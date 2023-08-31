@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "435B7A07-1EE2-4587-B3DE-09DF3E4D85B3",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:BobbysNews.xcodeproj",
+      "identifier" : "BF72AA862AA0BFD300368DA5",
+      "name" : "BobbysNews"
+    },
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:BobbysNews.xcodeproj",
+        "identifier" : "BF72AA9D2AA0BFD400368DA5",
+        "name" : "BobbysNewsTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:BobbysNews.xcodeproj",
+        "identifier" : "BF72AAA72AA0BFD400368DA5",
+        "name" : "BobbysNewsUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
