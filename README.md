@@ -4,17 +4,21 @@
 BobbysNews
 
 ## DESCRIPTION
-The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://newsapi.org) for searching and retrieving live articles from all over the web. These live articles are displayed in a list and also contain a more detailed page. SwiftUI components are used in this project - from the UI to the database,
-which you can look at in this GitHub project.
+The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://newsapi.org) for searching and retrieving live articles from all over the web. These live articles are displayed in a list and also contain a more detailed page. SwiftUI components are used in this project.
 
 ## SETUP
 - Minimum iOS target: 17.0
 - Build with: Xcode 15.0.0 Beta 8
 
+## ARCHITECTURE
+- Clean Architecture
+- SOLID
+- MVVM
+
 ## APIS
-Following APIs are used in this project:
 - SwiftUI
 - CoreData
+- UserDefaults
 - Combine
 - NewsAPI (https://newsapi.org)
 
