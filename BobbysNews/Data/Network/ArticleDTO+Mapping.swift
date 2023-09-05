@@ -14,7 +14,7 @@ struct ArticleDTO: Decodable {
 	let author: String?
 	let content: String?
 	let publishedAt: String?
-	let source: SourceDTO
+	let source: SourceDTO?
 	let story: String?
 	let title: String?
 	let url: URL?
@@ -32,12 +32,12 @@ extension ArticleDTO {
 
 	// MARK: - Mapping
 
-	func toDomain(country: Country) -> Article? {
+	func toDomain(country: String) -> Article? {
 		Article(author: author,
 				content: content,
 				country: country,
 				publishedAt: publishedAt?.toDate,
-				source: source.toDomain(),
+				source: source?.toDomain(),
 				story: story,
 				title: title,
 				url: url,
@@ -50,15 +50,16 @@ extension ArticleDTO {
 	// MARK: - Mapping
 
 	@discardableResult
-	func toEntity(country: Country, in context: NSManagedObjectContext) -> ArticleEntity? {
-		if source.name?.localizedStandardContains("removed") == false {
+	func toEntity(country: String,
+				  in context: NSManagedObjectContext) -> ArticleEntity? {
+		if source?.id?.localizedStandardContains("removed") == false,
+		   source?.name?.localizedStandardContains("removed") == false {
 			let entity = ArticleEntity(context: context)
 			entity.author = author
 			entity.content = content
-			entity.country = country.rawValue
+			entity.country = country
 			entity.publishedAt = publishedAt?.toDate
-			entity.sourceId = source.id
-			entity.sourceName = source.name
+			entity.source = source?.toEntity(in: context)
 			entity.story = story
 			entity.title = title
 			entity.url = url

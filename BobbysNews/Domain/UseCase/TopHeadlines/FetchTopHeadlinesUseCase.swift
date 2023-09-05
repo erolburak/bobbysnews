@@ -8,7 +8,7 @@
 import Combine
 
 protocol PFetchTopHeadlinesUseCase {
-	func fetch(country: Country) -> AnyPublisher<TopHeadlinesDTO, Error>
+	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error>
 }
 
 class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
@@ -25,7 +25,7 @@ class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func fetch(country: Country) -> AnyPublisher<TopHeadlinesDTO, Error> {
+	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
 		topHeadlinesRepository
 			.fetch(country: country)
 			.eraseToAnyPublisher()

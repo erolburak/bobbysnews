@@ -21,9 +21,14 @@ class TopHeadlinesQueriesRepositoryMock: PTopHeadlinesQueriesRepository {
 			.delete()
 	}
 
-	func fetchRequest(country: Country) {
+	func fetchRequest(country: String) {
 		topHeadlinesDataController
 			.fetchRequest(country: country)
+	}
+
+	func fetchSourcesRequest() {
+		topHeadlinesDataController
+			.fetchSourcesRequest()
 	}
 
 	func read() -> AnyPublisher<TopHeadlines, Error> {
@@ -32,9 +37,21 @@ class TopHeadlinesQueriesRepositoryMock: PTopHeadlinesQueriesRepository {
 			.eraseToAnyPublisher()
 	}
 
-	func save(country: Country, topHeadlinesDto: TopHeadlinesDTO) {
+	func readSources() -> AnyPublisher<Sources, Error> {
+		topHeadlinesDataController
+			.readSources()
+			.eraseToAnyPublisher()
+	}
+
+	func save(country: String,
+			  topHeadlinesDto: TopHeadlinesDTO) {
 		topHeadlinesDataController
 			.save(country: country,
 				  topHeadlinesDto: topHeadlinesDto)
+	}
+
+	func saveSources(sourcesDto: SourcesDTO) {
+		topHeadlinesDataController
+			.saveSources(sourcesDto: sourcesDto)
 	}
 }

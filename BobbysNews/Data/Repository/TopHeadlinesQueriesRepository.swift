@@ -10,10 +10,13 @@ import Foundation
 
 protocol PTopHeadlinesQueriesRepository {
 	func delete() throws
-	func fetchRequest(country: Country)
+	func fetchRequest(country: String)
+	func fetchSourcesRequest()
 	func read() -> AnyPublisher<TopHeadlines, Error>
-	func save(country: Country,
+	func readSources() -> AnyPublisher<Sources, Error>
+	func save(country: String,
 			  topHeadlinesDto: TopHeadlinesDTO)
+	func saveSources(sourcesDto: SourcesDTO)
 }
 
 class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
@@ -29,9 +32,14 @@ class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
 			.delete()
 	}
 
-	func fetchRequest(country: Country) {
+	func fetchRequest(country: String) {
 		topHeadlinesDataController
 			.fetchRequest(country: country)
+	}
+
+	func fetchSourcesRequest() {
+		topHeadlinesDataController
+			.fetchSourcesRequest()
 	}
 
 	func read() -> AnyPublisher<TopHeadlines, Error> {
@@ -40,10 +48,21 @@ class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
 			.eraseToAnyPublisher()
 	}
 
-	func save(country: Country,
+	func readSources() -> AnyPublisher<Sources, Error> {
+		topHeadlinesDataController
+			.readSources()
+			.eraseToAnyPublisher()
+	}
+
+	func save(country: String,
 			  topHeadlinesDto: TopHeadlinesDTO) {
 		topHeadlinesDataController
 			.save(country: country,
 				  topHeadlinesDto: topHeadlinesDto)
+	}
+
+	func saveSources(sourcesDto: SourcesDTO) {
+		topHeadlinesDataController
+			.saveSources(sourcesDto: sourcesDto)
 	}
 }

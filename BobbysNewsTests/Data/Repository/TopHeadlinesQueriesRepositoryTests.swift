@@ -34,16 +34,16 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 
 	func testFetchRequestWithCountryGermany() {
 		// Given
-		let country = Country.germany
+		let country = "Test"
 		// When
 		sut.fetchRequest(country: country)
 		// Then
 		XCTAssertEqual(mock.topHeadlinesQueriesSubject.value?.articles?.count, 2)
 	}
 
-	func testFetchRequestWithCountryNoneIsEmpty() {
+	func testFetchRequestWithCountryEmptyIsEmpty() {
 		// Given
-		let country = Country.none
+		let country = ""
 		// When
 		sut.fetchRequest(country: country)
 		// Then
@@ -72,8 +72,13 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 		let topHeadlinesDto = TopHeadlinesDTO(articles: [ArticleDTO(author: "Test 3",
 																	content: "Test 3",
 																	publishedAt: "Test 3",
-																	source: SourceDTO(id: "Test 3",
-																					  name: "Test 3"),
+																	source: SourceDTO(category: "Test 3",
+																					  country: "Test 3",
+																					  id: "Test 3",
+																					  language: "Test 3",
+																					  name: "Test 3",
+																					  story: "Test 3",
+																					  url: URL(string: "Test 3")),
 																	story: "Test 3",
 																	title: "Test 3",
 																	url: URL(string: "Test 3"),
@@ -81,8 +86,13 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 														 ArticleDTO(author: "Test 4",
 																	content: "Test 4",
 																	publishedAt: "Test 4",
-																	source: SourceDTO(id: "Test 4",
-																					  name: "Test 4"),
+																	source: SourceDTO(category: "Test 4",
+																					  country: "Test 4",
+																					  id: "Test 4",
+																					  language: "Test 4",
+																					  name: "Test 4",
+																					  story: "Test 4",
+																					  url: URL(string: "Test 4")),
 																	story: "Test 4",
 																	title: "Test 4",
 																	url: URL(string: "Test 4"),
@@ -90,7 +100,7 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 											  status: "Test",
 											  totalResults: 2)
 		// When
-		sut.save(country: .germany,
+		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
 		// Then
 		XCTAssertEqual(mock.topHeadlinesQueriesSubject.value?.articles?.count, 4)

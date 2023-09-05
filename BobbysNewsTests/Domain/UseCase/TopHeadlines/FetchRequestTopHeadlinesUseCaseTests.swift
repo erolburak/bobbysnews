@@ -23,21 +23,21 @@ class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 	override func tearDownWithError() throws {
 		sut = nil
 		topHeadlinesDataControllerMock = nil
-		topHeadlinesDataControllerMock = nil
+		topHeadlinesQueriesRepositoryMock = nil
 	}
 
-	func testFetchRequestWithCountryGermany() {
+	func testFetchRequest() {
 		// Given
-		let country = Country.germany
+		let country = "Test"
 		// When
 		sut.fetchRequest(country: country)
 		// Then
 		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 2)
 	}
 
-	func testFetchRequestWithCountryNoneIsEmpty() {
+	func testFetchRequestIsEmpty() {
 		// Given
-		let country = Country.none
+		let country = ""
 		// When
 		sut.fetchRequest(country: country)
 		// Then

@@ -15,8 +15,13 @@ class TopHeadlinesDTOMappingTests: XCTestCase {
 		let topHeadlinesDto = TopHeadlinesDTO(articles: [ArticleDTO(author: "Test",
 																	content: "Test",
 																	publishedAt: "2001-02-03T12:34:56Z",
-																	source: SourceDTO(id: "Test",
-																					  name: "Test"),
+																	source: SourceDTO(category: "Test",
+																					  country: "Test",
+																					  id: "Test",
+																					  language: "Test",
+																					  name: "Test",
+																					  story: "Test",
+																					  url: URL(string: "Test")),
 																	story: "Test",
 																	title: "Test",
 																	url: URL(string: "Test"),
@@ -24,10 +29,10 @@ class TopHeadlinesDTOMappingTests: XCTestCase {
 											  status: "Test",
 											  totalResults: 1)
 		// When
-		let topHeadlines = topHeadlinesDto.toDomain(country: .germany)
+		let topHeadlines = topHeadlinesDto.toDomain(country: "Test")
 		// Then
-		XCTAssertEqual(topHeadlines.articles?.count, topHeadlinesDto.articles?.count)
-		XCTAssertEqual(topHeadlines.status, topHeadlinesDto.status)
-		XCTAssertEqual(topHeadlines.totalResults, topHeadlinesDto.totalResults)
+		XCTAssertEqual(topHeadlines?.articles?.count, topHeadlinesDto.articles?.count)
+		XCTAssertEqual(topHeadlines?.status, topHeadlinesDto.status)
+		XCTAssertEqual(topHeadlines?.totalResults, topHeadlinesDto.totalResults)
 	}
 }

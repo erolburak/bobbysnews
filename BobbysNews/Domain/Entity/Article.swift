@@ -14,9 +14,9 @@ struct Article: Hashable, Identifiable {
 	let id = UUID()
 	let author: String?
 	let content: String?
-	let country: Country
+	let country: String?
 	let publishedAt: Date?
-	let source: Source
+	let source: Source?
 	let story: String?
 	let title: String?
 	let url: URL?

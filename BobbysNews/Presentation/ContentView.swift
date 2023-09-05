@@ -15,7 +15,7 @@ struct ContentView: View {
 
 	// MARK: - Private Properties
 
-	@AppStorage("country") private var country = Country.none
+	@AppStorage("country") private var country = ""
 
 	// MARK: - Layouts
 
@@ -23,15 +23,24 @@ struct ContentView: View {
 		NavigationStack {
 			ScrollView(.vertical,
 					   showsIndicators: false) {
-				if viewModel.state == .loaded {
-					ForEach(viewModel.articles ?? []) { article in
-						NavigationLink(value: article) {
-							Text(article.publishedAt?.toRelative ?? "") +
-							Text(article.source.name ?? "")
+				if !viewModel.selectedCountry.isEmpty {
+					switch viewModel.stateTopHeadlines {
+					case .isLoading:
+						ProgressView()
+					case .loaded:
+						ForEach(viewModel.articles ?? []) { article in
+							NavigationLink(value: article) {
+								Text(article.publishedAt?.toRelative ?? "") +
+								Text(article.source?.name ?? "")
+							}
 						}
-					}
-					.navigationDestination(for: Article.self) { article in
-						DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
+						.navigationDestination(for: Article.self) { article in
+							DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
+						}
+					case .emptyFetch:
+						Text("EmptyFetch")
+					case .emptyRead:
+						Text("EmptyRead")
 					}
 				}
 			}
@@ -46,29 +55,37 @@ struct ContentView: View {
 				}
 
 				ToolbarItem(placement: .topBarTrailing) {
-					Menu(viewModel.selectedCountry == .none ? "Select Country" : LocalizedStringKey(viewModel.selectedCountry.rawValue)) {
-						ForEach(Country.allCases.filter { $0 != .none }.sorted(),
-								id: \.rawValue) { item in
-							Button(LocalizedStringKey(item.rawValue)) {
-								country = item
+					switch viewModel.stateSources {
+					case .isLoading:
+						ProgressView()
+					case .loaded:
+						Menu("CountrySelect") {
+							if let countries = viewModel.countries {
+								ForEach(countries,
+										id: \.self) { item in
+									Button(item) {
+										country = item
+									}
+								}
 							}
 						}
+					case .load:
+						Button("CountryLoad") {
+							Task {
+								await viewModel.fetchTopHeadlinesSources(state: .isLoading)
+							}
+						}
+					case .emptyFetch:
+						Text("EmptyFetchSources")
+					case .emptyRead:
+						Text("EmptyReadSources")
 					}
 				}
 			}
 		}
 		.overlay {
-			switch viewModel.state {
-			case .isLoading:
-				ProgressView()
-			case .emptyData:
-				Text("EmptyData")
-			case .emptyFetch:
-				Text("EmptyFetch")
-			case .noSelectedCountry:
-				Text("NoSelectedCountry")
-			default:
-				EmptyView()
+			if viewModel.selectedCountry.isEmpty {
+				Text("EmptySelectedCountry")
 			}
 		}
 		.alert(isPresented: $viewModel.showAlert,
@@ -79,11 +96,15 @@ struct ContentView: View {
 			}
 		}
 		.onAppear {
-			viewModel.selectedCountry = country
-			viewModel.onAppear()
+			viewModel.onAppear(country: country)
 		}
 		.onDisappear() {
 			viewModel.onDisappear()
+		}
+		.onChange(of: viewModel.selectedCountry) { _, newState in
+			if newState.isEmpty {
+				country = ""
+			}
 		}
 		.onChange(of: country) {
 			viewModel.selectedCountry = country

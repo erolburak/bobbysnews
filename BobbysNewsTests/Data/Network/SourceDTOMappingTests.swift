@@ -12,12 +12,43 @@ class SourceDTOMappingTests: XCTestCase {
 
 	func testToDomain() {
 		// Given
-		let sourceDto = SourceDTO(id: "Test",
-								  name: "Test")
+		let sourceDto = SourceDTO(category: "Test",
+								  country: "Test",
+								  id: "Test",
+								  language: "Test",
+								  name: "Test",
+								  story: "Test",
+								  url: URL(string: "Test"))
 		// When
 		let source = sourceDto.toDomain()
 		// Then
-		XCTAssertEqual(source.id, sourceDto.id)
-		XCTAssertEqual(source.name, sourceDto.name)
+		XCTAssertEqual(source?.category, sourceDto.category)
+		XCTAssertEqual(source?.country, sourceDto.country)
+		XCTAssertEqual(source?.id, sourceDto.id)
+		XCTAssertEqual(source?.language, sourceDto.language)
+		XCTAssertEqual(source?.name, sourceDto.name)
+		XCTAssertEqual(source?.story, sourceDto.story)
+		XCTAssertNotNil(source?.url)
+	}
+
+	func testToEntity() {
+		// Given
+		let sourceDto = SourceDTO(category: "Test",
+								  country: "Test",
+								  id: "Test",
+								  language: "Test",
+								  name: "Test",
+								  story: "Test",
+								  url: URL(string: "Test"))
+		// When
+		let sourceEntity = sourceDto.toEntity(in: DataController.shared.backgroundContext)
+		// Then
+		XCTAssertEqual(sourceEntity?.category, sourceDto.category)
+		XCTAssertEqual(sourceEntity?.country, sourceDto.country)
+		XCTAssertEqual(sourceEntity?.id, sourceDto.id)
+		XCTAssertEqual(sourceEntity?.language, sourceDto.language)
+		XCTAssertEqual(sourceEntity?.name, sourceDto.name)
+		XCTAssertEqual(sourceEntity?.story, sourceDto.story)
+		XCTAssertNotNil(sourceEntity?.url)
 	}
 }

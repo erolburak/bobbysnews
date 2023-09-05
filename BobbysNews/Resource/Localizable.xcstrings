@@ -1,19 +1,36 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "de" : {
+    "CountryLoad" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deutschland"
+            "value" : "Länder laden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Germany"
+            "value" : "Load countries"
+          }
+        }
+      }
+    },
+    "CountrySelect" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Land auswählen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select country"
           }
         }
       }
@@ -34,34 +51,82 @@
         }
       }
     },
-    "EmptyData" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Daten sind leer."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Data is empty."
-          }
-        }
-      }
-    },
     "EmptyFetch" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfrage ist leer."
+            "value" : "Abfragedaten sind leer."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fetch is empty."
+            "value" : "Fetch data is empty."
+          }
+        }
+      }
+    },
+    "EmptyFetchSources" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfragedaten Quellen sind leer."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetch sources data is empty."
+          }
+        }
+      }
+    },
+    "EmptyRead" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datenbank ist leer."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Database is empty."
+          }
+        }
+      }
+    },
+    "EmptyReadSources" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Länder sind leer."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Countries are empty."
+          }
+        }
+      }
+    },
+    "EmptySelectedCountry" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswahl Land ist leer."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Country select is empty."
           }
         }
       }
@@ -116,19 +181,53 @@
         }
       }
     },
-    "ErrorDescriptionFetchTopHeadlines" : {
+    "ErrorDescriptionFetch" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfrage Schlagzeilen"
+            "value" : "Abfrage"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fetch Top Headlines"
+            "value" : "Fetch"
+          }
+        }
+      }
+    },
+    "ErrorDescriptionFetchSources" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage Quellen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetch sources"
+          }
+        }
+      }
+    },
+    "ErrorDescriptionRead" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read"
           }
         }
       }
@@ -165,7 +264,8 @@
         }
       }
     },
-    "ErrorRecoverySuggestionFetchTopHeadlines" : {
+    "ErrorRecoverySuggestionFetch" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -181,68 +281,36 @@
         }
       }
     },
-    "gb" : {
+    "ErrorRecoverySuggestionFetchSources" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Großbritannien"
+            "value" : "Abfrage Quellen fehlgeschlagen. Bitte versuche es erneut."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "United Kingdom"
+            "value" : "Failed to fetch sources. Please try again."
           }
         }
       }
     },
-    "NoSelectedCountry" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kein Land ausgewählt."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No country selected."
-          }
-        }
-      }
-    },
-    "Select Country" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Land auswählen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Country"
-          }
-        }
-      }
-    },
-    "us" : {
+    "ErrorRecoverySuggestionRead" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vereinigte Staaten"
+            "value" : "Lesen fehlgeschlagen. Bitte versuche es erneut."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "United States"
+            "value" : "Failed to read. Please try again."
           }
         }
       }

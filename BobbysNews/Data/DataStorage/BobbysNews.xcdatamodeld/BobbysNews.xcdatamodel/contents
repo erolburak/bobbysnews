@@ -5,11 +5,20 @@
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="country" optional="YES" attributeType="String"/>
         <attribute name="publishedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="sourceId" optional="YES" attributeType="String"/>
-        <attribute name="sourceName" optional="YES" attributeType="String"/>
         <attribute name="story" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="url" optional="YES" attributeType="URI"/>
         <attribute name="urlToImage" optional="YES" attributeType="URI"/>
+        <relationship name="source" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="SourceEntity" inverseName="article" inverseEntity="SourceEntity"/>
+    </entity>
+    <entity name="SourceEntity" representedClassName="SourceEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="category" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="language" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="story" optional="YES" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="URI"/>
+        <relationship name="article" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ArticleEntity" inverseName="source" inverseEntity="ArticleEntity"/>
     </entity>
 </model>

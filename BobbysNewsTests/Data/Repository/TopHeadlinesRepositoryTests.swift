@@ -24,12 +24,12 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 		sut = nil
 	}
 
-	func testFetchWithCountryGermanyIsNotNil() async {
+	func testFetchIsNotNil() async {
 		// Given
 		var topHeadlinesDto: TopHeadlinesDTO?
 		// When
 		let expectation = expectation(description: "Fetch")
-		sut.fetch(country: .germany)
+		sut.fetch(country: "Test")
 			.sink(receiveCompletion: { _ in },
 				  receiveValue: {
 				topHeadlinesDto = $0
@@ -41,12 +41,12 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 		XCTAssertNotNil(topHeadlinesDto)
 	}
 
-	func testFetchWithCountryNoneIsNil() async {
+	func testFetchIsNil() async {
 		// Given
 		var topHeadlinesDto: TopHeadlinesDTO?
 		// When
 		let expectation = expectation(description: "Fetch")
-		sut.fetch(country: .none)
+		sut.fetch(country: "")
 			.sink(receiveCompletion: { completion in
 				switch completion {
 				case .finished:

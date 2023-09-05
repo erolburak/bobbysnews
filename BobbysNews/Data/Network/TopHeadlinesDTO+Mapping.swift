@@ -18,7 +18,7 @@ extension TopHeadlinesDTO {
 
 	// MARK: - Mapping
 
-	func toDomain(country: Country) -> TopHeadlines {
+	func toDomain(country: String) -> TopHeadlines? {
 		TopHeadlines(articles: articles?.compactMap { $0.toDomain(country: country) },
 					 status: status,
 					 totalResults: totalResults)

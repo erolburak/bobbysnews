@@ -31,8 +31,13 @@ class SaveTopHeadlinesUseCaseTests: XCTestCase {
 		let topHeadlinesDto = TopHeadlinesDTO(articles: [ArticleDTO(author: "Test 3",
 																	content: "Test 3",
 																	publishedAt: "Test 3",
-																	source: SourceDTO(id: "Test 3",
-																					  name: "Test 3"),
+																	source: SourceDTO(category: "Test 3",
+																					  country: "Test 3",
+																					  id: "Test 3",
+																					  language: "Test 3",
+																					  name: "Test 3",
+																					  story: "Test 3",
+																					  url: URL(string: "Test 3")),
 																	story: "Test 3",
 																	title: "Test 3",
 																	url: URL(string: "Test 3"),
@@ -40,8 +45,13 @@ class SaveTopHeadlinesUseCaseTests: XCTestCase {
 														 ArticleDTO(author: "Test 4",
 																	content: "Test 4",
 																	publishedAt: "Test 4",
-																	source: SourceDTO(id: "Test 4",
-																					  name: "Test 4"),
+																	source: SourceDTO(category: "Test 4",
+																					  country: "Test 4",
+																					  id: "Test 4",
+																					  language: "Test 4",
+																					  name: "Test 4",
+																					  story: "Test 4",
+																					  url: URL(string: "Test 4")),
 																	story: "Test 4",
 																	title: "Test 4",
 																	url: URL(string: "Test 4"),
@@ -49,7 +59,7 @@ class SaveTopHeadlinesUseCaseTests: XCTestCase {
 											  status: "Test",
 											  totalResults: 2)
 		// When
-		sut.save(country: .germany,
+		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
 		// Then
 		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 4)

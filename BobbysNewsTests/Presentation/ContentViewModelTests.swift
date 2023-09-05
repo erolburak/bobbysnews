@@ -22,32 +22,55 @@ class ContentViewModelTests: XCTestCase {
 
 	func testOnAppear() async {
 		// Given
-		sut.selectedCountry = .none
-		sut.state = .isLoading
+		sut.selectedCountry = ""
+		sut.stateSources = .isLoading
+		sut.stateTopHeadlines = .isLoading
 		// When
-		sut.onAppear()
+		sut.onAppear(country: "")
 		// Then
 		await fulfillment(of: [], timeout: 1)
-		XCTAssertEqual(sut.state, .noSelectedCountry)
+		XCTAssertTrue(sut.selectedCountry.isEmpty)
+		XCTAssertEqual(sut.stateSources, .isLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
 	func testDelete() {
 		// Given
-		sut.state = .loaded
+		sut.selectedCountry = "Test"
+		sut.stateSources = .loaded
+		sut.stateTopHeadlines = .loaded
 		// When
 		sut.delete()
 		// Then
-		XCTAssertEqual(sut.state, .emptyData)
+		XCTAssertTrue(sut.selectedCountry.isEmpty)
+		XCTAssertEqual(sut.stateSources, .emptyRead)
+		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
 	}
 
 	func testFetchTopHeadlines() async {
 		// Given
-		sut.selectedCountry = .none
-		sut.state = .isLoading
+		sut.selectedCountry = ""
+		sut.stateSources = .isLoading
+		sut.stateTopHeadlines = .isLoading
 		// When
-		await sut.fetchTopHeadlines(state: .isLoading)
+		await sut.fetchTopHeadlines()
 		// Then
-		XCTAssertEqual(sut.state, .noSelectedCountry)
+		XCTAssertTrue(sut.selectedCountry.isEmpty)
+		XCTAssertEqual(sut.stateSources, .isLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
+	}
+
+	func testFetchTopHeadlinesSources() async {
+		// Given
+		sut.selectedCountry = ""
+		sut.stateSources = .isLoading
+		sut.stateTopHeadlines = .isLoading
+		// When
+		await sut.fetchTopHeadlinesSources()
+		// Then
+		XCTAssertTrue(sut.selectedCountry.isEmpty)
+		XCTAssertEqual(sut.stateSources, .isLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
 	func testShowAlerts() {
