@@ -8,7 +8,7 @@
 import Combine
 
 protocol PFetchRequestTopHeadlinesUseCase {
-	func fetchRequest(country: Country)
+	func fetchRequest(country: String)
 }
 
 class FetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase {
@@ -25,7 +25,7 @@ class FetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func fetchRequest(country: Country) {
+	func fetchRequest(country: String) {
 		topHeadlinesQueriesRepository
 			.fetchRequest(country: country)
 	}

@@ -18,7 +18,11 @@ struct ViewModelDI {
 						 fetchRequestTopHeadlinesUseCase: FetchRequestTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
 						 fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
 						 readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-						 saveTopHeadlinesUseCase: SaveTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
+						 saveTopHeadlinesUseCase: SaveTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+						 fetchRequestTopHeadlinesSourcesUseCase: FetchRequestTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+						 fetchTopHeadlinesSourcesUseCase: FetchTopHeadlinesSourcesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
+						 readTopHeadlinesSourcesUseCase: ReadTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+						 saveTopHeadlinesSourcesUseCase: SaveTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
 	}
 
 	func detailViewModel(article: Article) -> DetailViewModel {

@@ -15,11 +15,13 @@ struct AppConfiguration {
 
 		// MARK: - Properties
 
-		case delete, error(String), fetchTopHeadlines
+		case delete, error(String), fetch, fetchSources, read
 
 		static var allCases: [Errors] = [.delete,
 										 .error("Error\("ErrorDescription")"),
-										 .fetchTopHeadlines]
+										 .fetch,
+										 .fetchSources,
+										 .read]
 
 		var errorDescription: String? {
 			switch self {
@@ -27,8 +29,12 @@ struct AppConfiguration {
 				return String(localized: "Error\("ErrorDescriptionDelete")")
 			case .error(let error):
 				return error.description
-			case .fetchTopHeadlines:
-				return String(localized: "Error\("ErrorDescriptionFetchTopHeadlines")")
+			case .fetch:
+				return String(localized: "Error\("ErrorDescriptionFetch")")
+			case .fetchSources:
+				return String(localized: "Error\("ErrorDescriptionFetchSources")")
+			case .read:
+				return String(localized: "Error\("ErrorDescriptionRead")")
 			}
 		}
 
@@ -38,8 +44,12 @@ struct AppConfiguration {
 				return String(localized: "ErrorRecoverySuggestionDelete")
 			case .error:
 				return String(localized: "ErrorRecoverySuggestion")
-			case .fetchTopHeadlines: 
-				return String(localized: "ErrorRecoverySuggestionFetchTopHeadlines")
+			case .fetch:
+				return String(localized: "ErrorRecoverySuggestionFetch")
+			case .fetchSources:
+				return String(localized: "ErrorRecoverySuggestionFetchSources")
+			case .read:
+				return String(localized: "ErrorRecoverySuggestionRead")
 			}
 		}
 	}

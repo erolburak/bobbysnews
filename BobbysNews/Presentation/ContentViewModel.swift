@@ -13,25 +13,43 @@ class ContentViewModel {
 
 	// MARK: - Type Definitions
 
-	enum State {
-		case emptyData, emptyFetch, isLoading, loaded, noSelectedCountry
+	enum StateTopHeadlines {
+		/// General States
+		case isLoading, loaded
+		/// Empty States
+		case emptyFetch, emptyRead
+	}
+
+	enum StateSources {
+		/// General States
+		case isLoading, loaded, load
+		/// Empty States
+		case emptyFetch, emptyRead
 	}
 
 	// MARK: - Use Cases
-
+	/// TopHeadlines
 	private let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase
 	private let fetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase
 	private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
 	private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
 	private let saveTopHeadlinesUseCase: PSaveTopHeadlinesUseCase
+	/// Sources
+	private let fetchRequestTopHeadlinesSourcesUseCase: PFetchRequestTopHeadlinesSourcesUseCase
+	private let fetchTopHeadlinesSourcesUseCase: PFetchTopHeadlinesSourcesUseCase
+	private let readTopHeadlinesSourcesUseCase: PReadTopHeadlinesSourcesUseCase
+	private let saveTopHeadlinesSourcesUseCase: PSaveTopHeadlinesSourcesUseCase
 
 	// MARK: - Properties
 
 	var alertError: AppConfiguration.Errors?
 	var articles: [Article]?
-	var selectedCountry: Country = .none
+	var countries: [String]?
+	var selectedCountry = ""
 	var showAlert = false
-	var state: State = .isLoading
+	var sources: [Source]?
+	var stateSources: StateSources = .isLoading
+	var stateTopHeadlines: StateTopHeadlines = .isLoading
 
 	// MARK: - Private Properties
 
@@ -43,20 +61,33 @@ class ContentViewModel {
 		 fetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase,
 		 fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase,
 		 readTopHeadlinesUseCase: PReadTopHeadlinesUseCase,
-		 saveTopHeadlinesUseCase: PSaveTopHeadlinesUseCase) {
+		 saveTopHeadlinesUseCase: PSaveTopHeadlinesUseCase,
+		 fetchRequestTopHeadlinesSourcesUseCase: PFetchRequestTopHeadlinesSourcesUseCase,
+		 fetchTopHeadlinesSourcesUseCase: PFetchTopHeadlinesSourcesUseCase,
+		 readTopHeadlinesSourcesUseCase: PReadTopHeadlinesSourcesUseCase,
+		 saveTopHeadlinesSourcesUseCase: PSaveTopHeadlinesSourcesUseCase) {
 		self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
 		self.fetchRequestTopHeadlinesUseCase = fetchRequestTopHeadlinesUseCase
 		self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
 		self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
 		self.saveTopHeadlinesUseCase = saveTopHeadlinesUseCase
+		self.fetchRequestTopHeadlinesSourcesUseCase = fetchRequestTopHeadlinesSourcesUseCase
+		self.fetchTopHeadlinesSourcesUseCase = fetchTopHeadlinesSourcesUseCase
+		self.readTopHeadlinesSourcesUseCase = readTopHeadlinesSourcesUseCase
+		self.saveTopHeadlinesSourcesUseCase = saveTopHeadlinesSourcesUseCase
 	}
 
-	func onAppear() {
+	func onAppear(country: String) {
+		selectedCountry = country
+		/// Load TopHeadlines
 		readTopHeadlines()
 		fetchRequestTopHeadlines()
-
+		/// Load Sources
+		readTopHeadlinesSources()
+		fetchRequestTopHeadlinesSources()
 		Task {
-			await fetchTopHeadlines()
+			await fetchTopHeadlines(state: .isLoading)
+			await fetchTopHeadlinesSources(state: .isLoading)
 		}
 	}
 
@@ -68,22 +99,22 @@ class ContentViewModel {
 		do {
 			try deleteTopHeadlinesUseCase
 				.delete()
-			state = .emptyData
+			selectedCountry = ""
+			stateSources = .load
+			stateTopHeadlines = .emptyRead
 		} catch {
 			showAlert(error: .delete)
 		}
 	}
 
-	func fetchTopHeadlines(state: State? = nil) async {
+	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
 		if let state {
-			self.state = state
-		}
-
-		if selectedCountry != .none {
+			stateTopHeadlines = state
 			fetchTopHeadlinesUseCase
 				.fetch(country: selectedCountry)
 				.sink { [weak self] completion in
-					self?.updateState(completion: completion)
+					self?.updateStateTopHeadlines(completion: completion,
+												  failureState: .emptyFetch)
 				} receiveValue: { [weak self] topHeadlinesDto in
 					if let country = self?.selectedCountry {
 						self?.saveTopHeadlinesUseCase
@@ -92,8 +123,22 @@ class ContentViewModel {
 					}
 				}
 				.store(in: &cancellable)
-		} else {
-			self.state = .noSelectedCountry
+		}
+	}
+
+	func fetchTopHeadlinesSources(state: StateSources? = nil) async {
+		if let state {
+			stateSources = state
+			fetchTopHeadlinesSourcesUseCase
+				.fetchSources()
+				.sink { [weak self] completion in
+					self?.updateStateSources(completion: completion,
+											 failureState: .emptyFetch)
+				} receiveValue: { [weak self] sourcesDto in
+					self?.saveTopHeadlinesSourcesUseCase
+						.saveSources(sourcesDto: sourcesDto)
+				}
+				.store(in: &cancellable)
 		}
 	}
 
@@ -103,27 +148,61 @@ class ContentViewModel {
 	}
 
 	private func fetchRequestTopHeadlines() {
-		fetchRequestTopHeadlinesUseCase
-			.fetchRequest(country: selectedCountry)
+		if !selectedCountry.isEmpty {
+			fetchRequestTopHeadlinesUseCase
+				.fetchRequest(country: selectedCountry)
+		}
+	}
+
+	private func fetchRequestTopHeadlinesSources() {
+		fetchRequestTopHeadlinesSourcesUseCase
+			.fetchSourcesRequest()
 	}
 
 	private func readTopHeadlines() {
 		readTopHeadlinesUseCase
 			.read()
-			.sink(receiveCompletion: { [weak self] completion in
-				self?.updateState(completion: completion)
-			}, receiveValue: { [weak self] topHeadlines in
+			.sink(receiveCompletion: { _ in },
+				  receiveValue: { [weak self] topHeadlines in
 				self?.articles = topHeadlines.articles
+				self?.updateStateTopHeadlines(completion: topHeadlines.articles?.isEmpty == false ? .finished : self?.stateTopHeadlines != .isLoading ? .failure(AppConfiguration.Errors.read) : .finished,
+											  failureState: .emptyRead)
 			})
 			.store(in: &cancellable)
 	}
 
-	private func updateState(completion: Subscribers.Completion<Error>) {
+	private func readTopHeadlinesSources() {
+		readTopHeadlinesSourcesUseCase
+			.readSources()
+			.sink(receiveCompletion: { _ in },
+				  receiveValue: { [weak self] sources in
+				self?.sources = sources.sources
+				/// Sorted set of unique country codes
+				self?.countries = Array(Set(sources.sources?.compactMap { $0.country } ?? []).sorted(by: <))
+				self?.updateStateSources(completion: sources.sources?.isEmpty == false ? .finished : self?.stateSources != .isLoading ? .failure(AppConfiguration.Errors.read) : .finished,
+										 failureState: .emptyRead)
+			})
+			.store(in: &cancellable)
+	}
+
+	private func updateStateSources(completion: Subscribers.Completion<Error>,
+									failureState: StateSources) {
 		switch completion {
 		case .finished:
-			state = .loaded
+			stateSources = .loaded
 		case .failure(let error):
-			state = .emptyFetch
+			stateSources = failureState
+			showAlert(error: .error(error.localizedDescription))
+		}
+	}
+
+	private func updateStateTopHeadlines(completion: Subscribers.Completion<Error>,
+										 failureState: StateTopHeadlines) {
+		switch completion {
+		case .finished:
+			stateTopHeadlines = .loaded
+		case .failure(let error):
+			stateTopHeadlines = failureState
 			showAlert(error: .error(error.localizedDescription))
 		}
 	}

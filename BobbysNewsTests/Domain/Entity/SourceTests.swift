@@ -14,8 +14,13 @@ class SourceTests: XCTestCase {
 		// Given
 		let source: Source?
 		// When
-		source = Source(id: "Test",
-						name: "Test")
+		source = Source(category: "Test",
+						country: "Test",
+						id: "Test",
+						language: "Test",
+						name: "Test",
+						story: "Test",
+						url: URL(string: "Test"))
 		// Then
 		XCTAssertNotNil(source)
 	}

@@ -11,13 +11,12 @@ extension ArticleEntity {
 
 	// MARK: - Mapping
 
-	func toDomain() -> Article {
+	func toDomain() -> Article? {
 		Article(author: author,
 				content: content,
-				country: Country(rawValue: country ?? "") ?? .none,
+				country: country,
 				publishedAt: publishedAt,
-				source: Source(id: sourceId,
-							   name: sourceName),
+				source: source?.toDomain(),
 				story: story,
 				title: title,
 				url: url,

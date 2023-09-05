@@ -1,18 +1,17 @@
 //
-//  SaveTopHeadlinesUseCase.swift
+//  SaveTopHeadlinesSourcesUseCase.swift
 //  BobbysNews
 //
-//  Created by Burak Erol on 03.09.23.
+//  Created by Burak Erol on 05.09.23.
 //
 
 import Combine
 
-protocol PSaveTopHeadlinesUseCase {
-	func save(country: Country,
-			  topHeadlinesDto: TopHeadlinesDTO)
+protocol PSaveTopHeadlinesSourcesUseCase {
+	func saveSources(sourcesDto: SourcesDTO)
 }
 
-class SaveTopHeadlinesUseCase: PSaveTopHeadlinesUseCase {
+class SaveTopHeadlinesSourcesUseCase: PSaveTopHeadlinesSourcesUseCase {
 
 	// MARK: - Private Properties
 
@@ -26,10 +25,8 @@ class SaveTopHeadlinesUseCase: PSaveTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func save(country: Country,
-			  topHeadlinesDto: TopHeadlinesDTO) {
+	func saveSources(sourcesDto: SourcesDTO) {
 		topHeadlinesQueriesRepository
-			.save(country: country,
-				  topHeadlinesDto: topHeadlinesDto)
+			.saveSources(sourcesDto: sourcesDto)
 	}
 }
