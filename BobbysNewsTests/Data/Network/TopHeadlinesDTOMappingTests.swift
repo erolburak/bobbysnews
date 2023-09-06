@@ -14,7 +14,7 @@ class TopHeadlinesDTOMappingTests: XCTestCase {
 
 	func testToDomain() {
 		// Given
-		let topHeadlinesDto = DTOMock.topHeadlinesDto
+		let topHeadlinesDto = DTOMock.topHeadlinesDto1
 		// When
 		let topHeadlines = topHeadlinesDto.toDomain(country: "Test")
 		// Then

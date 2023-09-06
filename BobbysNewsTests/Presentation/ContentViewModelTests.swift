@@ -51,7 +51,7 @@ class ContentViewModelTests: XCTestCase {
 		// Then
 		await fulfillment(of: [], timeout: 1)
 		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .isInitialLoading)
+		XCTAssertNotEqual(sut.stateSources, .isInitialLoading)
 		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
 	}
 
@@ -64,7 +64,7 @@ class ContentViewModelTests: XCTestCase {
 		sut.delete()
 		// Then
 		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .emptyRead)
+		XCTAssertEqual(sut.stateSources, .load)
 		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
 	}
 

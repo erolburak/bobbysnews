@@ -19,7 +19,7 @@ class TopHeadlinesTests: XCTestCase {
 		topHeadlines = TopHeadlines(articles: [Article(author: "Test",
 													   content: "Test",
 													   country: "Test",
-													   publishedAt: .now,
+													   publishedAt: "2001-02-03T12:34:56Z".toDate,
 													   source: Source(category: "Test",
 																	  country: "Test",
 																	  id: "Test",

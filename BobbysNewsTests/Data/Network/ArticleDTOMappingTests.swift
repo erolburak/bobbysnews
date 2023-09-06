@@ -14,13 +14,13 @@ class ArticleDTOMappingTests: XCTestCase {
 
 	func testToDomain() {
 		// Given
-		let articleDto = DTOMock.articleDto
+		let articleDto = DTOMock.articleDto1
 		// When
 		let article = articleDto.toDomain(country: "Test")
 		// Then
 		XCTAssertEqual(article?.author, articleDto.author)
 		XCTAssertEqual(article?.content, articleDto.content)
-		XCTAssertNotNil(article?.publishedAt)
+		XCTAssertEqual(article?.publishedAt, articleDto.publishedAt?.toDate)
 		XCTAssertEqual(article?.source?.category, articleDto.source?.category)
 		XCTAssertEqual(article?.source?.country, articleDto.source?.country)
 		XCTAssertEqual(article?.source?.id, articleDto.source?.id)
@@ -36,14 +36,14 @@ class ArticleDTOMappingTests: XCTestCase {
 
 	func testToEntity() {
 		// Given
-		let articleDto = DTOMock.articleDto
+		let articleDto = DTOMock.articleDto1
 		// When
 		let articleEntity = articleDto.toEntity(country: "Test",
 												in: DataController.shared.backgroundContext)
 		// Then
 		XCTAssertEqual(articleEntity?.author, articleDto.author)
 		XCTAssertEqual(articleEntity?.content, articleDto.content)
-		XCTAssertNotNil(articleEntity?.publishedAt)
+		XCTAssertEqual(articleEntity?.publishedAt, articleDto.publishedAt?.toDate)
 		XCTAssertEqual(articleEntity?.source?.category, articleDto.source?.category)
 		XCTAssertEqual(articleEntity?.source?.country, articleDto.source?.country)
 		XCTAssertEqual(articleEntity?.source?.id, articleDto.source?.id)

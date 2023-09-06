@@ -14,7 +14,7 @@ class SourcesDTOMappingTests: XCTestCase {
 
 	func testToDomain() {
 		// Given
-		let sourcesDto = DTOMock.sourcesDto
+		let sourcesDto = DTOMock.sourcesDto1
 		// When
 		let sources = sourcesDto.toDomain()
 		// Then

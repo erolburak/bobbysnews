@@ -35,7 +35,7 @@ class ViewModelDITests: XCTestCase {
 
 	func testDetailViewModelIsNotNil() {
 		// Given
-		let article = EntityMock.article
+		let article = EntityMock.article1
 		// When
 		let detailViewModel = sut.detailViewModel(article: article)
 		// Then

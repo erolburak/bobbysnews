@@ -34,11 +34,11 @@ class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 
 	func testFetchRequest() {
 		// Given
-		let country = "Test"
+		let country = "Test 1"
 		// When
 		sut.fetchRequest(country: country)
 		// Then
-		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 2)
+		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 1)
 	}
 
 	func testFetchRequestIsEmpty() {

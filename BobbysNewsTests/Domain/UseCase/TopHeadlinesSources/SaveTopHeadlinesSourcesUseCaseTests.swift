@@ -32,9 +32,18 @@ class SaveTopHeadlinesSourcesUseCaseTests: XCTestCase {
 
 	// MARK: - Actions
 
-	func testSaveSources() {
+	func testSaveSourcesWithExistingSources() {
 		// Given
-		let sourcesDto = DTOMock.sourcesDto
+		let sourcesDto = DTOMock.sourcesDto1
+		// When
+		sut.saveSources(sourcesDto: sourcesDto)
+		// Then
+		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesSourcesQueriesSubject.value?.sources?.count, 2)
+	}
+
+	func testSaveSourcesWithNewSources() {
+		// Given
+		let sourcesDto = DTOMock.sourcesDto2
 		// When
 		sut.saveSources(sourcesDto: sourcesDto)
 		// Then

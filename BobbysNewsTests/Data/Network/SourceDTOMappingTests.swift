@@ -14,7 +14,7 @@ class SourceDTOMappingTests: XCTestCase {
 
 	func testToDomain() {
 		// Given
-		let sourceDto = DTOMock.sourceDto
+		let sourceDto = DTOMock.sourceDto1
 		// When
 		let source = sourceDto.toDomain()
 		// Then
@@ -29,7 +29,7 @@ class SourceDTOMappingTests: XCTestCase {
 
 	func testToEntity() {
 		// Given
-		let sourceDto = DTOMock.sourceDto
+		let sourceDto = DTOMock.sourceDto1
 		// When
 		let sourceEntity = sourceDto.toEntity(in: DataController.shared.backgroundContext)
 		// Then

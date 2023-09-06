@@ -40,11 +40,11 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 
 	func testFetchRequest() {
 		// Given
-		let country = "Test"
+		let country = "Test 1"
 		// When
 		sut.fetchRequest(country: country)
 		// Then
-		XCTAssertEqual(mock.topHeadlinesQueriesSubject.value?.articles?.count, 2)
+		XCTAssertEqual(mock.topHeadlinesQueriesSubject.value?.articles?.count, 1)
 	}
 
 	func testFetchRequestIsEmpty() {
@@ -75,7 +75,7 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 
 	func testSave() {
 		// Given
-		let topHeadlinesDto = DTOMock.topHeadlinesDto
+		let topHeadlinesDto = DTOMock.topHeadlinesDto2
 		// When
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)

@@ -32,9 +32,19 @@ class SaveTopHeadlinesUseCaseTests: XCTestCase {
 
 	// MARK: - Actions
 
-	func testSave() {
+	func testSaveWithExistingTopHeadlines() {
 		// Given
-		let topHeadlinesDto = DTOMock.topHeadlinesDto
+		let topHeadlinesDto = DTOMock.topHeadlinesDto1
+		// When
+		sut.save(country: "Test",
+				 topHeadlinesDto: topHeadlinesDto)
+		// Then
+		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 2)
+	}
+
+	func testSaveWithNewTopHeadlines() {
+		// Given
+		let topHeadlinesDto = DTOMock.topHeadlinesDto2
 		// When
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
