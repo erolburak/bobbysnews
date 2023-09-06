@@ -10,7 +10,11 @@ import XCTest
 
 class ContentViewModelTests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var sut: ContentViewModel!
+
+	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		sut = ViewModelDI.shared.contentViewModel()
@@ -20,18 +24,35 @@ class ContentViewModelTests: XCTestCase {
 		sut = nil
 	}
 
+	// MARK: - Actions
+
+	func testContentViewModelIsNotNil() async {
+		// When
+		let contentViewModel = ContentViewModel(deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+												fetchRequestTopHeadlinesUseCase: FetchRequestTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+							  fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
+							  readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+							  saveTopHeadlinesUseCase: SaveTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+							  fetchRequestTopHeadlinesSourcesUseCase: FetchRequestTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+							  fetchTopHeadlinesSourcesUseCase: FetchTopHeadlinesSourcesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
+							  readTopHeadlinesSourcesUseCase: ReadTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+							  saveTopHeadlinesSourcesUseCase: SaveTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
+		// Then
+		XCTAssertNotNil(contentViewModel)
+	}
+
 	func testOnAppear() async {
 		// Given
 		sut.selectedCountry = ""
-		sut.stateSources = .isLoading
-		sut.stateTopHeadlines = .isLoading
+		sut.stateSources = .isInitialLoading
+		sut.stateTopHeadlines = .isInitialLoading
 		// When
 		sut.onAppear(country: "")
 		// Then
 		await fulfillment(of: [], timeout: 1)
 		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .isLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
+		XCTAssertEqual(sut.stateSources, .isInitialLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
 	}
 
 	func testDelete() {
@@ -50,27 +71,27 @@ class ContentViewModelTests: XCTestCase {
 	func testFetchTopHeadlines() async {
 		// Given
 		sut.selectedCountry = ""
-		sut.stateSources = .isLoading
-		sut.stateTopHeadlines = .isLoading
+		sut.stateSources = .isInitialLoading
+		sut.stateTopHeadlines = .isInitialLoading
 		// When
 		await sut.fetchTopHeadlines()
 		// Then
 		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .isLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
+		XCTAssertEqual(sut.stateSources, .isInitialLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
 	}
 
 	func testFetchTopHeadlinesSources() async {
 		// Given
 		sut.selectedCountry = ""
-		sut.stateSources = .isLoading
-		sut.stateTopHeadlines = .isLoading
+		sut.stateSources = .isInitialLoading
+		sut.stateTopHeadlines = .isInitialLoading
 		// When
 		await sut.fetchTopHeadlinesSources()
 		// Then
 		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .isLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
+		XCTAssertEqual(sut.stateSources, .isInitialLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
 	}
 
 	func testShowAlerts() {

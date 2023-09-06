@@ -9,6 +9,9 @@ import Combine
 import Foundation
 
 protocol PTopHeadlinesQueriesRepository {
+
+	// MARK: - Actions
+
 	func delete() throws
 	func fetchRequest(country: String)
 	func fetchSourcesRequest()

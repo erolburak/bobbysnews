@@ -10,24 +10,11 @@ import XCTest
 
 class TopHeadlinesDTOMappingTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testToDomain() {
 		// Given
-		let topHeadlinesDto = TopHeadlinesDTO(articles: [ArticleDTO(author: "Test",
-																	content: "Test",
-																	publishedAt: "2001-02-03T12:34:56Z",
-																	source: SourceDTO(category: "Test",
-																					  country: "Test",
-																					  id: "Test",
-																					  language: "Test",
-																					  name: "Test",
-																					  story: "Test",
-																					  url: URL(string: "Test")),
-																	story: "Test",
-																	title: "Test",
-																	url: URL(string: "Test"),
-																	urlToImage: URL(string: "Test"))],
-											  status: "Test",
-											  totalResults: 1)
+		let topHeadlinesDto = DTOMock.topHeadlinesDto
 		// When
 		let topHeadlines = topHeadlinesDto.toDomain(country: "Test")
 		// Then

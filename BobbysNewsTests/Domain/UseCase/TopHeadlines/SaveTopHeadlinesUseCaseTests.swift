@@ -10,9 +10,13 @@ import XCTest
 
 class SaveTopHeadlinesUseCaseTests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var sut: SaveTopHeadlinesUseCase!
 	private var topHeadlinesDataControllerMock: TopHeadlinesDataControllerMock!
 	private var topHeadlinesQueriesRepositoryMock: TopHeadlinesQueriesRepositoryMock!
+
+	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		topHeadlinesDataControllerMock = TopHeadlinesDataControllerMock()
@@ -26,38 +30,11 @@ class SaveTopHeadlinesUseCaseTests: XCTestCase {
 		topHeadlinesQueriesRepositoryMock = nil
 	}
 
+	// MARK: - Actions
+
 	func testSave() {
 		// Given
-		let topHeadlinesDto = TopHeadlinesDTO(articles: [ArticleDTO(author: "Test 3",
-																	content: "Test 3",
-																	publishedAt: "Test 3",
-																	source: SourceDTO(category: "Test 3",
-																					  country: "Test 3",
-																					  id: "Test 3",
-																					  language: "Test 3",
-																					  name: "Test 3",
-																					  story: "Test 3",
-																					  url: URL(string: "Test 3")),
-																	story: "Test 3",
-																	title: "Test 3",
-																	url: URL(string: "Test 3"),
-																	urlToImage: URL(string: "Test 3")),
-														 ArticleDTO(author: "Test 4",
-																	content: "Test 4",
-																	publishedAt: "Test 4",
-																	source: SourceDTO(category: "Test 4",
-																					  country: "Test 4",
-																					  id: "Test 4",
-																					  language: "Test 4",
-																					  name: "Test 4",
-																					  story: "Test 4",
-																					  url: URL(string: "Test 4")),
-																	story: "Test 4",
-																	title: "Test 4",
-																	url: URL(string: "Test 4"),
-																	urlToImage: URL(string: "Test 4"))],
-											  status: "Test",
-											  totalResults: 2)
+		let topHeadlinesDto = DTOMock.topHeadlinesDto
 		// When
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)

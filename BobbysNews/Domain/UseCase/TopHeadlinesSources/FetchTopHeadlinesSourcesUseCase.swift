@@ -8,6 +8,9 @@
 import Combine
 
 protocol PFetchTopHeadlinesSourcesUseCase {
+
+	// MARK: - Actions
+
 	func fetchSources() -> AnyPublisher<SourcesDTO, Error>
 }
 

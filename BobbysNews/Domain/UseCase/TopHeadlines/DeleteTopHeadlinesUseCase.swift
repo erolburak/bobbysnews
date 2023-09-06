@@ -8,6 +8,9 @@
 import Combine
 
 protocol PDeleteTopHeadlinesUseCase {
+
+	// MARK: - Actions
+
 	func delete() throws
 }
 

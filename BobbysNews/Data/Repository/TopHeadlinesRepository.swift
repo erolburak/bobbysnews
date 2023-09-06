@@ -9,6 +9,9 @@ import Combine
 import Foundation
 
 protocol PTopHeadlinesRepository {
+
+	// MARK: - Actions
+
 	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error>
 	func fetchSources() -> AnyPublisher<SourcesDTO, Error>
 }

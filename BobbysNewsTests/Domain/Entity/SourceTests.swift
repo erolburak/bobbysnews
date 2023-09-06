@@ -10,6 +10,8 @@ import XCTest
 
 class SourceTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testSource() {
 		// Given
 		let source: Source?

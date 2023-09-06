@@ -10,9 +10,13 @@ import XCTest
 
 class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var sut: DeleteTopHeadlinesUseCase!
 	private var topHeadlinesDataControllerMock: TopHeadlinesDataControllerMock!
 	private var topHeadlinesQueriesRepositoryMock: TopHeadlinesQueriesRepositoryMock!
+
+	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		topHeadlinesDataControllerMock = TopHeadlinesDataControllerMock()
@@ -25,6 +29,8 @@ class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 		topHeadlinesDataControllerMock = nil
 		topHeadlinesDataControllerMock = nil
 	}
+
+	// MARK: - Actions
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete())

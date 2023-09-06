@@ -9,7 +9,13 @@ import Combine
 import CoreData
 
 protocol PTopHeadlinesDataController {
+
+	// MARK: - Properties
+
 	var topHeadlinesQueriesSubject: CurrentValueSubject<TopHeadlines?, Never> { get }
+
+	// MARK: - Actions
+
 	func delete() throws
 	func fetchRequest(country: String)
 	func read() -> AnyPublisher<TopHeadlines, Error>

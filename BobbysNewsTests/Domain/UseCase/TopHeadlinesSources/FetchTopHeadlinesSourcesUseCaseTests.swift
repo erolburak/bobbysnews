@@ -11,9 +11,13 @@ import XCTest
 
 class FetchTopHeadlinesSourcesUseCaseTests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var cancellable: Set<AnyCancellable>!
 	private var mock: TopHeadlinesRepositoryMock!
 	private var sut: FetchTopHeadlinesSourcesUseCase!
+
+	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -26,6 +30,8 @@ class FetchTopHeadlinesSourcesUseCaseTests: XCTestCase {
 		mock = nil
 		sut = nil
 	}
+
+	// MARK: - Actions
 
 	func testFetchSources() async {
 		// Given

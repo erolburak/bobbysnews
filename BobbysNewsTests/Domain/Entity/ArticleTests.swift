@@ -10,6 +10,8 @@ import XCTest
 
 class ArticleTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testArticle() {
 		// Given
 		let article: Article?

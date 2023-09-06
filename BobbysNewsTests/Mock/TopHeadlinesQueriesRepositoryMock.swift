@@ -10,11 +10,17 @@ import Combine
 
 class TopHeadlinesQueriesRepositoryMock: PTopHeadlinesQueriesRepository {
 
+	// MARK: - Private Properties
+
 	private let topHeadlinesDataController: TopHeadlinesDataControllerMock
+
+	// MARK: - Life Cycle
 
 	init(topHeadlinesDataController: TopHeadlinesDataControllerMock) {
 		self.topHeadlinesDataController = topHeadlinesDataController
 	}
+
+	// MARK: - Actions
 
 	func delete() throws {
 		try topHeadlinesDataController

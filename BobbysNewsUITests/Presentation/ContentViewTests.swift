@@ -9,7 +9,11 @@ import XCTest
 
 final class ContentViewTests: XCTestCase {
 
+	// MARK: - Life Cycle
+
 	override func setUpWithError() throws {
 		continueAfterFailure = false
 	}
+
+	// MARK: - Actions
 }

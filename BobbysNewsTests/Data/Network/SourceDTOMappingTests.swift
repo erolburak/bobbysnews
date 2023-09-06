@@ -10,15 +10,11 @@ import XCTest
 
 class SourceDTOMappingTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testToDomain() {
 		// Given
-		let sourceDto = SourceDTO(category: "Test",
-								  country: "Test",
-								  id: "Test",
-								  language: "Test",
-								  name: "Test",
-								  story: "Test",
-								  url: URL(string: "Test"))
+		let sourceDto = DTOMock.sourceDto
 		// When
 		let source = sourceDto.toDomain()
 		// Then
@@ -33,13 +29,7 @@ class SourceDTOMappingTests: XCTestCase {
 
 	func testToEntity() {
 		// Given
-		let sourceDto = SourceDTO(category: "Test",
-								  country: "Test",
-								  id: "Test",
-								  language: "Test",
-								  name: "Test",
-								  story: "Test",
-								  url: URL(string: "Test"))
+		let sourceDto = DTOMock.sourceDto
 		// When
 		let sourceEntity = sourceDto.toEntity(in: DataController.shared.backgroundContext)
 		// Then

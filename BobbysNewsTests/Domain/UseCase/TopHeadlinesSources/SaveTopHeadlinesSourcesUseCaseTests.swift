@@ -10,9 +10,13 @@ import XCTest
 
 class SaveTopHeadlinesSourcesUseCaseTests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var sut: SaveTopHeadlinesSourcesUseCase!
 	private var topHeadlinesDataControllerMock: TopHeadlinesDataControllerMock!
 	private var topHeadlinesQueriesRepositoryMock: TopHeadlinesQueriesRepositoryMock!
+
+	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		topHeadlinesDataControllerMock = TopHeadlinesDataControllerMock()
@@ -26,23 +30,11 @@ class SaveTopHeadlinesSourcesUseCaseTests: XCTestCase {
 		topHeadlinesQueriesRepositoryMock = nil
 	}
 
+	// MARK: - Actions
+
 	func testSaveSources() {
 		// Given
-		let sourcesDto = SourcesDTO(sources: [SourceDTO(category: "Test 3",
-														country: "Test 3",
-														id: "Test 3",
-														language: "Test 3",
-														name: "Test 3",
-														story: "Test 3",
-														url: URL(string: "Test 3")),
-											  SourceDTO(category: "Test 4",
-														country: "Test 4",
-														id: "Test 4",
-														language: "Test 4",
-														name: "Test 4",
-														story: "Test 4",
-														url: URL(string: "Test 4"))],
-									status: "Test")
+		let sourcesDto = DTOMock.sourcesDto
 		// When
 		sut.saveSources(sourcesDto: sourcesDto)
 		// Then

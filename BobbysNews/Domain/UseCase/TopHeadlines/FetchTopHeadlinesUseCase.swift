@@ -8,6 +8,9 @@
 import Combine
 
 protocol PFetchTopHeadlinesUseCase {
+
+	// MARK: - Actions
+
 	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error>
 }
 
