@@ -19,8 +19,8 @@ struct BobbysNewsApp: App {
     }
 }
 
-// TODO: Add Share Link
-// TODO: Add WebView
-// TODO: Update UI Styling
-// TODO: Update Localizable
-// TODO: Add UI Tests
+// TODO: - Add Share Link
+// TODO: - Add WebView
+// TODO: - Update UI Styling
+// TODO: - Update Localizable
+// TODO: - Add UI Tests

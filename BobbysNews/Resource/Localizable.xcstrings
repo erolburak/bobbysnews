@@ -131,22 +131,6 @@
         }
       }
     },
-    "Error%@" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "FEHLER: %@"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ERROR: %@"
-          }
-        }
-      }
-    },
     "ErrorDescription" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -215,6 +199,40 @@
         }
       }
     },
+    "ErrorDescriptionInvalidApiKey" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ungültiger Api Schlüssel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid api key"
+          }
+        }
+      }
+    },
+    "ErrorDescriptionLimitedRequests" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limitierte Abfragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Limited requests"
+          }
+        }
+      }
+    },
     "ErrorDescriptionRead" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -228,22 +246,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Read"
-          }
-        }
-      }
-    },
-    "ErrorRecoverySuggestion" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fehler. Bitte versuche es erneut."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Error. Please try again."
           }
         }
       }
@@ -294,6 +296,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to fetch sources. Please try again."
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionInvalidApiKey" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage fehlgeschlagen. Überprüfe Api Schlüssel oder gehen zu https://newsapi.org, um einen kostenlosen zu erstellen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch. Check api key, or go to https://newsapi.org to create a free one."
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionLimitedRequests" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage fehlgeschlagen. Developer Accounts sind auf 100 Anfragen über einen Zeitraum von 24 Stunden begrenzt (50 Anfragen alle 12 Stunden verfügbar). Upgrade auf einen kostenpflichtigen Plan, wenn weitere Anfragen erforderlich sind."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch. Developer accounts limited to 100 requests over a 24 hour period (50 requests available every 12 hours). Upgrade to a paid plan if more requests needed."
           }
         }
       }
