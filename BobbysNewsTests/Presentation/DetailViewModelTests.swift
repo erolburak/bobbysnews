@@ -10,27 +10,28 @@ import XCTest
 
 class DetailViewModelTests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var sut: DetailViewModel!
 
+	// MARK: - Life Cycle
+
 	override func setUpWithError() throws {
-		sut = ViewModelDI.shared.detailViewModel(article: Article(author: "Test",
-																  content: "Test",
-																  country: "Test",
-																  publishedAt: Date.now,
-																  source: Source(category: "Test",
-																				 country: "Test",
-																				 id: "Test",
-																				 language: "Test",
-																				 name: "Test",
-																				 story: "Test",
-																				 url: URL(string: "Test")),
-																  story: "Test",
-																  title: "Test",
-																  url: URL(string: "Test"),
-																  urlToImage: URL(string: "Test")))
+		sut = ViewModelDI.shared.detailViewModel(article: EntityMock.article)
 	}
 
 	override func tearDownWithError() throws {
 		sut = nil
+	}
+
+	// MARK: - Actions
+
+	func testDetailViewModelIsNotNil() async {
+		// Given
+		let article = EntityMock.article
+		// When
+		let detailViewModel = DetailViewModel(article: article)
+		// Then
+		XCTAssertNotNil(detailViewModel)
 	}
 }

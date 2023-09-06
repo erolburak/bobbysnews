@@ -10,6 +10,8 @@ import XCTest
 
 class SourceEntityMappingTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testSourceEntity() {
 		// Given
 		let sourceEntity: SourceEntity?

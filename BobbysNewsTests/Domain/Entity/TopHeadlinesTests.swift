@@ -10,6 +10,8 @@ import XCTest
 
 class TopHeadlinesTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testTopHeadlines() {
 		// Given
 		let topHeadlines: TopHeadlines?

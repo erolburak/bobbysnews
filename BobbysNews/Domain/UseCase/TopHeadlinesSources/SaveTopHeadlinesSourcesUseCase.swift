@@ -8,6 +8,9 @@
 import Combine
 
 protocol PSaveTopHeadlinesSourcesUseCase {
+
+	// MARK: - Actions
+
 	func saveSources(sourcesDto: SourcesDTO)
 }
 

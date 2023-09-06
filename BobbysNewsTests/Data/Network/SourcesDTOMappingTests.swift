@@ -10,16 +10,11 @@ import XCTest
 
 class SourcesDTOMappingTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testToDomain() {
 		// Given
-		let sourcesDto = SourcesDTO(sources: [SourceDTO(category: "Test",
-														country: "Test",
-														id: "Test",
-														language: "Test",
-														name: "Test",
-														story: "Test",
-														url: URL(string: "Test"))],
-									status: "Test")
+		let sourcesDto = DTOMock.sourcesDto
 		// When
 		let sources = sourcesDto.toDomain()
 		// Then

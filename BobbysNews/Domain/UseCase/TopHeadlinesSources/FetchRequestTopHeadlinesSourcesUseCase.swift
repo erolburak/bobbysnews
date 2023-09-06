@@ -8,6 +8,9 @@
 import Combine
 
 protocol PFetchRequestTopHeadlinesSourcesUseCase {
+
+	// MARK: - Actions
+
 	func fetchSourcesRequest()
 }
 

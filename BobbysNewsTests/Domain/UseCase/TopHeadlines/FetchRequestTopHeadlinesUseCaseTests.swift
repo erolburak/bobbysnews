@@ -10,9 +10,13 @@ import XCTest
 
 class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var sut: FetchRequestTopHeadlinesUseCase!
 	private var topHeadlinesDataControllerMock: TopHeadlinesDataControllerMock!
 	private var topHeadlinesQueriesRepositoryMock: TopHeadlinesQueriesRepositoryMock!
+
+	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		topHeadlinesDataControllerMock = TopHeadlinesDataControllerMock()
@@ -25,6 +29,8 @@ class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 		topHeadlinesDataControllerMock = nil
 		topHeadlinesQueriesRepositoryMock = nil
 	}
+
+	// MARK: - Actions
 
 	func testFetchRequest() {
 		// Given

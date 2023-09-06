@@ -10,22 +10,11 @@ import XCTest
 
 class ArticleDTOMappingTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testToDomain() {
 		// Given
-		let articleDto = ArticleDTO(author: "Test",
-									content: "Test",
-									publishedAt: "2001-02-03T12:34:56Z",
-									source: SourceDTO(category: "Test",
-													  country: "Test",
-													  id: "Test",
-													  language: "Test",
-													  name: "Test",
-													  story: "Test",
-													  url: URL(string: "Test")),
-									story: "Test",
-									title: "Test",
-									url: URL(string: "Test"),
-									urlToImage: URL(string: "Test"))
+		let articleDto = DTOMock.articleDto
 		// When
 		let article = articleDto.toDomain(country: "Test")
 		// Then
@@ -47,20 +36,7 @@ class ArticleDTOMappingTests: XCTestCase {
 
 	func testToEntity() {
 		// Given
-		let articleDto = ArticleDTO(author: "Test",
-									content: "Test",
-									publishedAt: "2001-02-03T12:34:56Z",
-									source: SourceDTO(category: "Test",
-													  country: "Test",
-													  id: "Test",
-													  language: "Test",
-													  name: "Test",
-													  story: "Test",
-													  url: URL(string: "Test")),
-									story: "Test",
-									title: "Test",
-									url: URL(string: "Test"),
-									urlToImage: URL(string: "Test"))
+		let articleDto = DTOMock.articleDto
 		// When
 		let articleEntity = articleDto.toEntity(country: "Test",
 												in: DataController.shared.backgroundContext)

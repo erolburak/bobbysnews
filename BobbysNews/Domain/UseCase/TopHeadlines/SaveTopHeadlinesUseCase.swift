@@ -8,6 +8,9 @@
 import Combine
 
 protocol PSaveTopHeadlinesUseCase {
+
+	// MARK: - Actions
+
 	func save(country: String,
 			  topHeadlinesDto: TopHeadlinesDTO)
 }

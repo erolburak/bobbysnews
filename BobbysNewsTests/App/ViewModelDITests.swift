@@ -10,7 +10,11 @@ import XCTest
 
 class ViewModelDITests: XCTestCase {
 
+	// MARK: - Private Properties
+
 	private var sut: ViewModelDI!
+
+	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		sut = ViewModelDI()
@@ -19,6 +23,8 @@ class ViewModelDITests: XCTestCase {
 	override func tearDownWithError() throws {
 		sut = nil
 	}
+
+	// MARK: - Actions
 
 	func testContentViewModelIsNotNil() {
 		// When
@@ -29,21 +35,7 @@ class ViewModelDITests: XCTestCase {
 
 	func testDetailViewModelIsNotNil() {
 		// Given
-		let article = Article(author: "Test",
-							  content: "Test",
-							  country: "Test",
-							  publishedAt: .now,
-							  source: Source(category: "Test",
-											 country: "Test",
-											 id: "Test",
-											 language: "Test",
-											 name: "Test",
-											 story: "Test",
-											 url: URL(string: "Test")),
-							  story: "Test",
-							  title: "Test",
-							  url: URL(string: "Test"),
-							  urlToImage: URL(string: "Test"))
+		let article = EntityMock.article
 		// When
 		let detailViewModel = sut.detailViewModel(article: article)
 		// Then

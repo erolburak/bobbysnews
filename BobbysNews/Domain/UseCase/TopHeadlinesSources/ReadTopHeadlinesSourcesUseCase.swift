@@ -8,6 +8,9 @@
 import Combine
 
 protocol PReadTopHeadlinesSourcesUseCase {
+
+	// MARK: - Actions
+
 	func readSources() -> AnyPublisher<Sources, Error>
 }
 

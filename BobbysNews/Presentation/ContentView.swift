@@ -25,7 +25,7 @@ struct ContentView: View {
 					   showsIndicators: false) {
 				if !viewModel.selectedCountry.isEmpty {
 					switch viewModel.stateTopHeadlines {
-					case .isLoading:
+					case .isInitialLoading, .isLoading:
 						ProgressView()
 					case .loaded:
 						ForEach(viewModel.articles ?? []) { article in
@@ -56,7 +56,7 @@ struct ContentView: View {
 
 				ToolbarItem(placement: .topBarTrailing) {
 					switch viewModel.stateSources {
-					case .isLoading:
+					case .isInitialLoading, .isLoading:
 						ProgressView()
 					case .loaded:
 						Menu("CountrySelect") {

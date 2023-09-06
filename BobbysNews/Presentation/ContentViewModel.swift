@@ -15,19 +15,20 @@ class ContentViewModel {
 
 	enum StateTopHeadlines {
 		/// General States
-		case isLoading, loaded
+		case isInitialLoading, isLoading, loaded
 		/// Empty States
 		case emptyFetch, emptyRead
 	}
 
 	enum StateSources {
 		/// General States
-		case isLoading, loaded, load
+		case isInitialLoading, isLoading, loaded, load
 		/// Empty States
 		case emptyFetch, emptyRead
 	}
 
 	// MARK: - Use Cases
+
 	/// TopHeadlines
 	private let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase
 	private let fetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase
@@ -48,8 +49,8 @@ class ContentViewModel {
 	var selectedCountry = ""
 	var showAlert = false
 	var sources: [Source]?
-	var stateSources: StateSources = .isLoading
-	var stateTopHeadlines: StateTopHeadlines = .isLoading
+	var stateSources: StateSources = .isInitialLoading
+	var stateTopHeadlines: StateTopHeadlines = .isInitialLoading
 
 	// MARK: - Private Properties
 
@@ -86,8 +87,8 @@ class ContentViewModel {
 		readTopHeadlinesSources()
 		fetchRequestTopHeadlinesSources()
 		Task {
-			await fetchTopHeadlines(state: .isLoading)
-			await fetchTopHeadlinesSources(state: .isLoading)
+			await fetchTopHeadlines(state: .isInitialLoading)
+			await fetchTopHeadlinesSources(state: .isInitialLoading)
 		}
 	}
 
@@ -165,7 +166,7 @@ class ContentViewModel {
 			.sink(receiveCompletion: { _ in },
 				  receiveValue: { [weak self] topHeadlines in
 				self?.articles = topHeadlines.articles
-				self?.updateStateTopHeadlines(completion: topHeadlines.articles?.isEmpty == false ? .finished : self?.stateTopHeadlines != .isLoading ? .failure(AppConfiguration.Errors.read) : .finished,
+				self?.updateStateTopHeadlines(completion: topHeadlines.articles?.isEmpty == false ? .finished : self?.stateTopHeadlines != .isInitialLoading ? .failure(AppConfiguration.Errors.read) : .finished,
 											  failureState: .emptyRead)
 			})
 			.store(in: &cancellable)
@@ -179,7 +180,7 @@ class ContentViewModel {
 				self?.sources = sources.sources
 				/// Sorted set of unique country codes
 				self?.countries = Array(Set(sources.sources?.compactMap { $0.country } ?? []).sorted(by: <))
-				self?.updateStateSources(completion: sources.sources?.isEmpty == false ? .finished : self?.stateSources != .isLoading ? .failure(AppConfiguration.Errors.read) : .finished,
+				self?.updateStateSources(completion: sources.sources?.isEmpty == false ? .finished : self?.stateSources != .isInitialLoading ? .failure(AppConfiguration.Errors.read) : .finished,
 										 failureState: .emptyRead)
 			})
 			.store(in: &cancellable)

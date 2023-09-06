@@ -10,6 +10,8 @@ import XCTest
 
 class ArticleEntityMappingTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testArticleEntity() {
 		// Given
 		let articleEntity: ArticleEntity?

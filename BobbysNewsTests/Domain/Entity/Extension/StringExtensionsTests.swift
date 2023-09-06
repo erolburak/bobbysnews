@@ -10,6 +10,8 @@ import XCTest
 
 class StringExtensionsTests: XCTestCase {
 
+	// MARK: - Actions
+
 	func testToDateIsNotNil() {
 		// Given
 		let dateString = "2001-02-03T12:34:56Z"
