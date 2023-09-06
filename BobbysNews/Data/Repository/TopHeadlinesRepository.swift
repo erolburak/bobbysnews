@@ -27,7 +27,11 @@ class TopHeadlinesRepository: PTopHeadlinesRepository {
 				.eraseToAnyPublisher()
 		}
 		return URLSession.shared.dataTaskPublisher(for: url)
-			.map(\.data)
+			.tryMap { [weak self] data, response in
+				try self?.validateResponse(defaultError: .fetch,
+										   response: response as? HTTPURLResponse)
+				return data
+			}
 			.decode(type: TopHeadlinesDTO.self,
 					decoder: JSONDecoder())
 			.eraseToAnyPublisher()
@@ -40,9 +44,28 @@ class TopHeadlinesRepository: PTopHeadlinesRepository {
 				.eraseToAnyPublisher()
 		}
 		return URLSession.shared.dataTaskPublisher(for: url)
-			.map(\.data)
+			.tryMap { [weak self] data, response in
+				try self?.validateResponse(defaultError: .fetchSources,
+										   response: response as? HTTPURLResponse)
+				return data
+			}
 			.decode(type: SourcesDTO.self,
 					decoder: JSONDecoder())
 			.eraseToAnyPublisher()
+	}
+
+	private func validateResponse(defaultError: AppConfiguration.Errors,
+								  response: HTTPURLResponse?) throws {
+		guard let response,
+			  200..<300 ~= response.statusCode else {
+			switch response?.statusCode {
+			case 401:
+				throw AppConfiguration.Errors.invalidApiKey
+			case 429:
+				throw AppConfiguration.Errors.limitedRequests
+			default:
+				throw AppConfiguration.Errors.fetch
+			}
+		}
 	}
 }

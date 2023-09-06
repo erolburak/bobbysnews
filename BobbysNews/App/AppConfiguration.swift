@@ -15,39 +15,49 @@ struct AppConfiguration {
 
 		// MARK: - Properties
 
-		case delete, error(String), fetch, fetchSources, read
+		case delete, error(String), fetch, fetchSources, invalidApiKey, limitedRequests, read
 
 		static var allCases: [Errors] = [.delete,
-										 .error("Error\("ErrorDescription")"),
+										 .error("ErrorDescription"),
 										 .fetch,
 										 .fetchSources,
+										 .invalidApiKey,
+										 .limitedRequests,
 										 .read]
 
 		var errorDescription: String? {
 			switch self {
-			case .delete: 
-				return String(localized: "Error\("ErrorDescriptionDelete")")
+			case .delete:
+				return String(localized: "ErrorDescriptionDelete")
 			case .error(let error):
 				return error.description
 			case .fetch:
-				return String(localized: "Error\("ErrorDescriptionFetch")")
+				return String(localized: "ErrorDescriptionFetch")
 			case .fetchSources:
-				return String(localized: "Error\("ErrorDescriptionFetchSources")")
+				return String(localized: "ErrorDescriptionFetchSources")
+			case .invalidApiKey:
+				return String(localized: "ErrorDescriptionInvalidApiKey")
+			case .limitedRequests:
+				return String(localized: "ErrorDescriptionLimitedRequests")
 			case .read:
-				return String(localized: "Error\("ErrorDescriptionRead")")
+				return String(localized: "ErrorDescriptionRead")
 			}
 		}
 
 		var recoverySuggestion: String? {
 			switch self {
-			case .delete: 
+			case .delete:
 				return String(localized: "ErrorRecoverySuggestionDelete")
 			case .error:
-				return String(localized: "ErrorRecoverySuggestion")
+				return nil
 			case .fetch:
 				return String(localized: "ErrorRecoverySuggestionFetch")
 			case .fetchSources:
 				return String(localized: "ErrorRecoverySuggestionFetchSources")
+			case .invalidApiKey:
+				return String(localized: "ErrorRecoverySuggestionInvalidApiKey")
+			case .limitedRequests:
+				return String(localized: "ErrorRecoverySuggestionLimitedRequests")
 			case .read:
 				return String(localized: "ErrorRecoverySuggestionRead")
 			}

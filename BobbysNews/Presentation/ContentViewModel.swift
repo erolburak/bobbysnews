@@ -193,7 +193,7 @@ class ContentViewModel {
 			stateSources = .loaded
 		case .failure(let error):
 			stateSources = failureState
-			showAlert(error: .error(error.localizedDescription))
+			showAlert(error: error as? AppConfiguration.Errors ?? .error(error.localizedDescription))
 		}
 	}
 
@@ -204,7 +204,7 @@ class ContentViewModel {
 			stateTopHeadlines = .loaded
 		case .failure(let error):
 			stateTopHeadlines = failureState
-			showAlert(error: .error(error.localizedDescription))
+			showAlert(error: error as? AppConfiguration.Errors ?? .error(error.localizedDescription))
 		}
 	}
 }
