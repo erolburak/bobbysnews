@@ -12,8 +12,8 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 
 	// MARK: - Properties
 
-	var topHeadlinesQueriesSubject: CurrentValueSubject<TopHeadlines?, Never> = CurrentValueSubject(EntityMock.topHeadlines)
-	var topHeadlinesSourcesQueriesSubject: CurrentValueSubject<Sources?, Never> = CurrentValueSubject(EntityMock.sources)
+	var topHeadlinesQueriesSubject: CurrentValueSubject<TopHeadlines?, Never> = CurrentValueSubject(EntityMock.topHeadlines1)
+	var topHeadlinesSourcesQueriesSubject: CurrentValueSubject<Sources?, Never> = CurrentValueSubject(EntityMock.sources1)
 
 	// MARK: - Actions
 
@@ -23,13 +23,13 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 	}
 
 	func fetchRequest(country: String) {
-		topHeadlinesQueriesSubject.send(TopHeadlines(articles: EntityMock.topHeadlines.articles?.filter { $0.country == country },
-													 status: EntityMock.topHeadlines.status,
-													 totalResults: EntityMock.topHeadlines.totalResults))
+		topHeadlinesQueriesSubject.send(TopHeadlines(articles: EntityMock.topHeadlines1.articles?.filter { $0.country == country },
+													 status: EntityMock.topHeadlines1.status,
+													 totalResults: EntityMock.topHeadlines1.totalResults))
 	}
 
 	func fetchSourcesRequest() {
-		topHeadlinesSourcesQueriesSubject.send(EntityMock.sources)
+		topHeadlinesSourcesQueriesSubject.send(EntityMock.sources1)
 	}
 
 	func read() -> AnyPublisher<TopHeadlines, Error> {
@@ -55,20 +55,20 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 				  let article = articleDto.toDomain(country: country) else { return }
 			articles.append(article)
 		}
-		topHeadlinesQueriesSubject.send(TopHeadlines(articles: articles + (EntityMock.topHeadlines.articles ?? []),
+		topHeadlinesQueriesSubject.send(TopHeadlines(articles: articles + (EntityMock.topHeadlines1.articles ?? []),
 													 status: topHeadlinesDto.status,
-													 totalResults: (topHeadlinesDto.totalResults ?? 0) + (EntityMock.topHeadlines.totalResults ?? 0)))
+													 totalResults: (topHeadlinesDto.totalResults ?? 0) + (EntityMock.topHeadlines1.totalResults ?? 0)))
 	}
 
 	func saveSources(sourcesDto: SourcesDTO) {
 		var sources: [Source] = []
 		sourcesDto.sources?.forEach { sourceDto in
-			guard topHeadlinesSourcesQueriesSubject.value?.sources?.filter({ $0.name == sourceDto.name }).isEmpty == true,
+			guard topHeadlinesSourcesQueriesSubject.value?.sources?.filter({ $0.id == sourceDto.id }).isEmpty == true,
 				  sourceDto.name?.isEmpty == false,
 				  let source = sourceDto.toDomain() else { return }
 			sources.append(source)
 		}
-		topHeadlinesSourcesQueriesSubject.send(Sources(sources: sources + (EntityMock.sources.sources ?? []),
+		topHeadlinesSourcesQueriesSubject.send(Sources(sources: sources + (EntityMock.sources1.sources ?? []),
 													   status: sourcesDto.status))
 	}
 }

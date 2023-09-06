@@ -17,7 +17,7 @@ class DetailViewModelTests: XCTestCase {
 	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
-		sut = ViewModelDI.shared.detailViewModel(article: EntityMock.article)
+		sut = ViewModelDI.shared.detailViewModel(article: EntityMock.article1)
 	}
 
 	override func tearDownWithError() throws {
@@ -28,7 +28,7 @@ class DetailViewModelTests: XCTestCase {
 
 	func testDetailViewModelIsNotNil() async {
 		// Given
-		let article = EntityMock.article
+		let article = EntityMock.article1
 		// When
 		let detailViewModel = DetailViewModel(article: article)
 		// Then

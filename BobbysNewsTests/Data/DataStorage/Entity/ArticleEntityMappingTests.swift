@@ -20,7 +20,7 @@ class ArticleEntityMappingTests: XCTestCase {
 		articleEntity?.author = "Test"
 		articleEntity?.content = "Test"
 		articleEntity?.country = "Test"
-		articleEntity?.publishedAt = .now
+		articleEntity?.publishedAt = "2001-02-03T12:34:56Z".toDate
 		let sourceEntity = SourceEntity(context: DataController.shared.backgroundContext)
 		sourceEntity.category = "Test"
 		sourceEntity.country = "Test"
@@ -44,7 +44,7 @@ class ArticleEntityMappingTests: XCTestCase {
 		articleEntity.author = "Test"
 		articleEntity.content = "Test"
 		articleEntity.country = "Test"
-		articleEntity.publishedAt = .now
+		articleEntity.publishedAt = "2001-02-03T12:34:56Z".toDate
 		let sourceEntity = SourceEntity(context: DataController.shared.backgroundContext)
 		sourceEntity.category = "Test"
 		sourceEntity.country = "Test"
@@ -64,7 +64,7 @@ class ArticleEntityMappingTests: XCTestCase {
 		XCTAssertEqual(articleDomain?.author, articleEntity.author)
 		XCTAssertEqual(articleDomain?.content, articleEntity.content)
 		XCTAssertEqual(articleDomain?.country, articleEntity.country)
-		XCTAssertNotNil(articleDomain?.publishedAt)
+		XCTAssertEqual(articleDomain?.publishedAt, articleEntity.publishedAt)
 		XCTAssertEqual(articleDomain?.source?.category, articleEntity.source?.category)
 		XCTAssertEqual(articleDomain?.source?.country, articleEntity.source?.country)
 		XCTAssertEqual(articleDomain?.source?.id, articleEntity.source?.id)

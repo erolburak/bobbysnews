@@ -14,7 +14,7 @@ class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 
 	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
 		if country.isEmpty == false {
-			return Just(DTOMock.topHeadlinesDto)
+			return Just(DTOMock.topHeadlinesDto1)
 				.setFailureType(to: Error.self)
 				.eraseToAnyPublisher()
 		} else {
@@ -24,7 +24,7 @@ class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 	}
 
 	func fetchSources() -> AnyPublisher<SourcesDTO, Error> {
-		Just(DTOMock.sourcesDto)
+		Just(DTOMock.sourcesDto1)
 			.setFailureType(to: Error.self)
 			.eraseToAnyPublisher()
 	}
