@@ -35,7 +35,7 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete())
-		XCTAssertNil(mock.topHeadlinesQueriesSubject.value)
+		XCTAssertNil(mock.queriesSubject.value)
 	}
 
 	func testFetchRequest() {
@@ -44,7 +44,7 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 		// When
 		sut.fetchRequest(country: country)
 		// Then
-		XCTAssertEqual(mock.topHeadlinesQueriesSubject.value?.articles?.count, 1)
+		XCTAssertEqual(mock.queriesSubject.value?.articles?.count, 1)
 	}
 
 	func testFetchRequestIsEmpty() {
@@ -53,7 +53,7 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 		// When
 		sut.fetchRequest(country: country)
 		// Then
-		XCTAssertEqual(mock.topHeadlinesQueriesSubject.value?.articles?.count, 0)
+		XCTAssertEqual(mock.queriesSubject.value?.articles?.count, 0)
 	}
 
 	func testRead() async {
@@ -80,6 +80,6 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
 		// Then
-		XCTAssertEqual(mock.topHeadlinesQueriesSubject.value?.articles?.count, 4)
+		XCTAssertEqual(mock.queriesSubject.value?.articles?.count, 4)
 	}
 }

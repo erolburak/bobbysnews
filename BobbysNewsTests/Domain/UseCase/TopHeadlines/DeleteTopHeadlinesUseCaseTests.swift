@@ -34,6 +34,6 @@ class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete())
-		XCTAssertNil(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value)
+		XCTAssertNil(topHeadlinesDataControllerMock.queriesSubject.value)
 	}
 }

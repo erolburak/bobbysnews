@@ -12,7 +12,7 @@ protocol PTopHeadlinesDataController {
 
 	// MARK: - Properties
 
-	var topHeadlinesQueriesSubject: CurrentValueSubject<TopHeadlines?, Never> { get }
+	var queriesSubject: CurrentValueSubject<TopHeadlines?, Never> { get }
 
 	// MARK: - Actions
 
@@ -31,8 +31,7 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 
 	// MARK: - Private Properties
 
-	internal let topHeadlinesQueriesSubject: CurrentValueSubject<TopHeadlines?, Never> = CurrentValueSubject(nil)
-	internal let topHeadlinesSourcesQueriesSubject: CurrentValueSubject<Sources?, Never> = CurrentValueSubject(nil)
+	internal let queriesSubject: CurrentValueSubject<TopHeadlines?, Never> = CurrentValueSubject(nil)
 	private let backgroundContext = DataController.shared.backgroundContext
 
 	// MARK: - Actions
@@ -46,18 +45,7 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 				backgroundContext.delete(article)
 			}
 			try backgroundContext.save()
-			topHeadlinesQueriesSubject.send(nil)
-		}
-
-		/// Delete all source entities
-		try backgroundContext.performAndWait {
-			let sourcesFetchRequest = SourceEntity.fetchRequest()
-			let sources = try backgroundContext.fetch(sourcesFetchRequest)
-			sources.forEach { source in
-				backgroundContext.delete(source)
-			}
-			try backgroundContext.save()
-			topHeadlinesSourcesQueriesSubject.send(nil)
+			queriesSubject.send(nil)
 		}
 	}
 
@@ -72,38 +60,15 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 				let topHeadlines = TopHeadlines(articles: result.compactMap { $0.toDomain() },
 												status: nil,
 												totalResults: result.count)
-				topHeadlinesQueriesSubject.send(topHeadlines)
+				queriesSubject.send(topHeadlines)
 			} catch {
-				topHeadlinesQueriesSubject.send(nil)
-			}
-		}
-	}
-
-	func fetchSourcesRequest() {
-		backgroundContext.performAndWait {
-			do {
-				let fetchRequest = SourceEntity.fetchRequest()
-				fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \SourceEntity.id,
-																 ascending: true)]
-				let result = try backgroundContext.fetch(fetchRequest)
-				let sources = Sources(sources: result.compactMap { $0.toDomain() },
-									  status: nil)
-				topHeadlinesSourcesQueriesSubject.send(sources)
-			} catch {
-				topHeadlinesSourcesQueriesSubject.send(nil)
+				queriesSubject.send(nil)
 			}
 		}
 	}
 
 	func read() -> AnyPublisher<TopHeadlines, Error> {
-		topHeadlinesQueriesSubject
-			.compactMap { $0 }
-			.setFailureType(to: Error.self)
-			.eraseToAnyPublisher()
-	}
-
-	func readSources() -> AnyPublisher<Sources, Error> {
-		topHeadlinesSourcesQueriesSubject
+		queriesSubject
 			.compactMap { $0 }
 			.setFailureType(to: Error.self)
 			.eraseToAnyPublisher()
@@ -143,36 +108,7 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 				try backgroundContext.save()
 				fetchRequest(country: country)
 			} catch {
-				topHeadlinesQueriesSubject.send(nil)
-			}
-		}
-	}
-
-	func saveSources(sourcesDto: SourcesDTO) {
-		backgroundContext.performAndWait {
-			do {
-				try sourcesDto.sources?.forEach { sourceDto in
-					guard sourceDto.country?.isEmpty == false else { return }
-					let sources = try backgroundContext.fetch(SourceEntity.fetchRequest())
-					var source = sources.filter { $0.id == sourceDto.id }.first
-					if source == nil {
-						/// Create source if not existing
-						sourceDto.toEntity(in: backgroundContext)
-					} else {
-						/// Update source if existing
-						source?.category = sourceDto.category
-						source?.country = sourceDto.country
-						source?.id = sourceDto.id
-						source?.language = sourceDto.language
-						source?.name = sourceDto.name
-						source?.story = sourceDto.story
-						source?.url = sourceDto.url
-					}
-				}
-				try backgroundContext.save()
-				fetchSourcesRequest()
-			} catch {
-				topHeadlinesSourcesQueriesSubject.send(nil)
+				queriesSubject.send(nil)
 			}
 		}
 	}

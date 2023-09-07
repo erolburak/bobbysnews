@@ -14,15 +14,16 @@ struct ViewModelDI {
 	// MARK: - Actions
 
 	func contentViewModel() -> ContentViewModel {
-		ContentViewModel(deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
+		ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
+						 fetchRequestSourcesUseCase: FetchRequestSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
+						 fetchSourcesUseCase: FetchSourcesUseCase(sourcesRepository: SourcesRepository()),
+						 readSourcesUseCase: ReadSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
+						 saveSourcesUseCase: SaveSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
+						 deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
 						 fetchRequestTopHeadlinesUseCase: FetchRequestTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
 						 fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
 						 readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-						 saveTopHeadlinesUseCase: SaveTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-						 fetchRequestTopHeadlinesSourcesUseCase: FetchRequestTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-						 fetchTopHeadlinesSourcesUseCase: FetchTopHeadlinesSourcesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
-						 readTopHeadlinesSourcesUseCase: ReadTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-						 saveTopHeadlinesSourcesUseCase: SaveTopHeadlinesSourcesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
+						 saveTopHeadlinesUseCase: SaveTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
 	}
 
 	func detailViewModel(article: Article) -> DetailViewModel {

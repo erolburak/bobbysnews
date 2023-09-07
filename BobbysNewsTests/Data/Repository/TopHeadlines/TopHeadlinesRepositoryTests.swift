@@ -35,7 +35,8 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 		var topHeadlinesDto: TopHeadlinesDTO?
 		// When
 		let expectation = expectation(description: "Fetch")
-		sut.fetch(country: "Test")
+		sut.fetch(apiKey: "Test",
+				  country: "Test")
 			.sink(receiveCompletion: { _ in },
 				  receiveValue: {
 				topHeadlinesDto = $0
@@ -52,7 +53,8 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 		var topHeadlinesDto: TopHeadlinesDTO?
 		// When
 		let expectation = expectation(description: "Fetch")
-		sut.fetch(country: "")
+		sut.fetch(apiKey: "",
+				  country: "")
 			.sink(receiveCompletion: { completion in
 				switch completion {
 				case .finished:

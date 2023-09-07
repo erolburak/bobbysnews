@@ -1,5 +1,11 @@
 # BOBBYSNEWS
 
+## NOTE
+The UI part is not ready yet. Following features will be added later:
+- Share Link for articles will be added soon
+- WebView for articles will be added soon
+- UI Tests will be added soon
+
 ## NAME
 BobbysNews
 
