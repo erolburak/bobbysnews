@@ -12,7 +12,8 @@ class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 
 	// MARK: - Actions
 
-	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
+	func fetch(apiKey: String,
+			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
 		if country.isEmpty == false {
 			return Just(DTOMock.topHeadlinesDto1)
 				.setFailureType(to: Error.self)
@@ -21,11 +22,5 @@ class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 			return Fail<TopHeadlinesDTO, Error>(error: AppConfiguration.Errors.fetch)
 				.eraseToAnyPublisher()
 		}
-	}
-
-	func fetchSources() -> AnyPublisher<SourcesDTO, Error> {
-		Just(DTOMock.sourcesDto1)
-			.setFailureType(to: Error.self)
-			.eraseToAnyPublisher()
 	}
 }

@@ -4,8 +4,16 @@
 <dict>
 	<key>ApiBaseUrl</key>
 	<string>$(API_BASE_URL)</string>
-	<key>ApiKey</key>
-	<string>$(API_KEY)</string>
+	<key>ApiKey1</key>
+	<string>$(API_KEY_1)</string>
+	<key>ApiKey2</key>
+	<string>$(API_KEY_2)</string>
+	<key>ApiKey3</key>
+	<string>$(API_KEY_3)</string>
+	<key>ApiKey4</key>
+	<string>$(API_KEY_4)</string>
+	<key>ApiKey5</key>
+	<string>$(API_KEY_5)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

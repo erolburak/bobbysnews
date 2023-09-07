@@ -6,7 +6,6 @@
 //
 
 import Combine
-import Foundation
 
 protocol PTopHeadlinesQueriesRepository {
 
@@ -14,12 +13,9 @@ protocol PTopHeadlinesQueriesRepository {
 
 	func delete() throws
 	func fetchRequest(country: String)
-	func fetchSourcesRequest()
 	func read() -> AnyPublisher<TopHeadlines, Error>
-	func readSources() -> AnyPublisher<Sources, Error>
 	func save(country: String,
 			  topHeadlinesDto: TopHeadlinesDTO)
-	func saveSources(sourcesDto: SourcesDTO)
 }
 
 class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
@@ -40,20 +36,9 @@ class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
 			.fetchRequest(country: country)
 	}
 
-	func fetchSourcesRequest() {
-		topHeadlinesDataController
-			.fetchSourcesRequest()
-	}
-
 	func read() -> AnyPublisher<TopHeadlines, Error> {
 		topHeadlinesDataController
 			.read()
-			.eraseToAnyPublisher()
-	}
-
-	func readSources() -> AnyPublisher<Sources, Error> {
-		topHeadlinesDataController
-			.readSources()
 			.eraseToAnyPublisher()
 	}
 
@@ -62,10 +47,5 @@ class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
 		topHeadlinesDataController
 			.save(country: country,
 				  topHeadlinesDto: topHeadlinesDto)
-	}
-
-	func saveSources(sourcesDto: SourcesDTO) {
-		topHeadlinesDataController
-			.saveSources(sourcesDto: sourcesDto)
 	}
 }

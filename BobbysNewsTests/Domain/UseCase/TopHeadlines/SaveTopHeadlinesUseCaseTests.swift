@@ -39,7 +39,7 @@ class SaveTopHeadlinesUseCaseTests: XCTestCase {
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
 		// Then
-		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 2)
+		XCTAssertEqual(topHeadlinesDataControllerMock.queriesSubject.value?.articles?.count, 2)
 	}
 
 	func testSaveWithNewTopHeadlines() {
@@ -49,6 +49,6 @@ class SaveTopHeadlinesUseCaseTests: XCTestCase {
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
 		// Then
-		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 4)
+		XCTAssertEqual(topHeadlinesDataControllerMock.queriesSubject.value?.articles?.count, 4)
 	}
 }

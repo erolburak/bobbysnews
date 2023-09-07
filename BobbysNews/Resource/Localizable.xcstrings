@@ -137,13 +137,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unbekannt"
+            "value" : "Fehler"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unknown"
+            "value" : "Error"
           }
         }
       }
@@ -266,6 +266,23 @@
         }
       }
     },
+    "ErrorRecoverySuggestionError" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbekannt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
+          }
+        }
+      }
+    },
     "ErrorRecoverySuggestionFetch" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -347,6 +364,86 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to read. Please try again."
+          }
+        }
+      }
+    },
+    "SelectedApiKeyFifth" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api Schlüssel [5] ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api key [5] selected"
+          }
+        }
+      }
+    },
+    "SelectedApiKeyFirst" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api Schlüssel [1] ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api key [1] selected"
+          }
+        }
+      }
+    },
+    "SelectedApiKeyFourth" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api Schlüssel [4] ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api key [4] selected"
+          }
+        }
+      }
+    },
+    "SelectedApiKeySecond" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api Schlüssel [2] ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api key [2] selected"
+          }
+        }
+      }
+    },
+    "SelectedApiKeyThird" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api Schlüssel [3] ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api key [3] selected"
           }
         }
       }

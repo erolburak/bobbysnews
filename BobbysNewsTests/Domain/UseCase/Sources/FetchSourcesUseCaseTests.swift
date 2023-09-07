@@ -1,5 +1,5 @@
 //
-//  FetchTopHeadlinesSourcesUseCaseTests.swift
+//  FetchSourcesUseCaseTests.swift
 //  BobbysNewsTests
 //
 //  Created by Burak Erol on 05.09.23.
@@ -9,20 +9,20 @@
 import Combine
 import XCTest
 
-class FetchTopHeadlinesSourcesUseCaseTests: XCTestCase {
+class FetchSourcesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 
 	private var cancellable: Set<AnyCancellable>!
-	private var mock: TopHeadlinesRepositoryMock!
-	private var sut: FetchTopHeadlinesSourcesUseCase!
+	private var mock: SourcesRepositoryMock!
+	private var sut: FetchSourcesUseCase!
 
 	// MARK: - Life Cycle
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
-		mock = TopHeadlinesRepositoryMock()
-		sut = FetchTopHeadlinesSourcesUseCase(topHeadlinesRepository: mock)
+		mock = SourcesRepositoryMock()
+		sut = FetchSourcesUseCase(sourcesRepository: mock)
 	}
 
 	override func tearDownWithError() throws {
@@ -33,12 +33,12 @@ class FetchTopHeadlinesSourcesUseCaseTests: XCTestCase {
 
 	// MARK: - Actions
 
-	func testFetchSources() async {
+	func testFetch() async {
 		// Given
 		var sourcesDto: SourcesDTO?
 		// When
-		let expectation = expectation(description: "FetchSources")
-		sut.fetchSources()
+		let expectation = expectation(description: "Fetch")
+		sut.fetch(apiKey: "Test")
 			.sink(receiveCompletion: { _ in },
 				  receiveValue: {
 				sourcesDto = $0

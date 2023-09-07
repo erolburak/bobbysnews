@@ -23,24 +23,15 @@ struct ContentView: View {
 		NavigationStack {
 			ScrollView(.vertical,
 					   showsIndicators: false) {
-				if !viewModel.selectedCountry.isEmpty {
-					switch viewModel.stateTopHeadlines {
-					case .isInitialLoading, .isLoading:
-						ProgressView()
-					case .loaded:
-						ForEach(viewModel.articles ?? []) { article in
-							NavigationLink(value: article) {
-								Text(article.publishedAt?.toRelative ?? "") +
-								Text(article.source?.name ?? "")
-							}
+				if case viewModel.stateTopHeadlines = .loaded {
+					ForEach(viewModel.articles ?? []) { article in
+						NavigationLink(value: article) {
+							Text(article.publishedAt?.toRelative ?? "") +
+							Text(article.source?.name ?? "")
 						}
-						.navigationDestination(for: Article.self) { article in
-							DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
-						}
-					case .emptyFetch:
-						Text("EmptyFetch")
-					case .emptyRead:
-						Text("EmptyRead")
+					}
+					.navigationDestination(for: Article.self) { article in
+						DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
 					}
 				}
 			}
@@ -59,7 +50,7 @@ struct ContentView: View {
 					case .isInitialLoading, .isLoading:
 						ProgressView()
 					case .loaded:
-						Menu("CountrySelect") {
+						Menu(!country.isEmpty ? country : String(localized: "CountrySelect")) {
 							if let countries = viewModel.countries {
 								ForEach(countries,
 										id: \.self) { item in
@@ -72,7 +63,7 @@ struct ContentView: View {
 					case .load:
 						Button("CountryLoad") {
 							Task {
-								await viewModel.fetchTopHeadlinesSources(state: .isLoading)
+								await viewModel.fetchSources(state: .isLoading)
 							}
 						}
 					case .emptyFetch:
@@ -81,11 +72,33 @@ struct ContentView: View {
 						Text("EmptyReadSources")
 					}
 				}
+
+				ToolbarItem(placement: .bottomBar) {
+					Picker(selection: $viewModel.selectedApiKey) {
+						ForEach(viewModel.apiKeys,
+								id: \.self) { item in
+							Text(item.keyDescription)
+						}
+					} label: {
+						EmptyView()
+					}
+				}
 			}
 		}
-		.overlay {
-			if viewModel.selectedCountry.isEmpty {
+		.overlay(alignment: .center) {
+			if viewModel.selectedCountry == nil {
 				Text("EmptySelectedCountry")
+			} else {
+				switch viewModel.stateTopHeadlines {
+				case .isInitialLoading, .isLoading:
+					ProgressView()
+				case .loaded:
+					EmptyView()
+				case .emptyFetch:
+					Text("EmptyFetch")
+				case .emptyRead:
+					Text("EmptyRead")
+				}
 			}
 		}
 		.alert(isPresented: $viewModel.showAlert,
@@ -102,7 +115,7 @@ struct ContentView: View {
 			viewModel.onDisappear()
 		}
 		.onChange(of: viewModel.selectedCountry) { _, newState in
-			if newState.isEmpty {
+			if newState == nil {
 				country = ""
 			}
 		}

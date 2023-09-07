@@ -11,7 +11,8 @@ protocol PFetchTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error>
+	func fetch(apiKey: String,
+			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error>
 }
 
 class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
@@ -28,9 +29,11 @@ class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func fetch(country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
+	func fetch(apiKey: String,
+			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
 		topHeadlinesRepository
-			.fetch(country: country)
+			.fetch(apiKey: apiKey,
+				   country: country)
 			.eraseToAnyPublisher()
 	}
 }

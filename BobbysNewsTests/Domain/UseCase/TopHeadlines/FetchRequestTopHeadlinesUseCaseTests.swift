@@ -38,7 +38,7 @@ class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 		// When
 		sut.fetchRequest(country: country)
 		// Then
-		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 1)
+		XCTAssertEqual(topHeadlinesDataControllerMock.queriesSubject.value?.articles?.count, 1)
 	}
 
 	func testFetchRequestIsEmpty() {
@@ -47,6 +47,6 @@ class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 		// When
 		sut.fetchRequest(country: country)
 		// Then
-		XCTAssertEqual(topHeadlinesDataControllerMock.topHeadlinesQueriesSubject.value?.articles?.count, 0)
+		XCTAssertEqual(topHeadlinesDataControllerMock.queriesSubject.value?.articles?.count, 0)
 	}
 }

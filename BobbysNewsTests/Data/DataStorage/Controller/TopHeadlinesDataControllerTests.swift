@@ -40,20 +40,13 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 		// When
 		sut.fetchRequest(country: country)
 		// Then
-		XCTAssertEqual(sut.topHeadlinesQueriesSubject.value?.articles?.count, 0)
-	}
-
-	func testFetchSourcesRequest() {
-		// When
-		sut.fetchSourcesRequest()
-		// Then
-		XCTAssertEqual(sut.topHeadlinesSourcesQueriesSubject.value?.sources?.count, 0)
+		XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 0)
 	}
 
 	func testRead() async {
 		// Given
 		var topHeadlines: TopHeadlines?
-		sut.topHeadlinesQueriesSubject.value = EntityMock.topHeadlines1
+		sut.queriesSubject.value = EntityMock.topHeadlines1
 		// When
 		let expectation = expectation(description: "Read")
 		sut.read()
@@ -68,24 +61,6 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 		XCTAssertNotNil(topHeadlines)
 	}
 
-	func testReadSources() async {
-		// Given
-		var sources: Sources?
-		sut.topHeadlinesSourcesQueriesSubject.value = EntityMock.sources1
-		// When
-		let expectation = expectation(description: "ReadSources")
-		sut.readSources()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				sources = $0
-				expectation.fulfill()
-			})
-			.store(in: &cancellable)
-		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(sources)
-	}
-
 	func testSaveWithExistingTopHeadlines() {
 		// Given
 		let topHeadlinesDto = DTOMock.topHeadlinesDto1
@@ -93,7 +68,7 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
 		// Then
-		XCTAssertEqual(sut.topHeadlinesQueriesSubject.value?.articles?.count, 2)
+		XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 2)
 	}
 
 	func testSaveWithNewTopHeadlines() {
@@ -103,24 +78,6 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 		sut.save(country: "Test",
 				 topHeadlinesDto: topHeadlinesDto)
 		// Then
-		XCTAssertEqual(sut.topHeadlinesQueriesSubject.value?.articles?.count, 4)
-	}
-
-	func testSaveSourcesWithExistingSources() {
-		// Given
-		let sourcesDto = DTOMock.sourcesDto1
-		// When
-		sut.saveSources(sourcesDto: sourcesDto)
-		// Then
-		XCTAssertEqual(sut.topHeadlinesSourcesQueriesSubject.value?.sources?.count, 2)
-	}
-
-	func testSaveSourcesWithNewSources() {
-		// Given
-		let sourcesDto = DTOMock.sourcesDto2
-		// When
-		sut.saveSources(sourcesDto: sourcesDto)
-		// Then
-		XCTAssertEqual(sut.topHeadlinesSourcesQueriesSubject.value?.sources?.count, 4)
+		XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 4)
 	}
 }
