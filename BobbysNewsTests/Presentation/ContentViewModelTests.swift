@@ -56,19 +56,6 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
 	}
 
-	func testDelete() {
-		// Given
-		sut.selectedCountry = "Test"
-		sut.stateSources = .loaded
-		sut.stateTopHeadlines = .loaded
-		// When
-		sut.delete()
-		// Then
-		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .load)
-		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
-	}
-
 	func testFetchSources() async {
 		// Given
 		sut.selectedCountry = nil
@@ -93,5 +80,18 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .isInitialLoading)
 		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
+	}
+
+	func testReset() {
+		// Given
+		sut.selectedCountry = "Test"
+		sut.stateSources = .loaded
+		sut.stateTopHeadlines = .loaded
+		// When
+		sut.reset()
+		// Then
+		XCTAssertNil(sut.selectedCountry)
+		XCTAssertEqual(sut.stateSources, .load)
+		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
 	}
 }

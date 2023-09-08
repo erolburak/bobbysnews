@@ -13,6 +13,7 @@ class DetailViewModel {
 	// MARK: - Properties
 
 	var article: Article
+	var showWebView = false
 
 	// MARK: - Life Cycle
 

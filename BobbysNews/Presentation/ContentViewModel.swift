@@ -51,7 +51,7 @@ class ContentViewModel {
 	var countries: Dictionary<String, String>?
 	var selectedCountry: String?
 	var showAlert = false
-	var showDeleteDialog = false
+	var showResetDialog = false
 	var sources: [Source]?
 	var stateSources: StateSources = .isInitialLoading
 	var stateTopHeadlines: StateTopHeadlines = .isInitialLoading
@@ -103,21 +103,6 @@ class ContentViewModel {
 		cancellable.removeAll()
 	}
 
-	func delete() {
-		do {
-			try deleteSourcesUseCase
-				.delete()
-			countries?.removeAll()
-			selectedCountry = nil
-			stateSources = .load
-			try deleteTopHeadlinesUseCase
-				.delete()
-			stateTopHeadlines = .emptyRead
-		} catch {
-			showAlert(error: .delete)
-		}
-	}
-
 	func fetchSources(state: StateSources? = nil) async {
 		if let state {
 			stateSources = state
@@ -150,6 +135,21 @@ class ContentViewModel {
 							  topHeadlinesDto: topHeadlinesDto)
 				}
 				.store(in: &cancellable)
+		}
+	}
+
+	func reset() {
+		do {
+			try deleteSourcesUseCase
+				.delete()
+			countries?.removeAll()
+			selectedCountry = nil
+			stateSources = .load
+			try deleteTopHeadlinesUseCase
+				.delete()
+			stateTopHeadlines = .emptyRead
+		} catch {
+			showAlert(error: .reset)
 		}
 	}
 
