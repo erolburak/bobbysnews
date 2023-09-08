@@ -67,34 +67,82 @@
         }
       }
     },
-    "Delete" : {
+    "EmptyArticleAuthor" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Löschen"
+            "value" : "Kein Author"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete"
+            "value" : "No author"
           }
         }
       }
     },
-    "DeleteConfirmation" : {
+    "EmptyArticleContent" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Aktion wird alle persistierten Einträge löschen und die Auswahl des Landes zurücksetzen."
+            "value" : "Kein Inhalt"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This action will delete all persisted entries and reset the country selection."
+            "value" : "No content"
+          }
+        }
+      }
+    },
+    "EmptyArticlePublishedAt" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Veröffentlichungsdatum"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No published date"
+          }
+        }
+      }
+    },
+    "EmptyArticleSource" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Quelle"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No source"
+          }
+        }
+      }
+    },
+    "EmptyArticleTitle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Titel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No title"
           }
         }
       }
@@ -196,23 +244,6 @@
         }
       }
     },
-    "ErrorDescriptionDelete" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Löschen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete"
-          }
-        }
-      }
-    },
     "ErrorDescriptionFetch" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -298,18 +329,18 @@
         }
       }
     },
-    "ErrorRecoverySuggestionDelete" : {
+    "ErrorDescriptionReset" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Löschen fehlgeschlagen. Bitte versuche es erneut."
+            "value" : "Zurücksetzen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to delete. Please try again."
+            "value" : "Reset"
           }
         }
       }
@@ -412,6 +443,134 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to read. Please try again."
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionReset" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen fehlgeschlagen. Bitte versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to reset. Please try again."
+          }
+        }
+      }
+    },
+    "Headline" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlagzeile"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Headline"
+          }
+        }
+      }
+    },
+    "OpenWebView" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchten Sie den gesamten Artikel lesen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Would you like to read the entire article?"
+          }
+        }
+      }
+    },
+    "Read" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lesen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read"
+          }
+        }
+      }
+    },
+    "Reset" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurücksetzen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset"
+          }
+        }
+      }
+    },
+    "ResetConfirmation" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gespeicherte Daten auf allen Geräten werden gelöscht und die App wird zurückgesetzt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saved data on all devices will be deleted and the app will be reset."
+          }
+        }
+      }
+    },
+    "Share" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share"
+          }
+        }
+      }
+    },
+    "TopHeadlines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlagzeilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top Headlines"
           }
         }
       }

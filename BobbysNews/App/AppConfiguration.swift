@@ -15,20 +15,18 @@ struct AppConfiguration {
 
 		// MARK: - Properties
 
-		case delete, error(String), fetch, fetchSources, invalidApiKey, limitedRequests, read
+		case error(String), fetch, fetchSources, invalidApiKey, limitedRequests, read, reset
 
-		static var allCases: [Errors] = [.delete,
-										 .error(String(localized: "ErrorDescriptionFetch")),
+		static var allCases: [Errors] = [.error(String(localized: "ErrorDescriptionFetch")),
 										 .fetch,
 										 .fetchSources,
 										 .invalidApiKey,
 										 .limitedRequests,
-										 .read]
+										 .read,
+										 .reset]
 
 		var errorDescription: String? {
 			switch self {
-			case .delete:
-				return String(localized: "ErrorDescriptionDelete")
 			case .error(let error):
 				return error.description
 			case .fetch:
@@ -41,13 +39,13 @@ struct AppConfiguration {
 				return String(localized: "ErrorDescriptionLimitedRequests")
 			case .read:
 				return String(localized: "ErrorDescriptionRead")
+			case .reset:
+				return String(localized: "ErrorDescriptionReset")
 			}
 		}
 
 		var recoverySuggestion: String? {
 			switch self {
-			case .delete:
-				return String(localized: "ErrorRecoverySuggestionDelete")
 			case .error:
 				return String(localized: "ErrorRecoverySuggestionError")
 			case .fetch:
@@ -60,6 +58,8 @@ struct AppConfiguration {
 				return String(localized: "ErrorRecoverySuggestionLimitedRequests")
 			case .read:
 				return String(localized: "ErrorRecoverySuggestionRead")
+			case .reset:
+				return String(localized: "ErrorRecoverySuggestionReset")
 			}
 		}
 	}

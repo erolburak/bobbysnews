@@ -1,16 +1,10 @@
 # BOBBYSNEWS
 
-## NOTE
-The UI part is not ready yet. Following features will be added later:
-- Share Link for articles will be added soon
-- WebView for articles will be added soon
-- UI Tests will be added soon
-
 ## NAME
 BobbysNews
 
 ## DESCRIPTION
-The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://newsapi.org) for searching and retrieving live articles from all over the web. These live articles are displayed in a list and also contain a more detailed page. SwiftUI components are used in this project.
+The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://newsapi.org) for retrieving top headlines from all over the web. These top headlines are displayed in a list and also contain a more detailed page. SwiftUI components are used in this project.
 
 ## SETUP
 - Minimum iOS target: 17.0
