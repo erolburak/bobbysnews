@@ -20,6 +20,7 @@ The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://
 - CoreData
 - UserDefaults
 - Combine
+- CloudKit Database
 - NewsAPI (https://newsapi.org)
 
 ## SCREENSHOTS
