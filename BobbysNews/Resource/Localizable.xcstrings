@@ -1,6 +1,38 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "ApiKey%lld" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api Schlüssel %lld"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Api key %lld"
+          }
+        }
+      }
+    },
+    "ApiKeySelect" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auswahl Api Schlüssel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select api key"
+          }
+        }
+      }
+    },
     "CountryLoad" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -47,6 +79,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete"
+          }
+        }
+      }
+    },
+    "DeleteConfirmation" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Aktion wird alle persistierten Einträge löschen und die Auswahl des Landes zurücksetzen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This action will delete all persisted entries and reset the country selection."
           }
         }
       }
@@ -364,86 +412,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to read. Please try again."
-          }
-        }
-      }
-    },
-    "SelectedApiKeyFifth" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api Schlüssel [5] ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api key [5] selected"
-          }
-        }
-      }
-    },
-    "SelectedApiKeyFirst" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api Schlüssel [1] ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api key [1] selected"
-          }
-        }
-      }
-    },
-    "SelectedApiKeyFourth" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api Schlüssel [4] ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api key [4] selected"
-          }
-        }
-      }
-    },
-    "SelectedApiKeySecond" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api Schlüssel [2] ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api key [2] selected"
-          }
-        }
-      }
-    },
-    "SelectedApiKeyThird" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api Schlüssel [3] ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Api key [3] selected"
           }
         }
       }

@@ -38,13 +38,10 @@ class AppConfigurationTests: XCTestCase {
 	func testApiKey() {
 		// Given
 		let apiKey: String?
-		let apiKeyDescription: String?
 		// When
-		apiKey = AppConfiguration.ApiKey.first.key
-		apiKeyDescription = AppConfiguration.ApiKey.first.keyDescription
+		apiKey = AppConfiguration.apiKey(1)
 		// Then
 		XCTAssertNotNil(apiKey)
-		XCTAssertNotNil(apiKeyDescription)
 	}
 
 	func testValidateResponse() throws {

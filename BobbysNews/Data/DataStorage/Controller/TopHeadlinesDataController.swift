@@ -81,7 +81,7 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 				try topHeadlinesDto.articles?.forEach { articleDto in
 					guard articleDto.title?.isEmpty == false else { return }
 					let articles = try backgroundContext.fetch(ArticleEntity.fetchRequest())
-					var article = articles.filter { $0.title == articleDto.title }.first
+					let article = articles.filter { $0.title == articleDto.title }.first
 					if article == nil {
 						/// Create article if not existing
 						articleDto.toEntity(country: country,

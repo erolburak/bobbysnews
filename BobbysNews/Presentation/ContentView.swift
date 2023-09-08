@@ -16,6 +16,7 @@ struct ContentView: View {
 	// MARK: - Private Properties
 
 	@AppStorage("country") private var country = ""
+	@State private var show = false
 
 	// MARK: - Layouts
 
@@ -29,6 +30,11 @@ struct ContentView: View {
 							Text(article.publishedAt?.toRelative ?? "") +
 							Text(article.source?.name ?? "")
 						}
+						.contextMenu {
+							// TODO: Add Share
+						} preview: {
+							// TODO: Preview Website or DetailView
+						}
 					}
 					.navigationDestination(for: Article.self) { article in
 						DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
@@ -39,48 +45,55 @@ struct ContentView: View {
 				await viewModel.fetchTopHeadlines()
 			}
 			.toolbar {
-				ToolbarItem(placement: .topBarLeading) {
-					Button("Delete") {
-						viewModel.delete()
-					}
-				}
-
 				ToolbarItem(placement: .topBarTrailing) {
-					switch viewModel.stateSources {
-					case .isInitialLoading, .isLoading:
-						ProgressView()
-					case .loaded:
-						Menu(!country.isEmpty ? country : String(localized: "CountrySelect")) {
-							if let countries = viewModel.countries {
-								ForEach(countries,
-										id: \.self) { item in
-									Button(item) {
-										country = item
+					Menu {
+						switch viewModel.stateSources {
+						case .isInitialLoading, .isLoading:
+							ProgressView()
+						case .load, .loaded:
+							if viewModel.countries?.isEmpty == true {
+								Button("CountryLoad") {
+									Task {
+										await viewModel.fetchSources(state: .isLoading)
+									}
+								}
+							} else {
+								Menu("CountrySelect") {
+									if let countries = viewModel.countries {
+										Picker(selection: $country) {
+											ForEach(countries.values.sorted(by: <),
+													id: \.self) { value in
+												Text(value)
+													.tag(countries.first { $0.value == value }?.key )
+											}
+										} label: {
+											EmptyView()
+										}
 									}
 								}
 							}
+						case .emptyFetch:
+							Text("EmptyFetchSources")
+						case .emptyRead:
+							Text("EmptyReadSources")
 						}
-					case .load:
-						Button("CountryLoad") {
-							Task {
-								await viewModel.fetchSources(state: .isLoading)
+
+						Menu("ApiKeySelect") {
+							Picker(selection: $viewModel.apiKeyVersion) {
+								ForEach(1...viewModel.apiKeyTotalAmount,
+										id: \.self) { version in
+									Text("ApiKey\(version)")
+								}
+							} label: {
+								EmptyView()
 							}
 						}
-					case .emptyFetch:
-						Text("EmptyFetchSources")
-					case .emptyRead:
-						Text("EmptyReadSources")
-					}
-				}
 
-				ToolbarItem(placement: .bottomBar) {
-					Picker(selection: $viewModel.selectedApiKey) {
-						ForEach(viewModel.apiKeys,
-								id: \.self) { item in
-							Text(item.keyDescription)
+						Button("Delete") {
+							viewModel.showDeleteDialog = true
 						}
 					} label: {
-						EmptyView()
+						Image(systemName: "gear")
 					}
 				}
 			}
@@ -99,6 +112,14 @@ struct ContentView: View {
 				case .emptyRead:
 					Text("EmptyRead")
 				}
+			}
+		}
+		.confirmationDialog("DeleteConfirmation",
+							isPresented: $viewModel.showDeleteDialog,
+							titleVisibility: .visible) {
+			Button("Delete",
+				   role: .destructive) {
+				viewModel.delete()
 			}
 		}
 		.alert(isPresented: $viewModel.showAlert,
@@ -120,11 +141,17 @@ struct ContentView: View {
 			}
 		}
 		.onChange(of: country) {
-			viewModel.selectedCountry = country
+			if !country.isEmpty {
+				viewModel.selectedCountry = country
 
-			Task {
-				await viewModel.fetchTopHeadlines(state: .isLoading)
+				Task {
+					await viewModel.fetchTopHeadlines(state: .isLoading)
+				}
 			}
+		}
+		.onChange(of: viewModel.apiKeyVersion) {
+			viewModel.stateSources = .load
+			viewModel.stateSources = .loaded
 		}
     }
 }
