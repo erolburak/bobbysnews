@@ -77,7 +77,7 @@ class SourcesDataController: PSourcesDataController {
 				try sourcesDto.sources?.forEach { sourceDto in
 					guard sourceDto.country?.isEmpty == false else { return }
 					let sources = try backgroundContext.fetch(SourceEntity.fetchRequest())
-					var source = sources.filter { $0.id == sourceDto.id }.first
+					let source = sources.filter { $0.id == sourceDto.id }.first
 					if source == nil {
 						/// Create source if not existing
 						sourceDto.toEntity(in: backgroundContext)

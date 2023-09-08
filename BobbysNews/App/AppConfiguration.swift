@@ -11,49 +11,6 @@ struct AppConfiguration {
 
 	// MARK: - Type Definitions
 
-	enum ApiKey: CaseIterable {
-
-		// MARK: - Properties
-
-		case first, second, third, fourth, fifth
-
-		var key: String {
-			var value: String?
-			switch self {
-			case .first: 
-				value = "ApiKey1"
-			case .second:
-				value = "ApiKey2"
-			case .third:
-				value = "ApiKey3"
-			case .fourth:
-				value = "ApiKey4"
-			case .fifth:
-				value = "ApiKey5"
-			}
-			guard let value,
-				  let apiKey = Bundle.main.object(forInfoDictionaryKey: value) as? String else {
-				fatalError("ApiKey is missing")
-			}
-			return apiKey
-		}
-
-		var keyDescription: String {
-			switch self {
-			case .first:
-				return String(localized: "SelectedApiKeyFirst")
-			case .second:
-				return String(localized: "SelectedApiKeySecond")
-			case .third:
-				return String(localized: "SelectedApiKeyThird")
-			case .fourth:
-				return String(localized: "SelectedApiKeyFourth")
-			case .fifth:
-				return String(localized: "SelectedApiKeyFifth")
-			}
-		}
-	}
-
 	enum Errors: Equatable, LocalizedError {
 
 		// MARK: - Properties
@@ -111,16 +68,23 @@ struct AppConfiguration {
 
 	static let apiBaseUrl = {
 		guard let apiBaseUrl = Bundle.main.object(forInfoDictionaryKey: "ApiBaseUrl") as? String else {
-			fatalError("ApiBaseUrl is missing")
+			fatalError("ApiBaseUrl is missing!")
 		}
 		return apiBaseUrl
 	}()
+	static func apiKey(_ version: Int) -> String {
+		guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "ApiKey\(version)") as? String else {
+			fatalError("ApiKey is missing!")
+		}
+		return apiKey
+	}
+	static let apiKeyTotalAmount = 5
 	static let shared = AppConfiguration()
 
 	// MARK: - Actions
 
 	func validateResponse(defaultError: Errors,
-						  response: HTTPURLResponse?) throws {
+								 response: HTTPURLResponse?) throws {
 		guard let response,
 			  200..<300 ~= response.statusCode else {
 			switch response?.statusCode {

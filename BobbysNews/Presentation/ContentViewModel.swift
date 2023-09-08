@@ -45,12 +45,13 @@ class ContentViewModel {
 	// MARK: - Properties
 
 	var alertError: AppConfiguration.Errors?
-	var apiKeys: [AppConfiguration.ApiKey] = { AppConfiguration.ApiKey.allCases }()
+	var apiKeyTotalAmount = AppConfiguration.apiKeyTotalAmount
+	var apiKeyVersion = 1
 	var articles: [Article]?
-	var countries: [String]?
-	var selectedApiKey = AppConfiguration.ApiKey.first
+	var countries: Dictionary<String, String>?
 	var selectedCountry: String?
 	var showAlert = false
+	var showDeleteDialog = false
 	var sources: [Source]?
 	var stateSources: StateSources = .isInitialLoading
 	var stateTopHeadlines: StateTopHeadlines = .isInitialLoading
@@ -106,10 +107,11 @@ class ContentViewModel {
 		do {
 			try deleteSourcesUseCase
 				.delete()
-			try deleteTopHeadlinesUseCase
-				.delete()
+			countries?.removeAll()
 			selectedCountry = nil
 			stateSources = .load
+			try deleteTopHeadlinesUseCase
+				.delete()
 			stateTopHeadlines = .emptyRead
 		} catch {
 			showAlert(error: .delete)
@@ -120,7 +122,7 @@ class ContentViewModel {
 		if let state {
 			stateSources = state
 			fetchSourcesUseCase
-				.fetch(apiKey: selectedApiKey.key)
+				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
 				.sink { [weak self] completion in
 					self?.updateStateSources(completion: completion,
 											 failureState: .emptyFetch)
@@ -133,18 +135,18 @@ class ContentViewModel {
 	}
 
 	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
-		if let selectedCountry,
+		if let country = countries?.first(where: { $0.value == selectedCountry })?.key,
 		   let state {
 			stateTopHeadlines = state
 			fetchTopHeadlinesUseCase
-				.fetch(apiKey: selectedApiKey.key,
-					   country: selectedCountry)
+				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
+					   country: country)
 				.sink { [weak self] completion in
 					self?.updateStateTopHeadlines(completion: completion,
 												  failureState: .emptyFetch)
 				} receiveValue: { [weak self] topHeadlinesDto in
 					self?.saveTopHeadlinesUseCase
-						.save(country: selectedCountry,
+						.save(country: country,
 							  topHeadlinesDto: topHeadlinesDto)
 				}
 				.store(in: &cancellable)
@@ -169,8 +171,18 @@ class ContentViewModel {
 			.sink(receiveCompletion: { _ in },
 				  receiveValue: { [weak self] sources in
 				self?.sources = sources.sources
-				/// Sorted set of unique country codes
-				self?.countries = Array(Set(sources.sources?.compactMap { $0.country } ?? []).sorted(by: <))
+				/// Set of unique country codes
+				let uniqueCountryCodes = Set(sources.sources?.compactMap { $0.country } ?? [])
+				/// Dictionary `code` as key and `country` as value  -> `de`:`Germany`, `us`:`United States`...
+				var countries: Dictionary<String, String> = [:]
+				uniqueCountryCodes.forEach { code in
+					if code == "zh" {
+						countries[code] = Locale.current.localizedString(forRegionCode: "cn") ?? ""
+					} else {
+						countries[code] = Locale.current.localizedString(forRegionCode: code) ?? ""
+					}
+				}
+				self?.countries = countries
 				self?.updateStateSources(completion: sources.sources?.isEmpty == false ? .finished : self?.stateSources != .isInitialLoading ? .failure(AppConfiguration.Errors.read) : .finished,
 										 failureState: .emptyRead)
 			})
