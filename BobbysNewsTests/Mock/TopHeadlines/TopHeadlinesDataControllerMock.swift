@@ -16,7 +16,7 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 
 	// MARK: - Actions
 
-	func delete() throws {
+	func delete(country: String?) throws {
 		queriesSubject.send(nil)
 	}
 

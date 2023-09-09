@@ -34,7 +34,7 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 	// MARK: - Actions
 
 	func testDelete() {
-		XCTAssertNoThrow(try sut.delete())
+		XCTAssertNoThrow(try sut.delete(country: nil))
 		XCTAssertNil(mock.queriesSubject.value)
 	}
 

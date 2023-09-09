@@ -29,24 +29,18 @@ struct DetailView: View {
 								  weight: .semibold))
 
 				GeometryReader { geometry in
-					Group {
-						if let urlToImage = viewModel.article.urlToImage {
-							AsyncImage(url: urlToImage) { phase in
-								if let image = phase.image {
-									image
-										.resizable()
-										.scaledToFill()
-										.frame(width: geometry.size.width,
-											   height: 280,
-											   alignment: .center)
-										.clipped()
-								} else if phase.error != nil {
-									EmptyImageView()
-								} else {
-									ProgressView()
-								}
-							}
-						} else {
+					AsyncImage(url: viewModel.article.urlToImage) { phase in
+						if let image = phase.image {
+							image
+								.resizable()
+								.scaledToFill()
+								.frame(width: geometry.size.width,
+									   height: 280,
+									   alignment: .center)
+								.clipped()
+						} else if case .empty = phase {
+							EmptyImageView()
+						} else if phase.error != nil {
 							EmptyImageView()
 						}
 					}

@@ -15,14 +15,14 @@ class ContentViewModel {
 
 	enum StateSources {
 		/// General States
-		case isInitialLoading, isLoading, loaded, load
+		case isLoading, loaded
 		/// Empty States
 		case emptyFetch, emptyRead
 	}
 
 	enum StateTopHeadlines {
 		/// General States
-		case isInitialLoading, isLoading, loaded
+		case isLoading, loaded
 		/// Empty States
 		case emptyFetch, emptyRead
 	}
@@ -46,15 +46,14 @@ class ContentViewModel {
 
 	var alertError: AppConfiguration.Errors?
 	var apiKeyTotalAmount = AppConfiguration.apiKeyTotalAmount
-	var apiKeyVersion = 1
+	var apiKeyVersion = 2
 	var articles: [Article]?
-	var countries: Dictionary<String, String>?
+	var countries: [String]?
 	var selectedCountry: String?
 	var showAlert = false
 	var showResetDialog = false
-	var sources: [Source]?
-	var stateSources: StateSources = .isInitialLoading
-	var stateTopHeadlines: StateTopHeadlines = .isInitialLoading
+	var stateSources: StateSources = .isLoading
+	var stateTopHeadlines: StateTopHeadlines = .isLoading
 
 	// MARK: - Private Properties
 
@@ -94,8 +93,8 @@ class ContentViewModel {
 		fetchRequestTopHeadlines()
 		Task {
 			/// Fetch sources and topHeadlines from api
-			await fetchSources(state: .isInitialLoading)
-			await fetchTopHeadlines(state: .isInitialLoading)
+			await fetchSources(state: .isLoading)
+			await fetchTopHeadlines(state: .isLoading)
 		}
 	}
 
@@ -103,36 +102,56 @@ class ContentViewModel {
 		cancellable.removeAll()
 	}
 
-	func fetchSources(state: StateSources? = nil) async {
-		if let state {
-			stateSources = state
-			fetchSourcesUseCase
-				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
-				.sink { [weak self] completion in
-					self?.updateStateSources(completion: completion,
-											 failureState: .emptyFetch)
-				} receiveValue: { [weak self] sourcesDto in
+	func fetchSources(state: StateSources) async {
+		stateSources = state
+		fetchSourcesUseCase
+			.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
+			.sink { [weak self] completion in
+				if case .failure(let error) = completion {
+					self?.updateStateSources(completion: .failure(error),
+											 state: .emptyFetch)
+				}
+			} receiveValue: { [weak self] sourcesDto in
+				if sourcesDto.sources != nil ||
+					sourcesDto.sources?.isEmpty == false {
 					self?.saveSourcesUseCase
 						.save(sourcesDto: sourcesDto)
+				} else {
+					self?.updateStateSources(completion: .finished,
+											 state: .emptyFetch)
 				}
-				.store(in: &cancellable)
-		}
+			}
+			.store(in: &cancellable)
 	}
 
-	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
-		if let country = countries?.first(where: { $0.value == selectedCountry })?.key,
-		   let state {
+	func fetchTopHeadlines(state: StateTopHeadlines) async {
+		if let selectedCountry {
 			stateTopHeadlines = state
 			fetchTopHeadlinesUseCase
 				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
-					   country: country)
+					   country: selectedCountry)
 				.sink { [weak self] completion in
-					self?.updateStateTopHeadlines(completion: completion,
-												  failureState: .emptyFetch)
+					if case .failure(let error) = completion {
+						self?.updateStateTopHeadlines(completion: .failure(error),
+													  state: .emptyFetch)
+					}
 				} receiveValue: { [weak self] topHeadlinesDto in
-					self?.saveTopHeadlinesUseCase
-						.save(country: country,
-							  topHeadlinesDto: topHeadlinesDto)
+					if topHeadlinesDto.articles != nil ||
+						topHeadlinesDto.articles?.isEmpty == false {
+						self?.saveTopHeadlinesUseCase
+							.save(country: selectedCountry,
+								  topHeadlinesDto: topHeadlinesDto)
+					} else {
+						do {
+							try self?.deleteTopHeadlinesUseCase
+								.delete(country: selectedCountry)
+							self?.countries?.removeAll()
+							self?.updateStateTopHeadlines(completion: .finished,
+														  state: .emptyFetch)
+						} catch {
+							self?.showAlert(error: .error(error.localizedDescription))
+						}
+					}
 				}
 				.store(in: &cancellable)
 		}
@@ -140,13 +159,16 @@ class ContentViewModel {
 
 	func reset() {
 		do {
+			apiKeyVersion = 2
+			/// Delete all persisted sources
 			try deleteSourcesUseCase
 				.delete()
 			countries?.removeAll()
 			selectedCountry = nil
-			stateSources = .load
+			stateSources = .emptyRead
+			/// Delete all persisted topHeadlines
 			try deleteTopHeadlinesUseCase
-				.delete()
+				.delete(country: nil)
 			stateTopHeadlines = .emptyRead
 		} catch {
 			showAlert(error: .reset)
@@ -168,23 +190,23 @@ class ContentViewModel {
 	private func readSources() {
 		readSourcesUseCase
 			.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { [weak self] sources in
-				self?.sources = sources.sources
-				/// Set of unique country codes
-				let uniqueCountryCodes = Set(sources.sources?.compactMap { $0.country } ?? [])
-				/// Dictionary `code` as key and `country` as value  -> `de`:`Germany`, `us`:`United States`...
-				var countries: Dictionary<String, String> = [:]
-				uniqueCountryCodes.forEach { code in
-					if code == "zh" {
-						countries[code] = Locale.current.localizedString(forRegionCode: "cn") ?? ""
-					} else {
-						countries[code] = Locale.current.localizedString(forRegionCode: code) ?? ""
-					}
+			.compactMap { $0.sources }
+			.receive(on: DispatchWorkloop.main)
+			.sink(receiveCompletion: { [weak self] completion in
+				if case .failure(let error) = completion {
+					self?.updateStateSources(completion: .failure(error),
+											 state: .emptyRead)
 				}
+			}, receiveValue: { [weak self] sources in
+				/// Set of unique countries
+				let countries = Set(sources.compactMap {
+					$0.country == "zh" ? "cn" : $0.country
+				}).sorted(by: { lhs, rhs in
+					Locale.current.localizedString(forRegionCode: lhs) ?? "" <= Locale.current.localizedString(forRegionCode: rhs) ?? ""
+				})
 				self?.countries = countries
-				self?.updateStateSources(completion: sources.sources?.isEmpty == false ? .finished : self?.stateSources != .isInitialLoading ? .failure(AppConfiguration.Errors.read) : .finished,
-										 failureState: .emptyRead)
+				self?.updateStateSources(completion: .finished,
+										 state: countries.isEmpty ? self?.stateSources == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
 			})
 			.store(in: &cancellable)
 	}
@@ -192,11 +214,19 @@ class ContentViewModel {
 	private func readTopHeadlines() {
 		readTopHeadlinesUseCase
 			.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { [weak self] topHeadlines in
-				self?.articles = topHeadlines.articles
-				self?.updateStateTopHeadlines(completion: topHeadlines.articles?.isEmpty == false ? .finished : self?.stateTopHeadlines != .isInitialLoading ? .failure(AppConfiguration.Errors.read) : .finished,
-											  failureState: .emptyRead)
+			.compactMap { $0.articles }
+			.receive(on: DispatchWorkloop.main)
+			.sink(receiveCompletion: { [weak self] completion in
+				if case .failure(let error) = completion {
+					self?.updateStateSources(completion: .failure(error),
+											 state: .emptyRead)
+				}
+			}, receiveValue: { [weak self] articles in
+				DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
+					self?.articles = articles
+					self?.updateStateTopHeadlines(completion: .finished,
+												  state: articles.isEmpty ? self?.stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
+				}
 			})
 			.store(in: &cancellable)
 	}
@@ -207,23 +237,23 @@ class ContentViewModel {
 	}
 
 	private func updateStateSources(completion: Subscribers.Completion<Error>,
-									failureState: StateSources) {
+									state: StateSources) {
 		switch completion {
 		case .finished:
-			stateSources = .loaded
+			stateSources = state
 		case .failure(let error):
-			stateSources = failureState
+			stateSources = state
 			showAlert(error: error as? AppConfiguration.Errors ?? .error(error.localizedDescription))
 		}
 	}
 
 	private func updateStateTopHeadlines(completion: Subscribers.Completion<Error>,
-										 failureState: StateTopHeadlines) {
+										 state: StateTopHeadlines) {
 		switch completion {
 		case .finished:
-			stateTopHeadlines = .loaded
+			stateTopHeadlines = state
 		case .failure(let error):
-			stateTopHeadlines = failureState
+			stateTopHeadlines = state
 			showAlert(error: error as? AppConfiguration.Errors ?? .error(error.localizedDescription))
 		}
 	}

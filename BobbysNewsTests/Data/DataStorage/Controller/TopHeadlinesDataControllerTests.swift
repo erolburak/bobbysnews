@@ -31,7 +31,7 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 	// MARK: - Actions
 
 	func testDelete() {
-		XCTAssertNoThrow(try sut.delete())
+		XCTAssertNoThrow(try sut.delete(country: nil))
 	}
 
 	func testFetchRequest() {

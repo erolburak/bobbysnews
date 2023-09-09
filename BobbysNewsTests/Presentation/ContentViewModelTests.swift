@@ -45,53 +45,55 @@ class ContentViewModelTests: XCTestCase {
 	func testOnAppear() async {
 		// Given
 		sut.selectedCountry = nil
-		sut.stateSources = .isInitialLoading
-		sut.stateTopHeadlines = .isInitialLoading
+		sut.stateSources = .isLoading
+		sut.stateTopHeadlines = .isLoading
 		// When
 		sut.onAppear(country: "")
 		// Then
 		await fulfillment(of: [], timeout: 1)
 		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .isInitialLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
+		XCTAssertEqual(sut.stateSources, .isLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
 	func testFetchSources() async {
 		// Given
 		sut.selectedCountry = nil
-		sut.stateSources = .isInitialLoading
-		sut.stateTopHeadlines = .isInitialLoading
+		sut.stateSources = .isLoading
+		sut.stateTopHeadlines = .isLoading
 		// When
-		await sut.fetchSources()
+		await sut.fetchSources(state: .isLoading)
 		// Then
 		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .isInitialLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
+		XCTAssertEqual(sut.stateSources, .emptyFetch)
+		XCTAssertEqual(sut.stateTopHeadlines, .emptyFetch)
 	}
 
 	func testFetchTopHeadlines() async {
 		// Given
 		sut.selectedCountry = nil
-		sut.stateSources = .isInitialLoading
-		sut.stateTopHeadlines = .isInitialLoading
+		sut.stateSources = .isLoading
+		sut.stateTopHeadlines = .isLoading
 		// When
-		await sut.fetchTopHeadlines()
+		await sut.fetchTopHeadlines(state: .isLoading)
 		// Then
 		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .isInitialLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isInitialLoading)
+		XCTAssertEqual(sut.stateSources, .isLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
 	func testReset() {
 		// Given
+		sut.apiKeyVersion = 2
 		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
 		sut.stateTopHeadlines = .loaded
 		// When
 		sut.reset()
 		// Then
+		XCTAssertEqual(sut.apiKeyVersion, 1)
 		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .load)
+		XCTAssertEqual(sut.stateSources, .emptyRead)
 		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
 	}
 }

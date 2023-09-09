@@ -22,9 +22,9 @@ class TopHeadlinesQueriesRepositoryMock: PTopHeadlinesQueriesRepository {
 
 	// MARK: - Actions
 
-	func delete() throws {
+	func delete(country: String?) throws {
 		try topHeadlinesDataController
-			.delete()
+			.delete(country: country)
 	}
 
 	func fetchRequest(country: String) {

@@ -16,7 +16,7 @@ protocol PTopHeadlinesDataController {
 
 	// MARK: - Actions
 
-	func delete() throws
+	func delete(country: String?) throws
 	func fetchRequest(country: String)
 	func read() -> AnyPublisher<TopHeadlines, Error>
 	func save(country: String,
@@ -36,11 +36,13 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 
 	// MARK: - Actions
 
-	func delete() throws {
-		/// Delete all article entities
+	func delete(country: String?) throws {
 		try backgroundContext.performAndWait {
-			let articlesFetchRequest = ArticleEntity.fetchRequest()
-			let articles = try backgroundContext.fetch(articlesFetchRequest)
+			let fetchRequest = ArticleEntity.fetchRequest()
+			if let country {
+				fetchRequest.predicate = NSPredicate(format: "country == %@", country)
+			}
+			let articles = try backgroundContext.fetch(fetchRequest)
 			articles.forEach { article in
 				backgroundContext.delete(article)
 			}
