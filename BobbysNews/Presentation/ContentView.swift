@@ -21,8 +21,8 @@ struct ContentView: View {
 
     var body: some View {
 		NavigationStack {
-			ScrollView(.vertical) {
-				if case viewModel.stateTopHeadlines = .loaded {
+			ScrollView {
+				if viewModel.stateTopHeadlines == .loaded {
 					ForEach(viewModel.articles ?? []) { article in
 						NavigationLink(value: article) {
 							Item(article: article)
@@ -38,7 +38,7 @@ struct ContentView: View {
 					}
 				}
 			}
-			.navigationTitle("TopHeadlines")
+			.navigationTitle(viewModel.stateTopHeadlines == .loaded ? "TopHeadlines" : "")
 			.refreshable {
 				await viewModel.fetchTopHeadlines()
 			}

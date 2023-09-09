@@ -17,7 +17,7 @@ struct DetailView: View {
 	// MARK: - Layouts
 
 	var body: some View {
-		ScrollView(.vertical) {
+		ScrollView {
 			VStack {
 				Text(viewModel.article.source?.name ?? String(localized: "EmptyArticleSource"))
 					.font(.system(.subheadline,
@@ -28,40 +28,40 @@ struct DetailView: View {
 					.font(.system(size: 8,
 								  weight: .semibold))
 
-				if let urlToImage = viewModel.article.urlToImage {
-					GeometryReader { geometry in
-						AsyncImage(url: urlToImage) { phase in
-							if let image = phase.image {
-								image
-									.resizable()
-									.scaledToFill()
-									.frame(width: geometry.size.width,
-										   height: 280,
-										   alignment: .center)
-									.clipped()
-							} else if phase.error != nil {
-								Image(systemName: "photo")
-									.resizable()
-									.aspectRatio(contentMode: .fit)
-									.frame(height: 24)
-									.foregroundStyle(.gray)
-							} else {
-								ProgressView()
+				GeometryReader { geometry in
+					Group {
+						if let urlToImage = viewModel.article.urlToImage {
+							AsyncImage(url: urlToImage) { phase in
+								if let image = phase.image {
+									image
+										.resizable()
+										.scaledToFill()
+										.frame(width: geometry.size.width,
+											   height: 280,
+											   alignment: .center)
+										.clipped()
+								} else if phase.error != nil {
+									EmptyImageView()
+								} else {
+									ProgressView()
+								}
 							}
+						} else {
+							EmptyImageView()
 						}
-						.frame(width: geometry.size.width,
-							   height: 280)
 					}
-					.frame(height: 280)
-					.background(.bar)
-					.clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 40,
-																						topTrailing: 40)))
-					.overlay {
-						LinearGradient(gradient: Gradient(colors: [.clear,
-																   Color(uiColor: .systemBackground)]),
-									   startPoint: UnitPoint(x: 0.5, y: 0.9),
-									   endPoint: UnitPoint(x: 0.5, y: 1))
-					}
+					.frame(width: geometry.size.width,
+						   height: 280)
+				}
+				.frame(height: 280)
+				.background(.bar)
+				.clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 40,
+																					topTrailing: 40)))
+				.overlay {
+					LinearGradient(gradient: Gradient(colors: [.clear,
+															   Color(uiColor: .systemBackground)]),
+								   startPoint: UnitPoint(x: 0.5, y: 0.9),
+								   endPoint: UnitPoint(x: 0.5, y: 1))
 				}
 
 				VStack(alignment: .leading,
@@ -77,6 +77,9 @@ struct DetailView: View {
 					Text(viewModel.article.author ?? String(localized: "EmptyArticleAuthor"))
 						.font(.system(size: 8,
 									  weight: .semibold))
+
+					/// Workaround to left align the content
+					Color.clear.frame(height: 0)
 				}
 				.padding(.horizontal)
 
@@ -96,11 +99,13 @@ struct DetailView: View {
 									  weight: .black))
 					}
 					.foregroundStyle(.secondary)
+					.padding(.horizontal)
 					.padding(.top, 40)
 				}
 			}
 		}
 		.navigationBarTitleDisplayMode(.inline)
+		.textSelection(.enabled)
 		.toolbar {
 			if let url = viewModel.article.url {
 				ToolbarItem(placement: .primaryAction) {
@@ -132,6 +137,14 @@ struct DetailView: View {
 		}
 	}
 
+	private func EmptyImageView() -> some View {
+		Image(systemName: "photo")
+			.resizable()
+			.aspectRatio(contentMode: .fit)
+			.frame(height: 24)
+			.foregroundStyle(.gray)
+	}
+
 	private struct WebView: UIViewRepresentable {
 
 		// MARK: - Properties
@@ -153,7 +166,7 @@ struct DetailView: View {
 
 #Preview {
 	DetailView(viewModel: ViewModelDI().detailViewModel(article: Article(author: "Author",
-																		 content: "ContentStart\r\nContentEnd asdf asdf asdfasdsas df asdsad fasd f asdf asdasdf  asdfasd sfasdf asdfasd",
+																		 content: "ContentStart\n\n\n\n\n\n\n\n\n\n\n\n\n\nContentEnd",
 																		 country: "Country",
 																		 publishedAt: "2001-02-03T12:34:56Z".toDate,
 																		 source: Source(category: "SourceCategory",
