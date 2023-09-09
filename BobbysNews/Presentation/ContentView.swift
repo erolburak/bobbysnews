@@ -15,85 +15,85 @@ struct ContentView: View {
 
 	// MARK: - Private Properties
 
-	@AppStorage("country") private var country = ""
+	@AppStorage("country") private var country = "us"
 
 	// MARK: - Layouts
 
     var body: some View {
 		NavigationStack {
 			ScrollView {
-				if viewModel.stateTopHeadlines == .loaded {
-					ForEach(viewModel.articles ?? []) { article in
-						NavigationLink(value: article) {
-							Item(article: article)
-						}
-						.contextMenu {
-							if let url = article.url {
-								ShareLink("Share", item: url)
-							}
-						}
+				ForEach(viewModel.articles ?? []) { article in
+					NavigationLink(value: article) {
+						Item(article: article)
 					}
-					.navigationDestination(for: Article.self) { article in
-						DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
+					.contextMenu {
+						if let url = article.url {
+							ShareLink("Share", item: url)
+						}
 					}
 				}
+				.navigationDestination(for: Article.self) { article in
+					DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
+				}
+				.opacity(viewModel.stateTopHeadlines == .loaded ? 1 : 0)
+				.animation(.easeInOut,
+						   value: viewModel.stateTopHeadlines)
 			}
-			.navigationTitle(viewModel.stateTopHeadlines == .loaded ? "TopHeadlines" : "")
+			.navigationTitle("TopHeadlines")
+			.toolbarTitleDisplayMode(.inline)
 			.refreshable {
-				await viewModel.fetchTopHeadlines()
+				await viewModel.fetchTopHeadlines(state: .isLoading)
 			}
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
 					Menu {
 						switch viewModel.stateSources {
-						case .isInitialLoading, .isLoading:
-							ProgressView()
-						case .load, .loaded:
-							if viewModel.countries?.isEmpty == true {
+						case .isLoading:
+							Text("CountriesLoading")
+						case .loaded:
+							if let countries = viewModel.countries {
+								Picker("CountrySelection",
+									   selection: $country) {
+									ForEach(countries,
+											id: \.self) { country in
+										Text(Locale.current.localizedString(forRegionCode: country) ?? "")
+											.tag(country)
+									}
+								}
+								.pickerStyle(.menu)
+							}
+						case .emptyFetch, .emptyRead:
+							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
 								Button {
 									Task {
 										await viewModel.fetchSources(state: .isLoading)
 									}
 								} label: {
-									Label("CountryLoad", systemImage: "arrow.down.to.line")
+									Label("CountriesLoad", systemImage: "arrow.down.to.line")
 										.labelStyle(.titleAndIcon)
 								}
-								.menuActionDismissBehavior(.disabled)
-							} else if let countries = viewModel.countries {
-								Menu("CountrySelect") {
-									Picker(selection: $country) {
-										ForEach(countries.values.sorted(by: <),
-												id: \.self) { value in
-											Text(value)
-												.tag(countries.first { $0.value == value }?.key )
-										}
-									} label: {
-										EmptyView()
-									}
-								}
 							}
-						case .emptyFetch:
-							Text("EmptyFetchSources")
-						case .emptyRead:
-							Text("EmptyReadSources")
 						}
 
-						Menu("ApiKeySelect") {
-							Picker(selection: $viewModel.apiKeyVersion) {
+						Section {
+							Picker("ApiKeySelection",
+								   selection: $viewModel.apiKeyVersion) {
 								ForEach(1...viewModel.apiKeyTotalAmount,
 										id: \.self) { version in
 									Text("ApiKey\(version)")
 								}
-							} label: {
-								EmptyView()
 							}
+							.pickerStyle(.menu)
+							.menuActionDismissBehavior(.disabled)
 						}
 
-						Button(role: .destructive) {
-							viewModel.showResetDialog = true
-						} label: {
-							Label("Reset", systemImage: "trash")
-								.labelStyle(.titleAndIcon)
+						Section {
+							Button(role: .destructive) {
+								viewModel.showResetDialog = true
+							} label: {
+								Label("Reset", systemImage: "trash")
+									.labelStyle(.titleAndIcon)
+							}
 						}
 					} label: {
 						Image(systemName: "gearshape")
@@ -103,17 +103,24 @@ struct ContentView: View {
 		}
 		.overlay(alignment: .center) {
 			if viewModel.selectedCountry == nil {
-				Text("EmptySelectedCountry")
+				EmptyStateView(image: "flag.slash",
+							   title: "EmptySelectedCountry",
+							   message: "EmptySelectedCountryMessage")
 			} else {
 				switch viewModel.stateTopHeadlines {
-				case .isInitialLoading, .isLoading:
-					ProgressView()
+				case .isLoading:
+					Text("TopHeadlinesLoading")
+						.fontWeight(.black)
 				case .loaded:
 					EmptyView()
 				case .emptyFetch:
-					Text("EmptyFetch")
+					EmptyStateView(image: "newspaper",
+								   title: "EmptyFetchTopHeadlines",
+								   message: "EmptyFetchTopHeadlinesMessage")
 				case .emptyRead:
-					Text("EmptyRead")
+					EmptyStateView(image: "newspaper",
+								   title: "EmptyReadTopHeadlines",
+								   message: "EmptyReadTopHeadlinesMessage")
 				}
 			}
 		}
@@ -145,15 +152,10 @@ struct ContentView: View {
 		.onChange(of: country) {
 			if !country.isEmpty {
 				viewModel.selectedCountry = country
-
 				Task {
 					await viewModel.fetchTopHeadlines(state: .isLoading)
 				}
 			}
-		}
-		.onChange(of: viewModel.apiKeyVersion) {
-			viewModel.stateSources = .load
-			viewModel.stateSources = .loaded
 		}
     }
 
@@ -180,34 +182,58 @@ struct ContentView: View {
 
 			Spacer()
 
-			if let urlToImage = article.urlToImage {
-				AsyncImage(url: urlToImage) { phase in
-					if let image = phase.image {
-						image
-							.resizable()
-							.scaledToFill()
-							.frame(width: 80,
-								   height: 80,
-								   alignment: .center)
-							.clipped()
-					} else if phase.error != nil {
-						Image(systemName: "photo")
-							.resizable()
-							.aspectRatio(contentMode: .fit)
-							.frame(height: 24)
-							.foregroundStyle(.gray)
-					} else {
-						ProgressView()
-					}
+			AsyncImage(url: article.urlToImage) { phase in
+				if let image = phase.image {
+					image
+						.resizable()
+						.scaledToFill()
+						.frame(width: 80,
+							   height: 80,
+							   alignment: .center)
+						.clipped()
+				} else if case .empty = phase {
+					EmptyImageView()
+				} else if phase.error != nil {
+					EmptyImageView()
 				}
-				.frame(width: 80,
-					   height: 80)
-				.background(.bar)
-				.clipShape(RoundedRectangle(cornerRadius: 12))
 			}
+			.frame(width: 80,
+				   height: 80)
+			.background(.bar)
+			.clipShape(RoundedRectangle(cornerRadius: 12))
 		}
 		.padding(.horizontal)
 		.padding(.vertical, 20)
+	}
+
+	private func EmptyImageView() -> some View {
+		Image(systemName: "photo")
+			.resizable()
+			.aspectRatio(contentMode: .fit)
+			.frame(height: 24)
+			.foregroundStyle(.gray)
+	}
+
+	private func EmptyStateView(image: String,
+								title: LocalizedStringKey,
+								message: LocalizedStringKey) -> some View {
+		VStack {
+			Image(systemName: image)
+				.resizable()
+				.aspectRatio(contentMode: .fit)
+				.frame(height: 32)
+				.padding(.bottom, 4)
+
+			Text(title)
+				.font(.system(.title3,
+							  weight: .black))
+
+			Text(message)
+				.font(.system(.footnote,
+							  weight: .regular))
+		}
+		.multilineTextAlignment(.center)
+		.padding()
 	}
 }
 

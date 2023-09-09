@@ -11,7 +11,7 @@ protocol PDeleteTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func delete() throws
+	func delete(country: String?) throws
 }
 
 class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
@@ -28,8 +28,8 @@ class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func delete() throws {
+	func delete(country: String?) throws {
 		try topHeadlinesQueriesRepository
-			.delete()
+			.delete(country: country)
 	}
 }

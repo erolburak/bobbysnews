@@ -1,49 +1,39 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
-          }
-        }
-      }
-    },
     "ApiKey%lld" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Api Schlüssel %lld"
+            "value" : "API-Schlüssel %lld"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Api key %lld"
+            "value" : "API key %lld"
           }
         }
       }
     },
-    "ApiKeySelect" : {
+    "ApiKeySelection" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Auswahl Api Schlüssel"
+            "value" : "API-Schlüsselauswahl"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select api key"
+            "value" : "API key selection"
           }
         }
       }
     },
-    "CountryLoad" : {
+    "CountriesLoad" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -60,19 +50,34 @@
         }
       }
     },
-    "CountrySelect" : {
-      "extractionState" : "manual",
+    "CountriesLoading" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Land auswählen"
+            "value" : "Länder werden geladen ..."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select country"
+            "value" : "Countries are loading ..."
+          }
+        }
+      }
+    },
+    "CountrySelection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Länderauswahl"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Country selection"
           }
         }
       }
@@ -157,50 +162,51 @@
         }
       }
     },
-    "EmptyFetch" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abfragedaten sind leer."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fetch data is empty."
-          }
-        }
-      }
-    },
     "EmptyFetchSources" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfragedaten Quellen sind leer."
+            "value" : "Keine Länder verfügbar"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fetch sources data is empty."
+            "value" : "No countries available"
           }
         }
       }
     },
-    "EmptyRead" : {
+    "EmptyFetchTopHeadlines" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Datenbank ist leer."
+            "value" : "Keine Schlagzeilen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Database is empty."
+            "value" : "No top headlines"
+          }
+        }
+      }
+    },
+    "EmptyFetchTopHeadlinesMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verfügbare Schlagzeilen werden hier angezeigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available top headlines are displayed here."
           }
         }
       }
@@ -210,13 +216,46 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Länder sind leer."
+            "value" : "Keine Länder geladen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Countries are empty."
+            "value" : "No countries loaded"
+          }
+        }
+      }
+    },
+    "EmptyReadTopHeadlines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Schlagzeilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No top headlines"
+          }
+        }
+      }
+    },
+    "EmptyReadTopHeadlinesMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geladene Schlagzeilen werden hier angezeigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loaded top headlines are displayed here."
           }
         }
       }
@@ -226,13 +265,30 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Auswahl Land ist leer."
+            "value" : "Kein Land ausgewählt"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Country select is empty."
+            "value" : "No country selected"
+          }
+        }
+      }
+    },
+    "EmptySelectedCountryMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle ein Land in den Einstellungen aus."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a country in the settings."
           }
         }
       }
@@ -294,13 +350,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ungültiger Api Schlüssel"
+            "value" : "Ungültiger API-Schlüssel"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid api key"
+            "value" : "Invalid API key"
           }
         }
       }
@@ -412,13 +468,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfrage fehlgeschlagen. Überprüfe Api Schlüssel oder gehen zu https://newsapi.org, um einen kostenlosen zu erstellen."
+            "value" : "Abfrage fehlgeschlagen. Bitte versuche es mit einem anderen API-Schlüssel erneut oder besuche https://newsapi.org, um einen kostenlosen zu erstellen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to fetch. Check api key, or go to https://newsapi.org to create a free one."
+            "value" : "Failed to fetch. Please try again with a different API key or visit https://newsapi.org to create a free one."
           }
         }
       }
@@ -429,13 +485,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfrage fehlgeschlagen. Developer Accounts sind auf 100 Anfragen über einen Zeitraum von 24 Stunden begrenzt (50 Anfragen alle 12 Stunden verfügbar). Upgrade auf einen kostenpflichtigen Plan, wenn weitere Anfragen erforderlich sind."
+            "value" : "Abfrage fehlgeschlagen. Bitte versuche es mit einem anderen API-Schlüssel erneut. Developer Accounts sind auf 100 Anfragen über einen Zeitraum von 24 Stunden begrenzt (50 Anfragen alle 12 Stunden verfügbar). Upgrade auf einen kostenpflichtigen Plan, wenn weitere Anfragen erforderlich sind."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to fetch. Developer accounts limited to 100 requests over a 24 hour period (50 requests available every 12 hours). Upgrade to a paid plan if more requests needed."
+            "value" : "Failed to fetch. Please try again with a different API key. Developer accounts limited to 100 requests over a 24 hour period (50 requests available every 12 hours). Upgrade to a paid plan if more requests needed."
           }
         }
       }
@@ -580,7 +636,23 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Top Headlines"
+            "value" : "Top headlines"
+          }
+        }
+      }
+    },
+    "TopHeadlinesLoading" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlagzeilen werden geladen ..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top headlines loading ..."
           }
         }
       }
