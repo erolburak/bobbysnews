@@ -46,7 +46,7 @@ class ContentViewModel {
 
 	var alertError: AppConfiguration.Errors?
 	var apiKeyTotalAmount = AppConfiguration.apiKeyTotalAmount
-	var apiKeyVersion = 2
+	var apiKeyVersion = 1
 	var articles: [Article]?
 	var countries: [String]?
 	var selectedCountry: String?
@@ -159,7 +159,7 @@ class ContentViewModel {
 
 	func reset() {
 		do {
-			apiKeyVersion = 2
+			apiKeyVersion = 1
 			/// Delete all persisted sources
 			try deleteSourcesUseCase
 				.delete()
