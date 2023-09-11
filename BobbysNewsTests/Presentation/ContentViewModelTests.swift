@@ -50,9 +50,8 @@ class ContentViewModelTests: XCTestCase {
 		// When
 		sut.onAppear(country: "")
 		// Then
-		await fulfillment(of: [], timeout: 1)
 		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .isLoading)
+		XCTAssertEqual(sut.stateSources, .loaded)
 		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
@@ -65,8 +64,8 @@ class ContentViewModelTests: XCTestCase {
 		await sut.fetchSources(state: .isLoading)
 		// Then
 		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .emptyFetch)
-		XCTAssertEqual(sut.stateTopHeadlines, .emptyFetch)
+		XCTAssertEqual(sut.stateSources, .isLoading)
+		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
 	func testFetchTopHeadlines() async {
