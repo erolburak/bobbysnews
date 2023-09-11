@@ -91,6 +91,7 @@ struct DetailView: View {
 						}
 						.font(.system(.subheadline,
 									  weight: .black))
+						.accessibilityIdentifier("ReadButton")
 					}
 					.foregroundStyle(.secondary)
 					.padding(.horizontal)
@@ -105,6 +106,7 @@ struct DetailView: View {
 				ToolbarItem(placement: .primaryAction) {
 					ShareLink(item: url)
 						.labelStyle(.iconOnly)
+						.accessibilityIdentifier("ShareLink")
 				}
 			}
 		}
@@ -124,6 +126,7 @@ struct DetailView: View {
 								} label: {
 									Image(systemName: "xmark")
 								}
+								.accessibilityIdentifier("CloseButton")
 							}
 						}
 				}

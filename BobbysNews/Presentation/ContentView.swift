@@ -31,6 +31,7 @@ struct ContentView: View {
 							ShareLink("Share", item: url)
 						}
 					}
+					.accessibilityIdentifier(article == viewModel.articles?.first ? "NavigationLinkItem" : "")
 				}
 				.navigationDestination(for: Article.self) { article in
 					DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
@@ -58,6 +59,7 @@ struct ContentView: View {
 											id: \.self) { country in
 										Text(Locale.current.localizedString(forRegionCode: country) ?? "")
 											.tag(country)
+											.accessibilityIdentifier("CountryPickerItem" + country)
 									}
 								}
 								.pickerStyle(.menu)
@@ -81,10 +83,12 @@ struct ContentView: View {
 								ForEach(1...viewModel.apiKeyTotalAmount,
 										id: \.self) { version in
 									Text("ApiKey\(version)")
+										.accessibilityIdentifier("ApiKeyPickerItem\(version)")
 								}
 							}
 							.pickerStyle(.menu)
 							.menuActionDismissBehavior(.disabled)
+							.accessibilityIdentifier("ApiKeyPicker")
 						}
 
 						Section {
@@ -94,9 +98,11 @@ struct ContentView: View {
 								Label("Reset", systemImage: "trash")
 									.labelStyle(.titleAndIcon)
 							}
+							.accessibilityIdentifier("ResetButton")
 						}
 					} label: {
 						Image(systemName: "gearshape")
+							.accessibilityIdentifier("SettingsImage")
 					}
 				}
 			}
@@ -130,6 +136,7 @@ struct ContentView: View {
 			Button("Reset", role: .destructive) {
 				viewModel.reset()
 			}
+			.accessibilityIdentifier("ResetConfirmationButton")
 		}
 		.alert(isPresented: $viewModel.showAlert,
 			   error: viewModel.alertError) { _ in
