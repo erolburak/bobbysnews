@@ -24,9 +24,10 @@ The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://
 - NewsAPI (https://newsapi.org)
 
 ## SCREENSHOTS
-<img src="https://github.com/erolburak/bobbysnews/assets/140210017/282e2e20-5353-453c-b937-b08161f32210" style=" width:240px">
-<img src="https://github.com/erolburak/bobbysnews/assets/140210017/8ce69c95-b063-4324-83b4-8d77964df244" style=" width:240px">
-<img src="https://github.com/erolburak/bobbysnews/assets/140210017/56bb356f-7105-4a8c-b310-0722c2a567bd" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/327eb392-cc63-4ece-a9de-82778140c9ad" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/8e9b597f-d8e0-47aa-8a97-4901702e22e0" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/aca074a1-073c-4838-9b8b-bbcaf114db3e" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/43fa84c7-b4e4-473b-b1db-0e80a6fc2929" style=" width:240px">
 
 ## SUPPORT
 Feel free to email me if there are any questions: erolburak@icloud.com
