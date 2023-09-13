@@ -26,7 +26,7 @@ class DetailViewModelTests: XCTestCase {
 
 	// MARK: - Actions
 
-	func testDetailViewModelIsNotNil() async {
+	func testDetailViewModelIsNotNil() {
 		// Given
 		let article = EntityMock.article1
 		// When

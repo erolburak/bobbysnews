@@ -26,7 +26,7 @@ class ContentViewModelTests: XCTestCase {
 
 	// MARK: - Actions
 
-	func testContentViewModelIsNotNil() async {
+	func testContentViewModelIsNotNil() {
 		// When
 		let contentViewModel = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
 												fetchRequestSourcesUseCase: FetchRequestSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
@@ -44,6 +44,8 @@ class ContentViewModelTests: XCTestCase {
 
 	func testOnAppear() async {
 		// Given
+		sut.articles = nil
+		sut.countries = nil
 		sut.selectedCountry = nil
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
@@ -57,6 +59,8 @@ class ContentViewModelTests: XCTestCase {
 
 	func testFetchSources() async {
 		// Given
+		sut.articles = nil
+		sut.countries = nil
 		sut.selectedCountry = nil
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
@@ -70,6 +74,8 @@ class ContentViewModelTests: XCTestCase {
 
 	func testFetchTopHeadlines() async {
 		// Given
+		sut.articles = nil
+		sut.countries = nil
 		sut.selectedCountry = nil
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading

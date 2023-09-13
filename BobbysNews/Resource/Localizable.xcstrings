@@ -593,7 +593,7 @@
         }
       }
     },
-    "ResetConfirmation" : {
+    "ResetConfirmationDialog" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -59,8 +59,9 @@ class SourcesDataControllerTests: XCTestCase {
 		XCTAssertNotNil(sources)
 	}
 
-	func testSaveSourcesWithExistingSources() {
+	func testSaveSourcesWithExistingSources() throws {
 		// Given
+		try sut.delete()
 		let sourcesDto = DTOMock.sourcesDto1
 		// When
 		sut.save(sourcesDto: sourcesDto)
