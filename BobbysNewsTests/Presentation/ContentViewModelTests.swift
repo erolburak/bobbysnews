@@ -56,7 +56,7 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertNotNil(sut.selectedCountry)
 		if sut.alertError == .limitedRequests {
 			XCTAssertEqual(sut.stateSources, .emptyFetch)
-			XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
+			XCTAssertEqual(sut.stateTopHeadlines, .emptyFetch)
 		} else {
 			XCTAssertEqual(sut.stateSources, .loaded)
 			XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)

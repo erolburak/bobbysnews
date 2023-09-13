@@ -276,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				BFDD66812AA3867D00BB49CE /* App */,
+				BF91F8CE2AB24DAD00CEF82E /* Extension */,
 				BFDD66822AA3868700BB49CE /* Presentation */,
 			);
 			path = BobbysNewsUITests;
@@ -645,7 +646,6 @@
 			children = (
 				BF7DFCB52AA1338100FCB11C /* ContentViewTests.swift */,
 				BF7DFCB72AA133B400FCB11C /* DetailViewTests.swift */,
-				BF91F8CE2AB24DAD00CEF82E /* Extension */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
