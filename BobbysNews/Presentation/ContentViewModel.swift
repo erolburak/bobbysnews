@@ -86,15 +86,16 @@ class ContentViewModel {
 
 	func onAppear(country: String) {
 		selectedCountry = !country.isEmpty ? country : nil
-		/// Bind sources and fetch from database
+		/// Bind sources, fetch from database and api
 		readSources()
 		fetchRequestSources()
-		/// Bind topHeadlines and fetch from database
+		Task {
+			await fetchSources(state: .isLoading)
+		}
+		/// Bind topHeadlines, fetch from database and api
 		readTopHeadlines()
 		fetchRequestTopHeadlines()
 		Task {
-			/// Fetch sources and topHeadlines from api
-			await fetchSources(state: .isLoading)
 			await fetchTopHeadlines(state: .isLoading)
 		}
 	}
@@ -164,11 +165,13 @@ class ContentViewModel {
 			/// Delete all persisted sources
 			try deleteSourcesUseCase
 				.delete()
+			countries = nil
 			selectedCountry = nil
 			stateSources = .emptyRead
 			/// Delete all persisted topHeadlines
 			try deleteTopHeadlinesUseCase
 				.delete(country: nil)
+			articles = nil
 			stateTopHeadlines = .emptyRead
 		} catch {
 			showAlert(error: .reset)
@@ -199,11 +202,9 @@ class ContentViewModel {
 				}
 			}, receiveValue: { [weak self] sources in
 				/// Set of unique countries
-				let countries = Set(sources.compactMap {
-					$0.country == "zh" ? "cn" : $0.country
-				}).sorted(by: { lhs, rhs in
-					Locale.current.localizedString(forRegionCode: lhs) ?? "" <= Locale.current.localizedString(forRegionCode: rhs) ?? ""
-				})
+				let countries = Set(sources.compactMap { $0.country == "zh" ? "cn" : $0.country })
+					.sorted(by: { lhs, rhs in
+						Locale.current.localizedString(forRegionCode: lhs) ?? "" <= Locale.current.localizedString(forRegionCode: rhs) ?? ""})
 				self?.countries = countries
 				self?.updateStateSources(completion: .finished,
 										 state: countries.isEmpty ? self?.stateSources == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)

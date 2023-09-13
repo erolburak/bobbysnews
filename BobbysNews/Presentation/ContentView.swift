@@ -22,26 +22,33 @@ struct ContentView: View {
     var body: some View {
 		NavigationStack {
 			ScrollView {
-				ForEach(viewModel.articles ?? []) { article in
-					NavigationLink(value: article) {
-						Item(article: article)
+				ScrollViewReader { proxy in
+					ForEach(viewModel.articles ?? []) { article in
+						NavigationLink(value: article) {
+							Item(article: article)
+						}
+						.contextMenu {
+							if let url = article.url {
+								ShareLink("Share", item: url)
+							}
+						}
+						.id(article)
+						.accessibilityIdentifier(article == viewModel.articles?.first ? "NavigationLinkItem" : "")
 					}
-					.contextMenu {
-						if let url = article.url {
-							ShareLink("Share", item: url)
+					.navigationDestination(for: Article.self) { article in
+						DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
+					}
+					.onChange(of: viewModel.stateTopHeadlines) { _, newState in
+						if newState == .loaded {
+							proxy.scrollTo(viewModel.articles?.first)
 						}
 					}
-					.accessibilityIdentifier(article == viewModel.articles?.first ? "NavigationLinkItem" : "")
 				}
-				.navigationDestination(for: Article.self) { article in
-					DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
-				}
-				.opacity(viewModel.stateTopHeadlines == .loaded ? 1 : 0)
-				.animation(.easeInOut,
-						   value: viewModel.stateTopHeadlines)
 			}
 			.navigationTitle("TopHeadlines")
 			.toolbarTitleDisplayMode(.inline)
+			.disabled(viewModel.stateTopHeadlines != .loaded)
+			.opacity(viewModel.stateTopHeadlines == .loaded ? 1 : 0.1)
 			.refreshable {
 				await viewModel.fetchTopHeadlines(state: .isLoading)
 			}
