@@ -93,7 +93,11 @@ struct ContentView: View {
 
 						Section {
 							Button(role: .destructive) {
-								viewModel.showResetDialog = true
+								if UIDevice.current.userInterfaceIdiom == .pad {
+									viewModel.showConfirmationDialogPad = true
+								} else {
+									viewModel.showConfirmationDialogPhone = true
+								}
 							} label: {
 								Label("Reset", systemImage: "trash")
 									.labelStyle(.titleAndIcon)
@@ -130,13 +134,21 @@ struct ContentView: View {
 				}
 			}
 		}
-		.confirmationDialog("ResetConfirmation",
-							isPresented: $viewModel.showResetDialog,
+		.confirmationDialog("ResetConfirmationDialog",
+							isPresented: $viewModel.showConfirmationDialogPhone,
 							titleVisibility: .visible) {
 			Button("Reset", role: .destructive) {
 				viewModel.reset()
 			}
-			.accessibilityIdentifier("ResetConfirmationButton")
+			.accessibilityIdentifier("ResetConfirmationDialogButtonPhone")
+		}
+		.alert("Reset", isPresented: $viewModel.showConfirmationDialogPad) {
+			Button("Reset", role: .destructive) {
+				viewModel.reset()
+			}
+			.accessibilityIdentifier("ResetConfirmationDialogButtonPad")
+		} message: {
+			Text("ResetConfirmationDialog")
 		}
 		.alert(isPresented: $viewModel.showAlert,
 			   error: viewModel.alertError) { _ in

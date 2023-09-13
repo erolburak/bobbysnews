@@ -61,8 +61,9 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 		XCTAssertNotNil(topHeadlines)
 	}
 
-	func testSaveWithExistingTopHeadlines() {
+	func testSaveWithExistingTopHeadlines() throws {
 		// Given
+		try sut.delete(country: nil)
 		let topHeadlinesDto = DTOMock.topHeadlinesDto1
 		// When
 		sut.save(country: "Test",

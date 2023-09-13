@@ -75,7 +75,7 @@ final class ContentViewTests: XCTestCase {
 		let resetButton = app.buttons["ResetButton"]
 		XCTAssertTrue(resetButton.waitForExistence(timeout: 5))
 		resetButton.tap()
-		let resetConfirmationButton = app.buttons["ResetConfirmationButton"]
-		XCTAssertTrue(resetConfirmationButton.waitForExistence(timeout: 5))
+		let resetConfirmationDialogButton = app.buttons[UIDevice.current.userInterfaceIdiom == .pad ? "ResetConfirmationDialogButtonPad" : "ResetConfirmationDialogButtonPhone"]
+		XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 5))
 	}
 }

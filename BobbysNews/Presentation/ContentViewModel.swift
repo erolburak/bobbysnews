@@ -51,7 +51,8 @@ class ContentViewModel {
 	var countries: [String]?
 	var selectedCountry: String?
 	var showAlert = false
-	var showResetDialog = false
+	var showConfirmationDialogPad = false
+	var showConfirmationDialogPhone = false
 	var stateSources: StateSources = .isLoading
 	var stateTopHeadlines: StateTopHeadlines = .isLoading
 
@@ -163,7 +164,6 @@ class ContentViewModel {
 			/// Delete all persisted sources
 			try deleteSourcesUseCase
 				.delete()
-			countries?.removeAll()
 			selectedCountry = nil
 			stateSources = .emptyRead
 			/// Delete all persisted topHeadlines
