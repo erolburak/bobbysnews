@@ -42,7 +42,7 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertNotNil(contentViewModel)
 	}
 
-	func testOnAppear() async {
+	func testOnAppear() async throws {
 		// Given
 		sut.articles = nil
 		sut.countries = nil
@@ -50,11 +50,17 @@ class ContentViewModelTests: XCTestCase {
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
-		sut.onAppear(country: "")
+		sut.onAppear(country: "Test")
 		// Then
-		XCTAssertNil(sut.selectedCountry)
-		XCTAssertEqual(sut.stateSources, .loaded)
-		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
+		try await Task.sleep(for: .seconds(5))
+		XCTAssertNotNil(sut.selectedCountry)
+		if sut.alertError == .limitedRequests {
+			XCTAssertEqual(sut.stateSources, .emptyFetch)
+			XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
+		} else {
+			XCTAssertEqual(sut.stateSources, .loaded)
+			XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
+		}
 	}
 
 	func testFetchSources() async {
@@ -90,6 +96,8 @@ class ContentViewModelTests: XCTestCase {
 	func testReset() {
 		// Given
 		sut.apiKeyVersion = 2
+		sut.articles = []
+		sut.countries = []
 		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
 		sut.stateTopHeadlines = .loaded
@@ -97,6 +105,8 @@ class ContentViewModelTests: XCTestCase {
 		sut.reset()
 		// Then
 		XCTAssertEqual(sut.apiKeyVersion, 1)
+		XCTAssertNil(sut.articles)
+		XCTAssertNil(sut.countries)
 		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .emptyRead)
 		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
