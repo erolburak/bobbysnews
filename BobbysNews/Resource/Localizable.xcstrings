@@ -310,23 +310,6 @@
         }
       }
     },
-    "ErrorDescriptionFetch" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abfrage"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fetch"
-          }
-        }
-      }
-    },
     "ErrorDescriptionFetchSources" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -340,6 +323,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fetch sources"
+          }
+        }
+      }
+    },
+    "ErrorDescriptionFetchTopHeadlines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage Schlagzeilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fetch top headlines"
           }
         }
       }
@@ -462,6 +461,22 @@
         }
       }
     },
+    "ErrorRecoverySuggestionFetchTopHeadlines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage Schlagzeilen fehlgeschlagen. Bitte versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch top headlines. Please try again."
+          }
+        }
+      }
+    },
     "ErrorRecoverySuggestionInvalidApiKey" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -573,6 +588,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Read"
+          }
+        }
+      }
+    },
+    "Refresh" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualisieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh"
           }
         }
       }

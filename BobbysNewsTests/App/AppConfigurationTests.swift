@@ -51,7 +51,7 @@ class AppConfigurationTests: XCTestCase {
 									   httpVersion: nil,
 									   headerFields: nil)
 		// Then
-		XCTAssertNoThrow(try sut.validateResponse(defaultError: .fetch,
+		XCTAssertNoThrow(try sut.validateResponse(defaultError: .error("Test"),
 												  response: response))
 	}
 
@@ -62,7 +62,7 @@ class AppConfigurationTests: XCTestCase {
 									   httpVersion: nil,
 									   headerFields: nil)
 		// Then
-		XCTAssertThrowsError(try sut.validateResponse(defaultError: .fetch,
+		XCTAssertThrowsError(try sut.validateResponse(defaultError: .error("Test"),
 													  response: response))
 	}
 

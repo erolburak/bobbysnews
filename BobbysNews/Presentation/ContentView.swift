@@ -47,8 +47,8 @@ struct ContentView: View {
 			}
 			.navigationTitle("TopHeadlines")
 			.toolbarTitleDisplayMode(.inline)
-			.disabled(viewModel.stateTopHeadlines != .loaded)
-			.opacity(viewModel.stateTopHeadlines == .loaded ? 1 : 0.1)
+			.disabled(viewModel.listDisabled)
+			.opacity(viewModel.listOpacity)
 			.refreshable {
 				await viewModel.fetchTopHeadlines(state: .isLoading)
 			}
@@ -119,25 +119,31 @@ struct ContentView: View {
 			}
 		}
 		.overlay(alignment: .center) {
-			if viewModel.selectedCountry == nil {
-				EmptyStateView(image: "flag.slash",
-							   title: "EmptySelectedCountry",
-							   message: "EmptySelectedCountryMessage")
-			} else {
-				switch viewModel.stateTopHeadlines {
-				case .isLoading:
-					Text("TopHeadlinesLoading")
-						.fontWeight(.black)
-				case .loaded:
-					EmptyView()
-				case .emptyFetch:
-					EmptyStateView(image: "newspaper",
-								   title: "EmptyFetchTopHeadlines",
-								   message: "EmptyFetchTopHeadlinesMessage")
-				case .emptyRead:
-					EmptyStateView(image: "newspaper",
-								   title: "EmptyReadTopHeadlines",
-								   message: "EmptyReadTopHeadlinesMessage")
+			VStack {
+				if viewModel.selectedCountry == nil {
+					StateView(image: "flag.slash",
+							  title: "EmptySelectedCountry",
+							  message: "EmptySelectedCountryMessage")
+				} else {
+					switch viewModel.stateTopHeadlines {
+					case .isLoading:
+						Text("TopHeadlinesLoading")
+							.fontWeight(.black)
+					case .loaded:
+						EmptyView()
+					case .emptyFetch:
+						StateView(image: "newspaper",
+								  title: "EmptyFetchTopHeadlines",
+								  message: "EmptyFetchTopHeadlinesMessage")
+
+						RefreshButton()
+					case .emptyRead:
+						StateView(image: "newspaper",
+								  title: "EmptyReadTopHeadlines",
+								  message: "EmptyReadTopHeadlinesMessage")
+
+						RefreshButton()
+					}
 				}
 			}
 		}
@@ -240,9 +246,24 @@ struct ContentView: View {
 			.foregroundStyle(.gray)
 	}
 
-	private func EmptyStateView(image: String,
-								title: LocalizedStringKey,
-								message: LocalizedStringKey) -> some View {
+	private func RefreshButton() -> some View {
+		Button {
+			Task {
+				await viewModel.fetchTopHeadlines(state: .isLoading)
+			}
+		} label: {
+			Text("Refresh")
+				.textCase(.uppercase)
+		}
+		.font(.system(.subheadline,
+					  weight: .black))
+		.foregroundStyle(.secondary)
+		.accessibilityIdentifier("RefreshButton")
+	}
+
+	private func StateView(image: String,
+						   title: LocalizedStringKey,
+						   message: LocalizedStringKey) -> some View {
 		VStack {
 			Image(systemName: image)
 				.resizable()

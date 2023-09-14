@@ -49,12 +49,18 @@ class ContentViewModel {
 	var apiKeyVersion = 1
 	var articles: [Article]?
 	var countries: [String]?
-	var selectedCountry: String?
+	var selectedCountry: String? {
+		didSet {
+			articles?.removeAll()
+		}
+	}
 	var showAlert = false
 	var showConfirmationDialogPad = false
 	var showConfirmationDialogPhone = false
 	var stateSources: StateSources = .isLoading
 	var stateTopHeadlines: StateTopHeadlines = .isLoading
+	var listDisabled: Bool { stateTopHeadlines != .loaded }
+	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.1 }
 
 	// MARK: - Private Properties
 
@@ -109,9 +115,9 @@ class ContentViewModel {
 		fetchSourcesUseCase
 			.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
 			.sink { [weak self] completion in
-				if case .failure(let error) = completion {
-					self?.updateStateSources(completion: .failure(error),
-											 state: .emptyFetch)
+				if case .failure = completion {
+					self?.updateStateSources(completion: completion,
+											 state: self?.countries?.isEmpty == true ? .emptyFetch : .loaded)
 				}
 			} receiveValue: { [weak self] sourcesDto in
 				if sourcesDto.sources != nil ||
@@ -121,6 +127,15 @@ class ContentViewModel {
 				} else {
 					self?.updateStateSources(completion: .finished,
 											 state: .emptyFetch)
+					do {
+						try self?.deleteSourcesUseCase
+							.delete()
+						self?.countries?.removeAll()
+						self?.updateStateSources(completion: .finished,
+												 state: .emptyFetch)
+					} catch {
+						self?.showAlert(error: .error(error.localizedDescription))
+					}
 				}
 			}
 			.store(in: &cancellable)
@@ -133,9 +148,9 @@ class ContentViewModel {
 				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
 					   country: selectedCountry)
 				.sink { [weak self] completion in
-					if case .failure(let error) = completion {
-						self?.updateStateTopHeadlines(completion: .failure(error),
-													  state: .emptyFetch)
+					if case .failure = completion {
+						self?.updateStateTopHeadlines(completion: completion,
+													  state: self?.articles?.isEmpty == true ? .emptyFetch : .loaded)
 					}
 				} receiveValue: { [weak self] topHeadlinesDto in
 					if topHeadlinesDto.articles != nil ||
@@ -147,7 +162,7 @@ class ContentViewModel {
 						do {
 							try self?.deleteTopHeadlinesUseCase
 								.delete(country: selectedCountry)
-							self?.countries?.removeAll()
+							self?.articles?.removeAll()
 							self?.updateStateTopHeadlines(completion: .finished,
 														  state: .emptyFetch)
 						} catch {
@@ -196,8 +211,8 @@ class ContentViewModel {
 			.compactMap { $0.sources }
 			.receive(on: DispatchWorkloop.main)
 			.sink(receiveCompletion: { [weak self] completion in
-				if case .failure(let error) = completion {
-					self?.updateStateSources(completion: .failure(error),
+				if case .failure = completion {
+					self?.updateStateSources(completion: completion,
 											 state: .emptyRead)
 				}
 			}, receiveValue: { [weak self] sources in
@@ -218,13 +233,13 @@ class ContentViewModel {
 			.compactMap { $0.articles }
 			.receive(on: DispatchWorkloop.main)
 			.sink(receiveCompletion: { [weak self] completion in
-				if case .failure(let error) = completion {
-					self?.updateStateSources(completion: .failure(error),
-											 state: .emptyRead)
+				if case .failure = completion {
+					self?.updateStateTopHeadlines(completion: completion,
+												  state: .emptyRead)
 				}
 			}, receiveValue: { [weak self] articles in
+				self?.articles = articles
 				DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
-					self?.articles = articles
 					self?.updateStateTopHeadlines(completion: .finished,
 												  state: articles.isEmpty ? self?.stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
 				}
