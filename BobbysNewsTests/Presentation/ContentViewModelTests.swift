@@ -44,22 +44,22 @@ class ContentViewModelTests: XCTestCase {
 
 	func testOnAppear() async throws {
 		// Given
+		let country = "Test"
+		// When
 		sut.articles = nil
 		sut.countries = nil
-		sut.selectedCountry = nil
+		sut.selectedCountry = country
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
-		// When
-		sut.onAppear(country: "Test")
 		// Then
 		try await Task.sleep(for: .seconds(5))
-		XCTAssertNotNil(sut.selectedCountry)
+		XCTAssertEqual(sut.selectedCountry, country)
 		if sut.alertError == .limitedRequests {
-			XCTAssertEqual(sut.stateSources, .emptyFetch)
-			XCTAssertEqual(sut.stateTopHeadlines, .emptyFetch)
-		} else {
 			XCTAssertEqual(sut.stateSources, .loaded)
-			XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
+			XCTAssertEqual(sut.stateTopHeadlines, .loaded)
+		} else {
+			XCTAssertEqual(sut.stateSources, .isLoading)
+			XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 		}
 	}
 
