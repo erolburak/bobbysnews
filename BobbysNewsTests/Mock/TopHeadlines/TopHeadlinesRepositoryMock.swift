@@ -19,7 +19,7 @@ class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 				.setFailureType(to: Error.self)
 				.eraseToAnyPublisher()
 		} else {
-			return Fail<TopHeadlinesDTO, Error>(error: AppConfiguration.Errors.fetch)
+			return Fail<TopHeadlinesDTO, Error>(error: AppConfiguration.Errors.fetchTopHeadlines)
 				.eraseToAnyPublisher()
 		}
 	}

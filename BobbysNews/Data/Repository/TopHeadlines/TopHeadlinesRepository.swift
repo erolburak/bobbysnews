@@ -24,12 +24,12 @@ class TopHeadlinesRepository: PTopHeadlinesRepository {
 			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
 		let endpoint = "top-headlines?country=\(country)&apiKey=\(apiKey)"
 		guard let url = URL(string: AppConfiguration.apiBaseUrl + endpoint) else {
-			return Fail(error: AppConfiguration.Errors.fetch)
+			return Fail(error: AppConfiguration.Errors.fetchTopHeadlines)
 				.eraseToAnyPublisher()
 		}
 		return URLSession.shared.dataTaskPublisher(for: url)
 			.tryMap { data, response in
-				try AppConfiguration.shared.validateResponse(defaultError: .fetch,
+				try AppConfiguration.shared.validateResponse(defaultError: .fetchTopHeadlines,
 															 response: response as? HTTPURLResponse)
 				return data
 			}

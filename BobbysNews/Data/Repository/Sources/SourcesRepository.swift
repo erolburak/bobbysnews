@@ -27,7 +27,7 @@ class SourcesRepository: PSourcesRepository {
 		}
 		return URLSession.shared.dataTaskPublisher(for: url)
 			.tryMap { data, response in
-				try AppConfiguration.shared.validateResponse(defaultError: .fetch,
+				try AppConfiguration.shared.validateResponse(defaultError: .fetchSources,
 															 response: response as? HTTPURLResponse)
 				return data
 			}

@@ -15,11 +15,11 @@ struct AppConfiguration {
 
 		// MARK: - Properties
 
-		case error(String), fetch, fetchSources, invalidApiKey, limitedRequests, read, reset
+		case error(String), fetchSources, fetchTopHeadlines, invalidApiKey, limitedRequests, read, reset
 
-		static var allCases: [Errors] = [.error(String(localized: "ErrorDescriptionFetch")),
-										 .fetch,
+		static var allCases: [Errors] = [.error(String(localized: "ErrorDescription")),
 										 .fetchSources,
+										 .fetchTopHeadlines,
 										 .invalidApiKey,
 										 .limitedRequests,
 										 .read,
@@ -29,10 +29,10 @@ struct AppConfiguration {
 			switch self {
 			case .error(let error):
 				return error.description
-			case .fetch:
-				return String(localized: "ErrorDescriptionFetch")
 			case .fetchSources:
 				return String(localized: "ErrorDescriptionFetchSources")
+			case .fetchTopHeadlines:
+				return String(localized: "ErrorDescriptionFetchTopHeadlines")
 			case .invalidApiKey:
 				return String(localized: "ErrorDescriptionInvalidApiKey")
 			case .limitedRequests:
@@ -48,10 +48,10 @@ struct AppConfiguration {
 			switch self {
 			case .error:
 				return String(localized: "ErrorRecoverySuggestionError")
-			case .fetch:
-				return String(localized: "ErrorRecoverySuggestionFetch")
 			case .fetchSources:
 				return String(localized: "ErrorRecoverySuggestionFetchSources")
+			case .fetchTopHeadlines:
+				return String(localized: "ErrorRecoverySuggestionFetchTopHeadlines")
 			case .invalidApiKey:
 				return String(localized: "ErrorRecoverySuggestionInvalidApiKey")
 			case .limitedRequests:
@@ -84,7 +84,7 @@ struct AppConfiguration {
 	// MARK: - Actions
 
 	func validateResponse(defaultError: Errors,
-								 response: HTTPURLResponse?) throws {
+						  response: HTTPURLResponse?) throws {
 		guard let response,
 			  200..<300 ~= response.statusCode else {
 			switch response?.statusCode {
@@ -93,7 +93,7 @@ struct AppConfiguration {
 			case 429:
 				throw Errors.limitedRequests
 			default:
-				throw Errors.fetch
+				throw defaultError
 			}
 		}
 	}
