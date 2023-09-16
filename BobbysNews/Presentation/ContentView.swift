@@ -50,7 +50,7 @@ struct ContentView: View {
 			.disabled(viewModel.listDisabled)
 			.opacity(viewModel.listOpacity)
 			.refreshable {
-				await viewModel.fetchTopHeadlines(state: .isLoading)
+				await viewModel.fetchTopHeadlines()
 			}
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
@@ -75,7 +75,7 @@ struct ContentView: View {
 							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
 								Button {
 									Task {
-										await viewModel.fetchSources(state: .isLoading)
+										await viewModel.fetchSources()
 									}
 								} label: {
 									Label("CountriesLoad", systemImage: "arrow.down.to.line")
@@ -121,9 +121,12 @@ struct ContentView: View {
 		.overlay(alignment: .center) {
 			VStack {
 				if viewModel.selectedCountry == nil {
-					StateView(image: "flag.slash",
-							  title: "EmptySelectedCountry",
-							  message: "EmptySelectedCountryMessage")
+					ContentUnavailableView {
+						Label("EmptySelectedCountry",
+							  systemImage: "flag.slash")
+					} description: {
+						Text("EmptySelectedCountryMessage")
+					}
 				} else {
 					switch viewModel.stateTopHeadlines {
 					case .isLoading:
@@ -132,15 +135,21 @@ struct ContentView: View {
 					case .loaded:
 						EmptyView()
 					case .emptyFetch:
-						StateView(image: "newspaper",
-								  title: "EmptyFetchTopHeadlines",
-								  message: "EmptyFetchTopHeadlinesMessage")
+						ContentUnavailableView {
+							Label("EmptyFetchTopHeadlines",
+								  systemImage: "newspaper")
+						} description: {
+							Text("EmptyFetchTopHeadlinesMessage")
+						}
 
 						RefreshButton()
 					case .emptyRead:
-						StateView(image: "newspaper",
-								  title: "EmptyReadTopHeadlines",
-								  message: "EmptyReadTopHeadlinesMessage")
+						ContentUnavailableView {
+							Label("EmptyReadTopHeadlines",
+								  systemImage: "newspaper")
+						} description: {
+							Text("EmptyReadTopHeadlinesMessage")
+						}
 
 						RefreshButton()
 					}
@@ -150,16 +159,10 @@ struct ContentView: View {
 		.confirmationDialog("ResetConfirmationDialog",
 							isPresented: $viewModel.showConfirmationDialogPhone,
 							titleVisibility: .visible) {
-			Button("Reset", role: .destructive) {
-				viewModel.reset()
-			}
-			.accessibilityIdentifier("ResetConfirmationDialogButtonPhone")
+			ResetButton()
 		}
 		.alert("Reset", isPresented: $viewModel.showConfirmationDialogPad) {
-			Button("Reset", role: .destructive) {
-				viewModel.reset()
-			}
-			.accessibilityIdentifier("ResetConfirmationDialogButtonPad")
+			ResetButton()
 		} message: {
 			Text("ResetConfirmationDialog")
 		}
@@ -171,21 +174,17 @@ struct ContentView: View {
 			}
 		}
 		.onAppear {
-			viewModel.onAppear(country: country)
+			viewModel.onAppear()
 		}
 		.onDisappear() {
 			viewModel.onDisappear()
 		}
-		.onChange(of: viewModel.selectedCountry) { _, newState in
-			if newState == nil {
-				country = ""
-			}
-		}
-		.onChange(of: country) {
+		.onChange(of: country,
+				  initial: true) {
+			viewModel.selectedCountry = !country.isEmpty ? country : nil
 			if !country.isEmpty {
-				viewModel.selectedCountry = country
-				Task {
-					await viewModel.fetchTopHeadlines(state: .isLoading)
+				Task.detached(priority: .background) {
+					await viewModel.fetchTopHeadlines()
 				}
 			}
 		}
@@ -249,7 +248,7 @@ struct ContentView: View {
 	private func RefreshButton() -> some View {
 		Button {
 			Task {
-				await viewModel.fetchTopHeadlines(state: .isLoading)
+				await viewModel.fetchTopHeadlines()
 			}
 		} label: {
 			Text("Refresh")
@@ -261,26 +260,12 @@ struct ContentView: View {
 		.accessibilityIdentifier("RefreshButton")
 	}
 
-	private func StateView(image: String,
-						   title: LocalizedStringKey,
-						   message: LocalizedStringKey) -> some View {
-		VStack {
-			Image(systemName: image)
-				.resizable()
-				.aspectRatio(contentMode: .fit)
-				.frame(height: 32)
-				.padding(.bottom, 4)
-
-			Text(title)
-				.font(.system(.title3,
-							  weight: .black))
-
-			Text(message)
-				.font(.system(.footnote,
-							  weight: .regular))
+	private func ResetButton() -> some View {
+		Button("Reset", role: .destructive) {
+			country = ""
+			viewModel.reset()
 		}
-		.multilineTextAlignment(.center)
-		.padding()
+		.accessibilityIdentifier("ResetConfirmationDialogButton")
 	}
 }
 
