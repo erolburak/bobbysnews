@@ -71,7 +71,7 @@ class ContentViewModelTests: XCTestCase {
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
-		await sut.fetchSources(state: .isLoading)
+		await sut.fetchSources()
 		// Then
 		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .isLoading)
@@ -86,7 +86,7 @@ class ContentViewModelTests: XCTestCase {
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
-		await sut.fetchTopHeadlines(state: .isLoading)
+		await sut.fetchTopHeadlines()
 		// Then
 		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .isLoading)

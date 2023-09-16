@@ -90,19 +90,18 @@ class ContentViewModel {
 		self.saveTopHeadlinesUseCase = saveTopHeadlinesUseCase
 	}
 
-	func onAppear(country: String) {
-		selectedCountry = !country.isEmpty ? country : nil
+	func onAppear() {
 		/// Bind sources, fetch from database and api
 		readSources()
 		fetchRequestSources()
 		Task {
-			await fetchSources(state: .isLoading)
+			await fetchSources()
 		}
 		/// Bind topHeadlines, fetch from database and api
 		readTopHeadlines()
 		fetchRequestTopHeadlines()
 		Task {
-			await fetchTopHeadlines(state: .isLoading)
+			await fetchTopHeadlines()
 		}
 	}
 
@@ -110,8 +109,8 @@ class ContentViewModel {
 		cancellable.removeAll()
 	}
 
-	func fetchSources(state: StateSources) async {
-		stateSources = state
+	func fetchSources() async {
+		stateSources = .isLoading
 		fetchSourcesUseCase
 			.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
 			.sink { [weak self] completion in
@@ -141,9 +140,9 @@ class ContentViewModel {
 			.store(in: &cancellable)
 	}
 
-	func fetchTopHeadlines(state: StateTopHeadlines) async {
+	func fetchTopHeadlines() async {
 		if let selectedCountry {
-			stateTopHeadlines = state
+			stateTopHeadlines = .isLoading
 			fetchTopHeadlinesUseCase
 				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
 					   country: selectedCountry)
@@ -181,11 +180,10 @@ class ContentViewModel {
 			try deleteSourcesUseCase
 				.delete()
 			countries = nil
-			selectedCountry = nil
 			stateSources = .emptyRead
 			/// Delete all persisted topHeadlines
 			try deleteTopHeadlinesUseCase
-				.delete(country: nil)
+				.delete(country: selectedCountry)
 			articles = nil
 			stateTopHeadlines = .emptyRead
 		} catch {
