@@ -60,7 +60,7 @@ class ContentViewModel {
 	var stateSources: StateSources = .isLoading
 	var stateTopHeadlines: StateTopHeadlines = .isLoading
 	var listDisabled: Bool { stateTopHeadlines != .loaded }
-	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.1 }
+	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
 
 	// MARK: - Private Properties
 

@@ -60,14 +60,16 @@ struct ContentView: View {
 							Text("CountriesLoading")
 						case .loaded:
 							if let countries = viewModel.countries {
-								Picker("CountrySelection",
-									   selection: $country) {
+								Picker(selection: $country) {
 									ForEach(countries,
 											id: \.self) { country in
 										Text(Locale.current.localizedString(forRegionCode: country) ?? "")
 											.tag(country)
 											.accessibilityIdentifier("CountryPickerItem" + country)
 									}
+								} label: {
+									Label("CountrySelection",
+										  systemImage: "flag.circle.fill")
 								}
 								.pickerStyle(.menu)
 							}
@@ -78,20 +80,22 @@ struct ContentView: View {
 										await viewModel.fetchSources()
 									}
 								} label: {
-									Label("CountriesLoad", systemImage: "arrow.down.to.line")
-										.labelStyle(.titleAndIcon)
+									Label("CountriesLoad",
+										  systemImage: "arrow.down.to.line.circle.fill")
 								}
 							}
 						}
 
 						Section {
-							Picker("ApiKeySelection",
-								   selection: $viewModel.apiKeyVersion) {
+							Picker(selection: $viewModel.apiKeyVersion) {
 								ForEach(1...viewModel.apiKeyTotalAmount,
 										id: \.self) { version in
 									Text("ApiKey\(version)")
 										.accessibilityIdentifier("ApiKeyPickerItem\(version)")
 								}
+							} label: {
+								Label("ApiKeySelection",
+									  systemImage: "key.fill")
 							}
 							.pickerStyle(.menu)
 							.menuActionDismissBehavior(.disabled)
@@ -106,13 +110,13 @@ struct ContentView: View {
 									viewModel.showConfirmationDialogPhone = true
 								}
 							} label: {
-								Label("Reset", systemImage: "trash")
-									.labelStyle(.titleAndIcon)
+								Label("Reset",
+									  systemImage: "trash.circle.fill")
 							}
 							.accessibilityIdentifier("ResetButton")
 						}
 					} label: {
-						Image(systemName: "gearshape")
+						Image(systemName: "gearshape.circle.fill")
 							.accessibilityIdentifier("SettingsImage")
 					}
 				}
@@ -123,7 +127,7 @@ struct ContentView: View {
 				if viewModel.selectedCountry == nil {
 					ContentUnavailableView {
 						Label("EmptySelectedCountry",
-							  systemImage: "flag.slash")
+							  systemImage: "flag.circle.fill")
 					} description: {
 						Text("EmptySelectedCountryMessage")
 					}
@@ -137,7 +141,7 @@ struct ContentView: View {
 					case .emptyFetch:
 						ContentUnavailableView {
 							Label("EmptyFetchTopHeadlines",
-								  systemImage: "newspaper")
+								  systemImage: "newspaper.circle.fill")
 						} description: {
 							Text("EmptyFetchTopHeadlinesMessage")
 						}
@@ -146,7 +150,7 @@ struct ContentView: View {
 					case .emptyRead:
 						ContentUnavailableView {
 							Label("EmptyReadTopHeadlines",
-								  systemImage: "newspaper")
+								  systemImage: "newspaper.circle.fill")
 						} description: {
 							Text("EmptyReadTopHeadlinesMessage")
 						}
@@ -238,7 +242,7 @@ struct ContentView: View {
 	}
 
 	private func EmptyImageView() -> some View {
-		Image(systemName: "photo")
+		Image(systemName: "photo.circle.fill")
 			.resizable()
 			.aspectRatio(contentMode: .fit)
 			.frame(height: 24)

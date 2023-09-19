@@ -105,7 +105,6 @@ struct DetailView: View {
 			if let url = viewModel.article.url {
 				ToolbarItem(placement: .primaryAction) {
 					ShareLink(item: url)
-						.labelStyle(.iconOnly)
 						.accessibilityIdentifier("ShareLink")
 				}
 			}
@@ -120,11 +119,11 @@ struct DetailView: View {
 								Text("Headline")
 							}
 
-							ToolbarItem(placement: .primaryAction) {
+							ToolbarItem(placement: .cancellationAction) {
 								Button {
 									viewModel.showWebView = false
 								} label: {
-									Image(systemName: "xmark")
+									Image(systemName: "xmark.circle.fill")
 								}
 								.accessibilityIdentifier("CloseButton")
 							}
@@ -135,7 +134,7 @@ struct DetailView: View {
 	}
 
 	private func EmptyImageView() -> some View {
-		Image(systemName: "photo")
+		Image(systemName: "photo.circle.fill")
 			.resizable()
 			.aspectRatio(contentMode: .fit)
 			.frame(height: 24)
