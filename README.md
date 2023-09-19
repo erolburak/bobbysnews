@@ -24,10 +24,10 @@ The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://
 - NewsAPI (https://newsapi.org)
 
 ## SCREENSHOTS
-<img src="https://github.com/erolburak/bobbysnews/assets/140210017/327eb392-cc63-4ece-a9de-82778140c9ad" style=" width:240px">
-<img src="https://github.com/erolburak/bobbysnews/assets/140210017/8e9b597f-d8e0-47aa-8a97-4901702e22e0" style=" width:240px">
-<img src="https://github.com/erolburak/bobbysnews/assets/140210017/aca074a1-073c-4838-9b8b-bbcaf114db3e" style=" width:240px">
-<img src="https://github.com/erolburak/bobbysnews/assets/140210017/43fa84c7-b4e4-473b-b1db-0e80a6fc2929" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/006ee81e-930d-42cf-8b56-0b31405121a4" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/1a589304-f163-48dd-9e33-384b0f484f6c" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/cceefd36-0abf-42a4-8d50-5d5d9a49cea5" style=" width:240px">
+<img src="https://github.com/erolburak/bobbysnews/assets/140210017/2ceff96e-d374-490e-aada-0b61adc0d948" style=" width:240px">
 
 ## SUPPORT
 Feel free to email me if there are any questions: erolburak@icloud.com
