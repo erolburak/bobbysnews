@@ -113,12 +113,10 @@ struct DetailView: View {
 			if let url = viewModel.article.url {
 				NavigationStack {
 					WebView(url: url)
+						.navigationTitle("Headline")
+						.navigationBarTitleDisplayMode(.inline)
 						.ignoresSafeArea(edges: .bottom)
 						.toolbar {
-							ToolbarItem(placement: .principal) {
-								Text("Headline")
-							}
-
 							ToolbarItem(placement: .cancellationAction) {
 								Button {
 									viewModel.showWebView = false
