@@ -50,7 +50,7 @@ struct ContentView: View {
 			.disabled(viewModel.listDisabled)
 			.opacity(viewModel.listOpacity)
 			.refreshable {
-				await viewModel.fetchTopHeadlines()
+				viewModel.fetchTopHeadlines()
 			}
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
@@ -76,9 +76,7 @@ struct ContentView: View {
 						case .emptyFetch, .emptyRead:
 							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
 								Button {
-									Task {
-										await viewModel.fetchSources()
-									}
+									viewModel.fetchSources()
 								} label: {
 									Label("CountriesLoad",
 										  systemImage: "arrow.down.to.line.circle.fill")
@@ -188,9 +186,7 @@ struct ContentView: View {
 				  initial: true) {
 			viewModel.selectedCountry = !country.isEmpty ? country : nil
 			if !country.isEmpty {
-				Task.detached(priority: .background) {
-					await viewModel.fetchTopHeadlines()
-				}
+				viewModel.fetchTopHeadlines()
 			}
 		}
     }
@@ -252,9 +248,7 @@ struct ContentView: View {
 
 	private func RefreshButton() -> some View {
 		Button {
-			Task {
-				await viewModel.fetchTopHeadlines()
-			}
+			viewModel.fetchTopHeadlines()
 		} label: {
 			Text("Refresh")
 				.textCase(.uppercase)

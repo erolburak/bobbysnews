@@ -94,25 +94,22 @@ class ContentViewModel {
 		/// Bind sources, fetch from database and api
 		readSources()
 		fetchRequestSources()
-		Task {
-			await fetchSources()
-		}
+		fetchSources()
 		/// Bind topHeadlines, fetch from database and api
 		readTopHeadlines()
 		fetchRequestTopHeadlines()
-		Task {
-			await fetchTopHeadlines()
-		}
+		fetchTopHeadlines()
 	}
 
 	func onDisappear() {
 		cancellable.removeAll()
 	}
 
-	func fetchSources() async {
+	func fetchSources() {
 		stateSources = .isLoading
 		fetchSourcesUseCase
 			.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
+			.receive(on: DispatchWorkloop.main)
 			.sink { [weak self] completion in
 				if case .failure = completion {
 					self?.updateStateSources(completion: completion,
@@ -140,12 +137,13 @@ class ContentViewModel {
 			.store(in: &cancellable)
 	}
 
-	func fetchTopHeadlines() async {
+	func fetchTopHeadlines() {
 		if let selectedCountry {
 			stateTopHeadlines = .isLoading
 			fetchTopHeadlinesUseCase
 				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
 					   country: selectedCountry)
+				.receive(on: DispatchWorkloop.main)
 				.sink { [weak self] completion in
 					if case .failure = completion {
 						self?.updateStateTopHeadlines(completion: completion,
