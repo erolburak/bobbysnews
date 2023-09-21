@@ -63,7 +63,7 @@ class ContentViewModelTests: XCTestCase {
 		}
 	}
 
-	func testFetchSources() async {
+	func testFetchSources() {
 		// Given
 		sut.articles = nil
 		sut.countries = nil
@@ -71,14 +71,14 @@ class ContentViewModelTests: XCTestCase {
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
-		await sut.fetchSources()
+		sut.fetchSources()
 		// Then
 		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .isLoading)
 		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
-	func testFetchTopHeadlines() async {
+	func testFetchTopHeadlines() {
 		// Given
 		sut.articles = nil
 		sut.countries = nil
@@ -86,7 +86,7 @@ class ContentViewModelTests: XCTestCase {
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
-		await sut.fetchTopHeadlines()
+		sut.fetchTopHeadlines()
 		// Then
 		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .isLoading)
