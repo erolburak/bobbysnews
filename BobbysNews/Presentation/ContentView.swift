@@ -165,7 +165,8 @@ struct ContentView: View {
 							titleVisibility: .visible) {
 			ResetButton()
 		}
-		.alert("Reset", isPresented: $viewModel.showConfirmationDialogPad) {
+		.alert("Reset",
+			   isPresented: $viewModel.showConfirmationDialogPad) {
 			ResetButton()
 		} message: {
 			Text("ResetConfirmationDialog")
@@ -265,7 +266,8 @@ struct ContentView: View {
 	}
 
 	private func ResetButton() -> some View {
-		Button("Reset", role: .destructive) {
+		Button("Reset",
+			   role: .destructive) {
 			country = ""
 			viewModel.reset()
 		}
