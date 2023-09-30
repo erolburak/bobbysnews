@@ -36,15 +36,9 @@ class SourcesDataController: PSourcesDataController {
 	// MARK: - Actions
 
 	func delete() throws {
-		try backgroundContext.performAndWait {
-			let fetchRequest = SourceEntity.fetchRequest()
-			let sources = try backgroundContext.fetch(fetchRequest)
-			sources.forEach { source in
-				backgroundContext.delete(source)
-			}
-			try backgroundContext.save()
-			queriesSubject.send(nil)
-		}
+		try backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "SourceEntity")))
+		try backgroundContext.save()
+		queriesSubject.send(nil)
 	}
 
 	func fetchRequest() {

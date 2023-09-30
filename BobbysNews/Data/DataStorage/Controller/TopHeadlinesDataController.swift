@@ -37,18 +37,13 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 	// MARK: - Actions
 
 	func delete(country: String?) throws {
-		try backgroundContext.performAndWait {
-			let fetchRequest = ArticleEntity.fetchRequest()
-			if let country {
-				fetchRequest.predicate = NSPredicate(format: "country == %@", country)
-			}
-			let articles = try backgroundContext.fetch(fetchRequest)
-			articles.forEach { article in
-				backgroundContext.delete(article)
-			}
-			try backgroundContext.save()
-			queriesSubject.send(nil)
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ArticleEntity")
+		if let country {
+			fetchRequest.predicate = NSPredicate(format: "country == %@", country)
 		}
+		try backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: fetchRequest))
+		try backgroundContext.save()
+		queriesSubject.send(nil)
 	}
 
 	func fetchRequest(country: String) {

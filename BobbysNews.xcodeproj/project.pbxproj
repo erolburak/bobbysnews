@@ -481,8 +481,8 @@
 		BFD1B8E42AA662E2000ED973 /* DataStorage */ = {
 			isa = PBXGroup;
 			children = (
-				BFDA4B502AA76C2300E9221F /* Entity */,
 				BFDA4B6B2AA7CB0E00E9221F /* Controller */,
+				BFDA4B502AA76C2300E9221F /* Entity */,
 			);
 			path = DataStorage;
 			sourceTree = "<group>";
