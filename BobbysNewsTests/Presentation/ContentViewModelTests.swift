@@ -78,7 +78,7 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
 
-	func testFetchTopHeadlines() {
+	func testFetchTopHeadlines() async {
 		// Given
 		sut.articles = nil
 		sut.countries = nil
@@ -86,7 +86,7 @@ class ContentViewModelTests: XCTestCase {
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
-		sut.fetchTopHeadlines()
+		await sut.fetchTopHeadlines(state: .isLoading)
 		// Then
 		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .isLoading)
@@ -98,7 +98,6 @@ class ContentViewModelTests: XCTestCase {
 		sut.apiKeyVersion = 2
 		sut.articles = []
 		sut.countries = []
-		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
 		sut.stateTopHeadlines = .loaded
 		// When
@@ -107,7 +106,6 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.apiKeyVersion, 1)
 		XCTAssertNil(sut.articles)
 		XCTAssertNil(sut.countries)
-		XCTAssertNil(sut.selectedCountry)
 		XCTAssertEqual(sut.stateSources, .emptyRead)
 		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
 	}

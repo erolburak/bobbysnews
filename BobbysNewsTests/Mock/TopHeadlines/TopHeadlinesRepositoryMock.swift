@@ -6,21 +6,17 @@
 //
 
 @testable import BobbysNews
-import Combine
 
 class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
+			   country: String) async throws -> TopHeadlinesDTO {
 		if country.isEmpty == false {
-			return Just(DTOMock.topHeadlinesDto1)
-				.setFailureType(to: Error.self)
-				.eraseToAnyPublisher()
+			return DTOMock.topHeadlinesDto1
 		} else {
-			return Fail<TopHeadlinesDTO, Error>(error: AppConfiguration.Errors.fetchTopHeadlines)
-				.eraseToAnyPublisher()
+			throw AppConfiguration.Errors.fetchTopHeadlines
 		}
 	}
 }
