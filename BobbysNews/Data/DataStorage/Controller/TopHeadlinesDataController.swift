@@ -37,11 +37,12 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 	// MARK: - Actions
 
 	func delete(country: String?) throws {
-		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "SourceEntity")
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ArticleEntity")
 		if let country {
 			fetchRequest.predicate = NSPredicate(format: "country == %@", country)
 		}
-		try backgroundContext.executeAndMergeChanges(NSBatchDeleteRequest(fetchRequest: fetchRequest))
+		try backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: fetchRequest))
+		try backgroundContext.save()
 		queriesSubject.send(nil)
 	}
 
@@ -101,6 +102,7 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 						article?.urlToImage = articleDto.urlToImage
 					}
 				}
+				try backgroundContext.save()
 			} catch {
 				queriesSubject.send(nil)
 			}
