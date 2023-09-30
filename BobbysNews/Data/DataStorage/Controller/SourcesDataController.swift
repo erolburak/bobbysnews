@@ -92,10 +92,10 @@ class SourcesDataController: PSourcesDataController {
 					}
 				}
 				try backgroundContext.save()
-				fetchRequest()
 			} catch {
 				queriesSubject.send(nil)
 			}
 		}
+		fetchRequest()
 	}
 }

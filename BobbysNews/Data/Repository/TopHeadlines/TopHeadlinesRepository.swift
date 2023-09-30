@@ -5,7 +5,6 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
-import Combine
 import Foundation
 
 protocol PTopHeadlinesRepository {
@@ -13,7 +12,7 @@ protocol PTopHeadlinesRepository {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error>
+			   country: String) async throws -> TopHeadlinesDTO
 }
 
 class TopHeadlinesRepository: PTopHeadlinesRepository {
@@ -21,20 +20,15 @@ class TopHeadlinesRepository: PTopHeadlinesRepository {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
+			   country: String) async throws -> TopHeadlinesDTO {
 		let endpoint = "top-headlines?country=\(country)&apiKey=\(apiKey)"
 		guard let url = URL(string: AppConfiguration.apiBaseUrl + endpoint) else {
-			return Fail(error: AppConfiguration.Errors.fetchTopHeadlines)
-				.eraseToAnyPublisher()
+			throw AppConfiguration.Errors.fetchTopHeadlines
 		}
-		return URLSession.shared.dataTaskPublisher(for: url)
-			.tryMap { data, response in
-				try AppConfiguration.shared.validateResponse(defaultError: .fetchTopHeadlines,
-															 response: response as? HTTPURLResponse)
-				return data
-			}
-			.decode(type: TopHeadlinesDTO.self,
-					decoder: JSONDecoder())
-			.eraseToAnyPublisher()
+		let (data, response) = try await URLSession.shared.data(from: url)
+		try AppConfiguration.shared.validateResponse(defaultError: .fetchTopHeadlines,
+													 response: response as? HTTPURLResponse)
+		return try JSONDecoder().decode(TopHeadlinesDTO.self,
+										from: data)
 	}
 }

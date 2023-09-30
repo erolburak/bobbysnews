@@ -32,15 +32,15 @@ struct ContentView: View {
 								ShareLink("Share", item: url)
 							}
 						}
-						.id(article)
-						.accessibilityIdentifier(article == viewModel.articles?.first ? "NavigationLinkItem" : "")
+						.id(article.id)
+						.accessibilityIdentifier(article.id == viewModel.articles?.first?.id ? "NavigationLinkItem" : "")
 					}
 					.navigationDestination(for: Article.self) { article in
 						DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
 					}
 					.onChange(of: viewModel.stateTopHeadlines) { _, newState in
 						if newState == .loaded {
-							proxy.scrollTo(viewModel.articles?.first)
+							proxy.scrollTo(viewModel.articles?.first?.id)
 						}
 					}
 				}
@@ -50,7 +50,7 @@ struct ContentView: View {
 			.disabled(viewModel.listDisabled)
 			.opacity(viewModel.listOpacity)
 			.refreshable {
-				viewModel.fetchTopHeadlines()
+				await viewModel.fetchTopHeadlines()
 			}
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
@@ -134,6 +134,7 @@ struct ContentView: View {
 					case .isLoading:
 						Text("TopHeadlinesLoading")
 							.fontWeight(.black)
+						EmptyView()
 					case .loaded:
 						EmptyView()
 					case .emptyFetch:
@@ -185,8 +186,10 @@ struct ContentView: View {
 		.onChange(of: country,
 				  initial: true) {
 			viewModel.selectedCountry = !country.isEmpty ? country : nil
+		}
+		.task(id: country) {
 			if !country.isEmpty {
-				viewModel.fetchTopHeadlines()
+				await viewModel.fetchTopHeadlines(state: .isLoading)
 			}
 		}
     }
@@ -248,7 +251,9 @@ struct ContentView: View {
 
 	private func RefreshButton() -> some View {
 		Button {
-			viewModel.fetchTopHeadlines()
+			Task {
+				await viewModel.fetchTopHeadlines(state: .isLoading)
+			}
 		} label: {
 			Text("Refresh")
 				.textCase(.uppercase)

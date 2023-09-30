@@ -5,14 +5,12 @@
 //  Created by Burak Erol on 01.09.23.
 //
 
-import Combine
-
 protocol PFetchTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error>
+			   country: String) async throws -> TopHeadlinesDTO
 }
 
 class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
@@ -30,10 +28,9 @@ class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) -> AnyPublisher<TopHeadlinesDTO, Error> {
-		topHeadlinesRepository
+			   country: String) async throws -> TopHeadlinesDTO {
+		try await topHeadlinesRepository
 			.fetch(apiKey: apiKey,
 				   country: country)
-			.eraseToAnyPublisher()
 	}
 }

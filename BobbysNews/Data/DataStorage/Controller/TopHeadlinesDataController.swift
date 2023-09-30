@@ -108,10 +108,10 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 					}
 				}
 				try backgroundContext.save()
-				fetchRequest(country: country)
 			} catch {
 				queriesSubject.send(nil)
 			}
 		}
+		fetchRequest(country: country)
 	}
 }

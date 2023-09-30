@@ -98,7 +98,9 @@ class ContentViewModel {
 		/// Bind topHeadlines, fetch from database and api
 		readTopHeadlines()
 		fetchRequestTopHeadlines()
-		fetchTopHeadlines()
+		Task {
+			await fetchTopHeadlines(state: .isLoading)
+		}
 	}
 
 	func onDisappear() {
@@ -137,37 +139,35 @@ class ContentViewModel {
 			.store(in: &cancellable)
 	}
 
-	func fetchTopHeadlines() {
+	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
 		if let selectedCountry {
-			stateTopHeadlines = .isLoading
-			fetchTopHeadlinesUseCase
-				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
-					   country: selectedCountry)
-				.receive(on: DispatchWorkloop.main)
-				.sink { [weak self] completion in
-					if case .failure = completion {
-						self?.updateStateTopHeadlines(completion: completion,
-													  state: self?.articles?.isEmpty == true ? .emptyFetch : .loaded)
-					}
-				} receiveValue: { [weak self] topHeadlinesDto in
-					if topHeadlinesDto.articles != nil ||
-						topHeadlinesDto.articles?.isEmpty == false {
-						self?.saveTopHeadlinesUseCase
-							.save(country: selectedCountry,
-								  topHeadlinesDto: topHeadlinesDto)
-					} else {
-						do {
-							try self?.deleteTopHeadlinesUseCase
-								.delete(country: selectedCountry)
-							self?.articles?.removeAll()
-							self?.updateStateTopHeadlines(completion: .finished,
-														  state: .emptyFetch)
-						} catch {
-							self?.showAlert(error: .error(error.localizedDescription))
-						}
+			if let state {
+				stateTopHeadlines = state
+			}
+			do {
+				let topHeadlinesDto = try await fetchTopHeadlinesUseCase
+					.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
+						   country: selectedCountry)
+				if topHeadlinesDto.articles != nil ||
+					topHeadlinesDto.articles?.isEmpty == false {
+					saveTopHeadlinesUseCase
+						.save(country: selectedCountry,
+							  topHeadlinesDto: topHeadlinesDto)
+				} else {
+					do {
+						try deleteTopHeadlinesUseCase
+							.delete(country: selectedCountry)
+						articles?.removeAll()
+						updateStateTopHeadlines(completion: .finished,
+												state: .emptyFetch)
+					} catch {
+						showAlert(error: .error(error.localizedDescription))
 					}
 				}
-				.store(in: &cancellable)
+			} catch {
+				updateStateTopHeadlines(completion: .failure(error),
+										state: articles?.isEmpty == true ? .emptyFetch : .loaded)
+			}
 		}
 	}
 
