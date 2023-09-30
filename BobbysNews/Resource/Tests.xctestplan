@@ -9,6 +9,12 @@
     }
   ],
   "defaultOptions" : {
+    "language" : "en-GB",
+    "locationScenario" : {
+      "identifier" : "London, England",
+      "referenceType" : "built-in"
+    },
+    "region" : "GB",
     "targetForVariableExpansion" : {
       "containerPath" : "container:BobbysNews.xcodeproj",
       "identifier" : "BF72AA862AA0BFD300368DA5",

@@ -36,15 +36,8 @@ class SourcesDataController: PSourcesDataController {
 	// MARK: - Actions
 
 	func delete() throws {
-		try backgroundContext.performAndWait {
-			let fetchRequest = SourceEntity.fetchRequest()
-			let sources = try backgroundContext.fetch(fetchRequest)
-			sources.forEach { source in
-				backgroundContext.delete(source)
-			}
-			try backgroundContext.save()
-			queriesSubject.send(nil)
-		}
+		try backgroundContext.executeAndMergeChanges(NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "SourceEntity")))
+		queriesSubject.send(nil)
 	}
 
 	func fetchRequest() {
@@ -91,7 +84,6 @@ class SourcesDataController: PSourcesDataController {
 						source?.url = sourceDto.url
 					}
 				}
-				try backgroundContext.save()
 			} catch {
 				queriesSubject.send(nil)
 			}

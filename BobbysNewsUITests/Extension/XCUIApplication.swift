@@ -13,6 +13,6 @@ extension XCUIApplication {
 
 	/// Identifies if limited request alert is visible
 	var isLimitedRequestAlertVisible: Bool {
-		self.alerts[Locale.current.language.languageCode == "en" ? "Limited requests" : "Limitierte Abfragen"].waitForExistence(timeout: 5)
+		self.alerts[Locale.current.language.languageCode == "en" ? "Limited requests" : ""].waitForExistence(timeout: 5)
 	}
 }

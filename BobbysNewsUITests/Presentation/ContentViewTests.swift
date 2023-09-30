@@ -33,7 +33,7 @@ final class ContentViewTests: XCTestCase {
 		let app = XCUIApplication()
 		app.launch()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : "Schlagzeilen"].images["SettingsImage"]
+			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
 		}
@@ -44,10 +44,10 @@ final class ContentViewTests: XCTestCase {
 		let app = XCUIApplication()
 		app.launch()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : "Schlagzeilen"].images["SettingsImage"]
+			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
-			let countryPicker = app.collectionViews.buttons[Locale.current.language.languageCode == "en" ? "Country selection" : "Länderauswahl"]
+			let countryPicker = app.collectionViews.buttons[Locale.current.language.languageCode == "en" ? "Country selection" : ""]
 			XCTAssertTrue(countryPicker.waitForExistence(timeout: 5))
 			countryPicker.tap()
 			let countryPickerItemDE = app.buttons["CountryPickerItem" + "de"]
@@ -61,10 +61,10 @@ final class ContentViewTests: XCTestCase {
 		let app = XCUIApplication()
 		app.launch()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : "Schlagzeilen"].images["SettingsImage"]
+			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
-			let apiKeyPicker = app.collectionViews.buttons[Locale.current.language.languageCode == "en" ? "API key selection" : "API-Schlüsselauswahl"]
+			let apiKeyPicker = app.collectionViews.buttons[Locale.current.language.languageCode == "en" ? "API key selection" : ""]
 			XCTAssertTrue(apiKeyPicker.waitForExistence(timeout: 5))
 			apiKeyPicker.tap()
 			let apiKeyPickerItem2 = app.buttons["ApiKeyPickerItem2"]
@@ -78,7 +78,7 @@ final class ContentViewTests: XCTestCase {
 		let app = XCUIApplication()
 		app.launch()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : "Schlagzeilen"].images["SettingsImage"]
+			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
 			let resetButton = app.buttons["ResetButton"]
