@@ -134,7 +134,6 @@ struct ContentView: View {
 					case .isLoading:
 						Text("TopHeadlinesLoading")
 							.fontWeight(.black)
-						EmptyView()
 					case .loaded:
 						EmptyView()
 					case .emptyFetch:

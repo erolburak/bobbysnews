@@ -49,6 +49,8 @@ class ContentViewModel {
 	var apiKeyVersion = 1
 	var articles: [Article]?
 	var countries: [String]?
+	var listDisabled: Bool { stateTopHeadlines != .loaded }
+	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
 	var selectedCountry: String? {
 		didSet {
 			articles?.removeAll()
@@ -59,8 +61,6 @@ class ContentViewModel {
 	var showConfirmationDialogPhone = false
 	var stateSources: StateSources = .isLoading
 	var stateTopHeadlines: StateTopHeadlines = .isLoading
-	var listDisabled: Bool { stateTopHeadlines != .loaded }
-	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
 
 	// MARK: - Private Properties
 
