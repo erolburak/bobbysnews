@@ -18,15 +18,20 @@ struct DetailView: View {
 
 	var body: some View {
 		ScrollView {
-			VStack {
-				Text(viewModel.article.source?.name ?? String(localized: "EmptyArticleSource"))
-					.font(.system(.subheadline,
-								  weight: .black))
-					.lineLimit(1)
+			VStack(alignment: .leading) {
+				VStack {
+					Text(viewModel.article.source?.name ?? String(localized: "EmptyArticleSource"))
+						.font(.system(.subheadline,
+									  weight: .black))
+						.lineLimit(1)
 
-				Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-					.font(.system(size: 8,
-								  weight: .semibold))
+					Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+						.font(.system(size: 8,
+									  weight: .semibold))
+				}
+				.frame(maxWidth: .infinity)
+				.multilineTextAlignment(.center)
+				.id(0)
 
 				GeometryReader { geometry in
 					AsyncImage(url: viewModel.article.urlToImage) { phase in
@@ -57,6 +62,7 @@ struct DetailView: View {
 								   startPoint: UnitPoint(x: 0.5, y: 0.9),
 								   endPoint: UnitPoint(x: 0.5, y: 1))
 				}
+				.id(1)
 
 				VStack(alignment: .leading,
 					   spacing: 8) {
@@ -71,11 +77,9 @@ struct DetailView: View {
 					Text(viewModel.article.author ?? String(localized: "EmptyArticleAuthor"))
 						.font(.system(size: 8,
 									  weight: .semibold))
-
-					/// Workaround to left align the content
-					Color.clear.frame(height: 0)
 				}
 				.padding(.horizontal)
+				.id(2)
 
 				if viewModel.article.url != nil {
 					VStack {
@@ -93,13 +97,20 @@ struct DetailView: View {
 									  weight: .black))
 						.accessibilityIdentifier("ReadButton")
 					}
+					.frame(maxWidth: .infinity)
+					.textSelection(.disabled)
 					.foregroundStyle(.secondary)
 					.padding(.horizontal)
 					.padding(.top, 40)
+					.id(3)
 				}
 			}
 		}
+		.navigationTitle(viewModel.navigationTitle)
 		.navigationBarTitleDisplayMode(.inline)
+		.scrollPosition(id: $viewModel.scrollPosition,
+						anchor: .top)
+		.scrollTargetLayout()
 		.textSelection(.enabled)
 		.toolbar {
 			if let url = viewModel.article.url {
@@ -159,19 +170,21 @@ struct DetailView: View {
 }
 
 #Preview {
-	DetailView(viewModel: ViewModelDI().detailViewModel(article: Article(author: "Author",
-																		 content: "ContentStart\n\n\n\n\n\n\n\n\n\n\n\n\n\nContentEnd",
-																		 country: "Country",
-																		 publishedAt: "2001-02-03T12:34:56Z".toDate,
-																		 source: Source(category: "SourceCategory",
-																						country: "SourceCountry",
-																						id: "SourceId",
-																						language: "SourceLanguage",
-																						name: "SourceName",
-																						story: "SourceStory",
-																						url: URL(string: "https://github.com/erolburak/bobbysnews")),
-																		 story: "Story",
-																		 title: "Title",
-																		 url: URL(string: "https://github.com/erolburak/bobbysnews"),
-																		 urlToImage: URL(string: "https://raw.githubusercontent.com/erolburak/bobbysnews/main/BobbysNews/Resource/Assets.xcassets/AppIcon.appiconset/%E2%80%8EAppIcon.png"))))
+	NavigationStack {
+		DetailView(viewModel: ViewModelDI().detailViewModel(article: Article(author: "Author",
+																			 content: "ContentStart\n\n\n\n\n\n\n\n\n\n\n\n\n\nContentEnd",
+																			 country: "Country",
+																			 publishedAt: "2001-02-03T12:34:56Z".toDate,
+																			 source: Source(category: "SourceCategory",
+																							country: "SourceCountry",
+																							id: "SourceId",
+																							language: "SourceLanguage",
+																							name: "SourceName",
+																							story: "SourceStory",
+																							url: URL(string: "https://github.com/erolburak/bobbysnews")),
+																			 story: "Story",
+																			 title: "Title",
+																			 url: URL(string: "https://github.com/erolburak/bobbysnews"),
+																			 urlToImage: URL(string: "https://raw.githubusercontent.com/erolburak/bobbysnews/main/BobbysNews/Resource/Assets.xcassets/AppIcon.appiconset/%E2%80%8EAppIcon.png"))))
+	}
 }

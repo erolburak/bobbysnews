@@ -15,34 +15,26 @@ struct ContentView: View {
 
 	// MARK: - Private Properties
 
-	@AppStorage("country") private var country = "us"
+	@AppStorage("country") private var country = ""
 
 	// MARK: - Layouts
 
     var body: some View {
 		NavigationStack {
 			ScrollView {
-				ScrollViewReader { proxy in
-					ForEach(viewModel.articles ?? []) { article in
-						NavigationLink(value: article) {
-							Item(article: article)
-						}
-						.contextMenu {
-							if let url = article.url {
-								ShareLink("Share", item: url)
-							}
-						}
-						.id(article.id)
-						.accessibilityIdentifier(article.id == viewModel.articles?.first?.id ? "NavigationLinkItem" : "")
+				ForEach(viewModel.articles ?? []) { article in
+					NavigationLink(value: article) {
+						Item(article: article)
 					}
-					.navigationDestination(for: Article.self) { article in
-						DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
-					}
-					.onChange(of: viewModel.stateTopHeadlines) { _, newState in
-						if newState == .loaded {
-							proxy.scrollTo(viewModel.articles?.first?.id)
+					.contextMenu {
+						if let url = article.url {
+							ShareLink("Share", item: url)
 						}
 					}
+					.accessibilityIdentifier(article.id == viewModel.articles?.first?.id ? "NavigationLinkItem" : "")
+				}
+				.navigationDestination(for: Article.self) { article in
+					DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
 				}
 			}
 			.navigationTitle("TopHeadlines")
@@ -60,7 +52,7 @@ struct ContentView: View {
 							Text("CountriesLoading")
 						case .loaded:
 							if let countries = viewModel.countries {
-								Picker(selection: $country) {
+								Picker(selection: $viewModel.selectedCountry) {
 									ForEach(countries,
 											id: \.self) { country in
 										Text(Locale.current.localizedString(forRegionCode: country) ?? "")
@@ -76,7 +68,7 @@ struct ContentView: View {
 						case .emptyFetch, .emptyRead:
 							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
 								Button {
-									viewModel.fetchSources()
+									viewModel.fetchSources(sensoryFeedback: true)
 								} label: {
 									Label("CountriesLoad",
 										  systemImage: "arrow.down.to.line.circle.fill")
@@ -122,7 +114,7 @@ struct ContentView: View {
 		}
 		.overlay(alignment: .center) {
 			VStack {
-				if viewModel.selectedCountry == nil {
+				if viewModel.selectedCountry.isEmpty {
 					ContentUnavailableView {
 						Label("EmptySelectedCountry",
 							  systemImage: "flag.circle.fill")
@@ -177,19 +169,18 @@ struct ContentView: View {
 			}
 		}
 		.onAppear {
-			viewModel.onAppear()
+			viewModel.onAppear(selectedCountry: country)
 		}
 		.onDisappear() {
 			viewModel.onDisappear()
 		}
-		.onChange(of: country,
-				  initial: true) {
-			viewModel.selectedCountry = !country.isEmpty ? country : nil
+		.onChange(of: viewModel.selectedCountry) {
+			country = viewModel.selectedCountry
 		}
-		.task(id: country) {
-			if !country.isEmpty {
-				await viewModel.fetchTopHeadlines(state: .isLoading)
-			}
+		.sensoryFeedback(viewModel.sensoryFeedback,
+						 trigger: viewModel.sensoryFeedbackTrigger) { _, newValue in
+			viewModel.sensoryFeedbackTrigger = false
+			return newValue == true
 		}
     }
 
@@ -266,7 +257,6 @@ struct ContentView: View {
 	private func ResetButton() -> some View {
 		Button("Reset",
 			   role: .destructive) {
-			country = ""
 			viewModel.reset()
 		}
 		.accessibilityIdentifier("ResetConfirmationDialogButton")

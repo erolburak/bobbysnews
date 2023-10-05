@@ -67,13 +67,13 @@ class ContentViewModelTests: XCTestCase {
 		// Given
 		sut.articles = nil
 		sut.countries = nil
-		sut.selectedCountry = nil
+		sut.selectedCountry = ""
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
 		sut.fetchSources()
 		// Then
-		XCTAssertNil(sut.selectedCountry)
+		XCTAssertTrue(sut.selectedCountry.isEmpty)
 		XCTAssertEqual(sut.stateSources, .isLoading)
 		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
@@ -82,13 +82,13 @@ class ContentViewModelTests: XCTestCase {
 		// Given
 		sut.articles = nil
 		sut.countries = nil
-		sut.selectedCountry = nil
+		sut.selectedCountry = ""
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
 		await sut.fetchTopHeadlines(state: .isLoading)
 		// Then
-		XCTAssertNil(sut.selectedCountry)
+		XCTAssertTrue(sut.selectedCountry.isEmpty)
 		XCTAssertEqual(sut.stateSources, .isLoading)
 		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
 	}
