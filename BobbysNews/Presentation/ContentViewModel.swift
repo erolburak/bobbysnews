@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Foundation
+import SwiftUI
 
 @Observable
 class ContentViewModel {
@@ -46,16 +46,30 @@ class ContentViewModel {
 
 	var alertError: AppConfiguration.Errors?
 	var apiKeyTotalAmount = AppConfiguration.apiKeyTotalAmount
-	var apiKeyVersion = 1
+	var apiKeyVersion = 1 {
+		didSet {
+			sensoryFeedback(feedback: .selection)
+		}
+	}
 	var articles: [Article]?
 	var countries: [String]?
 	var listDisabled: Bool { stateTopHeadlines != .loaded }
 	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
-	var selectedCountry: String? {
+	var selectedCountry = "" {
 		didSet {
 			articles?.removeAll()
+			Task {
+				await fetchTopHeadlines(state: .isLoading)
+			}
+		}
+		willSet {
+			if !newValue.isEmpty {
+				sensoryFeedback(feedback: .selection)
+			}
 		}
 	}
+	var sensoryFeedback: SensoryFeedback = .success
+	var sensoryFeedbackTrigger = false
 	var showAlert = false
 	var showConfirmationDialogPad = false
 	var showConfirmationDialogPhone = false
@@ -90,7 +104,8 @@ class ContentViewModel {
 		self.saveTopHeadlinesUseCase = saveTopHeadlinesUseCase
 	}
 
-	func onAppear() {
+	func onAppear(selectedCountry: String) {
+		self.selectedCountry = selectedCountry
 		/// Bind sources, fetch from database and api
 		readSources()
 		fetchRequestSources()
@@ -98,16 +113,13 @@ class ContentViewModel {
 		/// Bind topHeadlines, fetch from database and api
 		readTopHeadlines()
 		fetchRequestTopHeadlines()
-		Task {
-			await fetchTopHeadlines(state: .isLoading)
-		}
 	}
 
 	func onDisappear() {
 		cancellable.removeAll()
 	}
 
-	func fetchSources() {
+	func fetchSources(sensoryFeedback: Bool? = nil) {
 		stateSources = .isLoading
 		fetchSourcesUseCase
 			.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
@@ -122,6 +134,9 @@ class ContentViewModel {
 					sourcesDto.sources?.isEmpty == false {
 					self?.saveSourcesUseCase
 						.save(sourcesDto: sourcesDto)
+					if sensoryFeedback == true {
+						self?.sensoryFeedback(feedback: .success)
+					}
 				} else {
 					self?.updateStateSources(completion: .finished,
 											 state: .emptyFetch)
@@ -140,7 +155,7 @@ class ContentViewModel {
 	}
 
 	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
-		if let selectedCountry {
+		if !selectedCountry.isEmpty {
 			if let state {
 				stateTopHeadlines = state
 			}
@@ -174,6 +189,7 @@ class ContentViewModel {
 	func reset() {
 		do {
 			apiKeyVersion = 1
+			selectedCountry = ""
 			/// Delete all persisted sources
 			try deleteSourcesUseCase
 				.delete()
@@ -184,6 +200,7 @@ class ContentViewModel {
 				.delete(country: selectedCountry)
 			articles = nil
 			stateTopHeadlines = .emptyRead
+			sensoryFeedback(feedback: .success)
 		} catch {
 			showAlert(error: .reset)
 		}
@@ -195,7 +212,7 @@ class ContentViewModel {
 	}
 
 	private func fetchRequestTopHeadlines() {
-		if let selectedCountry {
+		if !selectedCountry.isEmpty {
 			fetchRequestTopHeadlinesUseCase
 				.fetchRequest(country: selectedCountry)
 		}
@@ -243,9 +260,17 @@ class ContentViewModel {
 			.store(in: &cancellable)
 	}
 
+	private func sensoryFeedback(feedback: SensoryFeedback) {
+		sensoryFeedback = feedback
+		DispatchQueue.main.async {
+			self.sensoryFeedbackTrigger = true
+		}
+	}
+
 	private func showAlert(error: AppConfiguration.Errors) {
 		alertError = error
 		showAlert = true
+		sensoryFeedback(feedback: .error)
 	}
 
 	private func updateStateSources(completion: Subscribers.Completion<Error>,
