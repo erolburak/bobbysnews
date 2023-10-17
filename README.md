@@ -4,7 +4,7 @@
 BobbysNews
 
 ## DESCRIPTION
-The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://newsapi.org) for retrieving top headlines from all over the web. These top headlines are displayed in a list and also contain a more detailed page. SwiftUI components are used in this project.
+The BobbysNews project is a simple app that is supposed to use the NewsAPI (https://newsapi.org) for retrieving top headlines from all over the web. These top headlines are displayed in a list and also contain a more detailed page. SwiftUI components are used in this project.
 
 ## SETUP
 - Minimum iOS target: 17.0
