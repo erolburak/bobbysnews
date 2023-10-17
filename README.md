@@ -8,7 +8,7 @@ The BobbysNews app is a simple app that is supposed to use the NewsAPI (https://
 
 ## SETUP
 - Minimum iOS target: 17.0
-- Build with: Xcode 15.0
+- Build with: Xcode
 
 ## ARCHITECTURE
 - Clean Architecture
