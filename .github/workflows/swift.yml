@@ -23,10 +23,6 @@ jobs:
     - name: Setup Swift
       uses: swift-actions/setup-swift@v1
     - name: Test iPhone 15 Pro
-      run: >-
-        xcodebuild test -project BobbysNews.xcodeproj
-        -scheme BobbysNews -destination 'platform=iOS Simulator,name=iPhone 15 Pro' | xcpretty -s
+      run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 15 Pro' | xcbeautify
     - name: Test iPad Pro (12.9-inch) (6th generation)
-      run: >-
-        xcodebuild test -project BobbysNews.xcodeproj
-        -scheme BobbysNews -destination 'platform=iOS Simulator,name=iPad Pro (12.9-inch) (6th generation)'| xcbeautify
+      run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro (12.9-inch) (6th generation)' | xcbeautify

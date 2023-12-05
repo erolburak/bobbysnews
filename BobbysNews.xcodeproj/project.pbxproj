@@ -155,10 +155,10 @@
 		BF7387E32AAA4B9F008FC067 /* SourcesQueriesRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesQueriesRepositoryMock.swift; sourceTree = "<group>"; };
 		BF7387E52AAA4BB8008FC067 /* SourcesRepositoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesRepositoryMock.swift; sourceTree = "<group>"; };
 		BF7387E72AAA5171008FC067 /* AppConfigurationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationTests.swift; sourceTree = "<group>"; };
+		BF79CBFA2B1F7A2700E32CFB /* BobbysNews.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = BobbysNews.xctestplan; sourceTree = "<group>"; };
 		BF7DFCB52AA1338100FCB11C /* ContentViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewTests.swift; sourceTree = "<group>"; };
 		BF7DFCB72AA133B400FCB11C /* DetailViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewTests.swift; sourceTree = "<group>"; };
 		BF91F8CC2AB24DA800CEF82E /* XCUIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIApplication.swift; sourceTree = "<group>"; };
-		BFBDD9192AA0C75700A4D6DF /* Tests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tests.xctestplan; sourceTree = "<group>"; };
 		BFD1B8AD2AA5E70F000ED973 /* ViewModelDITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDITests.swift; sourceTree = "<group>"; };
 		BFD1B8B02AA5F2B0000ED973 /* TopHeadlinesQueriesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlinesQueriesRepositoryTests.swift; sourceTree = "<group>"; };
 		BFD1B8B22AA5F2C2000ED973 /* TopHeadlinesRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopHeadlinesRepositoryTests.swift; sourceTree = "<group>"; };
@@ -372,9 +372,9 @@
 			children = (
 				BF72AA932AA0BFD400368DA5 /* Assets.xcassets */,
 				BF72AA952AA0BFD400368DA5 /* BobbysNews.entitlements */,
+				BF79CBFA2B1F7A2700E32CFB /* BobbysNews.xctestplan */,
 				BF72AA992AA0BFD400368DA5 /* Info.plist */,
 				BF188EB72AA0E33D00955836 /* Localizable.xcstrings */,
-				BFBDD9192AA0C75700A4D6DF /* Tests.xctestplan */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
