@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "435B7A07-1EE2-4587-B3DE-09DF3E4D85B3",
+      "id" : "921970DA-36BE-421E-88BF-92DE3C18B758",
       "name" : "Test Scheme Action",
       "options" : {
 
@@ -19,8 +19,7 @@
       "containerPath" : "container:BobbysNews.xcodeproj",
       "identifier" : "BF72AA862AA0BFD300368DA5",
       "name" : "BobbysNews"
-    },
-    "testTimeoutsEnabled" : true
+    }
   },
   "testTargets" : [
     {

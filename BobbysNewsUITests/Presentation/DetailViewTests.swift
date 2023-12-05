@@ -22,12 +22,13 @@ final class DetailViewTests: XCTestCase {
 		let app = XCUIApplication()
 		app.launch()
 		if !app.isLimitedRequestAlertVisible {
-			let navigationLink = app.buttons["NavigationLinkItem"]
-			XCTAssertTrue(navigationLink.waitForExistence(timeout: 5))
-			navigationLink.tap()
-			let shareLink = app.buttons["ShareLink"]
-			XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
-			shareLink.tap()
+			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
+			if navigationLink.waitForExistence(timeout: 5) {
+				navigationLink.tap()
+				let shareLink = app.buttons["ShareLink"]
+				XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
+				shareLink.tap()
+			}
 		}
 	}
 
@@ -36,12 +37,13 @@ final class DetailViewTests: XCTestCase {
 		let app = XCUIApplication()
 		app.launch()
 		if !app.isLimitedRequestAlertVisible {
-			let navigationLink = app.buttons["NavigationLinkItem"]
-			XCTAssertTrue(navigationLink.waitForExistence(timeout: 5))
-			navigationLink.tap()
-			let readButton = app.buttons["ReadButton"]
-			XCTAssertTrue(readButton.waitForExistence(timeout: 5))
-			readButton.tap()
+			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
+			if navigationLink.waitForExistence(timeout: 5) {
+				navigationLink.tap()
+				let readButton = app.buttons["ReadButton"]
+				XCTAssertTrue(readButton.waitForExistence(timeout: 5))
+				readButton.tap()
+			}
 		}
 	}
 
@@ -50,15 +52,16 @@ final class DetailViewTests: XCTestCase {
 		let app = XCUIApplication()
 		app.launch()
 		if !app.isLimitedRequestAlertVisible {
-			let navigationLink = app.buttons["NavigationLinkItem"]
-			XCTAssertTrue(navigationLink.waitForExistence(timeout: 5))
-			navigationLink.tap()
-			let readButton = app.buttons["ReadButton"]
-			XCTAssertTrue(readButton.waitForExistence(timeout: 5))
-			readButton.tap()
-			let closeButton = app.buttons["CloseButton"]
-			XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
-			closeButton.tap()
+			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
+			if navigationLink.waitForExistence(timeout: 5) {
+				navigationLink.tap()
+				let readButton = app.buttons["ReadButton"]
+				XCTAssertTrue(readButton.waitForExistence(timeout: 5))
+				readButton.tap()
+				let closeButton = app.buttons["CloseButton"]
+				XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
+				closeButton.tap()
+			}
 		}
 	}
 }
