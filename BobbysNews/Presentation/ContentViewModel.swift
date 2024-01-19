@@ -71,8 +71,7 @@ class ContentViewModel {
 	var sensoryFeedback: SensoryFeedback = .success
 	var sensoryFeedbackTrigger = false
 	var showAlert = false
-	var showConfirmationDialogPad = false
-	var showConfirmationDialogPhone = false
+	var showConfirmationDialog = false
 	var stateSources: StateSources = .isLoading
 	var stateTopHeadlines: StateTopHeadlines = .isLoading
 
@@ -80,7 +79,7 @@ class ContentViewModel {
 
 	private var cancellable = Set<AnyCancellable>()
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
 	init(deleteSourcesUseCase: PDeleteSourcesUseCase,
 		 fetchRequestSourcesUseCase: PFetchRequestSourcesUseCase,

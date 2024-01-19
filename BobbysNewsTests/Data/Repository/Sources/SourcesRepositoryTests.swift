@@ -16,7 +16,7 @@ class SourcesRepositoryTests: XCTestCase {
 	private var cancellable: Set<AnyCancellable>!
 	private var sut: SourcesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -28,8 +28,6 @@ class SourcesRepositoryTests: XCTestCase {
 		sut = nil
 	}
 
-	// MARK: - Actions
-
 	func testFetch() async {
 		// Given
 		var sourcesDto: SourcesDTO?
@@ -37,8 +35,8 @@ class SourcesRepositoryTests: XCTestCase {
 		let expectation = expectation(description: "Fetch")
 		sut.fetch(apiKey: "Test")
 			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				sourcesDto = $0
+				  receiveValue: { newSourcesDto in
+				sourcesDto = newSourcesDto
 				expectation.fulfill()
 			})
 			.store(in: &cancellable)

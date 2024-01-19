@@ -16,7 +16,7 @@ class FetchRequestSourcesUseCaseTests: XCTestCase {
 	private var sourcesDataControllerMock: SourcesDataControllerMock!
 	private var sourcesQueriesRepositoryMock: SourcesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		sourcesDataControllerMock = SourcesDataControllerMock()
@@ -29,8 +29,6 @@ class FetchRequestSourcesUseCaseTests: XCTestCase {
 		sourcesDataControllerMock = nil
 		sourcesQueriesRepositoryMock = nil
 	}
-
-	// MARK: - Actions
 
 	func testFetchRequest() {
 		// When

@@ -14,7 +14,7 @@ class SourcesQueriesRepositoryMock: PSourcesQueriesRepository {
 
 	private let sourcesDataController: SourcesDataControllerMock
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
 	init(sourcesDataController: SourcesDataControllerMock) {
 		self.sourcesDataController = sourcesDataController

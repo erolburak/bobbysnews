@@ -13,7 +13,7 @@ class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 
 	func fetch(apiKey: String,
 			   country: String) async throws -> TopHeadlinesDTO {
-		if country.isEmpty == false {
+		if !country.isEmpty {
 			return DTOMock.topHeadlinesDto1
 		} else {
 			throw AppConfiguration.Errors.fetchTopHeadlines

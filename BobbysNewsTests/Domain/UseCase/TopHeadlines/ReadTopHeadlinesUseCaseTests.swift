@@ -18,7 +18,7 @@ class ReadTopHeadlinesUseCaseTests: XCTestCase {
 	private var topHeadlinesDataControllerMock: TopHeadlinesDataControllerMock!
 	private var topHeadlinesQueriesRepositoryMock: TopHeadlinesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -34,8 +34,6 @@ class ReadTopHeadlinesUseCaseTests: XCTestCase {
 		topHeadlinesQueriesRepositoryMock = nil
 	}
 
-	// MARK: - Actions
-
 	func testRead() async {
 		// Given
 		var topHeadlines: TopHeadlines?
@@ -43,8 +41,8 @@ class ReadTopHeadlinesUseCaseTests: XCTestCase {
 		let expectation = expectation(description: "Read")
 		sut.read()
 			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				topHeadlines = $0
+				  receiveValue: { newTopHeadlines in
+				topHeadlines = newTopHeadlines
 				expectation.fulfill()
 			})
 			.store(in: &cancellable)

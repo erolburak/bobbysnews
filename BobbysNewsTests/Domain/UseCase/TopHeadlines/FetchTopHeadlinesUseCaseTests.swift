@@ -15,7 +15,7 @@ class FetchTopHeadlinesUseCaseTests: XCTestCase {
 	private var mock: TopHeadlinesRepositoryMock!
 	private var sut: FetchTopHeadlinesUseCase!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		mock = TopHeadlinesRepositoryMock()
@@ -26,8 +26,6 @@ class FetchTopHeadlinesUseCaseTests: XCTestCase {
 		mock = nil
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testFetchIsNotNil() async throws {
 		// Given

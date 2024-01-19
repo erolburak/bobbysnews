@@ -17,7 +17,7 @@ class SourcesQueriesRepositoryTests: XCTestCase {
 	private var mock: SourcesDataControllerMock!
 	private var sut: SourcesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -30,8 +30,6 @@ class SourcesQueriesRepositoryTests: XCTestCase {
 		mock = nil
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete())
@@ -52,8 +50,8 @@ class SourcesQueriesRepositoryTests: XCTestCase {
 		let expectation = expectation(description: "Read")
 		sut.read()
 			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				sources = $0
+				  receiveValue: { newSources in
+				sources = newSources
 				expectation.fulfill()
 			})
 			.store(in: &cancellable)

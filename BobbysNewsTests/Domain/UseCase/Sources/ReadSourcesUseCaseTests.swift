@@ -18,7 +18,7 @@ class ReadSourcesUseCaseTests: XCTestCase {
 	private var sourcesDataControllerMock: SourcesDataControllerMock!
 	private var sourcesQueriesRepositoryMock: SourcesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -33,8 +33,6 @@ class ReadSourcesUseCaseTests: XCTestCase {
 		sourcesDataControllerMock = nil
 		sourcesQueriesRepositoryMock = nil
 	}
-
-	// MARK: - Actions
 
 	func testRead() async {
 		// Given

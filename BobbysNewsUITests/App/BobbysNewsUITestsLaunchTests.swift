@@ -9,17 +9,15 @@ import XCTest
 
 final class BobbysNewsUITestsLaunchTests: XCTestCase {
 
-	// MARK: - Life Cycle
-
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
-        true
-    }
-
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
 	// MARK: - Actions
+
+	override class var runsForEachTargetApplicationUIConfiguration: Bool {
+		true
+	}
+
+	override func setUpWithError() throws {
+		continueAfterFailure = false
+	}
 
     func testLaunch() throws {
         let app = XCUIApplication()

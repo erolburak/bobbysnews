@@ -14,13 +14,15 @@ class DetailViewModel {
 
 	var article: Article
 	var navigationTitle: String {
-		guard let scrollPosition else { return "" }
+		guard let scrollPosition else {
+			return ""
+		}
 		return scrollPosition > 1 ? String(localized: "Headline") : ""
 	}
 	var scrollPosition: Int?
 	var showWebView = false
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
 	init(article: Article) {
 		self.article = article

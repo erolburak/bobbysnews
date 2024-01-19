@@ -19,7 +19,7 @@ class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
 	private let topHeadlinesRepository: PTopHeadlinesRepository
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
 	init(topHeadlinesRepository: PTopHeadlinesRepository) {
 		self.topHeadlinesRepository = topHeadlinesRepository

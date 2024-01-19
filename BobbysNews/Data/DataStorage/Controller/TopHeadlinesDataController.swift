@@ -76,7 +76,9 @@ class TopHeadlinesDataController: PTopHeadlinesDataController {
 		backgroundContext.performAndWait {
 			do {
 				try topHeadlinesDto.articles?.forEach { articleDto in
-					guard articleDto.title?.isEmpty == false else { return }
+					guard articleDto.title?.isEmpty == false else {
+						return
+					}
 					let articles = try backgroundContext.fetch(ArticleEntity.fetchRequest())
 					let article = articles.filter { $0.title == articleDto.title }.first
 					if article == nil {

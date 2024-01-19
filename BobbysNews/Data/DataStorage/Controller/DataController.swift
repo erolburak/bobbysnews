@@ -19,7 +19,7 @@ class DataController {
 	private let container: NSPersistentCloudKitContainer
 	lazy var backgroundContext = container.newBackgroundContext()
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
     init() {
         container = NSPersistentCloudKitContainer(name: "BobbysNews")

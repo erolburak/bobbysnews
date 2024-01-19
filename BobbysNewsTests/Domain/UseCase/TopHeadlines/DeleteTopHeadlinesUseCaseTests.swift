@@ -16,7 +16,7 @@ class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 	private var topHeadlinesDataControllerMock: TopHeadlinesDataControllerMock!
 	private var topHeadlinesQueriesRepositoryMock: TopHeadlinesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		topHeadlinesDataControllerMock = TopHeadlinesDataControllerMock()
@@ -29,8 +29,6 @@ class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 		topHeadlinesDataControllerMock = nil
 		topHeadlinesDataControllerMock = nil
 	}
-
-	// MARK: - Actions
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete(country: nil))

@@ -16,7 +16,7 @@ class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 	private var topHeadlinesDataControllerMock: TopHeadlinesDataControllerMock!
 	private var topHeadlinesQueriesRepositoryMock: TopHeadlinesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		topHeadlinesDataControllerMock = TopHeadlinesDataControllerMock()
@@ -29,8 +29,6 @@ class FetchRequestTopHeadlinesUseCaseTests: XCTestCase {
 		topHeadlinesDataControllerMock = nil
 		topHeadlinesQueriesRepositoryMock = nil
 	}
-
-	// MARK: - Actions
 
 	func testFetchRequest() {
 		// Given

@@ -14,7 +14,7 @@ class ContentViewModelTests: XCTestCase {
 
 	private var sut: ContentViewModel!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		sut = ViewModelDI.shared.contentViewModel()
@@ -23,8 +23,6 @@ class ContentViewModelTests: XCTestCase {
 	override func tearDownWithError() throws {
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testContentViewModelIsNotNil() {
 		// When

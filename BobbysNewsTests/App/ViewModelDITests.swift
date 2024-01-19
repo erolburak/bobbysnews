@@ -14,7 +14,7 @@ class ViewModelDITests: XCTestCase {
 
 	private var sut: ViewModelDI!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		sut = ViewModelDI()
@@ -23,8 +23,6 @@ class ViewModelDITests: XCTestCase {
 	override func tearDownWithError() throws {
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testContentViewModelIsNotNil() {
 		// When

@@ -20,7 +20,7 @@ class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
 
 	private let topHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
 	init(topHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository) {
 		self.topHeadlinesQueriesRepository = topHeadlinesQueriesRepository
