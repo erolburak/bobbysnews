@@ -30,6 +30,7 @@
       }
     },
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:BobbysNews.xcodeproj",
         "identifier" : "BF72AAA72AA0BFD400368DA5",
