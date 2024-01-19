@@ -16,13 +16,15 @@ class DataController {
 
 	// MARK: - Private Properties
 
-	private let container: NSPersistentCloudKitContainer
+	private let container: NSPersistentContainer
 	lazy var backgroundContext = container.newBackgroundContext()
 
 	// MARK: - Inits
 
     init() {
-        container = NSPersistentCloudKitContainer(name: "BobbysNews")
+		/// Disable cloud kit database if test scheme is running
+		let isTestScheme = ProcessInfo().environment["XCTestConfigurationFilePath"] != nil
+		container = isTestScheme ? NSPersistentContainer(name: "BobbysNews") : NSPersistentCloudKitContainer(name: "BobbysNews")
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)!")

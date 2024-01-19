@@ -32,7 +32,9 @@ class SourcesDataControllerTests: XCTestCase {
 		XCTAssertNoThrow(try sut.delete())
 	}
 
-	func testFetchRequest() {
+	func testFetchRequest() throws {
+		// Given
+		try sut.delete()
 		// When
 		sut.fetchRequest()
 		// Then
