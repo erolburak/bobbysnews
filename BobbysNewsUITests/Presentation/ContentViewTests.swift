@@ -9,13 +9,11 @@ import XCTest
 
 final class ContentViewTests: XCTestCase {
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		continueAfterFailure = false
 	}
-
-	// MARK: - Actions
 
 	/// Test navigation link item to open detail view
 	func testNavigationLinkItem() {

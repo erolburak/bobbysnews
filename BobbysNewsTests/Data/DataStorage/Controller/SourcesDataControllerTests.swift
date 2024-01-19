@@ -16,7 +16,7 @@ class SourcesDataControllerTests: XCTestCase {
 	private var cancellable: Set<AnyCancellable>!
 	private var sut: SourcesDataController!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -27,8 +27,6 @@ class SourcesDataControllerTests: XCTestCase {
 		cancellable.removeAll()
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete())
@@ -49,8 +47,8 @@ class SourcesDataControllerTests: XCTestCase {
 		let expectation = expectation(description: "Read")
 		sut.read()
 			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				sources = $0
+				  receiveValue: { newSources in
+				sources = newSources
 				expectation.fulfill()
 			})
 			.store(in: &cancellable)

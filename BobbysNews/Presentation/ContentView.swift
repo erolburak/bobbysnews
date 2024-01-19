@@ -94,11 +94,7 @@ struct ContentView: View {
 
 						Section {
 							Button(role: .destructive) {
-								if UIDevice.current.userInterfaceIdiom == .pad {
-									viewModel.showConfirmationDialogPad = true
-								} else {
-									viewModel.showConfirmationDialogPhone = true
-								}
+								viewModel.showConfirmationDialog = true
 							} label: {
 								Label("Reset",
 									  systemImage: "trash.circle.fill")
@@ -151,15 +147,9 @@ struct ContentView: View {
 			}
 		}
 		.confirmationDialog("ResetConfirmationDialog",
-							isPresented: $viewModel.showConfirmationDialogPhone,
+							isPresented: $viewModel.showConfirmationDialog,
 							titleVisibility: .visible) {
 			ResetButton()
-		}
-		.alert("Reset",
-			   isPresented: $viewModel.showConfirmationDialogPad) {
-			ResetButton()
-		} message: {
-			Text("ResetConfirmationDialog")
 		}
 		.alert(isPresented: $viewModel.showAlert,
 			   error: viewModel.alertError) { _ in
@@ -174,8 +164,8 @@ struct ContentView: View {
 		.onDisappear() {
 			viewModel.onDisappear()
 		}
-		.onChange(of: viewModel.selectedCountry) {
-			country = viewModel.selectedCountry
+		.onChange(of: viewModel.selectedCountry) { _, newValue in
+			country = newValue
 		}
 		.sensoryFeedback(viewModel.sensoryFeedback,
 						 trigger: viewModel.sensoryFeedbackTrigger) { _, newValue in

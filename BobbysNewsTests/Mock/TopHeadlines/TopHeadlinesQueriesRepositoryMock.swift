@@ -14,7 +14,7 @@ class TopHeadlinesQueriesRepositoryMock: PTopHeadlinesQueriesRepository {
 
 	private let topHeadlinesDataController: TopHeadlinesDataControllerMock
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
 	init(topHeadlinesDataController: TopHeadlinesDataControllerMock) {
 		self.topHeadlinesDataController = topHeadlinesDataController

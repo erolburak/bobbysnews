@@ -9,13 +9,11 @@ import XCTest
 
 final class DetailViewTests: XCTestCase {
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		continueAfterFailure = false
 	}
-
-	// MARK: - Actions
 
 	/// Test share link to open share view while first opening detail view
 	func testShareLink() {

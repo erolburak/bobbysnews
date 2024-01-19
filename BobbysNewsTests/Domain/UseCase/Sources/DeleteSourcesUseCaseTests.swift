@@ -16,7 +16,7 @@ class DeleteSourcesUseCaseTests: XCTestCase {
 	private var sourcesDataControllerMock: SourcesDataControllerMock!
 	private var sourcesQueriesRepositoryMock: SourcesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		sourcesDataControllerMock = SourcesDataControllerMock()
@@ -29,8 +29,6 @@ class DeleteSourcesUseCaseTests: XCTestCase {
 		sourcesDataControllerMock = nil
 		sourcesQueriesRepositoryMock = nil
 	}
-
-	// MARK: - Actions
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete())

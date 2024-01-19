@@ -16,7 +16,7 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 	private var cancellable: Set<AnyCancellable>!
 	private var sut: TopHeadlinesDataController!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -27,8 +27,6 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 		cancellable.removeAll()
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete(country: nil))
@@ -51,8 +49,8 @@ class TopHeadlinesDataControllerTests: XCTestCase {
 		let expectation = expectation(description: "Read")
 		sut.read()
 			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				topHeadlines = $0
+				  receiveValue: { newTopHeadlines in
+				topHeadlines = newTopHeadlines
 				expectation.fulfill()
 			})
 			.store(in: &cancellable)

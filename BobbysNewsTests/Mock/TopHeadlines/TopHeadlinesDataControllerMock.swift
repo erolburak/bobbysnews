@@ -39,7 +39,9 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 		topHeadlinesDto.articles?.forEach { articleDto in
 			guard queriesSubject.value?.articles?.filter({ $0.title == articleDto.title }).isEmpty == true,
 				  articleDto.title?.isEmpty == false,
-				  let article = articleDto.toDomain(country: country) else { return }
+				  let article = articleDto.toDomain(country: country) else {
+				return
+			}
 			articles.append(article)
 		}
 		queriesSubject.send(TopHeadlines(articles: articles + (EntityMock.topHeadlines1.articles ?? []),

@@ -14,7 +14,7 @@ class AppConfigurationTests: XCTestCase {
 	
 	private var sut: AppConfiguration!
 	
-	// MARK: - Life Cycle
+	// MARK: - Actions
 	
 	override func setUpWithError() throws {
 		sut = AppConfiguration()
@@ -23,8 +23,6 @@ class AppConfigurationTests: XCTestCase {
 	override func tearDownWithError() throws {
 		sut = nil
 	}
-	
-	// MARK: - Actions
 
 	func testApiBaseUrl() {
 		// Given

@@ -14,7 +14,7 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 
 	private var sut: TopHeadlinesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		sut = TopHeadlinesRepositoryMock()
@@ -23,8 +23,6 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 	override func tearDownWithError() throws {
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testFetchIsNotNil() async throws {
 		// Given

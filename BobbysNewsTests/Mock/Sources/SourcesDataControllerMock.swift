@@ -36,7 +36,9 @@ class SourcesDataControllerMock: PSourcesDataController {
 		sourcesDto.sources?.forEach { sourceDto in
 			guard queriesSubject.value?.sources?.filter({ $0.id == sourceDto.id }).isEmpty == true,
 				  sourceDto.name?.isEmpty == false,
-				  let source = sourceDto.toDomain() else { return }
+				  let source = sourceDto.toDomain() else {
+				return
+			}
 			sources.append(source)
 		}
 		queriesSubject.send(Sources(sources: sources + (EntityMock.sources1.sources ?? []),

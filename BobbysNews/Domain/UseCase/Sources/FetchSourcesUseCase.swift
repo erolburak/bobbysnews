@@ -20,7 +20,7 @@ class FetchSourcesUseCase: PFetchSourcesUseCase {
 
 	private let sourcesRepository: PSourcesRepository
 
-	// MARK: - Life Cycle
+	// MARK: - Inits
 
 	init(sourcesRepository: PSourcesRepository) {
 		self.sourcesRepository = sourcesRepository

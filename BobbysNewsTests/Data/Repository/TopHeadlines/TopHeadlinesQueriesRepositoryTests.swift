@@ -17,7 +17,7 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 	private var mock: TopHeadlinesDataControllerMock!
 	private var sut: TopHeadlinesQueriesRepositoryMock!
 
-	// MARK: - Life Cycle
+	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
@@ -30,8 +30,6 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 		mock = nil
 		sut = nil
 	}
-
-	// MARK: - Actions
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete(country: nil))
@@ -63,8 +61,8 @@ class TopHeadlinesQueriesRepositoryTests: XCTestCase {
 		let expectation = expectation(description: "Read")
 		sut.read()
 			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				topHeadlines = $0
+				  receiveValue: { newTopHeadlines in
+				topHeadlines = newTopHeadlines
 				expectation.fulfill()
 			})
 			.store(in: &cancellable)

@@ -68,7 +68,9 @@ class SourcesDataController: PSourcesDataController {
 		backgroundContext.performAndWait {
 			do {
 				try sourcesDto.sources?.forEach { sourceDto in
-					guard sourceDto.country?.isEmpty == false else { return }
+					guard sourceDto.country?.isEmpty == false else {
+						return
+					}
 					let sources = try backgroundContext.fetch(SourceEntity.fetchRequest())
 					let source = sources.filter { $0.id == sourceDto.id }.first
 					if source == nil {
