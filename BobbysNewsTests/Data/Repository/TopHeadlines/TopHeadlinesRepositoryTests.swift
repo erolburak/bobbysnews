@@ -26,24 +26,24 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 
 	func testFetchIsNotNil() async throws {
 		// Given
-		var topHeadlinesDto: TopHeadlinesDTO?
+		var topHeadlinesApi: TopHeadlinesApi?
 		// When
-		topHeadlinesDto = try await sut.fetch(apiKey: "Test",
+		topHeadlinesApi = try await sut.fetch(apiKey: "Test",
 											  country: "Test")
 		// Then
-		XCTAssertNotNil(topHeadlinesDto)
+		XCTAssertNotNil(topHeadlinesApi)
 	}
 
 	func testFetchIsNil() async throws {
 		// Given
-		var topHeadlinesDto: TopHeadlinesDTO?
+		var topHeadlinesApi: TopHeadlinesApi?
 		// When
 		do {
-			topHeadlinesDto = try await sut.fetch(apiKey: "",
+			topHeadlinesApi = try await sut.fetch(apiKey: "",
 												  country: "")
 		} catch {
 			// Then
-			XCTAssertNil(topHeadlinesDto)
+			XCTAssertNil(topHeadlinesApi)
 			XCTAssertNotNil(error)
 		}
 	}

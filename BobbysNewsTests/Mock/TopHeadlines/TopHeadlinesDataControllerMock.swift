@@ -12,7 +12,7 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 
 	// MARK: - Properties
 
-	var queriesSubject: CurrentValueSubject<TopHeadlines?, Never> = CurrentValueSubject(EntityMock.topHeadlines1)
+	var queriesSubject: CurrentValueSubject<TopHeadlines?, Never> = CurrentValueSubject(EntityMock.topHeadlinesEntity)
 
 	// MARK: - Actions
 
@@ -21,9 +21,9 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 	}
 
 	func fetchRequest(country: String) {
-		queriesSubject.send(TopHeadlines(articles: EntityMock.topHeadlines1.articles?.filter { $0.country == country },
-										 status: EntityMock.topHeadlines1.status,
-										 totalResults: EntityMock.topHeadlines1.totalResults))
+		queriesSubject.send(TopHeadlines(articles: EntityMock.topHeadlinesEntity?.articles?.filter { $0.country == country },
+										 status: EntityMock.topHeadlinesEntity?.status,
+										 totalResults: EntityMock.topHeadlinesEntity?.totalResults))
 	}
 
 	func read() -> AnyPublisher<TopHeadlines, Error> {
@@ -34,18 +34,31 @@ class TopHeadlinesDataControllerMock: PTopHeadlinesDataController {
 	}
 
 	func save(country: String,
-			  topHeadlinesDto: TopHeadlinesDTO) {
+			  topHeadlinesApi: TopHeadlinesApi) {
 		var articles: [Article] = []
-		topHeadlinesDto.articles?.forEach { articleDto in
-			guard queriesSubject.value?.articles?.filter({ $0.title == articleDto.title }).isEmpty == true,
-				  articleDto.title?.isEmpty == false,
-				  let article = articleDto.toDomain(country: country) else {
+		topHeadlinesApi.articles?.forEach { articleApi in
+			guard queriesSubject.value?.articles?.filter({ $0.title == articleApi.title }).isEmpty == true,
+				  articleApi.title?.isEmpty == false else {
 				return
 			}
-			articles.append(article)
+			articles.append(Article(author: articleApi.author,
+									content: articleApi.content,
+									country: country,
+									publishedAt: articleApi.publishedAt?.toDate,
+									source: Source(category: articleApi.source?.category,
+												   country: articleApi.source?.country,
+												   id: articleApi.source?.id,
+												   language: articleApi.source?.language,
+												   name: articleApi.source?.name,
+												   story: articleApi.source?.story,
+												   url: articleApi.source?.url),
+									story: articleApi.story,
+									title: articleApi.title,
+									url: articleApi.url,
+									urlToImage: articleApi.urlToImage))
 		}
-		queriesSubject.send(TopHeadlines(articles: articles + (EntityMock.topHeadlines1.articles ?? []),
-										 status: topHeadlinesDto.status,
-										 totalResults: (topHeadlinesDto.totalResults ?? 0) + (EntityMock.topHeadlines1.totalResults ?? 0)))
+		queriesSubject.send(TopHeadlines(articles: articles + (EntityMock.topHeadlinesEntity?.articles ?? []),
+										 status: topHeadlinesApi.status,
+										 totalResults: (topHeadlinesApi.totalResults ?? 0) + (EntityMock.topHeadlinesEntity?.totalResults ?? 0)))
 	}
 }

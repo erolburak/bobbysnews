@@ -10,7 +10,7 @@ protocol PFetchTopHeadlinesUseCase {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) async throws -> TopHeadlinesDTO
+			   country: String) async throws
 }
 
 class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
@@ -28,9 +28,19 @@ class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) async throws -> TopHeadlinesDTO {
-		try await topHeadlinesRepository
-			.fetch(apiKey: apiKey,
-				   country: country)
+			   country: String) async throws {
+		let topHeadlinesApi = try await topHeadlinesRepository.fetch(apiKey: apiKey,
+																	 country: country)
+		if topHeadlinesApi.articles != nil ||
+			topHeadlinesApi.articles?.isEmpty == false {
+			TopHeadlinesDataController
+				.shared
+				.save(country: country,
+					  topHeadlinesApi: topHeadlinesApi)
+		} else {
+			try TopHeadlinesDataController
+				.shared
+				.delete(country: country)
+		}
 	}
 }

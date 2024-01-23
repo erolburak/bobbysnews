@@ -12,9 +12,9 @@ class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) async throws -> TopHeadlinesDTO {
+			   country: String) async throws -> TopHeadlinesApi {
 		if !country.isEmpty {
-			return DTOMock.topHeadlinesDto1
+			return ApiMock.topHeadlinesApi1
 		} else {
 			throw AppConfiguration.Errors.fetchTopHeadlines
 		}

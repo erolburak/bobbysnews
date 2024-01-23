@@ -14,7 +14,6 @@ protocol PSourcesQueriesRepository {
 	func delete() throws
 	func fetchRequest()
 	func read() -> AnyPublisher<Sources, Error>
-	func save(sourcesDto: SourcesDTO)
 }
 
 class SourcesQueriesRepository: PSourcesQueriesRepository {
@@ -39,10 +38,5 @@ class SourcesQueriesRepository: PSourcesQueriesRepository {
 		sourcesDataController
 			.read()
 			.eraseToAnyPublisher()
-	}
-
-	func save(sourcesDto: SourcesDTO) {
-		sourcesDataController
-			.save(sourcesDto: sourcesDto)
 	}
 }

@@ -14,8 +14,6 @@ protocol PTopHeadlinesQueriesRepository {
 	func delete(country: String?) throws
 	func fetchRequest(country: String)
 	func read() -> AnyPublisher<TopHeadlines, Error>
-	func save(country: String,
-			  topHeadlinesDto: TopHeadlinesDTO)
 }
 
 class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
@@ -40,12 +38,5 @@ class TopHeadlinesQueriesRepository: PTopHeadlinesQueriesRepository {
 		topHeadlinesDataController
 			.read()
 			.eraseToAnyPublisher()
-	}
-
-	func save(country: String,
-			  topHeadlinesDto: TopHeadlinesDTO) {
-		topHeadlinesDataController
-			.save(country: country,
-				  topHeadlinesDto: topHeadlinesDto)
 	}
 }

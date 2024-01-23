@@ -33,9 +33,9 @@ class ViewModelDITests: XCTestCase {
 
 	func testDetailViewModelIsNotNil() {
 		// Given
-		let article = EntityMock.article1
+		let articleEntity = EntityMock.articleEntity1
 		// When
-		let detailViewModel = sut.detailViewModel(article: article)
+		let detailViewModel = sut.detailViewModel(article: Article(from: articleEntity))
 		// Then
 		XCTAssertNotNil(detailViewModel)
 	}

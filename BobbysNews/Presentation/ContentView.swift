@@ -68,7 +68,9 @@ struct ContentView: View {
 						case .emptyFetch, .emptyRead:
 							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
 								Button {
-									viewModel.fetchSources(sensoryFeedback: true)
+									Task {
+										await viewModel.fetchSources(sensoryFeedback: true)
+									}
 								} label: {
 									Label("CountriesLoad",
 										  systemImage: "arrow.down.to.line.circle.fill")

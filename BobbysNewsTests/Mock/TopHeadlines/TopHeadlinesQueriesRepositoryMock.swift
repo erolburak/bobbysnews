@@ -37,11 +37,4 @@ class TopHeadlinesQueriesRepositoryMock: PTopHeadlinesQueriesRepository {
 			.read()
 			.eraseToAnyPublisher()
 	}
-
-	func save(country: String,
-			  topHeadlinesDto: TopHeadlinesDTO) {
-		topHeadlinesDataController
-			.save(country: country,
-				  topHeadlinesDto: topHeadlinesDto)
-	}
 }

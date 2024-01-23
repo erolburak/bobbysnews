@@ -6,42 +6,30 @@
 //
 
 @testable import BobbysNews
-import Combine
 import XCTest
 
 class SourcesRepositoryTests: XCTestCase {
 
 	// MARK: - Private Properties
 
-	private var cancellable: Set<AnyCancellable>!
 	private var sut: SourcesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		cancellable = Set<AnyCancellable>()
 		sut = SourcesRepositoryMock()
 	}
 
 	override func tearDownWithError() throws {
-		cancellable.removeAll()
 		sut = nil
 	}
 
-	func testFetch() async {
+	func testFetch() async throws {
 		// Given
-		var sourcesDto: SourcesDTO?
+		var sourcesApi: SourcesApi?
 		// When
-		let expectation = expectation(description: "Fetch")
-		sut.fetch(apiKey: "Test")
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { newSourcesDto in
-				sourcesDto = newSourcesDto
-				expectation.fulfill()
-			})
-			.store(in: &cancellable)
+		sourcesApi = try await sut.fetch(apiKey: "Test")
 		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(sourcesDto)
+		XCTAssertNotNil(sourcesApi)
 	}
 }

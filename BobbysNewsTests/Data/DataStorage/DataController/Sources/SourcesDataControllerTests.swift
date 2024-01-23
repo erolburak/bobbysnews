@@ -1,5 +1,5 @@
 //
-//  SourcesQueriesRepositoryTests.swift
+//  SourcesDataControllerTests.swift
 //  BobbysNewsTests
 //
 //  Created by Burak Erol on 07.09.23.
@@ -9,43 +9,42 @@
 import Combine
 import XCTest
 
-class SourcesQueriesRepositoryTests: XCTestCase {
+class SourcesDataControllerTests: XCTestCase {
 
 	// MARK: - Private Properties
 
 	private var cancellable: Set<AnyCancellable>!
-	private var mock: SourcesDataControllerMock!
-	private var sut: SourcesQueriesRepositoryMock!
+	private var sut: SourcesDataController!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
-		mock = SourcesDataControllerMock()
-		sut = SourcesQueriesRepositoryMock(sourcesDataController: mock)
+		sut = SourcesDataController()
 	}
 
 	override func tearDownWithError() throws {
 		cancellable.removeAll()
-		mock = nil
 		sut = nil
 	}
 
 	func testDelete() {
 		XCTAssertNoThrow(try sut.delete())
-		XCTAssertNil(mock.queriesSubject.value)
 	}
 
-	func testFetchRequest() {
+	func testFetchRequest() throws {
+		// Given
+		try sut.delete()
 		// When
 		sut.fetchRequest()
 		// Then
-		XCTAssertEqual(mock.queriesSubject.value?.sources?.count, 2)
+		XCTAssertEqual(sut.queriesSubject.value?.sources?.count, 0)
 	}
 
 	func testRead() async {
 		// Given
 		var sources: Sources?
+		sut.queriesSubject.value = EntityMock.sourcesEntity
 		// When
 		let expectation = expectation(description: "Read")
 		sut.read()
@@ -58,5 +57,24 @@ class SourcesQueriesRepositoryTests: XCTestCase {
 		// Then
 		await fulfillment(of: [expectation], timeout: 1)
 		XCTAssertNotNil(sources)
+	}
+
+	func testSaveSourcesWithExistingSources() throws {
+		// Given
+		try sut.delete()
+		let sourcesApi = ApiMock.sourcesApi1
+		// When
+		sut.save(sourcesApi: sourcesApi)
+		// Then
+		XCTAssertEqual(sut.queriesSubject.value?.sources?.count, 2)
+	}
+
+	func testSaveSourcesWithNewSources() {
+		// Given
+		let sourcesApi = ApiMock.sourcesApi2
+		// When
+		sut.save(sourcesApi: sourcesApi)
+		// Then
+		XCTAssertEqual(sut.queriesSubject.value?.sources?.count, 4)
 	}
 }
