@@ -34,13 +34,11 @@ class ContentViewModel {
 	private let fetchRequestSourcesUseCase: PFetchRequestSourcesUseCase
 	private let fetchSourcesUseCase: PFetchSourcesUseCase
 	private let readSourcesUseCase: PReadSourcesUseCase
-	private let saveSourcesUseCase: PSaveSourcesUseCase
 	/// TopHeadlines
 	private let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase
 	private let fetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase
 	private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
 	private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
-	private let saveTopHeadlinesUseCase: PSaveTopHeadlinesUseCase
 
 	// MARK: - Properties
 
@@ -85,22 +83,18 @@ class ContentViewModel {
 		 fetchRequestSourcesUseCase: PFetchRequestSourcesUseCase,
 		 fetchSourcesUseCase: PFetchSourcesUseCase,
 		 readSourcesUseCase: PReadSourcesUseCase,
-		 saveSourcesUseCase: PSaveSourcesUseCase,
 		 deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase,
 		 fetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase,
 		 fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase,
-		 readTopHeadlinesUseCase: PReadTopHeadlinesUseCase,
-		 saveTopHeadlinesUseCase: PSaveTopHeadlinesUseCase) {
+		 readTopHeadlinesUseCase: PReadTopHeadlinesUseCase) {
 		self.deleteSourcesUseCase = deleteSourcesUseCase
 		self.fetchRequestSourcesUseCase = fetchRequestSourcesUseCase
 		self.fetchSourcesUseCase = fetchSourcesUseCase
 		self.readSourcesUseCase = readSourcesUseCase
-		self.saveSourcesUseCase = saveSourcesUseCase
 		self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
 		self.fetchRequestTopHeadlinesUseCase = fetchRequestTopHeadlinesUseCase
 		self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
 		self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
-		self.saveTopHeadlinesUseCase = saveTopHeadlinesUseCase
 	}
 
 	func onAppear(selectedCountry: String) {
@@ -108,7 +102,9 @@ class ContentViewModel {
 		/// Bind sources, fetch from database and api
 		readSources()
 		fetchRequestSources()
-		fetchSources()
+		Task {
+			await fetchSources()
+		}
 		/// Bind topHeadlines, fetch from database and api
 		readTopHeadlines()
 		fetchRequestTopHeadlines()
@@ -118,39 +114,16 @@ class ContentViewModel {
 		cancellable.removeAll()
 	}
 
-	func fetchSources(sensoryFeedback: Bool? = nil) {
+	func fetchSources(sensoryFeedback: Bool? = nil) async {
 		stateSources = .isLoading
-		fetchSourcesUseCase
-			.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
-			.receive(on: DispatchWorkloop.main)
-			.sink { [weak self] completion in
-				if case .failure = completion {
-					self?.updateStateSources(completion: completion,
-											 state: self?.countries?.isEmpty == true ? .emptyFetch : .loaded)
-				}
-			} receiveValue: { [weak self] sourcesDto in
-				if sourcesDto.sources != nil ||
-					sourcesDto.sources?.isEmpty == false {
-					self?.saveSourcesUseCase
-						.save(sourcesDto: sourcesDto)
-					if sensoryFeedback == true {
-						self?.sensoryFeedback(feedback: .success)
-					}
-				} else {
-					self?.updateStateSources(completion: .finished,
-											 state: .emptyFetch)
-					do {
-						try self?.deleteSourcesUseCase
-							.delete()
-						self?.countries?.removeAll()
-						self?.updateStateSources(completion: .finished,
-												 state: .emptyFetch)
-					} catch {
-						self?.showAlert(error: .error(error.localizedDescription))
-					}
-				}
-			}
-			.store(in: &cancellable)
+		
+		do {
+			try await fetchSourcesUseCase
+				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
+		} catch {
+			updateStateSources(completion: .failure(error),
+							   state: countries?.isEmpty == true ? .emptyFetch : .loaded)
+		}
 	}
 
 	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
@@ -159,25 +132,9 @@ class ContentViewModel {
 				stateTopHeadlines = state
 			}
 			do {
-				let topHeadlinesDto = try await fetchTopHeadlinesUseCase
+				try await fetchTopHeadlinesUseCase
 					.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
 						   country: selectedCountry)
-				if topHeadlinesDto.articles != nil ||
-					topHeadlinesDto.articles?.isEmpty == false {
-					saveTopHeadlinesUseCase
-						.save(country: selectedCountry,
-							  topHeadlinesDto: topHeadlinesDto)
-				} else {
-					do {
-						try deleteTopHeadlinesUseCase
-							.delete(country: selectedCountry)
-						articles?.removeAll()
-						updateStateTopHeadlines(completion: .finished,
-												state: .emptyFetch)
-					} catch {
-						showAlert(error: .error(error.localizedDescription))
-					}
-				}
 			} catch {
 				updateStateTopHeadlines(completion: .failure(error),
 										state: articles?.isEmpty == true ? .emptyFetch : .loaded)

@@ -37,9 +37,4 @@ class SourcesQueriesRepositoryMock: PSourcesQueriesRepository {
 			.read()
 			.eraseToAnyPublisher()
 	}
-
-	func save(sourcesDto: SourcesDTO) {
-		sourcesDataController
-			.save(sourcesDto: sourcesDto)
-	}
 }

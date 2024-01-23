@@ -12,7 +12,7 @@ protocol PTopHeadlinesRepository {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) async throws -> TopHeadlinesDTO
+			   country: String) async throws -> TopHeadlinesApi
 }
 
 class TopHeadlinesRepository: PTopHeadlinesRepository {
@@ -20,7 +20,7 @@ class TopHeadlinesRepository: PTopHeadlinesRepository {
 	// MARK: - Actions
 
 	func fetch(apiKey: String,
-			   country: String) async throws -> TopHeadlinesDTO {
+			   country: String) async throws -> TopHeadlinesApi {
 		let endpoint = "top-headlines?country=\(country)&apiKey=\(apiKey)"
 		guard let url = URL(string: AppConfiguration.apiBaseUrl + endpoint) else {
 			throw AppConfiguration.Errors.fetchTopHeadlines
@@ -28,7 +28,7 @@ class TopHeadlinesRepository: PTopHeadlinesRepository {
 		let (data, response) = try await URLSession.shared.data(from: url)
 		try AppConfiguration.shared.validateResponse(defaultError: .fetchTopHeadlines,
 													 response: response as? HTTPURLResponse)
-		return try JSONDecoder().decode(TopHeadlinesDTO.self,
+		return try JSONDecoder().decode(TopHeadlinesApi.self,
 										from: data)
 	}
 }

@@ -1,5 +1,5 @@
 //
-//  ReadTopHeadlinesUseCaseTests.swift
+//  ReaApipHeadlinesUseCaseTests.swift
 //  BobbysNewsTests
 //
 //  Created by Burak Erol on 04.09.23.
@@ -9,7 +9,7 @@
 import Combine
 import XCTest
 
-class ReadTopHeadlinesUseCaseTests: XCTestCase {
+class ReaApipHeadlinesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 

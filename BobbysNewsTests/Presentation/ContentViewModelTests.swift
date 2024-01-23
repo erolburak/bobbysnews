@@ -30,12 +30,10 @@ class ContentViewModelTests: XCTestCase {
 												fetchRequestSourcesUseCase: FetchRequestSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
 												fetchSourcesUseCase: FetchSourcesUseCase(sourcesRepository: SourcesRepository()),
 												readSourcesUseCase: ReadSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
-												saveSourcesUseCase: SaveSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
 												deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
 												fetchRequestTopHeadlinesUseCase: FetchRequestTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
 												fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
-												readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-												saveTopHeadlinesUseCase: SaveTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
+												readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
 		// Then
 		XCTAssertNotNil(contentViewModel)
 	}
@@ -61,7 +59,7 @@ class ContentViewModelTests: XCTestCase {
 		}
 	}
 
-	func testFetchSources() {
+	func testFetchSources() async {
 		// Given
 		sut.articles = nil
 		sut.countries = nil
@@ -69,7 +67,7 @@ class ContentViewModelTests: XCTestCase {
 		sut.stateSources = .isLoading
 		sut.stateTopHeadlines = .isLoading
 		// When
-		sut.fetchSources()
+		await sut.fetchSources()
 		// Then
 		XCTAssertTrue(sut.selectedCountry.isEmpty)
 		XCTAssertEqual(sut.stateSources, .isLoading)

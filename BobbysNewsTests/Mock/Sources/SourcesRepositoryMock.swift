@@ -6,15 +6,12 @@
 //
 
 @testable import BobbysNews
-import Combine
 
 class SourcesRepositoryMock: PSourcesRepository {
 
 	// MARK: - Actions
 
-	func fetch(apiKey: String) -> AnyPublisher<SourcesDTO, Error> {
-		Just(DTOMock.sourcesDto1)
-			.setFailureType(to: Error.self)
-			.eraseToAnyPublisher()
+	func fetch(apiKey: String) async throws -> SourcesApi {
+		ApiMock.sourcesApi1
 	}
 }

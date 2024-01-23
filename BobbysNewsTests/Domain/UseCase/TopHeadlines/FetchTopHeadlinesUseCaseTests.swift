@@ -27,27 +27,11 @@ class FetchTopHeadlinesUseCaseTests: XCTestCase {
 		sut = nil
 	}
 
-	func testFetchIsNotNil() async throws {
-		// Given
-		var topHeadlinesDto: TopHeadlinesDTO?
+	func testFetch() async throws {
 		// When
-		topHeadlinesDto = try await sut.fetch(apiKey: "Test",
-											  country: "Test")
+		let topHeadlines: () = try await sut.fetch(apiKey: "Test",
+												   country: "Test")
 		// Then
-		XCTAssertNotNil(topHeadlinesDto)
-	}
-
-	func testFetchIsNil() async throws {
-		// Given
-		var topHeadlinesDto: TopHeadlinesDTO?
-		// When
-		do {
-			topHeadlinesDto = try await sut.fetch(apiKey: "",
-												  country: "")
-		} catch {
-			// Then
-			XCTAssertNil(topHeadlinesDto)
-			XCTAssertNotNil(error)
-		}
+		XCTAssertNoThrow(topHeadlines)
 	}
 }

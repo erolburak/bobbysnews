@@ -5,13 +5,11 @@
 //  Created by Burak Erol on 05.09.23.
 //
 
-import Combine
-
 protocol PFetchSourcesUseCase {
 
 	// MARK: - Actions
 
-	func fetch(apiKey: String) -> AnyPublisher<SourcesDTO, Error>
+	func fetch(apiKey: String) async throws
 }
 
 class FetchSourcesUseCase: PFetchSourcesUseCase {
@@ -28,9 +26,17 @@ class FetchSourcesUseCase: PFetchSourcesUseCase {
 
 	// MARK: - Actions
 
-	func fetch(apiKey: String) -> AnyPublisher<SourcesDTO, Error> {
-		sourcesRepository
-			.fetch(apiKey: apiKey)
-			.eraseToAnyPublisher()
+	func fetch(apiKey: String) async throws {
+		let sourcesApi = try await sourcesRepository.fetch(apiKey: apiKey)
+		if sourcesApi.sources != nil ||
+			sourcesApi.sources?.isEmpty == false {
+			SourcesDataController
+				.shared
+				.save(sourcesApi: sourcesApi)
+		} else {
+			try SourcesDataController
+				.shared
+				.delete()
+		}
 	}
 }
