@@ -1,6 +1,6 @@
 //
 //  ContentViewModelTests.swift
-//  ContentViewModelTests
+//  BobbysNewsTests
 //
 //  Created by Burak Erol on 31.08.23.
 //
@@ -12,51 +12,52 @@ class ContentViewModelTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var mock: ContentViewModelUseCaseMock!
 	private var sut: ContentViewModel!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		sut = ViewModelDI.shared.contentViewModel()
+		mock = ContentViewModelUseCaseMock()
+		sut = ContentViewModel(deleteSourcesUseCase: mock,
+							   fetchSourcesUseCase: mock,
+							   readSourcesUseCase: mock,
+							   deleteTopHeadlinesUseCase: mock,
+							   fetchTopHeadlinesUseCase: mock,
+							   readTopHeadlinesUseCase: mock)
 	}
 
 	override func tearDownWithError() throws {
+		mock = nil
 		sut = nil
 	}
 
-	func testContentViewModelIsNotNil() {
+	// MARK: - Actions
+
+	func testContentViewModel() {
+		// Given
+		let contentViewModel: ContentViewModel?
 		// When
-		let contentViewModel = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
-												fetchRequestSourcesUseCase: FetchRequestSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
-												fetchSourcesUseCase: FetchSourcesUseCase(sourcesRepository: SourcesRepository()),
-												readSourcesUseCase: ReadSourcesUseCase(sourcesQueriesRepository: SourcesQueriesRepository()),
-												deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-												fetchRequestTopHeadlinesUseCase: FetchRequestTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()),
-												fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepository()),
-												readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesQueriesRepository: TopHeadlinesQueriesRepository()))
+		contentViewModel = ContentViewModel(deleteSourcesUseCase: mock,
+											fetchSourcesUseCase: mock,
+											readSourcesUseCase: mock,
+											deleteTopHeadlinesUseCase: mock,
+											fetchTopHeadlinesUseCase: mock,
+											readTopHeadlinesUseCase: mock)
 		// Then
 		XCTAssertNotNil(contentViewModel)
 	}
 
 	func testOnAppear() async throws {
 		// Given
-		let country = "Test"
+		sut.selectedCountry = ""
 		// When
-		sut.articles = nil
-		sut.countries = nil
-		sut.selectedCountry = country
-		sut.stateSources = .isLoading
-		sut.stateTopHeadlines = .isLoading
+		sut.onAppear(selectedCountry: sut.selectedCountry)
+		try await Task.sleep(for: .seconds(2))
 		// Then
-		try await Task.sleep(for: .seconds(5))
-		XCTAssertEqual(sut.selectedCountry, country)
-		if sut.alertError == .limitedRequests {
-			XCTAssertEqual(sut.stateSources, .loaded)
-			XCTAssertEqual(sut.stateTopHeadlines, .loaded)
-		} else {
-			XCTAssertEqual(sut.stateSources, .isLoading)
-			XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
-		}
+		XCTAssertEqual(sut.articles?.count, 2)
+		XCTAssertEqual(sut.stateSources, .loaded)
+		XCTAssertEqual(sut.stateTopHeadlines, .loaded)
 	}
 
 	func testFetchSources() async {

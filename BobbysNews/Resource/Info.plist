@@ -2,18 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>ApiBaseUrl</key>
-	<string>$(API_BASE_URL)</string>
-	<key>ApiKey1</key>
-	<string>$(API_KEY_1)</string>
-	<key>ApiKey2</key>
-	<string>$(API_KEY_2)</string>
-	<key>ApiKey3</key>
-	<string>$(API_KEY_3)</string>
-	<key>ApiKey4</key>
-	<string>$(API_KEY_4)</string>
-	<key>ApiKey5</key>
-	<string>$(API_KEY_5)</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

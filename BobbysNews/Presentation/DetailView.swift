@@ -5,6 +5,7 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
+import BobbysNewsDomain
 import SwiftUI
 import WebKit
 
@@ -171,10 +172,10 @@ struct DetailView: View {
 
 #Preview {
 	NavigationStack {
-		DetailView(viewModel: ViewModelDI().detailViewModel(article: Article(author: "Author",
+		DetailView(viewModel: ViewModelFactory().detailViewModel(article: Article(author: "Author",
 																			 content: "ContentStart\n\n\n\n\n\n\n\n\n\n\n\n\n\nContentEnd",
 																			 country: "Country",
-																			 publishedAt: "2001-02-03T12:34:56Z".toDate,
+																			 publishedAt: .now,
 																			 source: Source(category: "SourceCategory",
 																							country: "SourceCountry",
 																							id: "SourceId",

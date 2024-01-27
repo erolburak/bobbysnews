@@ -36,6 +36,20 @@
         "identifier" : "BF72AAA72AA0BFD400368DA5",
         "name" : "BobbysNewsUITests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:BobbysNewsData",
+        "identifier" : "BobbysNewsDataTests",
+        "name" : "BobbysNewsDataTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:BobbysNewsDomain",
+        "identifier" : "BobbysNewsDomainTests",
+        "name" : "BobbysNewsDomainTests"
+      }
     }
   ],
   "version" : 1

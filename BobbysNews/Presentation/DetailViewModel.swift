@@ -5,6 +5,7 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
+import BobbysNewsDomain
 import Foundation
 
 @Observable
