@@ -5,6 +5,7 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
+import BobbysNewsDomain
 import SwiftUI
 
 struct ContentView: View {
@@ -34,7 +35,7 @@ struct ContentView: View {
 					.accessibilityIdentifier(article.id == viewModel.articles?.first?.id ? "NavigationLinkItem" : "")
 				}
 				.navigationDestination(for: Article.self) { article in
-					DetailView(viewModel: ViewModelDI.shared.detailViewModel(article: article))
+					DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article))
 				}
 			}
 			.navigationTitle("TopHeadlines")
@@ -256,5 +257,5 @@ struct ContentView: View {
 }
 
 #Preview {
-	ContentView(viewModel: ViewModelDI.shared.contentViewModel())
+	ContentView(viewModel: ViewModelFactory.shared.contentViewModel())
 }

@@ -14,7 +14,7 @@ struct BobbysNewsApp: App {
 
     var body: some Scene {
         WindowGroup {
-			ContentView(viewModel: ViewModelDI.shared.contentViewModel())
-        }
+			ContentView(viewModel: ViewModelFactory.shared.contentViewModel())
+		}
     }
 }

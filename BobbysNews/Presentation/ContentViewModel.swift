@@ -5,6 +5,7 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
+import BobbysNewsDomain
 import Combine
 import SwiftUI
 
@@ -31,19 +32,17 @@ class ContentViewModel {
 
 	/// Sources
 	private let deleteSourcesUseCase: PDeleteSourcesUseCase
-	private let fetchRequestSourcesUseCase: PFetchRequestSourcesUseCase
 	private let fetchSourcesUseCase: PFetchSourcesUseCase
 	private let readSourcesUseCase: PReadSourcesUseCase
 	/// TopHeadlines
 	private let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase
-	private let fetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase
 	private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
 	private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
 
 	// MARK: - Properties
 
-	var alertError: AppConfiguration.Errors?
-	var apiKeyTotalAmount = AppConfiguration.apiKeyTotalAmount
+	var alertError: Errors?
+	var apiKeyTotalAmount = 5
 	var apiKeyVersion = 1 {
 		didSet {
 			sensoryFeedback(feedback: .selection)
@@ -80,34 +79,27 @@ class ContentViewModel {
 	// MARK: - Inits
 
 	init(deleteSourcesUseCase: PDeleteSourcesUseCase,
-		 fetchRequestSourcesUseCase: PFetchRequestSourcesUseCase,
 		 fetchSourcesUseCase: PFetchSourcesUseCase,
 		 readSourcesUseCase: PReadSourcesUseCase,
 		 deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase,
-		 fetchRequestTopHeadlinesUseCase: PFetchRequestTopHeadlinesUseCase,
 		 fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase,
 		 readTopHeadlinesUseCase: PReadTopHeadlinesUseCase) {
 		self.deleteSourcesUseCase = deleteSourcesUseCase
-		self.fetchRequestSourcesUseCase = fetchRequestSourcesUseCase
 		self.fetchSourcesUseCase = fetchSourcesUseCase
 		self.readSourcesUseCase = readSourcesUseCase
 		self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
-		self.fetchRequestTopHeadlinesUseCase = fetchRequestTopHeadlinesUseCase
 		self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
 		self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
 	}
 
 	func onAppear(selectedCountry: String) {
 		self.selectedCountry = selectedCountry
-		/// Bind sources, fetch from database and api
 		readSources()
-		fetchRequestSources()
+		readTopHeadlines()
 		Task {
 			await fetchSources()
+			await fetchTopHeadlines()
 		}
-		/// Bind topHeadlines, fetch from database and api
-		readTopHeadlines()
-		fetchRequestTopHeadlines()
 	}
 
 	func onDisappear() {
@@ -116,10 +108,9 @@ class ContentViewModel {
 
 	func fetchSources(sensoryFeedback: Bool? = nil) async {
 		stateSources = .isLoading
-		
 		do {
 			try await fetchSourcesUseCase
-				.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion))
+				.fetch(apiKey: apiKeyVersion)
 		} catch {
 			updateStateSources(completion: .failure(error),
 							   state: countries?.isEmpty == true ? .emptyFetch : .loaded)
@@ -133,7 +124,7 @@ class ContentViewModel {
 			}
 			do {
 				try await fetchTopHeadlinesUseCase
-					.fetch(apiKey: AppConfiguration.apiKey(apiKeyVersion),
+					.fetch(apiKey: apiKeyVersion,
 						   country: selectedCountry)
 			} catch {
 				updateStateTopHeadlines(completion: .failure(error),
@@ -159,18 +150,6 @@ class ContentViewModel {
 			sensoryFeedback(feedback: .success)
 		} catch {
 			showAlert(error: .reset)
-		}
-	}
-
-	private func fetchRequestSources() {
-		fetchRequestSourcesUseCase
-			.fetchRequest()
-	}
-
-	private func fetchRequestTopHeadlines() {
-		if !selectedCountry.isEmpty {
-			fetchRequestTopHeadlinesUseCase
-				.fetchRequest(country: selectedCountry)
 		}
 	}
 
@@ -223,7 +202,7 @@ class ContentViewModel {
 		}
 	}
 
-	private func showAlert(error: AppConfiguration.Errors) {
+	private func showAlert(error: Errors) {
 		alertError = error
 		showAlert = true
 		sensoryFeedback(feedback: .error)
@@ -236,7 +215,7 @@ class ContentViewModel {
 			stateSources = state
 		case .failure(let error):
 			stateSources = state
-			showAlert(error: error as? AppConfiguration.Errors ?? .error(error.localizedDescription))
+			showAlert(error: error as? Errors ?? .error(error.localizedDescription))
 		}
 	}
 
@@ -247,7 +226,7 @@ class ContentViewModel {
 			stateTopHeadlines = state
 		case .failure(let error):
 			stateTopHeadlines = state
-			showAlert(error: error as? AppConfiguration.Errors ?? .error(error.localizedDescription))
+			showAlert(error: error as? Errors ?? .error(error.localizedDescription))
 		}
 	}
 }
