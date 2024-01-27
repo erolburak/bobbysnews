@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct SourceAPI: Decodable {
+public struct SourceAPI: Decodable {
 
 	// MARK: - Properties
 
-	let category: String?
-	let country: String?
-	let id: String?
-	let language: String?
-	let name: String?
-	let story: String?
-	let url: URL?
+	public let category: String?
+	public let country: String?
+	public let id: String?
+	public let language: String?
+	public let name: String?
+	public let story: String?
+	public let url: URL?
 
 	// MARK: - Private Properties
 

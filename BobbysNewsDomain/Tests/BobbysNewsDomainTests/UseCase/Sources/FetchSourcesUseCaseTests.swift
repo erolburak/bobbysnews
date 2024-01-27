@@ -6,28 +6,26 @@
 //
 
 @testable import BobbysNewsDomain
+import BobbysNewsData
 import XCTest
 
 class FetchSourcesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var mock: SourcesRepositoryMock!
 	private var sut: FetchSourcesUseCase!
-	private var sourcesPersistenceControllerMock: SourcesPersistenceControllerMock!
-	private var sourcesRepositoryMock: SourcesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		sourcesPersistenceControllerMock = SourcesPersistenceControllerMock()
-		sourcesRepositoryMock = SourcesRepositoryMock(sourcesPersistenceController: sourcesPersistenceControllerMock)
-		sut = FetchSourcesUseCase(sourcesRepository: sourcesRepositoryMock)
+		mock = SourcesRepositoryMock()
+		sut = FetchSourcesUseCase(sourcesRepository: mock)
 	}
 
 	override func tearDownWithError() throws {
+		mock = nil
 		sut = nil
-		sourcesPersistenceControllerMock = nil
-		sourcesRepositoryMock = nil
 	}
 
 	func testFetch() async throws {
@@ -37,6 +35,6 @@ class FetchSourcesUseCaseTests: XCTestCase {
 		try await sut
 			.fetch(apiKey: apiKey)
 		// Then
-		XCTAssertEqual(sourcesPersistenceControllerMock.queriesSubject.value?.count, 1)
+		XCTAssertEqual(mock.sourcesPersistenceController.queriesSubject.value?.count, 2)
 	}
 }

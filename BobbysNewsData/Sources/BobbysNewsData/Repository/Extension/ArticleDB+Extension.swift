@@ -10,8 +10,8 @@ extension ArticleDB {
 	// MARK: - Inits
 
 	@discardableResult
-	convenience init?(from api: ArticleAPI?,
-					  country: String) {
+	public convenience init?(from api: ArticleAPI?,
+							 country: String) {
 		guard let api,
 			  api.source?.id?.localizedStandardContains("removed") == false,
 			  api.source?.name?.localizedStandardContains("removed") == false else { return nil }

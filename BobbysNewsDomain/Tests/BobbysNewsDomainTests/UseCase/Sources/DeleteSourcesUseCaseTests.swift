@@ -6,37 +6,35 @@
 //
 
 @testable import BobbysNewsDomain
+import BobbysNewsData
 import XCTest
 
 class DeleteSourcesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var mock: SourcesRepositoryMock!
 	private var sut: DeleteSourcesUseCase!
-	private var sourcesPersistenceControllerMock: SourcesPersistenceControllerMock!
-	private var sourcesRepositoryMock: SourcesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		sourcesPersistenceControllerMock = SourcesPersistenceControllerMock()
-		sourcesRepositoryMock = SourcesRepositoryMock(sourcesPersistenceController: sourcesPersistenceControllerMock)
-		sut = DeleteSourcesUseCase(sourcesRepository: sourcesRepositoryMock)
+		mock = SourcesRepositoryMock()
+		sut = DeleteSourcesUseCase(sourcesRepository: mock)
 	}
 
 	override func tearDownWithError() throws {
+		mock = nil
 		sut = nil
-		sourcesPersistenceControllerMock = nil
-		sourcesRepositoryMock = nil
 	}
 
 	func testDelete() throws {
 		// Given
-		sourcesPersistenceControllerMock.queriesSubject.value = EntityMock.sourcesDB
+		mock.sourcesPersistenceController.queriesSubject.value = EntityMock.sourcesDB
 		// When
 		try sut
 			.delete()
 		// Then
-		XCTAssertNil(sourcesPersistenceControllerMock.queriesSubject.value)
+		XCTAssertNil(mock.sourcesPersistenceController.queriesSubject.value)
 	}
 }

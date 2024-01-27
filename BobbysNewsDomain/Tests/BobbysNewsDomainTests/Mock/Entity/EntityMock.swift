@@ -9,7 +9,7 @@ import BobbysNewsData
 import BobbysNewsDomain
 import Foundation
 
-struct EntityMock {
+class EntityMock {
 
 	// MARK: - Properties
 

@@ -6,6 +6,7 @@
 //
 
 @testable import BobbysNewsDomain
+import BobbysNewsData
 import Combine
 import XCTest
 
@@ -14,24 +15,21 @@ class ReadSourcesUseCaseTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellable: Set<AnyCancellable>!
+	private var mock: SourcesRepositoryMock!
 	private var sut: ReadSourcesUseCase!
-	private var sourcesPersistenceControllerMock: SourcesPersistenceControllerMock!
-	private var sourcesRepositoryMock: SourcesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
-		sourcesPersistenceControllerMock = SourcesPersistenceControllerMock()
-		sourcesRepositoryMock = SourcesRepositoryMock(sourcesPersistenceController: sourcesPersistenceControllerMock)
-		sut = ReadSourcesUseCase(sourcesRepository: sourcesRepositoryMock)
+		mock = SourcesRepositoryMock()
+		sut = ReadSourcesUseCase(sourcesRepository: mock)
 	}
 
 	override func tearDownWithError() throws {
 		cancellable.removeAll()
+		mock = nil
 		sut = nil
-		sourcesPersistenceControllerMock = nil
-		sourcesRepositoryMock = nil
 	}
 
 	func testRead() async {

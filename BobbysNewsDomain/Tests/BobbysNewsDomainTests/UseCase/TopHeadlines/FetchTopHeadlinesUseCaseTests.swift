@@ -6,28 +6,26 @@
 //
 
 @testable import BobbysNewsDomain
+import BobbysNewsData
 import XCTest
 
 class FetchTopHeadlinesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var mock: TopHeadlinesRepositoryMock!
 	private var sut: FetchTopHeadlinesUseCase!
-	private var topHeadlinesPersistenceControllerMock: TopHeadlinesPersistenceControllerMock!
-	private var topHeadlinesRepositoryMock: TopHeadlinesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		topHeadlinesPersistenceControllerMock = TopHeadlinesPersistenceControllerMock()
-		topHeadlinesRepositoryMock = TopHeadlinesRepositoryMock(topHeadlinesPersistenceController: topHeadlinesPersistenceControllerMock)
-		sut = FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock)
+		mock = TopHeadlinesRepositoryMock()
+		sut = FetchTopHeadlinesUseCase(topHeadlinesRepository: mock)
 	}
 
 	override func tearDownWithError() throws {
+		mock = nil
 		sut = nil
-		topHeadlinesPersistenceControllerMock = nil
-		topHeadlinesRepositoryMock = nil
 	}
 
 	func testFetch() async throws {
@@ -39,6 +37,6 @@ class FetchTopHeadlinesUseCaseTests: XCTestCase {
 			.fetch(apiKey: apiKey,
 				   country: country)
 		// Then
-		XCTAssertEqual(topHeadlinesPersistenceControllerMock.queriesSubject.value?.count, 1)
+		XCTAssertEqual(mock.topHeadlinesPersistenceController.queriesSubject.value?.count, 2)
 	}
 }

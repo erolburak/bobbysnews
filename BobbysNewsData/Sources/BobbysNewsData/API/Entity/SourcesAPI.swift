@@ -9,5 +9,5 @@ public struct SourcesAPI: Decodable {
 
 	// MARK: - Properties
 
-	let sources: [SourceAPI]?
+	public let sources: [SourceAPI]?
 }

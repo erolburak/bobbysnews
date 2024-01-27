@@ -5,14 +5,16 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNewsData
+public class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
 
-class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
+	// MARK: - Inits
+
+	public init() {}
 
 	// MARK: - Actions
 
-	func fetch(apiKey: Int,
-			   country: String) async throws -> TopHeadlinesAPI {
+	public func fetch(apiKey: Int,
+					  country: String) async throws -> TopHeadlinesAPI {
 		if country.isEmpty {
 			throw NetworkConfiguration.Errors.fetchTopHeadlines
 		} else {

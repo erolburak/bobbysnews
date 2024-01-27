@@ -6,37 +6,35 @@
 //
 
 @testable import BobbysNewsDomain
+import BobbysNewsData
 import XCTest
 
 class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var mock: TopHeadlinesRepositoryMock!
 	private var sut: DeleteTopHeadlinesUseCase!
-	private var topHeadlinesPersistenceControllerMock: TopHeadlinesPersistenceControllerMock!
-	private var topHeadlinesRepositoryMock: TopHeadlinesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		topHeadlinesPersistenceControllerMock = TopHeadlinesPersistenceControllerMock()
-		topHeadlinesRepositoryMock = TopHeadlinesRepositoryMock(topHeadlinesPersistenceController: topHeadlinesPersistenceControllerMock)
-		sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock)
+		mock = TopHeadlinesRepositoryMock()
+		sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: mock)
 	}
 
 	override func tearDownWithError() throws {
+		mock = nil
 		sut = nil
-		topHeadlinesPersistenceControllerMock = nil
-		topHeadlinesRepositoryMock = nil
 	}
 
 	func testDelete() throws {
 		// Given
-		topHeadlinesPersistenceControllerMock.queriesSubject.value = EntityMock.topHeadlinesDB
+		mock.topHeadlinesPersistenceController.queriesSubject.value = EntityMock.topHeadlinesDB
 		// When
 		try sut
 			.delete(country: nil)
 		// Then
-		XCTAssertNil(topHeadlinesPersistenceControllerMock.queriesSubject.value)
+		XCTAssertNil(mock.topHeadlinesPersistenceController.queriesSubject.value)
 	}
 }

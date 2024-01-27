@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct ArticleAPI: Decodable {
+public struct ArticleAPI: Decodable {
 
 	// MARK: - Properties
 
-	let author: String?
-	let content: String?
-	let publishedAt: String?
-	let source: SourceAPI?
-	let story: String?
-	let title: String?
-	let url: URL?
-	let urlToImage: URL?
+	public let author: String?
+	public let content: String?
+	public let publishedAt: String?
+	public let source: SourceAPI?
+	public let story: String?
+	public let title: String?
+	public let url: URL?
+	public let urlToImage: URL?
 
 	// MARK: - Private Properties
 

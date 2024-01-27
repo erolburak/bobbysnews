@@ -10,7 +10,7 @@ extension SourceDB {
 	// MARK: - Inits
 
 	@discardableResult
-	convenience init?(from api: SourceAPI?) {
+	public convenience init?(from api: SourceAPI?) {
 		guard let api,
 			  api.id?.localizedStandardContains("removed") == false,
 			  api.name?.localizedStandardContains("removed") == false else { return nil }

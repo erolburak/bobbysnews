@@ -14,30 +14,28 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellable: Set<AnyCancellable>!
-	private var topHeadlinesPersistenceControllerMock: TopHeadlinesPersistenceControllerMock!
-	private var topHeadlinesNetworkControllerMock: TopHeadlinesNetworkControllerMock!
 	private var sut: TopHeadlinesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
-		topHeadlinesPersistenceControllerMock = TopHeadlinesPersistenceControllerMock()
-		topHeadlinesNetworkControllerMock = TopHeadlinesNetworkControllerMock()
-		sut = TopHeadlinesRepositoryMock(topHeadlinesPersistenceController: topHeadlinesPersistenceControllerMock,
-										 topHeadlinesNetworkController: topHeadlinesNetworkControllerMock)
+		sut = TopHeadlinesRepositoryMock()
 	}
 
 	override func tearDownWithError() throws {
 		cancellable.removeAll()
-		topHeadlinesPersistenceControllerMock = nil
-		topHeadlinesNetworkControllerMock = nil
 		sut = nil
 	}
 
-	func testDelete() {
-		XCTAssertNoThrow(try sut.delete(country: nil))
-		XCTAssertNil(topHeadlinesPersistenceControllerMock.queriesSubject.value)
+	func testDelete() async throws {
+		// Given
+		sut.topHeadlinesPersistenceController.queriesSubject.value = EntityMock.topHeadlinesDB
+		// When
+		try sut
+			.delete(country: nil)
+		// Then
+		XCTAssertNil(sut.topHeadlinesPersistenceController.queriesSubject.value)
 	}
 
 	func testFetch() async throws {
@@ -48,7 +46,7 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 		try await sut.fetch(apiKey: apiKey,
 							country: country)
 		// Then
-		XCTAssertEqual(topHeadlinesPersistenceControllerMock.queriesSubject.value?.count, 1)
+		XCTAssertEqual(sut.topHeadlinesPersistenceController.queriesSubject.value?.count, 2)
 	}
 
 	func testRead() async {

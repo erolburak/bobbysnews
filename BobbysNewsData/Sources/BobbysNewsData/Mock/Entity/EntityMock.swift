@@ -5,34 +5,33 @@
 //  Created by Burak Erol on 06.09.23.
 //
 
-@testable import BobbysNewsData
 import Foundation
 
-struct EntityMock {
+public class EntityMock {
 
 	// MARK: - Properties
 
 	/// Mocks which represent API entities
-	static let articleAPI = ArticleAPI(author: "Test",
-									   content: "Test",
-									   publishedAt: "2001-02-03T12:34:56Z",
-									   source: sourceAPI,
-									   story: "Test",
-									   title: "Test",
-									   url: URL(string: "Test"),
-									   urlToImage: URL(string: "Test"))
-	static let sourceAPI = SourceAPI(category: "Test",
-									 country: "Test",
-									 id: "Test",
-									 language: "Test",
-									 name: "Test",
-									 story: "Test",
-									 url: URL(string: "Test"))
-	static let sourcesAPI = SourcesAPI(sources: [sourceAPI])
-	static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
+	public static let articleAPI = ArticleAPI(author: "Test",
+											  content: "Test",
+											  publishedAt: "2001-02-03T12:34:56Z",
+											  source: sourceAPI,
+											  story: "Test",
+											  title: "Test",
+											  url: URL(string: "Test"),
+											  urlToImage: URL(string: "Test"))
+	public static let sourceAPI = SourceAPI(category: "Test",
+											country: "Test",
+											id: "Test",
+											language: "Test",
+											name: "Test",
+											story: "Test",
+											url: URL(string: "Test"))
+	public static let sourcesAPI = SourcesAPI(sources: [sourceAPI])
+	public static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
 
 	/// Mocks which represent DB entities
-	static let articleDB = {
+	public static let articleDB = {
 		let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
 		articleDB.author = "Test"
 		articleDB.content = "Test"
@@ -45,7 +44,7 @@ struct EntityMock {
 		articleDB.urlToImage = URL(string: "Test")
 		return articleDB
 	}()
-	static let sourceDB = {
+	public static let sourceDB = {
 		let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
 		sourceDB.category = "Test"
 		sourceDB.country = "Test"
@@ -56,6 +55,10 @@ struct EntityMock {
 		sourceDB.url = URL(string: "Test")
 		return sourceDB
 	}()
-	static let sourcesDB = [sourceDB]
-	static let topHeadlinesDB = [articleDB]
+	public static let sourcesDB = [sourceDB]
+	public static let topHeadlinesDB = [articleDB]
+
+	// MARK: - Inits
+
+	public init() {}
 }

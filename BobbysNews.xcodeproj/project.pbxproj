@@ -14,6 +14,8 @@
 		BF188EBA2AA0E38B00955836 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EB92AA0E38B00955836 /* DetailView.swift */; };
 		BF188EBC2AA0E39600955836 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EBB2AA0E39600955836 /* DetailViewModel.swift */; };
 		BF188EBE2AA0E3AD00955836 /* DetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EBD2AA0E3AD00955836 /* DetailViewModelTests.swift */; };
+		BF2F65492B65497E00930B4B /* BobbysNewsData in Frameworks */ = {isa = PBXBuildFile; productRef = BF2F65482B65497E00930B4B /* BobbysNewsData */; };
+		BF2F654B2B65497E00930B4B /* BobbysNewsDomain in Frameworks */ = {isa = PBXBuildFile; productRef = BF2F654A2B65497E00930B4B /* BobbysNewsDomain */; };
 		BF72AA922AA0BFD300368DA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF72AA912AA0BFD300368DA5 /* ContentView.swift */; };
 		BF72AA942AA0BFD400368DA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF72AA932AA0BFD400368DA5 /* Assets.xcassets */; };
 		BF72AAA32AA0BFD400368DA5 /* ContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF72AAA22AA0BFD400368DA5 /* ContentViewModelTests.swift */; };
@@ -28,8 +30,6 @@
 		BFBDEA1A2B61C25F00548AB5 /* ErrorsExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDEA192B61C25F00548AB5 /* ErrorsExtensionTests.swift */; };
 		BFD1B8AE2AA5E70F000ED973 /* ViewModelFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD1B8AD2AA5E70F000ED973 /* ViewModelFactoryTests.swift */; };
 		BFD1B8C42AA634B9000ED973 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD1B8C32AA634B9000ED973 /* DateExtensionTests.swift */; };
-		BFD1F8F22B6405F7003E425C /* BobbysNewsData in Frameworks */ = {isa = PBXBuildFile; productRef = BFD1F8F12B6405F7003E425C /* BobbysNewsData */; };
-		BFD1F8F42B6405F7003E425C /* BobbysNewsDomain in Frameworks */ = {isa = PBXBuildFile; productRef = BFD1F8F32B6405F7003E425C /* BobbysNewsDomain */; };
 		BFDD66972AA3B4BD00BB49CE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD66962AA3B4BD00BB49CE /* Date+Extension.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,8 +88,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFD1F8F42B6405F7003E425C /* BobbysNewsDomain in Frameworks */,
-				BFD1F8F22B6405F7003E425C /* BobbysNewsData in Frameworks */,
+				BF2F654B2B65497E00930B4B /* BobbysNewsDomain in Frameworks */,
+				BF2F65492B65497E00930B4B /* BobbysNewsData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,8 +315,8 @@
 			);
 			name = BobbysNews;
 			packageProductDependencies = (
-				BFD1F8F12B6405F7003E425C /* BobbysNewsData */,
-				BFD1F8F32B6405F7003E425C /* BobbysNewsDomain */,
+				BF2F65482B65497E00930B4B /* BobbysNewsData */,
+				BF2F654A2B65497E00930B4B /* BobbysNewsDomain */,
 			);
 			productName = BobbysNews;
 			productReference = BF72AA872AA0BFD300368DA5 /* BobbysNews.app */;
@@ -336,6 +336,8 @@
 				BF72AAA02AA0BFD400368DA5 /* PBXTargetDependency */,
 			);
 			name = BobbysNewsTests;
+			packageProductDependencies = (
+			);
 			productName = BobbysNewsTests;
 			productReference = BF72AA9E2AA0BFD400368DA5 /* BobbysNewsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -354,6 +356,8 @@
 				BF72AAAA2AA0BFD400368DA5 /* PBXTargetDependency */,
 			);
 			name = BobbysNewsUITests;
+			packageProductDependencies = (
+			);
 			productName = BobbysNewsUITests;
 			productReference = BF72AAA82AA0BFD400368DA5 /* BobbysNewsUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -844,11 +848,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		BFD1F8F12B6405F7003E425C /* BobbysNewsData */ = {
+		BF2F65482B65497E00930B4B /* BobbysNewsData */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BobbysNewsData;
 		};
-		BFD1F8F32B6405F7003E425C /* BobbysNewsDomain */ = {
+		BF2F654A2B65497E00930B4B /* BobbysNewsDomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BobbysNewsDomain;
 		};

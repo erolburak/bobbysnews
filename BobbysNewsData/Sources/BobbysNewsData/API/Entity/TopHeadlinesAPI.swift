@@ -9,5 +9,5 @@ public struct TopHeadlinesAPI: Decodable {
 
 	// MARK: - Properties
 
-	let articles: [ArticleAPI]?
+	public let articles: [ArticleAPI]?
 }

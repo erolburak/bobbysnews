@@ -14,30 +14,28 @@ class SourcesRepositoryTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellable: Set<AnyCancellable>!
-	private var sourcesPersistenceControllerMock: SourcesPersistenceControllerMock!
-	private var sourcesNetworkControllerMock: SourcesNetworkControllerMock!
 	private var sut: SourcesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
-		sourcesPersistenceControllerMock = SourcesPersistenceControllerMock()
-		sourcesNetworkControllerMock = SourcesNetworkControllerMock()
-		sut = SourcesRepositoryMock(sourcesPersistenceController: sourcesPersistenceControllerMock,
-									sourcesNetworkController: sourcesNetworkControllerMock)
+		sut = SourcesRepositoryMock()
 	}
 
 	override func tearDownWithError() throws {
 		cancellable.removeAll()
-		sourcesPersistenceControllerMock = nil
-		sourcesNetworkControllerMock = nil
 		sut = nil
 	}
 
-	func testDelete() {
-		XCTAssertNoThrow(try sut.delete())
-		XCTAssertNil(sourcesPersistenceControllerMock.queriesSubject.value)
+	func testDelete() async throws {
+		// Given
+		sut.sourcesPersistenceController.queriesSubject.value = EntityMock.sourcesDB
+		// When
+		try sut
+			.delete()
+		// Then
+		XCTAssertNil(sut.sourcesPersistenceController.queriesSubject.value)
 	}
 
 	func testFetch() async throws {
@@ -46,7 +44,7 @@ class SourcesRepositoryTests: XCTestCase {
 		// When
 		try await sut.fetch(apiKey: apiKey)
 		// Then
-		XCTAssertEqual(sourcesPersistenceControllerMock.queriesSubject.value?.count, 1)
+		XCTAssertEqual(sut.sourcesPersistenceController.queriesSubject.value?.count, 2)
 	}
 
 	func testRead() async {
