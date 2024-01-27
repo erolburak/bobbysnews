@@ -55,7 +55,7 @@ class ContentViewModelTests: XCTestCase {
 		sut.onAppear(selectedCountry: sut.selectedCountry)
 		try await Task.sleep(for: .seconds(2))
 		// Then
-		XCTAssertEqual(sut.articles?.count, 2)
+		XCTAssertEqual(sut.articles?.count, 5)
 		XCTAssertEqual(sut.stateSources, .loaded)
 		XCTAssertEqual(sut.stateTopHeadlines, .loaded)
 	}
