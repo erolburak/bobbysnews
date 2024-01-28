@@ -14,7 +14,7 @@ public protocol PDeleteSourcesUseCase {
 	func delete() throws
 }
 
-class DeleteSourcesUseCase: PDeleteSourcesUseCase {
+public class DeleteSourcesUseCase: PDeleteSourcesUseCase {
 
 	// MARK: - Private Properties
 
@@ -22,13 +22,13 @@ class DeleteSourcesUseCase: PDeleteSourcesUseCase {
 
 	// MARK: - Inits
 
-	init(sourcesRepository: PSourcesRepository) {
+	public init(sourcesRepository: PSourcesRepository) {
 		self.sourcesRepository = sourcesRepository
 	}
 
 	// MARK: - Actions
 
-	func delete() throws {
+	public func delete() throws {
 		try sourcesRepository
 			.delete()
 	}

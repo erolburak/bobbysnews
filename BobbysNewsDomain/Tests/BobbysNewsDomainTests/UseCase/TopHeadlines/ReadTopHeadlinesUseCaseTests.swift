@@ -15,20 +15,17 @@ class ReaApipHeadlinesUseCaseTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellable: Set<AnyCancellable>!
-	private var mock: TopHeadlinesRepositoryMock!
 	private var sut: ReadTopHeadlinesUseCase!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
-		mock = TopHeadlinesRepositoryMock()
-		sut = ReadTopHeadlinesUseCase(topHeadlinesRepository: mock)
+		sut = ReadTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepositoryMock())
 	}
 
 	override func tearDownWithError() throws {
 		cancellable.removeAll()
-		mock = nil
 		sut = nil
 	}
 

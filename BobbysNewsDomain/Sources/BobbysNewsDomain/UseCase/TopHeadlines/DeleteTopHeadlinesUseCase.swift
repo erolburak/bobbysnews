@@ -14,7 +14,7 @@ public protocol PDeleteTopHeadlinesUseCase {
 	func delete(country: String?) throws
 }
 
-class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
+public class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
 
 	// MARK: - Private Properties
 
@@ -22,13 +22,13 @@ class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
 
 	// MARK: - Inits
 
-	init(topHeadlinesRepository: PTopHeadlinesRepository) {
+	public init(topHeadlinesRepository: PTopHeadlinesRepository) {
 		self.topHeadlinesRepository = topHeadlinesRepository
 	}
 
 	// MARK: - Actions
 
-	func delete(country: String?) throws {
+	public func delete(country: String?) throws {
 		try topHeadlinesRepository
 			.delete(country: country)
 	}

@@ -15,7 +15,7 @@ public protocol PReadSourcesUseCase {
 	func read() -> AnyPublisher<Sources, Error>
 }
 
-class ReadSourcesUseCase: PReadSourcesUseCase {
+public class ReadSourcesUseCase: PReadSourcesUseCase {
 
 	// MARK: - Private Properties
 
@@ -23,13 +23,13 @@ class ReadSourcesUseCase: PReadSourcesUseCase {
 
 	// MARK: - Inits
 
-	init(sourcesRepository: PSourcesRepository) {
+	public init(sourcesRepository: PSourcesRepository) {
 		self.sourcesRepository = sourcesRepository
 	}
 
 	// MARK: - Actions
 
-	func read() -> AnyPublisher<Sources, Error> {
+	public func read() -> AnyPublisher<Sources, Error> {
 		sourcesRepository
 			.read()
 			.compactMap {

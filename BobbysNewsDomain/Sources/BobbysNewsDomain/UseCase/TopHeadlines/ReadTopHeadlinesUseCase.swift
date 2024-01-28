@@ -15,7 +15,7 @@ public protocol PReadTopHeadlinesUseCase {
 	func read() -> AnyPublisher<TopHeadlines, Error>
 }
 
-class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
+public class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
 	// MARK: - Private Properties
 
@@ -23,13 +23,13 @@ class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
 	// MARK: - Inits
 
-	init(topHeadlinesRepository: PTopHeadlinesRepository) {
+	public init(topHeadlinesRepository: PTopHeadlinesRepository) {
 		self.topHeadlinesRepository = topHeadlinesRepository
 	}
 
 	// MARK: - Actions
 
-	func read() -> AnyPublisher<TopHeadlines, Error> {
+	public func read() -> AnyPublisher<TopHeadlines, Error> {
 		topHeadlinesRepository
 			.read()
 			.compactMap {

@@ -14,7 +14,7 @@ public protocol PFetchSourcesUseCase {
 	func fetch(apiKey: Int) async throws
 }
 
-class FetchSourcesUseCase: PFetchSourcesUseCase {
+public class FetchSourcesUseCase: PFetchSourcesUseCase {
 
 	// MARK: - Private Properties
 
@@ -22,13 +22,13 @@ class FetchSourcesUseCase: PFetchSourcesUseCase {
 
 	// MARK: - Inits
 
-	init(sourcesRepository: PSourcesRepository) {
+	public init(sourcesRepository: PSourcesRepository) {
 		self.sourcesRepository = sourcesRepository
 	}
 
 	// MARK: - Actions
 
-	func fetch(apiKey: Int) async throws {
+	public func fetch(apiKey: Int) async throws {
 		try await sourcesRepository
 			.fetch(apiKey: apiKey)
 	}
