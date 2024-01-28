@@ -37,7 +37,7 @@ class ViewModelFactoryTests: XCTestCase {
 		// Given
 		let detailViewModel: DetailViewModel?
 		// When
-		detailViewModel = sut.detailViewModel(article: EntityMock.article1)
+		detailViewModel = sut.detailViewModel(article: EntityMock.article)
 		// Then
 		XCTAssertNotNil(detailViewModel)
 	}

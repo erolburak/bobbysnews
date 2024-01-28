@@ -6,30 +6,35 @@
 //
 
 @testable import BobbysNews
+import BobbysNewsData
+import BobbysNewsDomain
 import XCTest
 
 class ContentViewModelTests: XCTestCase {
 
 	// MARK: - Private Properties
 
-	private var mock: ContentViewModelUseCaseMock!
 	private var sut: ContentViewModel!
+	private var sourcesRepositoryMock: SourcesRepositoryMock!
+	private var topHeadlinesRepositoryMock: TopHeadlinesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		mock = ContentViewModelUseCaseMock()
-		sut = ContentViewModel(deleteSourcesUseCase: mock,
-							   fetchSourcesUseCase: mock,
-							   readSourcesUseCase: mock,
-							   deleteTopHeadlinesUseCase: mock,
-							   fetchTopHeadlinesUseCase: mock,
-							   readTopHeadlinesUseCase: mock)
+		sourcesRepositoryMock = SourcesRepositoryMock()
+		topHeadlinesRepositoryMock = TopHeadlinesRepositoryMock()
+		sut = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
+							   fetchSourcesUseCase: FetchSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
+							   readSourcesUseCase: ReadSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
+							   deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
+							   fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
+							   readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
 	}
 
 	override func tearDownWithError() throws {
-		mock = nil
 		sut = nil
+		sourcesRepositoryMock = nil
+		topHeadlinesRepositoryMock = nil
 	}
 
 	// MARK: - Actions
@@ -38,63 +43,57 @@ class ContentViewModelTests: XCTestCase {
 		// Given
 		let contentViewModel: ContentViewModel?
 		// When
-		contentViewModel = ContentViewModel(deleteSourcesUseCase: mock,
-											fetchSourcesUseCase: mock,
-											readSourcesUseCase: mock,
-											deleteTopHeadlinesUseCase: mock,
-											fetchTopHeadlinesUseCase: mock,
-											readTopHeadlinesUseCase: mock)
+		contentViewModel = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
+											fetchSourcesUseCase: FetchSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
+											readSourcesUseCase: ReadSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
+											deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
+											fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
+											readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
 		// Then
 		XCTAssertNotNil(contentViewModel)
 	}
 
 	func testOnAppear() async throws {
 		// Given
-		sut.selectedCountry = ""
+		sut.selectedCountry = "Test"
 		// When
 		sut.onAppear(selectedCountry: sut.selectedCountry)
 		try await Task.sleep(for: .seconds(2))
 		// Then
 		XCTAssertEqual(sut.articles?.count, 2)
+		XCTAssertEqual(sut.countries?.count, 1)
 		XCTAssertEqual(sut.stateSources, .loaded)
 		XCTAssertEqual(sut.stateTopHeadlines, .loaded)
 	}
 
-	func testFetchSources() async {
+	func testFetchSources() async throws {
 		// Given
-		sut.articles = nil
-		sut.countries = nil
-		sut.selectedCountry = ""
-		sut.stateSources = .isLoading
-		sut.stateTopHeadlines = .isLoading
+		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
+		sut.selectedCountry = "Test"
 		// When
 		await sut.fetchSources()
+		try await Task.sleep(for: .seconds(2))
 		// Then
-		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .isLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
+		XCTAssertEqual(sut.countries?.count, 1)
 	}
 
-	func testFetchTopHeadlines() async {
+	func testFetchTopHeadlines() async throws {
 		// Given
-		sut.articles = nil
-		sut.countries = nil
-		sut.selectedCountry = ""
-		sut.stateSources = .isLoading
-		sut.stateTopHeadlines = .isLoading
+		sut.articles = [EntityMock.article]
+		sut.selectedCountry = "Test"
 		// When
 		await sut.fetchTopHeadlines(state: .isLoading)
+		try await Task.sleep(for: .seconds(2))
 		// Then
-		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .isLoading)
-		XCTAssertEqual(sut.stateTopHeadlines, .isLoading)
+		XCTAssertEqual(sut.articles?.count, 0)
 	}
 
 	func testReset() {
 		// Given
 		sut.apiKeyVersion = 2
-		sut.articles = []
-		sut.countries = []
+		sut.articles = [EntityMock.article]
+		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
+		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
 		sut.stateTopHeadlines = .loaded
 		// When
@@ -103,6 +102,7 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.apiKeyVersion, 1)
 		XCTAssertNil(sut.articles)
 		XCTAssertNil(sut.countries)
+		XCTAssertTrue(sut.selectedCountry.isEmpty)
 		XCTAssertEqual(sut.stateSources, .emptyRead)
 		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
 	}

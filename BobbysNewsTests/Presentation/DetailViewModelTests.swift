@@ -17,7 +17,7 @@ class DetailViewModelTests: XCTestCase {
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		sut = ViewModelFactory.shared.detailViewModel(article: EntityMock.article1)
+		sut = ViewModelFactory.shared.detailViewModel(article: EntityMock.article)
 	}
 
 	override func tearDownWithError() throws {
@@ -26,7 +26,7 @@ class DetailViewModelTests: XCTestCase {
 
 	func testDetailViewModel() {
 		// Given
-		let article = EntityMock.article2
+		let article = EntityMock.article
 		let detailViewModel: DetailViewModel?
 		// When
 		detailViewModel = DetailViewModel(article: article)

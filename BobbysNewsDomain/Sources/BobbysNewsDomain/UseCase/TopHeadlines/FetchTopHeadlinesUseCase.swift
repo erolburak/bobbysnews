@@ -15,7 +15,7 @@ public protocol PFetchTopHeadlinesUseCase {
 			   country: String) async throws
 }
 
-class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
+public class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
 	// MARK: - Private Properties
 
@@ -23,14 +23,14 @@ class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
 	// MARK: - Inits
 
-	init(topHeadlinesRepository: PTopHeadlinesRepository) {
+	public init(topHeadlinesRepository: PTopHeadlinesRepository) {
 		self.topHeadlinesRepository = topHeadlinesRepository
 	}
 
 	// MARK: - Actions
 
-	func fetch(apiKey: Int,
-			   country: String) async throws {
+	public func fetch(apiKey: Int,
+					  country: String) async throws {
 		try await topHeadlinesRepository
 			.fetch(apiKey: apiKey,
 				   country: country)

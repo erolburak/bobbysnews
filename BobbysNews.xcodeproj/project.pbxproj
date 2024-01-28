@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BF1786A62B63B5C50030FB12 /* EntityMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1786A52B63B5C50030FB12 /* EntityMock.swift */; };
-		BF1786A92B63BACA0030FB12 /* ContentViewModelUseCaseMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1786A82B63BACA0030FB12 /* ContentViewModelUseCaseMock.swift */; };
 		BF188EB52AA0E17400955836 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EB42AA0E17400955836 /* ContentViewModel.swift */; };
 		BF188EB82AA0E33D00955836 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = BF188EB72AA0E33D00955836 /* Localizable.xcstrings */; };
 		BF188EBA2AA0E38B00955836 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EB92AA0E38B00955836 /* DetailView.swift */; };
@@ -53,7 +52,6 @@
 /* Begin PBXFileReference section */
 		BF00C0B72B613B47008D159A /* BobbysNewsData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BobbysNewsData; sourceTree = "<group>"; };
 		BF1786A52B63B5C50030FB12 /* EntityMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityMock.swift; sourceTree = "<group>"; };
-		BF1786A82B63BACA0030FB12 /* ContentViewModelUseCaseMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModelUseCaseMock.swift; sourceTree = "<group>"; };
 		BF188EB42AA0E17400955836 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		BF188EB72AA0E33D00955836 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		BF188EB92AA0E38B00955836 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
@@ -114,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				BF1786A42B63B5AA0030FB12 /* Entity */,
-				BF1786A72B63BA290030FB12 /* UseCase */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -125,14 +122,6 @@
 				BF1786A52B63B5C50030FB12 /* EntityMock.swift */,
 			);
 			path = Entity;
-			sourceTree = "<group>";
-		};
-		BF1786A72B63BA290030FB12 /* UseCase */ = {
-			isa = PBXGroup;
-			children = (
-				BF1786A82B63BACA0030FB12 /* ContentViewModelUseCaseMock.swift */,
-			);
-			path = UseCase;
 			sourceTree = "<group>";
 		};
 		BF72AA7E2AA0BFD300368DA5 = {
@@ -458,7 +447,6 @@
 				BFBDEA1A2B61C25F00548AB5 /* ErrorsExtensionTests.swift in Sources */,
 				BF72AAA32AA0BFD400368DA5 /* ContentViewModelTests.swift in Sources */,
 				BF188EBE2AA0E3AD00955836 /* DetailViewModelTests.swift in Sources */,
-				BF1786A92B63BACA0030FB12 /* ContentViewModelUseCaseMock.swift in Sources */,
 				BFD1B8AE2AA5E70F000ED973 /* ViewModelFactoryTests.swift in Sources */,
 				BF1786A62B63B5C50030FB12 /* EntityMock.swift in Sources */,
 			);

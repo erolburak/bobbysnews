@@ -15,20 +15,17 @@ class ReadSourcesUseCaseTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellable: Set<AnyCancellable>!
-	private var mock: SourcesRepositoryMock!
 	private var sut: ReadSourcesUseCase!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellable = Set<AnyCancellable>()
-		mock = SourcesRepositoryMock()
-		sut = ReadSourcesUseCase(sourcesRepository: mock)
+		sut = ReadSourcesUseCase(sourcesRepository: SourcesRepositoryMock())
 	}
 
 	override func tearDownWithError() throws {
 		cancellable.removeAll()
-		mock = nil
 		sut = nil
 	}
 
