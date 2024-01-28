@@ -10,17 +10,16 @@ extension ArticleDB {
 	// MARK: - Inits
 
 	@discardableResult
-	public convenience init?(from api: ArticleAPI?,
-							 country: String) {
-		guard let api,
-			  api.source?.id?.localizedStandardContains("removed") == false,
-			  api.source?.name?.localizedStandardContains("removed") == false else { return nil }
+	public convenience init(from api: ArticleAPI,
+							country: String) {
 		self.init(context: PersistenceController.shared.backgroundContext)
 		self.author = api.author
 		self.content = api.content
 		self.country = country
 		self.publishedAt = api.publishedAt?.toDate
-		self.source = SourceDB(from: api.source)
+		if let sourceAPI = api.source {
+			self.source = SourceDB(from: sourceAPI)
+		}
 		self.story = api.story
 		self.title = api.title
 		self.url = api.url

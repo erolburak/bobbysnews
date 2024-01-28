@@ -13,10 +13,6 @@ public class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersistenceCont
 
 	public var queriesSubject: CurrentValueSubject<[ArticleDB]?, Never> = CurrentValueSubject(EntityMock.topHeadlinesDB)
 
-	// MARK: - Inits
-
-	public init() {}
-
 	// MARK: - Actions
 
 	public func delete(country: String?) throws {

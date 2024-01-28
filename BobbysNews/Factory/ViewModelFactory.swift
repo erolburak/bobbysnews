@@ -11,9 +11,9 @@ class ViewModelFactory {
 
 	// MARK: - Private Properties
 
-	private lazy var useCaseFactory = UseCaseFactory()
+	private let useCaseFactory = UseCaseFactory()
 
-	// MARK: - Private Properties
+	// MARK: - Properties
 
 	static let shared = ViewModelFactory()
 

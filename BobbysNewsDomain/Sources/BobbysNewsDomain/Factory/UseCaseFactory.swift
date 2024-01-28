@@ -9,34 +9,26 @@ import BobbysNewsData
 
 public class UseCaseFactory {
 
-	// MARK: - Private Properties
-
-	private let repositoryFactory: RepositoryFactory
-
 	// MARK: - Properties
 
-	public lazy var deleteSourcesUseCase: PDeleteSourcesUseCase = {
-		DeleteSourcesUseCase(sourcesRepository: repositoryFactory.sourcesRepository)
-	}()
-	public lazy var fetchSourcesUseCase: PFetchSourcesUseCase = {
-		FetchSourcesUseCase(sourcesRepository: repositoryFactory.sourcesRepository)
-	}()
-	public lazy var readSourcesUseCase: PReadSourcesUseCase = {
-		ReadSourcesUseCase(sourcesRepository: repositoryFactory.sourcesRepository)
-	}()
-	public lazy var deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase = {
-		DeleteTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
-	}()
-	public lazy var fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase = {
-		FetchTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
-	}()
-	public lazy var readTopHeadlinesUseCase: PReadTopHeadlinesUseCase = {
-		ReadTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
-	}()
+	/// Sources
+	public let deleteSourcesUseCase: PDeleteSourcesUseCase
+	public let fetchSourcesUseCase: PFetchSourcesUseCase
+	public let readSourcesUseCase: PReadSourcesUseCase
+	/// TopHeadlines
+	public let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase
+	public let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
+	public let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
 
 	// MARK: - Inits
 
 	public init() {
-		repositoryFactory = RepositoryFactory()
+		let repositoryFactory = RepositoryFactory()
+		deleteSourcesUseCase = DeleteSourcesUseCase(sourcesRepository: repositoryFactory.sourcesRepository)
+		fetchSourcesUseCase = FetchSourcesUseCase(sourcesRepository: repositoryFactory.sourcesRepository)
+		readSourcesUseCase = ReadSourcesUseCase(sourcesRepository: repositoryFactory.sourcesRepository)
+		deleteTopHeadlinesUseCase = DeleteTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
+		fetchTopHeadlinesUseCase = FetchTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
+		readTopHeadlinesUseCase = ReadTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
 	}
 }

@@ -197,9 +197,7 @@ class ContentViewModel {
 
 	private func sensoryFeedback(feedback: SensoryFeedback) {
 		sensoryFeedback = feedback
-		DispatchQueue.main.async {
-			self.sensoryFeedbackTrigger = true
-		}
+		sensoryFeedbackTrigger = true
 	}
 
 	private func showAlert(error: Errors) {

@@ -47,16 +47,16 @@ class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 	}
 
 	func fetchRequest(country: String) {
-		backgroundContext.performAndWait {
-			do {
+		do {
+			try backgroundContext.performAndWait {
 				let fetchRequest = ArticleDB.fetchRequest()
 				fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \ArticleDB.publishedAt,
 																 ascending: false)]
 				fetchRequest.predicate = NSPredicate(format: "country == %@", country)
 				queriesSubject.send(try backgroundContext.fetch(fetchRequest))
-			} catch {
-				queriesSubject.send(nil)
 			}
+		} catch {
+			queriesSubject.send(nil)
 		}
 	}
 
@@ -69,8 +69,8 @@ class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 
 	func save(country: String,
 			  topHeadlinesAPI: TopHeadlinesAPI) {
-		backgroundContext.performAndWait {
-			do {
+		do {
+			try backgroundContext.performAndWait {
 				let existingArticles = try backgroundContext.fetch(ArticleDB.fetchRequest())
 				topHeadlinesAPI.articles?.forEach { articleAPI in
 					guard articleAPI.title?.isEmpty == false else { return }
@@ -99,10 +99,10 @@ class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 					}
 				}
 				try backgroundContext.save()
-			} catch {
-				queriesSubject.send(nil)
 			}
+			fetchRequest(country: country)
+		} catch {
+			queriesSubject.send(nil)
 		}
-		fetchRequest(country: country)
 	}
 }

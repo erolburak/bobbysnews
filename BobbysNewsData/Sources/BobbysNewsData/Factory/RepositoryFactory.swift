@@ -9,15 +9,15 @@ public class RepositoryFactory {
 
 	// MARK: - Properties
 
-	public lazy var sourcesRepository: PSourcesRepository = {
-		SourcesRepository()
-	}()
-
-	public lazy var topHeadlinesRepository: PTopHeadlinesRepository = {
-		TopHeadlinesRepository()
-	}()
+	/// Sources
+	public let sourcesRepository: PSourcesRepository
+	/// TopHeadlines
+	public let topHeadlinesRepository: PTopHeadlinesRepository
 
 	// MARK: - Inits
 
-	public init() {}
+	public init() {
+		sourcesRepository = SourcesRepository()
+		topHeadlinesRepository = TopHeadlinesRepository()
+	}
 }

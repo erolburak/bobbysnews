@@ -57,8 +57,4 @@ public class EntityMock {
 	}()
 	public static let sourcesDB = [sourceDB]
 	public static let topHeadlinesDB = [articleDB]
-
-	// MARK: - Inits
-
-	public init() {}
 }
