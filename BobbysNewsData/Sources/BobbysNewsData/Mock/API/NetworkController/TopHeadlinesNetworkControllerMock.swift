@@ -7,10 +7,6 @@
 
 public class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
 
-	// MARK: - Inits
-
-	public init() {}
-
 	// MARK: - Actions
 
 	public func fetch(apiKey: Int,

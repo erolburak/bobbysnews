@@ -13,10 +13,6 @@ public class SourcesPersistenceControllerMock: PSourcesPersistenceController {
 
 	public var queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(EntityMock.sourcesDB)
 
-	// MARK: - Inits
-
-	public init() {}
-
 	// MARK: - Actions
 
 	public func delete() throws {

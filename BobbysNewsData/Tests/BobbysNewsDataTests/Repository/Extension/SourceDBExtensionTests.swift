@@ -18,12 +18,12 @@ class SourceDBExtensionTests: XCTestCase {
 		// When
 		let sourceDB = SourceDB(from: sourceAPI)
 		// Then
-		XCTAssertEqual(sourceDB?.category, sourceAPI.category)
-		XCTAssertEqual(sourceDB?.country, sourceAPI.country)
-		XCTAssertEqual(sourceDB?.id, sourceAPI.id)
-		XCTAssertEqual(sourceDB?.language, sourceAPI.language)
-		XCTAssertEqual(sourceDB?.name, sourceAPI.name)
-		XCTAssertEqual(sourceDB?.story, sourceAPI.story)
-		XCTAssertEqual(sourceDB?.url, sourceAPI.url)
+		XCTAssertEqual(sourceDB.category, sourceAPI.category)
+		XCTAssertEqual(sourceDB.country, sourceAPI.country)
+		XCTAssertEqual(sourceDB.id, sourceAPI.id)
+		XCTAssertEqual(sourceDB.language, sourceAPI.language)
+		XCTAssertEqual(sourceDB.name, sourceAPI.name)
+		XCTAssertEqual(sourceDB.story, sourceAPI.story)
+		XCTAssertEqual(sourceDB.url, sourceAPI.url)
 	}
 }

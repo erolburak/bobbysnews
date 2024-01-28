@@ -42,15 +42,15 @@ class SourcesPersistenceController: PSourcesPersistenceController {
 	}
 
 	func fetchRequest() {
-		backgroundContext.performAndWait {
-			do {
+		do {
+			try backgroundContext.performAndWait {
 				let fetchRequest = SourceDB.fetchRequest()
 				fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \SourceDB.id,
 																 ascending: true)]
 				queriesSubject.send(try backgroundContext.fetch(fetchRequest))
-			} catch {
-				queriesSubject.send(nil)
 			}
+		} catch {
+			queriesSubject.send(nil)
 		}
 	}
 
@@ -62,8 +62,8 @@ class SourcesPersistenceController: PSourcesPersistenceController {
 	}
 
 	func save(sourcesAPI: SourcesAPI) {
-		backgroundContext.performAndWait {
-			do {
+		do {
+			try backgroundContext.performAndWait {
 				let existingSources = try backgroundContext.fetch(SourceDB.fetchRequest())
 				sourcesAPI.sources?.forEach { sourceAPI in
 					guard sourceAPI.country?.isEmpty == false else { return }
@@ -83,10 +83,10 @@ class SourcesPersistenceController: PSourcesPersistenceController {
 					}
 				}
 				try backgroundContext.save()
-			} catch {
-				queriesSubject.send(nil)
 			}
+			fetchRequest()
+		} catch {
+			queriesSubject.send(nil)
 		}
-		fetchRequest()
 	}
 }

@@ -17,8 +17,8 @@ public class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 	// MARK: - Inits
 
 	public init() {
-		self.topHeadlinesNetworkController = TopHeadlinesNetworkControllerMock()
-		self.topHeadlinesPersistenceController = TopHeadlinesPersistenceControllerMock()
+		topHeadlinesNetworkController = TopHeadlinesNetworkControllerMock()
+		topHeadlinesPersistenceController = TopHeadlinesPersistenceControllerMock()
 	}
 
 	// MARK: - Actions

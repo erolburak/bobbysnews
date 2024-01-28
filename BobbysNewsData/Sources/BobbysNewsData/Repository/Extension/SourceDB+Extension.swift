@@ -10,10 +10,7 @@ extension SourceDB {
 	// MARK: - Inits
 
 	@discardableResult
-	public convenience init?(from api: SourceAPI?) {
-		guard let api,
-			  api.id?.localizedStandardContains("removed") == false,
-			  api.name?.localizedStandardContains("removed") == false else { return nil }
+	public convenience init(from api: SourceAPI) {
 		self.init(context: PersistenceController.shared.backgroundContext)
 		self.category = api.category
 		self.country = api.country

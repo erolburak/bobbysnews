@@ -11,12 +11,15 @@ public class SourcesRepositoryMock: PSourcesRepository {
 
 	// MARK: - Private Properties
 
-	public let sourcesNetworkController = SourcesNetworkControllerMock()
-	public let sourcesPersistenceController = SourcesPersistenceControllerMock()
+	public let sourcesNetworkController: SourcesNetworkControllerMock
+	public let sourcesPersistenceController: SourcesPersistenceControllerMock
 
 	// MARK: - Inits
 
-	public init() {}
+	public init() {
+		sourcesNetworkController = SourcesNetworkControllerMock()
+		sourcesPersistenceController = SourcesPersistenceControllerMock()
+	}
 
 	// MARK: - Actions
 
