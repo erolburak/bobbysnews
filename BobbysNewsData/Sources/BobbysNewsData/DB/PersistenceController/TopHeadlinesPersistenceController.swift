@@ -73,7 +73,9 @@ class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 			try backgroundContext.performAndWait {
 				let existingArticles = try backgroundContext.fetch(ArticleDB.fetchRequest())
 				topHeadlinesAPI.articles?.forEach { articleAPI in
-					guard articleAPI.title?.isEmpty == false else { return }
+					guard articleAPI.title?.isEmpty == false else {
+						return
+					}
 					let existingArticle = existingArticles.first { $0.title == articleAPI.title }
 					if existingArticle != nil {
 						/// Update existing article

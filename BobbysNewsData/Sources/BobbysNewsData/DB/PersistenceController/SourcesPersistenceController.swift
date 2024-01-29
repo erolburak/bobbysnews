@@ -66,7 +66,9 @@ class SourcesPersistenceController: PSourcesPersistenceController {
 			try backgroundContext.performAndWait {
 				let existingSources = try backgroundContext.fetch(SourceDB.fetchRequest())
 				sourcesAPI.sources?.forEach { sourceAPI in
-					guard sourceAPI.country?.isEmpty == false else { return }
+					guard sourceAPI.country?.isEmpty == false else {
+						return
+					}
 					let existingSource = existingSources.first { $0.id == sourceAPI.id }
 					if existingSource != nil {
 						/// Update existing source
