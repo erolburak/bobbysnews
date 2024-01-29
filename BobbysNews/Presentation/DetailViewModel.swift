@@ -18,10 +18,20 @@ class DetailViewModel {
 		guard let scrollPosition else {
 			return ""
 		}
-		return scrollPosition > 1 ? String(localized: "Headline") : ""
+		return scrollPosition >= 1 ? title : ""
 	}
 	var scrollPosition: Int?
-	var showWebView = false
+	var showWebView = false {
+		willSet {
+			if newValue == false {
+				webViewIsLoading = true
+			}
+		}
+	}
+	var title: String {
+		article.source?.name ?? String(localized: "EmptyArticleSource")
+	}
+	var webViewIsLoading = true
 
 	// MARK: - Inits
 

@@ -12,7 +12,9 @@ extension Source {
 	// MARK: - Inits
 
 	init?(from db: SourceDB?) {
-		guard let db else { return nil }
+		guard let db else {
+			return nil
+		}
 		self.init(category: db.category,
 				  country: db.country,
 				  id: db.id,

@@ -21,7 +21,7 @@ struct DetailView: View {
 		ScrollView {
 			VStack(alignment: .leading) {
 				VStack {
-					Text(viewModel.article.source?.name ?? String(localized: "EmptyArticleSource"))
+					Text(viewModel.title)
 						.font(.system(.subheadline,
 									  weight: .black))
 						.lineLimit(1)
@@ -124,20 +124,26 @@ struct DetailView: View {
 		.sheet(isPresented: $viewModel.showWebView) {
 			if let url = viewModel.article.url {
 				NavigationStack {
-					WebView(url: url)
-						.navigationTitle("Headline")
-						.navigationBarTitleDisplayMode(.inline)
-						.ignoresSafeArea(edges: .bottom)
-						.toolbar {
-							ToolbarItem(placement: .cancellationAction) {
-								Button {
-									viewModel.showWebView = false
-								} label: {
-									Image(systemName: "xmark.circle.fill")
-								}
-								.accessibilityIdentifier("CloseButton")
+					WebView(isLoading: $viewModel.webViewIsLoading,
+							url: url)
+					.navigationTitle("Headline")
+					.navigationBarTitleDisplayMode(.inline)
+					.ignoresSafeArea(edges: .bottom)
+					.toolbar {
+						ToolbarItem(placement: .cancellationAction) {
+							Button {
+								viewModel.showWebView = false
+							} label: {
+								Image(systemName: "xmark.circle.fill")
 							}
+							.accessibilityIdentifier("CloseButton")
 						}
+					}
+					.overlay {
+						if viewModel.webViewIsLoading {
+							ProgressView()
+						}
+					}
 				}
 			}
 		}
@@ -155,17 +161,51 @@ struct DetailView: View {
 
 		// MARK: - Properties
 
+		@Binding var isLoading: Bool
 		let url: URL
 
 		// MARK: - Actions
 
+		func makeCoordinator() -> Coordinator {
+			Coordinator(parent: self)
+		}
+	
 		func makeUIView(context: Context) -> WKWebView {
-			WKWebView()
+			let wkWebView = WKWebView()
+			wkWebView.navigationDelegate = context.coordinator
+			wkWebView.load(URLRequest(url: url))
+			return wkWebView
 		}
 
 		func updateUIView(_ webView: WKWebView,
-						  context: Context) {
-			webView.load(URLRequest(url: url))
+						  context: Context) {}
+
+		// MARK: - Coordinator
+
+		class Coordinator: NSObject,
+						   WKNavigationDelegate {
+
+			// MARK: - Private Properties
+
+			private let parent: WebView
+
+			// MARK: - Inits
+
+			init(parent: WebView) {
+				self.parent = parent
+			}
+
+			// MARK: - Actions
+
+			func webView(_ webView: WKWebView,
+						 didStartProvisionalNavigation navigation: WKNavigation!) {
+				parent.isLoading = true
+			}
+
+			func webView(_ webView: WKWebView,
+						 didFinish navigation: WKNavigation!) {
+				parent.isLoading = false
+			}
 		}
 	}
 }
