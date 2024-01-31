@@ -29,8 +29,10 @@ struct DetailView: View {
 					Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
 						.font(.system(size: 8,
 									  weight: .semibold))
+						.padding(.bottom, 18)
 				}
-				.frame(maxWidth: .infinity)
+				.frame(maxWidth: .infinity,
+					   alignment: .top)
 				.multilineTextAlignment(.center)
 				.id(0)
 
@@ -63,6 +65,7 @@ struct DetailView: View {
 								   startPoint: UnitPoint(x: 0.5, y: 0.9),
 								   endPoint: UnitPoint(x: 0.5, y: 1))
 				}
+				.padding(.top, -18)
 				.id(1)
 
 				VStack(alignment: .leading,
@@ -107,13 +110,35 @@ struct DetailView: View {
 				}
 			}
 		}
-		.navigationTitle(viewModel.navigationTitle)
-		.navigationBarTitleDisplayMode(.inline)
 		.scrollPosition(id: $viewModel.scrollPosition,
 						anchor: .top)
 		.scrollTargetLayout()
 		.textSelection(.enabled)
 		.toolbar {
+			ToolbarItem(placement: .principal) {
+				VStack {
+					Text(viewModel.title)
+						.font(.headline)
+
+					Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+						.font(.system(size: 8,
+									  weight: .semibold))
+				}
+				.offset(y: viewModel.showNavigationTitle ? 0 : 40)
+				.opacity(viewModel.showNavigationTitle ? 1 : 0)
+				.transition(.slide)
+				.onChange(of: viewModel.scrollPosition,
+						  initial: true) { _, newValue in
+					withAnimation {
+						if newValue == 0 {
+							viewModel.showNavigationTitle = false
+						} else if newValue == 1 {
+							viewModel.showNavigationTitle = true
+						}
+					}
+				}
+			}
+
 			if let url = viewModel.article.url {
 				ToolbarItem(placement: .primaryAction) {
 					ShareLink(item: url)
