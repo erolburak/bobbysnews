@@ -108,19 +108,24 @@ struct ContentView: View {
 						Image(systemName: "gearshape.circle.fill")
 							.accessibilityIdentifier("SettingsImage")
 					}
+					.confirmationDialog("ResetConfirmationDialog",
+										isPresented: $viewModel.showConfirmationDialog,
+										titleVisibility: .visible) {
+						ResetButton()
+					}
 				}
 			}
 		}
 		.overlay(alignment: .center) {
-			VStack {
-				if viewModel.selectedCountry.isEmpty {
-					ContentUnavailableView {
-						Label("EmptySelectedCountry",
-							  systemImage: "flag.circle.fill")
-					} description: {
-						Text("EmptySelectedCountryMessage")
-					}
-				} else {
+			if viewModel.selectedCountry.isEmpty {
+				ContentUnavailableView {
+					Label("EmptySelectedCountry",
+						  systemImage: "flag.circle.fill")
+				} description: {
+					Text("EmptySelectedCountryMessage")
+				}
+			} else {
+				VStack {
 					switch viewModel.stateTopHeadlines {
 					case .isLoading:
 						Text("TopHeadlinesLoading")
@@ -148,11 +153,6 @@ struct ContentView: View {
 					}
 				}
 			}
-		}
-		.confirmationDialog("ResetConfirmationDialog",
-							isPresented: $viewModel.showConfirmationDialog,
-							titleVisibility: .visible) {
-			ResetButton()
 		}
 		.alert(isPresented: $viewModel.showAlert,
 			   error: viewModel.alertError) { _ in
