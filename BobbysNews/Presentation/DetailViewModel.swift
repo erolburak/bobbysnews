@@ -14,13 +14,8 @@ class DetailViewModel {
 	// MARK: - Properties
 
 	var article: Article
-	var navigationTitle: String {
-		guard let scrollPosition else {
-			return ""
-		}
-		return scrollPosition >= 1 ? title : ""
-	}
 	var scrollPosition: Int?
+	var showNavigationTitle = false
 	var showWebView = false {
 		willSet {
 			if newValue == false {
