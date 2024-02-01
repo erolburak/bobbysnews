@@ -45,7 +45,7 @@ class ContentViewModel {
 	var apiKeyTotalAmount = 5
 	var apiKeyVersion = 1 {
 		didSet {
-			sensoryFeedback(feedback: .selection)
+			sensoryFeedbackTrigger(feedback: .selection)
 		}
 	}
 	var articles: [Article]?
@@ -61,12 +61,12 @@ class ContentViewModel {
 		}
 		willSet {
 			if !newValue.isEmpty {
-				sensoryFeedback(feedback: .selection)
+				sensoryFeedbackTrigger(feedback: .selection)
 			}
 		}
 	}
-	var sensoryFeedback: SensoryFeedback = .success
-	var sensoryFeedbackTrigger = false
+	var sensoryFeedback: SensoryFeedback?
+	var sensoryFeedbackBool = false
 	var showAlert = false
 	var showConfirmationDialog = false
 	var stateSources: StateSources = .isLoading
@@ -147,7 +147,7 @@ class ContentViewModel {
 				.delete(country: selectedCountry)
 			articles = nil
 			stateTopHeadlines = .emptyRead
-			sensoryFeedback(feedback: .success)
+			sensoryFeedbackTrigger(feedback: .success)
 		} catch {
 			showAlert(error: .reset)
 		}
@@ -195,15 +195,15 @@ class ContentViewModel {
 			.store(in: &cancellable)
 	}
 
-	private func sensoryFeedback(feedback: SensoryFeedback) {
+	private func sensoryFeedbackTrigger(feedback: SensoryFeedback) {
 		sensoryFeedback = feedback
-		sensoryFeedbackTrigger = true
+		sensoryFeedbackBool.toggle()
 	}
 
 	private func showAlert(error: Errors) {
 		alertError = error
 		showAlert = true
-		sensoryFeedback(feedback: .error)
+		sensoryFeedbackTrigger(feedback: .error)
 	}
 
 	private func updateStateSources(completion: Subscribers.Completion<Error>,

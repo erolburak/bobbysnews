@@ -170,10 +170,8 @@ struct ContentView: View {
 		.onChange(of: viewModel.selectedCountry) { _, newValue in
 			country = newValue
 		}
-		.sensoryFeedback(viewModel.sensoryFeedback,
-						 trigger: viewModel.sensoryFeedbackTrigger) { _, newValue in
-			viewModel.sensoryFeedbackTrigger = false
-			return newValue == true
+		.sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
+			viewModel.sensoryFeedback
 		}
     }
 
