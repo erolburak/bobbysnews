@@ -194,7 +194,7 @@ struct DetailView: View {
 		func makeCoordinator() -> Coordinator {
 			Coordinator(parent: self)
 		}
-	
+
 		func makeUIView(context: Context) -> WKWebView {
 			let wkWebView = WKWebView()
 			wkWebView.navigationDelegate = context.coordinator
@@ -202,7 +202,7 @@ struct DetailView: View {
 			return wkWebView
 		}
 
-		func updateUIView(_ webView: WKWebView,
+		func updateUIView(_ uiView: WKWebView,
 						  context: Context) {}
 
 		// MARK: - Coordinator
