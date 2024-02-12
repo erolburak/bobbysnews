@@ -7,7 +7,7 @@
 
 import Combine
 
-public class SourcesRepositoryMock: PSourcesRepository {
+public final class SourcesRepositoryMock: PSourcesRepository {
 
 	// MARK: - Private Properties
 

@@ -111,7 +111,11 @@ struct ContentView: View {
 					.confirmationDialog("ResetConfirmationDialog",
 										isPresented: $viewModel.showConfirmationDialog,
 										titleVisibility: .visible) {
-						ResetButton()
+						Button("Reset",
+							   role: .destructive) {
+							viewModel.reset()
+						}
+						.accessibilityIdentifier("ResetConfirmationDialogButton")
 					}
 				}
 			}
@@ -139,8 +143,6 @@ struct ContentView: View {
 						} description: {
 							Text("EmptyFetchTopHeadlinesMessage")
 						}
-
-						RefreshButton()
 					case .emptyRead:
 						ContentUnavailableView {
 							Label("EmptyReadTopHeadlines",
@@ -148,8 +150,22 @@ struct ContentView: View {
 						} description: {
 							Text("EmptyReadTopHeadlinesMessage")
 						}
+					}
 
-						RefreshButton()
+					if viewModel.stateTopHeadlines == .emptyFetch ||
+						viewModel.stateTopHeadlines == .emptyRead {
+						Button {
+							Task {
+								await viewModel.fetchTopHeadlines(state: .isLoading)
+							}
+						} label: {
+							Text("Refresh")
+								.textCase(.uppercase)
+						}
+						.font(.system(.subheadline,
+									  weight: .black))
+						.foregroundStyle(.secondary)
+						.accessibilityIdentifier("RefreshButton")
 					}
 				}
 			}
@@ -161,14 +177,19 @@ struct ContentView: View {
 				Text(message)
 			}
 		}
-		.onAppear {
+		.task {
 			viewModel.onAppear(selectedCountry: country)
+			await viewModel.fetchSources()
 		}
 		.onDisappear() {
 			viewModel.onDisappear()
 		}
 		.onChange(of: viewModel.selectedCountry) { _, newValue in
 			country = newValue
+			viewModel.articles?.removeAll()
+			Task {
+				await viewModel.fetchTopHeadlines(state: .isLoading)
+			}
 		}
 		.sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
 			viewModel.sensoryFeedback
@@ -207,10 +228,12 @@ struct ContentView: View {
 							   height: 80,
 							   alignment: .center)
 						.clipped()
-				} else if case .empty = phase {
-					EmptyImageView()
-				} else if phase.error != nil {
-					EmptyImageView()
+				} else {
+					Image(systemName: "photo.circle.fill")
+						.resizable()
+						.aspectRatio(contentMode: .fit)
+						.frame(height: 24)
+						.foregroundStyle(.gray)
 				}
 			}
 			.frame(width: 80,
@@ -220,37 +243,6 @@ struct ContentView: View {
 		}
 		.padding(.horizontal)
 		.padding(.vertical, 20)
-	}
-
-	private func EmptyImageView() -> some View {
-		Image(systemName: "photo.circle.fill")
-			.resizable()
-			.aspectRatio(contentMode: .fit)
-			.frame(height: 24)
-			.foregroundStyle(.gray)
-	}
-
-	private func RefreshButton() -> some View {
-		Button {
-			Task {
-				await viewModel.fetchTopHeadlines(state: .isLoading)
-			}
-		} label: {
-			Text("Refresh")
-				.textCase(.uppercase)
-		}
-		.font(.system(.subheadline,
-					  weight: .black))
-		.foregroundStyle(.secondary)
-		.accessibilityIdentifier("RefreshButton")
-	}
-
-	private func ResetButton() -> some View {
-		Button("Reset",
-			   role: .destructive) {
-			viewModel.reset()
-		}
-		.accessibilityIdentifier("ResetConfirmationDialogButton")
 	}
 }
 

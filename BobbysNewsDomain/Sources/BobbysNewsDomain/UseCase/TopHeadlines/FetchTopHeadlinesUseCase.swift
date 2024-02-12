@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public protocol PFetchTopHeadlinesUseCase {
+public protocol PFetchTopHeadlinesUseCase: Sendable {
 
 	// MARK: - Actions
 
@@ -15,7 +15,7 @@ public protocol PFetchTopHeadlinesUseCase {
 			   country: String) async throws
 }
 
-public class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
+public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
 	// MARK: - Private Properties
 

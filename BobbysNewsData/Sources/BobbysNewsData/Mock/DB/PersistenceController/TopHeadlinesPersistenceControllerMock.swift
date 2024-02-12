@@ -5,13 +5,14 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
+@preconcurrency
 import Combine
 
-public class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersistenceController {
+public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersistenceController {
 
 	// MARK: - Properties
 
-	public var queriesSubject: CurrentValueSubject<[ArticleDB]?, Never> = CurrentValueSubject(EntityMock.topHeadlinesDB)
+	public let queriesSubject: CurrentValueSubject<[ArticleDB]?, Never> = CurrentValueSubject(EntityMock.topHeadlinesDB)
 
 	// MARK: - Actions
 

@@ -7,14 +7,14 @@
 
 import BobbysNewsData
 
-public protocol PFetchSourcesUseCase {
+public protocol PFetchSourcesUseCase: Sendable {
 
 	// MARK: - Actions
 
 	func fetch(apiKey: Int) async throws
 }
 
-public class FetchSourcesUseCase: PFetchSourcesUseCase {
+public final class FetchSourcesUseCase: PFetchSourcesUseCase {
 
 	// MARK: - Private Properties
 

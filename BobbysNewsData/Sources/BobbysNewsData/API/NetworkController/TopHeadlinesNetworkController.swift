@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PTopHeadlinesNetworkController {
+protocol PTopHeadlinesNetworkController: Sendable {
 
 	// MARK: - Actions
 
@@ -15,7 +15,7 @@ protocol PTopHeadlinesNetworkController {
 			   country: String) async throws -> TopHeadlinesAPI
 }
 
-class TopHeadlinesNetworkController: PTopHeadlinesNetworkController {
+final class TopHeadlinesNetworkController: PTopHeadlinesNetworkController {
 
 	// MARK: - Actions
 

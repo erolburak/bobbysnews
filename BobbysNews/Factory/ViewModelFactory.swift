@@ -7,7 +7,7 @@
 
 import BobbysNewsDomain
 
-class ViewModelFactory {
+final class ViewModelFactory: Sendable {
 
 	// MARK: - Private Properties
 

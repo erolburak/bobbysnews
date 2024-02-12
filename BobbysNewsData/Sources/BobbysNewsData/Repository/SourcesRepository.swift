@@ -7,7 +7,7 @@
 
 import Combine
 
-public protocol PSourcesRepository {
+public protocol PSourcesRepository: Sendable {
 
 	// MARK: - Actions
 
@@ -16,7 +16,7 @@ public protocol PSourcesRepository {
 	func read() -> AnyPublisher<[SourceDB], Error>
 }
 
-class SourcesRepository: PSourcesRepository {
+final class SourcesRepository: PSourcesRepository {
 
 	// MARK: - Private Properties
 

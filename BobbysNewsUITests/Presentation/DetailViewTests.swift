@@ -16,6 +16,7 @@ final class DetailViewTests: XCTestCase {
 	}
 
 	/// Test share link to open share view while first opening detail view
+	@MainActor
 	func testShareLink() {
 		let app = XCUIApplication()
 		app.launch()
@@ -31,6 +32,7 @@ final class DetailViewTests: XCTestCase {
 	}
 
 	/// Test read button to open web view while first opening detail view
+	@MainActor
 	func testReadButton() {
 		let app = XCUIApplication()
 		app.launch()
@@ -46,6 +48,7 @@ final class DetailViewTests: XCTestCase {
 	}
 
 	/// Test close button of web view while first opening detail view
+	@MainActor
 	func testCloseButton() {
 		let app = XCUIApplication()
 		app.launch()

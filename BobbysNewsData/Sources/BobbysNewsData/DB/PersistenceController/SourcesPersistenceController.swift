@@ -5,10 +5,11 @@
 //  Created by Burak Erol on 07.09.23.
 //
 
+@preconcurrency
 import Combine
 import CoreData
 
-public protocol PSourcesPersistenceController {
+public protocol PSourcesPersistenceController: Sendable {
 
 	// MARK: - Properties
 
@@ -22,12 +23,11 @@ public protocol PSourcesPersistenceController {
 	func save(sourcesAPI: SourcesAPI)
 }
 
-class SourcesPersistenceController: PSourcesPersistenceController {
+final class SourcesPersistenceController: PSourcesPersistenceController {
 
 	// MARK: - Private Properties
 
 	internal let queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(nil)
-	private let backgroundContext = PersistenceController.shared.backgroundContext
 
 	// MARK: - Properties
 
@@ -36,18 +36,18 @@ class SourcesPersistenceController: PSourcesPersistenceController {
 	// MARK: - Actions
 
 	func delete() throws {
-		try backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "SourceDB")))
-		try backgroundContext.save()
+		try PersistenceController.shared.backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "SourceDB")))
+		try PersistenceController.shared.backgroundContext.save()
 		queriesSubject.send(nil)
 	}
 
 	func fetchRequest() {
 		do {
-			try backgroundContext.performAndWait {
+			try PersistenceController.shared.backgroundContext.performAndWait {
 				let fetchRequest = SourceDB.fetchRequest()
 				fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \SourceDB.id,
 																 ascending: true)]
-				queriesSubject.send(try backgroundContext.fetch(fetchRequest))
+				queriesSubject.send(try PersistenceController.shared.backgroundContext.fetch(fetchRequest))
 			}
 		} catch {
 			queriesSubject.send(nil)
@@ -63,8 +63,8 @@ class SourcesPersistenceController: PSourcesPersistenceController {
 
 	func save(sourcesAPI: SourcesAPI) {
 		do {
-			try backgroundContext.performAndWait {
-				let existingSources = try backgroundContext.fetch(SourceDB.fetchRequest())
+			try PersistenceController.shared.backgroundContext.performAndWait {
+				let existingSources = try PersistenceController.shared.backgroundContext.fetch(SourceDB.fetchRequest())
 				sourcesAPI.sources?.forEach { sourceAPI in
 					guard sourceAPI.country?.isEmpty == false else {
 						return
@@ -84,7 +84,7 @@ class SourcesPersistenceController: PSourcesPersistenceController {
 						SourceDB(from: sourceAPI)
 					}
 				}
-				try backgroundContext.save()
+				try PersistenceController.shared.backgroundContext.save()
 			}
 			fetchRequest()
 		} catch {

@@ -7,7 +7,7 @@
 
 import Combine
 
-public class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
+public final class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 
 	// MARK: - Private Properties
 

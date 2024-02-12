@@ -5,13 +5,14 @@
 //  Created by Burak Erol on 07.09.23.
 //
 
+@preconcurrency
 import Combine
 
-public class SourcesPersistenceControllerMock: PSourcesPersistenceController {
+public final class SourcesPersistenceControllerMock: PSourcesPersistenceController {
 
 	// MARK: - Properties
 
-	public var queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(EntityMock.sourcesDB)
+	public let queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(EntityMock.sourcesDB)
 
 	// MARK: - Actions
 

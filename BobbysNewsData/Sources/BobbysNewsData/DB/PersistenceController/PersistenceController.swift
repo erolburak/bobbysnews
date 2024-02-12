@@ -5,15 +5,16 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
-import Combine
+@preconcurrency
 import CoreData
+import Combine
 
-public class PersistenceController {
+public final class PersistenceController: Sendable {
 
 	// MARK: - Properties
 
 	public static let shared = PersistenceController()
-	public lazy var backgroundContext = container.newBackgroundContext()
+	public let backgroundContext: NSManagedObjectContext
 
 	// MARK: - Private Properties
 
@@ -38,5 +39,6 @@ public class PersistenceController {
 			}
 		}
 		container.viewContext.automaticallyMergesChangesFromParent = true
+		backgroundContext = container.newBackgroundContext()
 	}
 }

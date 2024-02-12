@@ -7,14 +7,14 @@
 
 import BobbysNewsData
 
-public protocol PDeleteSourcesUseCase {
+public protocol PDeleteSourcesUseCase: Sendable {
 
 	// MARK: - Actions
 
 	func delete() throws
 }
 
-public class DeleteSourcesUseCase: PDeleteSourcesUseCase {
+public final class DeleteSourcesUseCase: PDeleteSourcesUseCase {
 
 	// MARK: - Private Properties
 
