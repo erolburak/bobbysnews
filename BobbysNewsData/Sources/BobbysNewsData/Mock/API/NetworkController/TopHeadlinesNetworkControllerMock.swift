@@ -5,7 +5,7 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-public class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
+public final class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
 
 	// MARK: - Actions
 

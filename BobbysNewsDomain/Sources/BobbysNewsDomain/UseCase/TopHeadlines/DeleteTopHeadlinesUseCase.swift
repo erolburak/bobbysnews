@@ -7,14 +7,14 @@
 
 import BobbysNewsData
 
-public protocol PDeleteTopHeadlinesUseCase {
+public protocol PDeleteTopHeadlinesUseCase: Sendable {
 
 	// MARK: - Actions
 
 	func delete(country: String?) throws
 }
 
-public class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
+public final class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
 
 	// MARK: - Private Properties
 

@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol PSourcesNetworkController {
+protocol PSourcesNetworkController: Sendable {
 
 	// MARK: - Actions
 
 	func fetch(apiKey: Int) async throws -> SourcesAPI
 }
 
-class SourcesNetworkController: PSourcesNetworkController {
+final class SourcesNetworkController: PSourcesNetworkController {
 
 	// MARK: - Actions
 

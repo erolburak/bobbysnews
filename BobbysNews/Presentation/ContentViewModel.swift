@@ -53,12 +53,6 @@ class ContentViewModel {
 	var listDisabled: Bool { stateTopHeadlines != .loaded }
 	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
 	var selectedCountry = "" {
-		didSet {
-			articles?.removeAll()
-			Task {
-				await fetchTopHeadlines(state: .isLoading)
-			}
-		}
 		willSet {
 			if !newValue.isEmpty {
 				sensoryFeedbackTrigger(feedback: .selection)
@@ -96,16 +90,13 @@ class ContentViewModel {
 		self.selectedCountry = selectedCountry
 		readSources()
 		readTopHeadlines()
-		Task {
-			await fetchSources()
-			await fetchTopHeadlines()
-		}
 	}
 
 	func onDisappear() {
 		cancellable.removeAll()
 	}
 
+	@MainActor
 	func fetchSources(sensoryFeedback: Bool? = nil) async {
 		stateSources = .isLoading
 		do {
@@ -117,6 +108,7 @@ class ContentViewModel {
 		}
 	}
 
+	@MainActor
 	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
 		if !selectedCountry.isEmpty {
 			if let state {
@@ -187,10 +179,8 @@ class ContentViewModel {
 				}
 			}, receiveValue: { [weak self] articles in
 				self?.articles = articles
-				DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(750)) {
-					self?.updateStateTopHeadlines(completion: .finished,
-												  state: articles.isEmpty ? self?.stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
-				}
+				self?.updateStateTopHeadlines(completion: .finished,
+											  state: articles.isEmpty ? self?.stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
 			})
 			.store(in: &cancellable)
 	}

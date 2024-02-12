@@ -8,14 +8,14 @@
 import BobbysNewsData
 import Combine
 
-public protocol PReadTopHeadlinesUseCase {
+public protocol PReadTopHeadlinesUseCase: Sendable {
 
 	// MARK: - Actions
 
 	func read() -> AnyPublisher<TopHeadlines, Error>
 }
 
-public class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
+public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
 	// MARK: - Private Properties
 

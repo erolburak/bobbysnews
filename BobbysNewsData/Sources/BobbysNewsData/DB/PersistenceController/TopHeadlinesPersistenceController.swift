@@ -5,10 +5,11 @@
 //  Created by Burak Erol on 03.09.23.
 //
 
+@preconcurrency
 import Combine
 import CoreData
 
-public protocol PTopHeadlinesPersistenceController {
+public protocol PTopHeadlinesPersistenceController: Sendable {
 
 	// MARK: - Properties
 
@@ -23,12 +24,11 @@ public protocol PTopHeadlinesPersistenceController {
 			  topHeadlinesAPI: TopHeadlinesAPI)
 }
 
-class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
+final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 
 	// MARK: - Private Properties
 
 	internal let queriesSubject: CurrentValueSubject<[ArticleDB]?, Never> = CurrentValueSubject(nil)
-	private let backgroundContext = PersistenceController.shared.backgroundContext
 
 	// MARK: - Properties
 
@@ -41,19 +41,19 @@ class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 		if let country {
 			fetchRequest.predicate = NSPredicate(format: "country == %@", country)
 		}
-		try backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: fetchRequest))
-		try backgroundContext.save()
+		try PersistenceController.shared.backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: fetchRequest))
+		try PersistenceController.shared.backgroundContext.save()
 		queriesSubject.send(nil)
 	}
 
 	func fetchRequest(country: String) {
 		do {
-			try backgroundContext.performAndWait {
+			try PersistenceController.shared.backgroundContext.performAndWait {
 				let fetchRequest = ArticleDB.fetchRequest()
 				fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \ArticleDB.publishedAt,
 																 ascending: false)]
 				fetchRequest.predicate = NSPredicate(format: "country == %@", country)
-				queriesSubject.send(try backgroundContext.fetch(fetchRequest))
+				queriesSubject.send(try PersistenceController.shared.backgroundContext.fetch(fetchRequest))
 			}
 		} catch {
 			queriesSubject.send(nil)
@@ -70,8 +70,8 @@ class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 	func save(country: String,
 			  topHeadlinesAPI: TopHeadlinesAPI) {
 		do {
-			try backgroundContext.performAndWait {
-				let existingArticles = try backgroundContext.fetch(ArticleDB.fetchRequest())
+			try PersistenceController.shared.backgroundContext.performAndWait {
+				let existingArticles = try PersistenceController.shared.backgroundContext.fetch(ArticleDB.fetchRequest())
 				topHeadlinesAPI.articles?.forEach { articleAPI in
 					guard articleAPI.title?.isEmpty == false else {
 						return
@@ -100,7 +100,7 @@ class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 								  country: country)
 					}
 				}
-				try backgroundContext.save()
+				try PersistenceController.shared.backgroundContext.save()
 			}
 			fetchRequest(country: country)
 		} catch {

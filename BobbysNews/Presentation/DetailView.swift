@@ -46,10 +46,12 @@ struct DetailView: View {
 									   height: 280,
 									   alignment: .center)
 								.clipped()
-						} else if case .empty = phase {
-							EmptyImageView()
-						} else if phase.error != nil {
-							EmptyImageView()
+						} else {
+							Image(systemName: "photo.circle.fill")
+								.resizable()
+								.aspectRatio(contentMode: .fit)
+								.frame(height: 24)
+								.foregroundStyle(.gray)
 						}
 					}
 					.frame(width: geometry.size.width,
@@ -172,14 +174,6 @@ struct DetailView: View {
 				}
 			}
 		}
-	}
-
-	private func EmptyImageView() -> some View {
-		Image(systemName: "photo.circle.fill")
-			.resizable()
-			.aspectRatio(contentMode: .fit)
-			.frame(height: 24)
-			.foregroundStyle(.gray)
 	}
 
 	private struct WebView: UIViewRepresentable {

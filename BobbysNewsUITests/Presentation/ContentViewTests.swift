@@ -16,6 +16,7 @@ final class ContentViewTests: XCTestCase {
 	}
 
 	/// Test navigation link item to open detail view
+	@MainActor
 	func testNavigationLinkItem() {
 		let app = XCUIApplication()
 		app.launch()
@@ -27,6 +28,7 @@ final class ContentViewTests: XCTestCase {
 	}
 
 	/// Test settings button to open settings menu
+	@MainActor
 	func testSettingsButton() {
 		let app = XCUIApplication()
 		app.launch()
@@ -38,6 +40,7 @@ final class ContentViewTests: XCTestCase {
 	}
 
 	/// Test country picker item to change country while first opening settings menu
+	@MainActor
 	func testCountryPickerItem() {
 		let app = XCUIApplication()
 		app.launch()
@@ -55,6 +58,7 @@ final class ContentViewTests: XCTestCase {
 	}
 
 	/// Test api key picker item to change api key while first opening settings menu
+	@MainActor
 	func testApiKeyPickerItem() {
 		let app = XCUIApplication()
 		app.launch()
@@ -72,6 +76,7 @@ final class ContentViewTests: XCTestCase {
 	}
 
 	/// Test reset and confirm reset while first opening settings view
+	@MainActor
 	func testResetButton() {
 		let app = XCUIApplication()
 		app.launch()

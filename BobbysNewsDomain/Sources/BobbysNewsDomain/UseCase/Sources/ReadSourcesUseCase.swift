@@ -8,14 +8,14 @@
 import BobbysNewsData
 import Combine
 
-public protocol PReadSourcesUseCase {
+public protocol PReadSourcesUseCase: Sendable {
 
 	// MARK: - Actions
 
 	func read() -> AnyPublisher<Sources, Error>
 }
 
-public class ReadSourcesUseCase: PReadSourcesUseCase {
+public final class ReadSourcesUseCase: PReadSourcesUseCase {
 
 	// MARK: - Private Properties
 

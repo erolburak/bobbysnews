@@ -7,7 +7,7 @@
 
 import Combine
 
-public protocol PTopHeadlinesRepository {
+public protocol PTopHeadlinesRepository: Sendable {
 
 	// MARK: - Actions
 
@@ -17,7 +17,7 @@ public protocol PTopHeadlinesRepository {
 	func read() -> AnyPublisher<[ArticleDB], Error>
 }
 
-class TopHeadlinesRepository: PTopHeadlinesRepository {
+final class TopHeadlinesRepository: PTopHeadlinesRepository {
 
 	// MARK: - Private Properties
 

@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public class UseCaseFactory {
+public final class UseCaseFactory: Sendable {
 
 	// MARK: - Properties
 
