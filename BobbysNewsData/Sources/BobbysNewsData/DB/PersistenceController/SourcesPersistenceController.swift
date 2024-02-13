@@ -25,13 +25,13 @@ public protocol PSourcesPersistenceController: Sendable {
 
 final class SourcesPersistenceController: PSourcesPersistenceController {
 
-	// MARK: - Private Properties
-
-	internal let queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(nil)
-
 	// MARK: - Properties
 
 	static let shared = SourcesPersistenceController()
+
+	// MARK: - Private Properties
+
+	internal let queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(nil)
 
 	// MARK: - Actions
 

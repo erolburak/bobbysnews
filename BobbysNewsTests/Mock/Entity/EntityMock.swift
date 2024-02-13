@@ -10,16 +10,6 @@ import Foundation
 
 struct EntityMock {
 
-	// MARK: - Private Properties
-
-	private static let source = Source(category: "Test",
-									   country: "Test",
-									   id: "Test",
-									   language: "Test",
-									   name: "Test",
-									   story: "Test",
-									   url: URL(string: "Test"))
-
 	// MARK: - Properties
 
 	static let article = Article(author: "Test",
@@ -40,4 +30,14 @@ struct EntityMock {
 								   .reset]
 	static let sources = Sources(sources: [source])
 	static let topHeadlines = TopHeadlines(articles: [article])
+
+	// MARK: - Private Properties
+
+	private static let source = Source(category: "Test",
+									   country: "Test",
+									   id: "Test",
+									   language: "Test",
+									   name: "Test",
+									   story: "Test",
+									   url: URL(string: "Test"))
 }

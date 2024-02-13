@@ -18,14 +18,6 @@ struct NetworkConfiguration {
 		case fetchSources, fetchTopHeadlines, invalidApiKey, limitedRequests
 	}
 
-	// MARK: - Private Properties
-
-	private static let apiKeys = ["5cac74ed65174965aff2fff52f09a0bc",
-								  "3d4ebbcc8f4749349fb66bb21913f717",
-								  "eac8e350dc834a0c96e3a450e7e0c0ee",
-								  "57d956229c5449e58443c98196a38bef",
-								  "0b2e24b44e6a40e9af79e4f08ab57963"]
-
 	// MARK: - Properties
 
 	static let apiBaseUrl = "https://newsapi.org/v2/"
@@ -33,6 +25,14 @@ struct NetworkConfiguration {
 		return apiKeys[key]
 	}
 	static let shared = NetworkConfiguration()
+
+	// MARK: - Private Properties
+
+	private static let apiKeys = ["5cac74ed65174965aff2fff52f09a0bc",
+								  "3d4ebbcc8f4749349fb66bb21913f717",
+								  "eac8e350dc834a0c96e3a450e7e0c0ee",
+								  "57d956229c5449e58443c98196a38bef",
+								  "0b2e24b44e6a40e9af79e4f08ab57963"]
 
 	// MARK: - Actions
 
