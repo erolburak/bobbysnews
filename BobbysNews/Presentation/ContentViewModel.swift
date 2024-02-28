@@ -40,6 +40,10 @@ final class ContentViewModel: Sendable {
 	private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
 	private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
 
+	// MARK: - Private Properties
+
+	private var cancellable = Set<AnyCancellable>()
+
 	// MARK: - Properties
 
 	var alertError: Errors?
@@ -66,10 +70,6 @@ final class ContentViewModel: Sendable {
 	var showConfirmationDialog = false
 	var stateSources: StateSources = .isLoading
 	var stateTopHeadlines: StateTopHeadlines = .isLoading
-
-	// MARK: - Private Properties
-
-	private var cancellable = Set<AnyCancellable>()
 
 	// MARK: - Inits
 
