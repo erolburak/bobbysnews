@@ -9,6 +9,13 @@ import Foundation
 
 public struct ArticleAPI: Decodable {
 
+	// MARK: - Type Definitions
+
+	private enum CodingKeys: String, CodingKey {
+		case author, content, publishedAt, source, title, url, urlToImage
+		case story = "description"
+	}
+
 	// MARK: - Properties
 
 	public let author: String?
@@ -19,11 +26,4 @@ public struct ArticleAPI: Decodable {
 	public let title: String?
 	public let url: URL?
 	public let urlToImage: URL?
-
-	// MARK: - Private Properties
-
-	private enum CodingKeys: String, CodingKey {
-		case author, content, publishedAt, source, title, url, urlToImage
-		case story = "description"
-	}
 }

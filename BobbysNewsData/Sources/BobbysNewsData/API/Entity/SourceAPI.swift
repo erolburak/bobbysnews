@@ -9,6 +9,13 @@ import Foundation
 
 public struct SourceAPI: Decodable {
 
+	// MARK: - Type Definitions
+
+	private enum CodingKeys: String, CodingKey {
+		case category, country, id, language, name, url
+		case story = "description"
+	}
+
 	// MARK: - Properties
 
 	public let category: String?
@@ -18,11 +25,4 @@ public struct SourceAPI: Decodable {
 	public let name: String?
 	public let story: String?
 	public let url: URL?
-
-	// MARK: - Private Properties
-
-	private enum CodingKeys: String, CodingKey {
-		case category, country, id, language, name, url
-		case story = "description"
-	}
 }

@@ -10,13 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
 
-	// MARK: - Properties
-
-	@State var viewModel: ContentViewModel
-
 	// MARK: - Private Properties
 
 	@AppStorage("country") private var country = ""
+
+	// MARK: - Properties
+
+	@State var viewModel: ContentViewModel
 
 	// MARK: - Layouts
 

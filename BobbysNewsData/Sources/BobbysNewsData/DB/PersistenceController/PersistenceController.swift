@@ -10,14 +10,14 @@ import Combine
 
 public final class PersistenceController {
 
+	// MARK: - Private Properties
+
+	private let container: NSPersistentContainer
+
 	// MARK: - Properties
 
 	public static let shared = PersistenceController()
 	public let backgroundContext: NSManagedObjectContext
-
-	// MARK: - Private Properties
-
-	private let container: NSPersistentContainer
 
 	// MARK: - Inits
 

@@ -25,13 +25,13 @@ public protocol PTopHeadlinesPersistenceController {
 
 final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
 
-	// MARK: - Properties
-
-	static let shared = TopHeadlinesPersistenceController()
-
 	// MARK: - Private Properties
 
 	internal let queriesSubject: CurrentValueSubject<[ArticleDB]?, Never> = CurrentValueSubject(nil)
+
+	// MARK: - Properties
+
+	static let shared = TopHeadlinesPersistenceController()
 
 	// MARK: - Actions
 
