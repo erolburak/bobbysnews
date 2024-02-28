@@ -5,7 +5,9 @@
 //  Created by Burak Erol on 03.09.23.
 //
 
+@preconcurrency
 import BobbysNewsDomain
+import SwiftUI
 
 final class ViewModelFactory: Sendable {
 

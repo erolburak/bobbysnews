@@ -5,11 +5,10 @@
 //  Created by Burak Erol on 03.09.23.
 //
 
-@preconcurrency
 import Combine
 import CoreData
 
-public protocol PTopHeadlinesPersistenceController: Sendable {
+public protocol PTopHeadlinesPersistenceController {
 
 	// MARK: - Properties
 

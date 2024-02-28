@@ -9,7 +9,7 @@ import BobbysNewsDomain
 import Foundation
 
 @Observable
-class DetailViewModel {
+final class DetailViewModel {
 
 	// MARK: - Properties
 

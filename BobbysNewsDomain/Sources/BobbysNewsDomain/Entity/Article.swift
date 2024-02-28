@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Article: Hashable, Identifiable, Sendable {
+public struct Article: Hashable, Identifiable {
 
 	// MARK: - Properties
 

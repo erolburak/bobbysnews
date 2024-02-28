@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PTopHeadlinesNetworkController: Sendable {
+protocol PTopHeadlinesNetworkController {
 
 	// MARK: - Actions
 

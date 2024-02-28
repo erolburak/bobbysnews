@@ -5,12 +5,13 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
+@preconcurrency
 import BobbysNewsDomain
 import Combine
 import SwiftUI
 
 @Observable
-class ContentViewModel {
+final class ContentViewModel: Sendable {
 
 	// MARK: - Type Definitions
 
@@ -96,7 +97,6 @@ class ContentViewModel {
 		cancellable.removeAll()
 	}
 
-	@MainActor
 	func fetchSources(sensoryFeedback: Bool? = nil) async {
 		stateSources = .isLoading
 		do {
@@ -108,7 +108,6 @@ class ContentViewModel {
 		}
 	}
 
-	@MainActor
 	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
 		if !selectedCountry.isEmpty {
 			if let state {

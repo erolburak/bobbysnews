@@ -8,7 +8,7 @@
 import BobbysNewsData
 import Combine
 
-public protocol PReadSourcesUseCase: Sendable {
+public protocol PReadSourcesUseCase {
 
 	// MARK: - Actions
 

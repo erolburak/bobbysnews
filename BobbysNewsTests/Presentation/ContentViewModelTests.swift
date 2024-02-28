@@ -66,7 +66,6 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.stateTopHeadlines, .loaded)
 	}
 
-	@MainActor
 	func testFetchSources() async throws {
 		// Given
 		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
@@ -78,7 +77,6 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.countries?.count, 1)
 	}
 
-	@MainActor
 	func testFetchTopHeadlines() async throws {
 		// Given
 		sut.articles = [EntityMock.article]

@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public protocol PDeleteSourcesUseCase: Sendable {
+public protocol PDeleteSourcesUseCase {
 
 	// MARK: - Actions
 

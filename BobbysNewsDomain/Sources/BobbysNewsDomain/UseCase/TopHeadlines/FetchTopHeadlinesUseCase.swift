@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public protocol PFetchTopHeadlinesUseCase: Sendable {
+public protocol PFetchTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
