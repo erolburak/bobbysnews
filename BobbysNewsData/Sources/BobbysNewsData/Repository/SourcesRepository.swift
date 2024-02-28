@@ -7,7 +7,7 @@
 
 import Combine
 
-public protocol PSourcesRepository: Sendable {
+public protocol PSourcesRepository {
 
 	// MARK: - Actions
 

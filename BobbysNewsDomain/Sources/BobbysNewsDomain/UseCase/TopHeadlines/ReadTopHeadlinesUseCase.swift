@@ -8,7 +8,7 @@
 import BobbysNewsData
 import Combine
 
-public protocol PReadTopHeadlinesUseCase: Sendable {
+public protocol PReadTopHeadlinesUseCase {
 
 	// MARK: - Actions
 

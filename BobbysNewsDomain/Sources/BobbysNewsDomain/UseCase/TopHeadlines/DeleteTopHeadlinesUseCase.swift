@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public protocol PDeleteTopHeadlinesUseCase: Sendable {
+public protocol PDeleteTopHeadlinesUseCase {
 
 	// MARK: - Actions
 

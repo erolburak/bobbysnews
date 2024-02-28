@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol PSourcesNetworkController: Sendable {
+protocol PSourcesNetworkController {
 
 	// MARK: - Actions
 

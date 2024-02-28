@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public protocol PFetchSourcesUseCase: Sendable {
+public protocol PFetchSourcesUseCase {
 
 	// MARK: - Actions
 

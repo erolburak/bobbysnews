@@ -5,11 +5,10 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
-@preconcurrency
 import CoreData
 import Combine
 
-public final class PersistenceController: Sendable {
+public final class PersistenceController {
 
 	// MARK: - Properties
 

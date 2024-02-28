@@ -5,11 +5,10 @@
 //  Created by Burak Erol on 07.09.23.
 //
 
-@preconcurrency
 import Combine
 import CoreData
 
-public protocol PSourcesPersistenceController: Sendable {
+public protocol PSourcesPersistenceController {
 
 	// MARK: - Properties
 

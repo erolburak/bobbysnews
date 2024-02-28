@@ -5,7 +5,6 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@preconcurrency
 import Combine
 
 public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersistenceController {

@@ -7,7 +7,7 @@
 
 import Combine
 
-public protocol PTopHeadlinesRepository: Sendable {
+public protocol PTopHeadlinesRepository {
 
 	// MARK: - Actions
 
