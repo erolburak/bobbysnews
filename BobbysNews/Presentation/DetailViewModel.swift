@@ -18,8 +18,9 @@ final class DetailViewModel {
 	var showNavigationTitle = false
 	var showWebView = false {
 		willSet {
-			if newValue == false {
+			if !newValue {
 				webViewIsLoading = true
+				webViewShowError = false
 			}
 		}
 	}
@@ -27,6 +28,7 @@ final class DetailViewModel {
 		article.source?.name ?? String(localized: "EmptyArticleSource")
 	}
 	var webViewIsLoading = true
+	var webViewShowError = false
 
 	// MARK: - Inits
 

@@ -544,6 +544,38 @@
         }
       }
     },
+    "ErrorWebView" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Webseite laden fehlgeschlagen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to load website"
+          }
+        }
+      }
+    },
+    "ErrorWebViewMessage" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geladene Webseite wird hier angezeigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loaded website will display here."
+          }
+        }
+      }
+    },
     "Headline" : {
       "localizations" : {
         "de" : {
