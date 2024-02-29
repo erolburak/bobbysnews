@@ -1,6 +1,6 @@
 //
 //  ErrorsTests.swift
-//	BobbysNewsDomain
+//  BobbysNewsDomain
 //
 //  Created by Burak Erol on 24.01.24.
 //

@@ -151,8 +151,20 @@ struct DetailView: View {
 		.sheet(isPresented: $viewModel.showWebView) {
 			if let url = viewModel.article.url {
 				NavigationStack {
-					WebView(isLoading: $viewModel.webViewIsLoading,
-							url: url)
+					Group {
+						if !viewModel.webViewShowError {
+							WebView(isLoading: $viewModel.webViewIsLoading,
+									showError: $viewModel.webViewShowError,
+									url: url)
+						} else {
+							ContentUnavailableView {
+								Label("ErrorWebView",
+									  systemImage: "newspaper.circle.fill")
+							} description: {
+								Text("ErrorWebViewMessage")
+							}
+						}
+					}
 					.navigationTitle("Headline")
 					.navigationBarTitleDisplayMode(.inline)
 					.ignoresSafeArea(edges: .bottom)
@@ -181,6 +193,7 @@ struct DetailView: View {
 		// MARK: - Properties
 
 		@Binding var isLoading: Bool
+		@Binding var showError: Bool
 		let url: URL
 
 		// MARK: - Actions
@@ -219,6 +232,12 @@ struct DetailView: View {
 			func webView(_ webView: WKWebView,
 						 didStartProvisionalNavigation navigation: WKNavigation!) {
 				parent.isLoading = true
+			}
+			
+			func webView(_ webView: WKWebView,
+						 didFail navigation: WKNavigation!,
+						 withError error: any Error) {
+				parent.showError = true
 			}
 
 			func webView(_ webView: WKWebView,

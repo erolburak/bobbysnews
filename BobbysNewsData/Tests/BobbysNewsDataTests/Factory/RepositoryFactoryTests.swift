@@ -1,6 +1,6 @@
 //
 //  RepositoryFactoryTests.swift
-//	BobbysNewsData
+//  BobbysNewsData
 //
 //  Created by Burak Erol on 24.01.24.
 //
