@@ -13,18 +13,18 @@ class TopHeadlinesPersistenceControllerTests: XCTestCase {
 
 	// MARK: - Private Properties
 
-	private var cancellable: Set<AnyCancellable>!
+	private var cancellables: Set<AnyCancellable>!
 	private var sut: TopHeadlinesPersistenceControllerMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		cancellable = Set<AnyCancellable>()
+		cancellables = Set<AnyCancellable>()
 		sut = TopHeadlinesPersistenceControllerMock()
 	}
 
 	override func tearDownWithError() throws {
-		cancellable.removeAll()
+		cancellables.removeAll()
 		sut = nil
 	}
 
@@ -53,7 +53,7 @@ class TopHeadlinesPersistenceControllerTests: XCTestCase {
 				topHeadlines = newTopHeadlines
 				expectation.fulfill()
 			})
-			.store(in: &cancellable)
+			.store(in: &cancellables)
 		// Then
 		await fulfillment(of: [expectation], timeout: 1)
 		XCTAssertNotNil(topHeadlines)

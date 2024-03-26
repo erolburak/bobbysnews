@@ -13,18 +13,18 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 
 	// MARK: - Private Properties
 
-	private var cancellable: Set<AnyCancellable>!
+	private var cancellables: Set<AnyCancellable>!
 	private var sut: TopHeadlinesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		cancellable = Set<AnyCancellable>()
+		cancellables = Set<AnyCancellable>()
 		sut = TopHeadlinesRepositoryMock()
 	}
 
 	override func tearDownWithError() throws {
-		cancellable.removeAll()
+		cancellables.removeAll()
 		sut = nil
 	}
 
@@ -60,7 +60,7 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 				topHeadlines = newTopHeadlines
 				expectation.fulfill()
 			})
-			.store(in: &cancellable)
+			.store(in: &cancellables)
 		// Then
 		await fulfillment(of: [expectation], timeout: 1)
 		XCTAssertNotNil(topHeadlines)

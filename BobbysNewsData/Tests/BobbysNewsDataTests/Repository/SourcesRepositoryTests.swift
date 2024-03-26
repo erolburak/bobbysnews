@@ -13,18 +13,18 @@ class SourcesRepositoryTests: XCTestCase {
 
 	// MARK: - Private Properties
 
-	private var cancellable: Set<AnyCancellable>!
+	private var cancellables: Set<AnyCancellable>!
 	private var sut: SourcesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		cancellable = Set<AnyCancellable>()
+		cancellables = Set<AnyCancellable>()
 		sut = SourcesRepositoryMock()
 	}
 
 	override func tearDownWithError() throws {
-		cancellable.removeAll()
+		cancellables.removeAll()
 		sut = nil
 	}
 
@@ -58,7 +58,7 @@ class SourcesRepositoryTests: XCTestCase {
 				sources = newSources
 				expectation.fulfill()
 			})
-			.store(in: &cancellable)
+			.store(in: &cancellables)
 		// Then
 		await fulfillment(of: [expectation], timeout: 1)
 		XCTAssertNotNil(sources)
