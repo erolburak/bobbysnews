@@ -42,7 +42,7 @@ final class ContentViewModel: Sendable {
 
 	// MARK: - Private Properties
 
-	private var cancellable = Set<AnyCancellable>()
+	private var cancellables = Set<AnyCancellable>()
 
 	// MARK: - Properties
 
@@ -94,7 +94,7 @@ final class ContentViewModel: Sendable {
 	}
 
 	func onDisappear() {
-		cancellable.removeAll()
+		cancellables.removeAll()
 	}
 
 	func fetchSources(sensoryFeedback: Bool? = nil) async {
@@ -163,7 +163,7 @@ final class ContentViewModel: Sendable {
 				self?.updateStateSources(completion: .finished,
 										 state: countries.isEmpty ? self?.stateSources == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
 			})
-			.store(in: &cancellable)
+			.store(in: &cancellables)
 	}
 
 	private func readTopHeadlines() {
@@ -181,7 +181,7 @@ final class ContentViewModel: Sendable {
 				self?.updateStateTopHeadlines(completion: .finished,
 											  state: articles.isEmpty ? self?.stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
 			})
-			.store(in: &cancellable)
+			.store(in: &cancellables)
 	}
 
 	private func sensoryFeedbackTrigger(feedback: SensoryFeedback) {

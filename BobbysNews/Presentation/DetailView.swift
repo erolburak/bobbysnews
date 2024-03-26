@@ -59,8 +59,8 @@ struct DetailView: View {
 				}
 				.frame(height: 280)
 				.background(.bar)
-				.clipShape(UnevenRoundedRectangle(cornerRadii: RectangleCornerRadii(topLeading: 40,
-																					topTrailing: 40)))
+				.clipShape(.rect(topLeadingRadius: 40,
+								 topTrailingRadius: 40))
 				.overlay {
 					LinearGradient(gradient: Gradient(colors: [.clear,
 															   Color(uiColor: .systemBackground)]),
@@ -93,12 +93,10 @@ struct DetailView: View {
 							.font(.system(.caption2,
 										  weight: .semibold))
 
-						Button {
+						Button("Read") {
 							viewModel.showWebView = true
-						} label: {
-							Text("Read")
-								.textCase(.uppercase)
 						}
+						.textCase(.uppercase)
 						.font(.system(.subheadline,
 									  weight: .black))
 						.accessibilityIdentifier("ReadButton")
@@ -157,12 +155,9 @@ struct DetailView: View {
 									showError: $viewModel.webViewShowError,
 									url: url)
 						} else {
-							ContentUnavailableView {
-								Label("ErrorWebView",
-									  systemImage: "newspaper.circle.fill")
-							} description: {
-								Text("ErrorWebViewMessage")
-							}
+							ContentUnavailableView("ErrorWebView",
+												   systemImage: "newspaper.circle.fill",
+												   description: Text("ErrorWebViewMessage"))
 						}
 					}
 					.navigationTitle("Headline")
@@ -170,10 +165,9 @@ struct DetailView: View {
 					.ignoresSafeArea(edges: .bottom)
 					.toolbar {
 						ToolbarItem(placement: .cancellationAction) {
-							Button {
+							Button("Close",
+								   systemImage: "xmark.circle.fill") {
 								viewModel.showWebView = false
-							} label: {
-								Image(systemName: "xmark.circle.fill")
 							}
 							.accessibilityIdentifier("CloseButton")
 						}

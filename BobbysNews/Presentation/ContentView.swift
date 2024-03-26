@@ -68,13 +68,11 @@ struct ContentView: View {
 							}
 						case .emptyFetch, .emptyRead:
 							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
-								Button {
+								Button("CountriesLoad",
+									   systemImage: "arrow.down.to.line.circle.fill") {
 									Task {
 										await viewModel.fetchSources(sensoryFeedback: true)
 									}
-								} label: {
-									Label("CountriesLoad",
-										  systemImage: "arrow.down.to.line.circle.fill")
 								}
 							}
 						}
@@ -96,11 +94,10 @@ struct ContentView: View {
 						}
 
 						Section {
-							Button(role: .destructive) {
+							Button("Reset",
+								   systemImage: "trash.circle.fill",
+								   role: .destructive) {
 								viewModel.showConfirmationDialog = true
-							} label: {
-								Label("Reset",
-									  systemImage: "trash.circle.fill")
 							}
 							.accessibilityIdentifier("ResetButton")
 						}
@@ -122,46 +119,29 @@ struct ContentView: View {
 		}
 		.overlay(alignment: .center) {
 			if viewModel.selectedCountry.isEmpty {
-				ContentUnavailableView {
-					Label("EmptySelectedCountry",
-						  systemImage: "flag.circle.fill")
-				} description: {
-					Text("EmptySelectedCountryMessage")
-				}
+				ContentUnavailableView("EmptySelectedCountry",
+									   systemImage: "flag.circle.fill",
+									   description: Text("EmptySelectedCountryMessage"))
 			} else {
-				VStack {
-					switch viewModel.stateTopHeadlines {
-					case .isLoading:
-						Text("TopHeadlinesLoading")
-							.fontWeight(.black)
-					case .loaded:
-						EmptyView()
-					case .emptyFetch:
-						ContentUnavailableView {
-							Label("EmptyFetchTopHeadlines",
-								  systemImage: "newspaper.circle.fill")
-						} description: {
-							Text("EmptyFetchTopHeadlinesMessage")
-						}
-					case .emptyRead:
-						ContentUnavailableView {
-							Label("EmptyReadTopHeadlines",
-								  systemImage: "newspaper.circle.fill")
-						} description: {
-							Text("EmptyReadTopHeadlinesMessage")
-						}
-					}
-
-					if viewModel.stateTopHeadlines == .emptyFetch ||
-						viewModel.stateTopHeadlines == .emptyRead {
-						Button {
+				switch viewModel.stateTopHeadlines {
+				case .isLoading:
+					Text("TopHeadlinesLoading")
+						.fontWeight(.black)
+				case .loaded:
+					EmptyView()
+				case .emptyFetch, .emptyRead:
+					ContentUnavailableView {
+						Label(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
+							  systemImage: "newspaper.circle.fill")
+					} description: {
+						Text(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
+					} actions: {
+						Button("Refresh") {
 							Task {
 								await viewModel.fetchTopHeadlines(state: .isLoading)
 							}
-						} label: {
-							Text("Refresh")
-								.textCase(.uppercase)
 						}
+						.textCase(.uppercase)
 						.font(.system(.subheadline,
 									  weight: .black))
 						.foregroundStyle(.secondary)
@@ -239,7 +219,7 @@ struct ContentView: View {
 			.frame(width: 80,
 				   height: 80)
 			.background(.bar)
-			.clipShape(RoundedRectangle(cornerRadius: 12))
+			.clipShape(.rect(cornerRadius: 12))
 		}
 		.padding(.horizontal)
 		.padding(.vertical, 20)
