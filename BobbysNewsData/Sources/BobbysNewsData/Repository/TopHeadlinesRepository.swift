@@ -11,7 +11,7 @@ public protocol PTopHeadlinesRepository {
 
 	// MARK: - Actions
 
-	func delete(country: String?) throws
+	func delete() throws
 	func fetch(apiKey: Int,
 			   country: String) async throws
 	func read() -> AnyPublisher<[ArticleDB], Error>
@@ -26,9 +26,9 @@ final class TopHeadlinesRepository: PTopHeadlinesRepository {
 
 	// MARK: - Actions
 
-	func delete(country: String?) throws {
+	func delete() throws {
 		try topHeadlinesPersistenceController
-			.delete(country: country)
+			.delete()
 	}
 
 	func fetch(apiKey: Int,
@@ -42,7 +42,7 @@ final class TopHeadlinesRepository: PTopHeadlinesRepository {
 				.save(country: country,
 					  topHeadlinesAPI: topHeadlinesAPI)
 		} else {
-			try delete(country: country)
+			try delete()
 		}
 	}
 

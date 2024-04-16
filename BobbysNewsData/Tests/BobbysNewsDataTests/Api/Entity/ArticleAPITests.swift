@@ -20,7 +20,7 @@ class ArticleAPITests: XCTestCase {
 		// Then
 		XCTAssertEqual(articleAPI?.author, "Test")
 		XCTAssertEqual(articleAPI?.content, "Test")
-		XCTAssertEqual(articleAPI?.publishedAt, "2001-02-03T12:34:56Z")
+		XCTAssertEqual(articleAPI?.publishedAt, .distantPast)
 		XCTAssertEqual(articleAPI?.source?.category, "Test")
 		XCTAssertEqual(articleAPI?.source?.country, "Test")
 		XCTAssertEqual(articleAPI?.source?.id, "Test")

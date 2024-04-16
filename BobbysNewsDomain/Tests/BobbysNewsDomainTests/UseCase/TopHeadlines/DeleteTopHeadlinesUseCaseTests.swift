@@ -33,7 +33,7 @@ class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 		mock.topHeadlinesPersistenceController.queriesSubject.value = EntityMock.topHeadlinesDB
 		// When
 		try sut
-			.delete(country: nil)
+			.delete()
 		// Then
 		XCTAssertNil(mock.topHeadlinesPersistenceController.queriesSubject.value)
 	}

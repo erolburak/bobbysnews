@@ -133,7 +133,6 @@
 				BF00C0B72B613B47008D159A /* BobbysNewsData */,
 				BF8B97022B61615C006F5D85 /* BobbysNewsDomain */,
 				BF72AA882AA0BFD300368DA5 /* Products */,
-				BF8B97032B617F13006F5D85 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,13 +175,6 @@
 				BFDD66822AA3868700BB49CE /* Presentation */,
 			);
 			path = BobbysNewsUITests;
-			sourceTree = "<group>";
-		};
-		BF8B97032B617F13006F5D85 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BF91F8CE2AB24DAD00CEF82E /* Extension */ = {

@@ -23,9 +23,9 @@ public final class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 
 	// MARK: - Actions
 
-	public func delete(country: String?) throws {
+	public func delete() throws {
 		try topHeadlinesPersistenceController
-			.delete(country: country)
+			.delete()
 	}
 
 	public func fetch(apiKey: Int,
@@ -39,7 +39,7 @@ public final class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
 				.save(country: country,
 					  topHeadlinesAPI: topHeadlinesAPI)
 		} else {
-			try delete(country: country)
+			try delete()
 		}
 	}
 

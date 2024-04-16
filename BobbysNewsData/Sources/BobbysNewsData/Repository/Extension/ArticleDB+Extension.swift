@@ -16,7 +16,7 @@ extension ArticleDB {
 		self.author = api.author
 		self.content = api.content
 		self.country = country
-		self.publishedAt = api.publishedAt?.toDate
+		self.publishedAt = api.publishedAt
 		if let sourceAPI = api.source {
 			self.source = SourceDB(from: sourceAPI)
 		}

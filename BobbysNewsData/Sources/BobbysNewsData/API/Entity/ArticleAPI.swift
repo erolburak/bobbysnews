@@ -20,7 +20,7 @@ public struct ArticleAPI: Decodable {
 
 	public let author: String?
 	public let content: String?
-	public let publishedAt: String?
+	public let publishedAt: Date?
 	public let source: SourceAPI?
 	public let story: String?
 	public let title: String?

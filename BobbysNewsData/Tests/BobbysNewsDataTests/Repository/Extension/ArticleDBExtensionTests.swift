@@ -21,7 +21,7 @@ class ArticleDBExtensionTests: XCTestCase {
 		// Then
 		XCTAssertEqual(articleDB.author, articleAPI.author)
 		XCTAssertEqual(articleDB.content, articleAPI.content)
-		XCTAssertEqual(articleDB.publishedAt, articleAPI.publishedAt?.toDate)
+		XCTAssertEqual(articleDB.publishedAt, articleAPI.publishedAt)
 		XCTAssertEqual(articleDB.source?.category, articleAPI.source?.category)
 		XCTAssertEqual(articleDB.source?.country, articleAPI.source?.country)
 		XCTAssertEqual(articleDB.source?.id, articleAPI.source?.id)

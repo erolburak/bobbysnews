@@ -15,7 +15,7 @@ public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersisten
 
 	// MARK: - Actions
 
-	public func delete(country: String?) throws {
+	public func delete() throws {
 		queriesSubject.send(nil)
 	}
 

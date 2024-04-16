@@ -17,7 +17,7 @@ class EntityMock {
 	static let article = Article(author: "Test",
 								 content: "Test",
 								 country: "Test",
-								 publishedAt: .now,
+								 publishedAt: .distantPast,
 								 source: source,
 								 story: "Test",
 								 title: "Test",
@@ -46,7 +46,7 @@ class EntityMock {
 		articleDB.author = "Test"
 		articleDB.content = "Test"
 		articleDB.country = "Test"
-		articleDB.publishedAt = .now
+		articleDB.publishedAt = .distantPast
 		articleDB.source = sourceDB
 		articleDB.story = "Test"
 		articleDB.title = "Test"
