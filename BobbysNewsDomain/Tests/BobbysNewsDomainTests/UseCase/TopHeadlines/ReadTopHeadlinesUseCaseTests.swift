@@ -1,5 +1,5 @@
 //
-//  ReaApipHeadlinesUseCaseTests.swift
+//  ReadApiHeadlinesUseCaseTests.swift
 //  BobbysNewsDomain
 //
 //  Created by Burak Erol on 04.09.23.
@@ -10,7 +10,7 @@ import BobbysNewsData
 import Combine
 import XCTest
 
-class ReaApipHeadlinesUseCaseTests: XCTestCase {
+class ReadApiHeadlinesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 
