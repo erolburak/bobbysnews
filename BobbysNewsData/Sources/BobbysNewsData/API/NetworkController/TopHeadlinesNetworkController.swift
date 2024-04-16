@@ -17,6 +17,16 @@ protocol PTopHeadlinesNetworkController {
 
 final class TopHeadlinesNetworkController: PTopHeadlinesNetworkController {
 
+	// MARK: - Private Properties
+
+	private let jsonDecoder = JSONDecoder()
+
+	// MARK: - Inits
+
+	init() {
+		jsonDecoder.dateDecodingStrategy = .iso8601
+	}
+
 	// MARK: - Actions
 
 	func fetch(apiKey: Int,
@@ -28,7 +38,7 @@ final class TopHeadlinesNetworkController: PTopHeadlinesNetworkController {
 		let (data, response) = try await URLSession.shared.data(from: url)
 		try NetworkConfiguration.shared.validateResponse(defaultError: .fetchTopHeadlines,
 													  response: response as? HTTPURLResponse)
-		return try JSONDecoder().decode(TopHeadlinesAPI.self,
-										from: data)
+		return try jsonDecoder.decode(TopHeadlinesAPI.self,
+									  from: data)
 	}
 }

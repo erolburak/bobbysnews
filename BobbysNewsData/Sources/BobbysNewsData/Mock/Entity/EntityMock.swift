@@ -14,7 +14,7 @@ public class EntityMock {
 	/// Mocks which represent API entities
 	public static let articleAPI = ArticleAPI(author: "Test",
 											  content: "Test",
-											  publishedAt: "2001-02-03T12:34:56Z",
+											  publishedAt: .distantPast,
 											  source: sourceAPI,
 											  story: "Test",
 											  title: "Test",
@@ -36,7 +36,7 @@ public class EntityMock {
 		articleDB.author = "Test"
 		articleDB.content = "Test"
 		articleDB.country = "Test"
-		articleDB.publishedAt = "2001-02-03T12:34:56Z".toDate
+		articleDB.publishedAt = .distantPast
 		articleDB.source = sourceDB
 		articleDB.story = "Test"
 		articleDB.title = "Test"

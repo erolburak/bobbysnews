@@ -126,17 +126,17 @@ final class ContentViewModel: Sendable {
 
 	func reset() {
 		do {
-			apiKeyVersion = 1
-			selectedCountry = ""
 			/// Delete all persisted sources
 			try deleteSourcesUseCase
 				.delete()
-			countries = nil
-			stateSources = .emptyRead
 			/// Delete all persisted topHeadlines
 			try deleteTopHeadlinesUseCase
-				.delete(country: selectedCountry)
+				.delete()
+			apiKeyVersion = 1
 			articles = nil
+			countries = nil
+			selectedCountry = ""
+			stateSources = .emptyRead
 			stateTopHeadlines = .emptyRead
 			sensoryFeedbackTrigger(feedback: .success)
 		} catch {

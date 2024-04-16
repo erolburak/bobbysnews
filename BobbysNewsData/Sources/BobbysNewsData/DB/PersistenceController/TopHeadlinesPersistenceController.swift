@@ -16,7 +16,7 @@ public protocol PTopHeadlinesPersistenceController {
 
 	// MARK: - Actions
 
-	func delete(country: String?) throws
+	func delete() throws
 	func fetchRequest(country: String)
 	func read() -> AnyPublisher<[ArticleDB], Error>
 	func save(country: String,
@@ -35,12 +35,9 @@ final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceControlle
 
 	// MARK: - Actions
 
-	func delete(country: String?) throws {
-		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ArticleDB")
-		if let country {
-			fetchRequest.predicate = NSPredicate(format: "country == %@", country)
-		}
-		try PersistenceController.shared.backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: fetchRequest))
+	func delete() throws {
+		let fetchRequest =
+		try PersistenceController.shared.backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "ArticleDB")))
 		try PersistenceController.shared.backgroundContext.save()
 		queriesSubject.send(nil)
 	}
@@ -81,7 +78,7 @@ final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceControlle
 						existingArticle?.author = articleAPI.author
 						existingArticle?.content = articleAPI.content
 						existingArticle?.country = country
-						existingArticle?.publishedAt = articleAPI.publishedAt?.toDate
+						existingArticle?.publishedAt = articleAPI.publishedAt
 						existingArticle?.source?.category = articleAPI.source?.category
 						existingArticle?.source?.country = articleAPI.source?.country
 						existingArticle?.source?.id = articleAPI.source?.id

@@ -29,7 +29,7 @@ class TopHeadlinesPersistenceControllerTests: XCTestCase {
 	}
 
 	func testDelete() {
-		XCTAssertNoThrow(try sut.delete(country: nil))
+		XCTAssertNoThrow(try sut.delete())
 	}
 
 	func testFetchRequest() {

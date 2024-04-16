@@ -20,7 +20,7 @@ class TopHeadlinesAPITests: XCTestCase {
 		// Then
 		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.author, "Test")
 		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.content, "Test")
-		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.publishedAt, "2001-02-03T12:34:56Z")
+		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.publishedAt, .distantPast)
 		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.source?.category, "Test")
 		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.source?.country, "Test")
 		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.source?.id, "Test")

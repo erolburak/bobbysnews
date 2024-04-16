@@ -16,6 +16,16 @@ protocol PSourcesNetworkController {
 
 final class SourcesNetworkController: PSourcesNetworkController {
 
+	// MARK: - Private Properties
+
+	private let jsonDecoder = JSONDecoder()
+
+	// MARK: - Inits
+
+	init() {
+		jsonDecoder.dateDecodingStrategy = .iso8601
+	}
+
 	// MARK: - Actions
 
 	func fetch(apiKey: Int) async throws -> SourcesAPI {
@@ -26,7 +36,7 @@ final class SourcesNetworkController: PSourcesNetworkController {
 		let (data, response) = try await URLSession.shared.data(from: url)
 		try NetworkConfiguration.shared.validateResponse(defaultError: .fetchSources,
 													  response: response as? HTTPURLResponse)
-		return try JSONDecoder().decode(SourcesAPI.self,
-										from: data)
+		return try jsonDecoder.decode(SourcesAPI.self,
+									  from: data)
 	}
 }
