@@ -36,7 +36,6 @@ final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceControlle
 	// MARK: - Actions
 
 	func delete() throws {
-		let fetchRequest =
 		try PersistenceController.shared.backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "ArticleDB")))
 		try PersistenceController.shared.backgroundContext.save()
 		queriesSubject.send(nil)
