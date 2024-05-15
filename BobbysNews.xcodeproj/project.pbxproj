@@ -76,6 +76,7 @@
 		BFAB87842B61927300A51F36 /* BobbysNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobbysNewsApp.swift; sourceTree = "<group>"; };
 		BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Errors+Extension.swift"; sourceTree = "<group>"; };
 		BFBDEA192B61C25F00548AB5 /* ErrorsExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsExtensionTests.swift; sourceTree = "<group>"; };
+		BFC3369D2BF563BC0008FC76 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BFD1B8AD2AA5E70F000ED973 /* ViewModelFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactoryTests.swift; sourceTree = "<group>"; };
 		BFD1B8C32AA634B9000ED973 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		BFDD66962AA3B4BD00BB49CE /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -221,6 +222,7 @@
 				BF79CBFA2B1F7A2700E32CFB /* BobbysNews.xctestplan */,
 				BF72AA992AA0BFD400368DA5 /* Info.plist */,
 				BF188EB72AA0E33D00955836 /* Localizable.xcstrings */,
+				BFC3369D2BF563BC0008FC76 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
