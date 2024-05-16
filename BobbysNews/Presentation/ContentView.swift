@@ -103,7 +103,12 @@ struct ContentView: View {
 						}
 					} label: {
 						Image(systemName: "gearshape.circle.fill")
+							.popoverTip(viewModel.settingsTip,
+										arrowEdge: .top)
 							.accessibilityIdentifier("SettingsImage")
+					}
+					.onTapGesture {
+						viewModel.invalidateSettingsTip()
 					}
 					.confirmationDialog("ResetConfirmationDialog",
 										isPresented: $viewModel.showConfirmationDialog,
