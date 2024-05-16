@@ -27,11 +27,13 @@ public final class PersistenceController {
 			  let managedObjectModel = NSManagedObjectModel(contentsOf: moduleUrl) else {
 			fatalError("Error initializing managed object model with module url!")
 		}
-		/// Disable cloud kit database if test scheme is running
-		let isTestScheme = ProcessInfo().environment["XCTestConfigurationFilePath"] != nil
-		container = isTestScheme ? NSPersistentContainer(name: "BobbysNews",
-														 managedObjectModel: managedObjectModel) : NSPersistentCloudKitContainer(name: "BobbysNews",
-																																 managedObjectModel: managedObjectModel)
+#if DEBUG
+		container = NSPersistentContainer(name: "BobbysNews",
+										  managedObjectModel: managedObjectModel)
+#else
+		NSPersistentCloudKitContainer(name: "BobbysNews",
+									  managedObjectModel: managedObjectModel)
+#endif
 		container.loadPersistentStores { _, error in
 			if let error = error as NSError? {
 				fatalError("Unresolved error \(error), \(error.userInfo)")
