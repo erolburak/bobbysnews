@@ -19,6 +19,7 @@ The **BobbysNews** app is my own project, which uses the [NewsAPI](https://newsa
 - CoreData
 - UserDefaults
 - Combine
+- TipKit
 - CloudKit Database
 - [NewsAPI](https://newsapi.org)
 

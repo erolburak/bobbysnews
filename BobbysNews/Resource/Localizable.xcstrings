@@ -688,6 +688,38 @@
         }
       }
     },
+    "Settings" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "SettingsTipMessage" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Länder werden hier in einer Liste dargestellt welche zur Auswahl bereitstehen. Darüber hinaus kann der API-Schlüssel hier gewechselt werden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Countries are shown here in a list which are available for selection. In addition, the API key can be changed here."
+          }
+        }
+      }
+    },
     "Share" : {
       "localizations" : {
         "de" : {

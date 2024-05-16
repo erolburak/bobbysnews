@@ -8,7 +8,7 @@
 @preconcurrency
 import BobbysNewsDomain
 import Combine
-import SwiftUI
+import TipKit
 
 @Observable
 final class ContentViewModel: Sendable {
@@ -27,6 +27,15 @@ final class ContentViewModel: Sendable {
 		case isLoading, loaded
 		/// Empty States
 		case emptyFetch, emptyRead
+	}
+
+	struct SettingsTip: Tip {
+
+		// MARK: - Properties
+
+		var image: Image? = Image(systemName: "gearshape.circle.fill")
+		var message: Text? = Text("SettingsTipMessage")
+		var title = Text("Settings")
 	}
 
 	// MARK: - Use Cases
@@ -66,6 +75,7 @@ final class ContentViewModel: Sendable {
 	}
 	var sensoryFeedback: SensoryFeedback?
 	var sensoryFeedbackBool = false
+	var settingsTip = SettingsTip()
 	var showAlert = false
 	var showConfirmationDialog = false
 	var stateSources: StateSources = .isLoading
@@ -85,6 +95,7 @@ final class ContentViewModel: Sendable {
 		self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
 		self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
 		self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
+		configureTipKit()
 	}
 
 	func onAppear(selectedCountry: String) {
@@ -124,6 +135,10 @@ final class ContentViewModel: Sendable {
 		}
 	}
 
+	func invalidateSettingsTip() {
+		settingsTip.invalidate(reason: .actionPerformed)
+	}
+
 	func reset() {
 		do {
 			/// Delete all persisted sources
@@ -141,6 +156,15 @@ final class ContentViewModel: Sendable {
 			sensoryFeedbackTrigger(feedback: .success)
 		} catch {
 			showAlert(error: .reset)
+		}
+	}
+
+	private func configureTipKit() {
+		Task {
+			if ProcessInfo().environment["XCTestConfigurationFilePath"] == nil {
+				try? Tips.configure([.displayFrequency(.immediate),
+									 .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
+			}
 		}
 	}
 
