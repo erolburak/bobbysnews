@@ -95,7 +95,11 @@ final class ContentViewModel: Sendable {
 		self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
 		self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
 		self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
+#if DEBUG
+		return
+#else
 		configureTipKit()
+#endif
 	}
 
 	func onAppear(selectedCountry: String) {
@@ -161,10 +165,8 @@ final class ContentViewModel: Sendable {
 
 	private func configureTipKit() {
 		Task {
-			if ProcessInfo().environment["XCTestConfigurationFilePath"] == nil {
-				try? Tips.configure([.displayFrequency(.immediate),
-									 .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
-			}
+			try? Tips.configure([.displayFrequency(.immediate),
+								 .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
 		}
 	}
 
