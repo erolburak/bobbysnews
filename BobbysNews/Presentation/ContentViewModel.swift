@@ -33,8 +33,15 @@ final class ContentViewModel: Sendable {
 
 		// MARK: - Properties
 
+		@Parameter
+		static var show: Bool = false
 		var image: Image? = Image(systemName: "gearshape.circle.fill")
 		var message: Text? = Text("SettingsTipMessage")
+		var rules: [Rule] {
+			[#Rule(Self.$show) {
+				$0 == true
+			}]
+		}
 		var title = Text("Settings")
 	}
 
@@ -55,6 +62,7 @@ final class ContentViewModel: Sendable {
 
 	// MARK: - Properties
 
+	let settingsTip = SettingsTip()
 	var alertError: Errors?
 	var apiKeyTotalAmount = 5
 	var apiKeyVersion = 1 {
@@ -75,7 +83,6 @@ final class ContentViewModel: Sendable {
 	}
 	var sensoryFeedback: SensoryFeedback?
 	var sensoryFeedbackBool = false
-	var settingsTip = SettingsTip()
 	var showAlert = false
 	var showConfirmationDialog = false
 	var stateSources: StateSources = .isLoading
@@ -95,11 +102,7 @@ final class ContentViewModel: Sendable {
 		self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
 		self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
 		self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
-#if DEBUG
-		return
-#else
 		configureTipKit()
-#endif
 	}
 
 	func onAppear(selectedCountry: String) {
@@ -161,6 +164,10 @@ final class ContentViewModel: Sendable {
 		} catch {
 			showAlert(error: .reset)
 		}
+	}
+
+	func showSettingsTip() async throws {
+		SettingsTip.show = true
 	}
 
 	private func configureTipKit() {

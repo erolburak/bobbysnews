@@ -105,6 +105,12 @@ struct ContentView: View {
 						Image(systemName: "gearshape.circle.fill")
 							.popoverTip(viewModel.settingsTip,
 										arrowEdge: .top)
+							.onAppear {
+								Task {
+									try await Task.sleep(for: .seconds(1))
+									try await viewModel.showSettingsTip()
+								}
+							}
 							.accessibilityIdentifier("SettingsImage")
 					}
 					.onTapGesture {

@@ -15,7 +15,7 @@ class DateExtensionTests: XCTestCase {
 	func testToRelativeIsToday() {
 		// Given
 		let date = Date.now
-		let relative = Locale.current.language.languageCode == "en" ? "Today" : ""
+		let relative = "Today"
 		// When
 		let relativeDate = date.toRelative
 		// Then
@@ -26,7 +26,7 @@ class DateExtensionTests: XCTestCase {
 		// Given
 		let date = Calendar.current.date(byAdding: DateComponents(day: -1),
 										 to: .now)
-		let relative = Locale.current.language.languageCode == "en" ? "Yesterday" : ""
+		let relative = "Yesterday"
 		// When
 		let relativeDate = date?.toRelative ?? relative
 		// Then

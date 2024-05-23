@@ -15,11 +15,14 @@ final class ContentViewTests: XCTestCase {
 		continueAfterFailure = false
 	}
 
-	/// Test navigation link item to open detail view
+	/// Test navigation link item to open detail view steps:
+	/// 1) Close settings tip
+	/// 2) Open detail view
 	@MainActor
 	func testNavigationLinkItem() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
 			let navigationLink = app.buttons["NavigationLinkItem"]
 			XCTAssertTrue(navigationLink.waitForExistence(timeout: 5))
@@ -27,28 +30,36 @@ final class ContentViewTests: XCTestCase {
 		}
 	}
 
-	/// Test settings button to open settings menu
+	/// Test settings button to open settings menu steps:
+	/// 1) Close settings tip
+	/// 2) Open settings menu
 	@MainActor
 	func testSettingsButton() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
+			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
 		}
 	}
 
-	/// Test country picker item to change country while first opening settings menu
+	/// Test country picker item to change country steps:
+	/// 1) Close settings tip
+	/// 2) Open settings menu
+	/// 3) Open country picker
+	/// 4) Set selected country to DE
 	@MainActor
 	func testCountryPickerItem() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
+			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
-			let countryPicker = app.collectionViews.buttons[Locale.current.language.languageCode == "en" ? "Country selection" : ""]
+			let countryPicker = app.collectionViews.buttons["Country selection"]
 			XCTAssertTrue(countryPicker.waitForExistence(timeout: 5))
 			countryPicker.tap()
 			let countryPickerItemDE = app.buttons["CountryPickerItem" + "de"]
@@ -57,16 +68,21 @@ final class ContentViewTests: XCTestCase {
 		}
 	}
 
-	/// Test api key picker item to change api key while first opening settings menu
+	/// Test api key picker item to change api key steps:
+	/// 1) Close settings tip
+	/// 2) Open settings menu
+	/// 3) Open api key picker
+	/// 4) Set selected api key to 2
 	@MainActor
 	func testApiKeyPickerItem() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
+			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
-			let apiKeyPicker = app.collectionViews.buttons[Locale.current.language.languageCode == "en" ? "API key selection" : ""]
+			let apiKeyPicker = app.collectionViews.buttons["API key selection"]
 			XCTAssertTrue(apiKeyPicker.waitForExistence(timeout: 5))
 			apiKeyPicker.tap()
 			let apiKeyPickerItem2 = app.buttons["ApiKeyPickerItem2"]
@@ -75,13 +91,18 @@ final class ContentViewTests: XCTestCase {
 		}
 	}
 
-	/// Test reset and confirm reset while first opening settings view
+	/// Test reset and confirm reset steps:
+	/// 1) Close settings tip
+	/// 2) Open settings menu
+	/// 3) Press reset
+	/// 4) Check if `ResetConfirmationDialogButton` exists
 	@MainActor
 	func testResetButton() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars[Locale.current.language.languageCode == "en" ? "Top headlines" : ""].images["SettingsImage"]
+			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
 			let resetButton = app.buttons["ResetButton"]

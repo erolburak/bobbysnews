@@ -15,11 +15,15 @@ final class DetailViewTests: XCTestCase {
 		continueAfterFailure = false
 	}
 
-	/// Test share link to open share view while first opening detail view
+	/// Test share link to open share view steps:
+	/// 1) Close settings tip
+	/// 2) Open detail view
+	/// 3) Press share
 	@MainActor
 	func testShareLink() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
 			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
 			if navigationLink.waitForExistence(timeout: 5) {
@@ -31,11 +35,15 @@ final class DetailViewTests: XCTestCase {
 		}
 	}
 
-	/// Test read button to open web view while first opening detail view
+	/// Test read button to open web view steps:
+	/// 1) Close settings tip
+	/// 2) Open detail view
+	/// 3) Press read
 	@MainActor
 	func testReadButton() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
 			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
 			if navigationLink.waitForExistence(timeout: 5) {
@@ -47,11 +55,16 @@ final class DetailViewTests: XCTestCase {
 		}
 	}
 
-	/// Test close button of web view while first opening detail view
+	/// Test close button of web view steps:
+	/// 1) Close settings tip
+	/// 2) Open detail view
+	/// 3) Press read
+	/// 4) Close web view
 	@MainActor
 	func testCloseButton() {
 		let app = XCUIApplication()
 		app.launch()
+		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
 			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
 			if navigationLink.waitForExistence(timeout: 5) {

@@ -8,6 +8,7 @@
 @testable import BobbysNews
 import BobbysNewsData
 import BobbysNewsDomain
+import TipKit
 import XCTest
 
 class ContentViewModelTests: XCTestCase {
@@ -88,6 +89,15 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.articles?.count, 1)
 	}
 
+	func testInvalidateSettingsTip() {
+		// Given
+		let tipsStatus = Tips.Status.invalidated(.actionPerformed)
+		// When
+		sut.invalidateSettingsTip()
+		// Then
+		XCTAssertEqual(sut.settingsTip.status, tipsStatus)
+	}
+
 	func testReset() {
 		// Given
 		sut.apiKeyVersion = 2
@@ -105,5 +115,14 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertTrue(sut.selectedCountry.isEmpty)
 		XCTAssertEqual(sut.stateSources, .emptyRead)
 		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
+	}
+
+	func testShowSettingsTip() async throws {
+		// Given
+		ContentViewModel.SettingsTip.show = false
+		// When
+		try await sut.showSettingsTip()
+		// Then
+		XCTAssertTrue(ContentViewModel.SettingsTip.show)
 	}
 }
