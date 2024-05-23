@@ -9,6 +9,10 @@ import CoreData
 
 public final class PersistenceController {
 
+	// MARK: - Private Properties
+
+	private let container: NSPersistentContainer
+
 	// MARK: - Properties
 
 	public static let shared = PersistenceController()
@@ -22,8 +26,13 @@ public final class PersistenceController {
 			  let managedObjectModel = NSManagedObjectModel(contentsOf: moduleUrl) else {
 			fatalError("Error initializing managed object model with module url!")
 		}
-		let container = NSPersistentCloudKitContainer(name: "BobbysNews",
-													  managedObjectModel: managedObjectModel)
+#if DEBUG
+		container = NSPersistentContainer(name: "BobbysNews",
+										  managedObjectModel: managedObjectModel)
+ #else
+		container = NSPersistentCloudKitContainer(name: "BobbysNews",
+												  managedObjectModel: managedObjectModel)
+ #endif
 		container.loadPersistentStores { _, error in
 			if let error = error as NSError? {
 				fatalError("Unresolved error \(error), \(error.userInfo)")
