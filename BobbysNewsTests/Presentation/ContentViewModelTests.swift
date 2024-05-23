@@ -89,13 +89,21 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.articles?.count, 1)
 	}
 
-	func testInvalidateSettingsTip() {
+	func testInvalidateSettingsTip() async {
 		// Given
-		let tipsStatus = Tips.Status.invalidated(.actionPerformed)
+		var tipsStatus: Tips.Status?
 		// When
+		let expectation = expectation(description: "Invalidate")
 		sut.invalidateSettingsTip()
+		for await status in sut.settingsTip.statusUpdates {
+			if status == .invalidated(.actionPerformed) {
+				tipsStatus = status
+				expectation.fulfill()
+			}
+		}
 		// Then
-		XCTAssertEqual(sut.settingsTip.status, tipsStatus)
+		await fulfillment(of: [expectation], timeout: 1)
+		XCTAssertNotNil(tipsStatus)
 	}
 
 	func testReset() {
