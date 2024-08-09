@@ -10,13 +10,25 @@ import XCTest
 
 class ArticleTests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
 	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
 
 	func testArticle() {
 		// Given
 		let article: Article?
 		// When
-		article = EntityMock.article
+		article = entity.article
 		// Then
 		XCTAssertEqual(article?.author, "Test")
 		XCTAssertEqual(article?.content, "Test")

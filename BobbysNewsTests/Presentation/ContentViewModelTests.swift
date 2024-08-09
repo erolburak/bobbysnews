@@ -15,6 +15,7 @@ class ContentViewModelTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var entity: EntityMock!
 	private var sut: ContentViewModel!
 	private var sourcesRepositoryMock: SourcesRepositoryMock!
 	private var topHeadlinesRepositoryMock: TopHeadlinesRepositoryMock!
@@ -22,6 +23,7 @@ class ContentViewModelTests: XCTestCase {
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
+		entity = EntityMock()
 		sourcesRepositoryMock = SourcesRepositoryMock()
 		topHeadlinesRepositoryMock = TopHeadlinesRepositoryMock()
 		sut = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
@@ -33,6 +35,7 @@ class ContentViewModelTests: XCTestCase {
 	}
 
 	override func tearDownWithError() throws {
+		entity = nil
 		sut = nil
 		sourcesRepositoryMock = nil
 		topHeadlinesRepositoryMock = nil
@@ -67,23 +70,25 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.stateTopHeadlines, .loaded)
 	}
 
+	@MainActor
 	func testFetchSources() async throws {
 		// Given
-		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
+		sut.countries = [entity.sources.sources?.first?.country ?? "Test"]
 		sut.selectedCountry = "Test"
 		// When
-		await sut.fetchSources()
+		sut.fetchSources()
 		try await Task.sleep(for: .seconds(2))
 		// Then
 		XCTAssertEqual(sut.countries?.count, 1)
 	}
 
+	@MainActor
 	func testFetchTopHeadlines() async throws {
 		// Given
-		sut.articles = [EntityMock.article]
+		sut.articles = [entity.article]
 		sut.selectedCountry = "Test"
 		// When
-		await sut.fetchTopHeadlines(state: .isLoading)
+		sut.fetchTopHeadlines(state: .isLoading)
 		try await Task.sleep(for: .seconds(2))
 		// Then
 		XCTAssertEqual(sut.articles?.count, 1)
@@ -109,8 +114,8 @@ class ContentViewModelTests: XCTestCase {
 	func testReset() {
 		// Given
 		sut.apiKeyVersion = 2
-		sut.articles = [EntityMock.article]
-		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
+		sut.articles = [entity.article]
+		sut.countries = [entity.sources.sources?.first?.country ?? "Test"]
 		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
 		sut.stateTopHeadlines = .loaded

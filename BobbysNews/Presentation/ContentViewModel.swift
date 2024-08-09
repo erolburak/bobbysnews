@@ -5,13 +5,11 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
-@preconcurrency
 import BobbysNewsDomain
 import Combine
 import TipKit
 
-@Observable
-final class ContentViewModel: Sendable {
+final class ContentViewModel: ObservableObject {
 
 	// MARK: - Type Definitions
 
@@ -62,31 +60,31 @@ final class ContentViewModel: Sendable {
 
 	// MARK: - Properties
 
-	let settingsTip = SettingsTip()
-	var alertError: Errors?
-	var apiKeyTotalAmount = 5
-	var apiKeyVersion = 1 {
+	@Published var alertError: Errors?
+	@Published var apiKeyVersion = 1 {
 		didSet {
 			sensoryFeedbackTrigger(feedback: .selection)
 		}
 	}
-	var articles: [Article]?
-	var countries: [String]?
-	var listDisabled: Bool { stateTopHeadlines != .loaded }
-	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
-	var selectedCountry = "" {
+	@Published var articles: [Article]?
+	@Published var countries: [String]?
+	@Published var selectedCountry = "" {
 		willSet {
 			if !newValue.isEmpty {
 				sensoryFeedbackTrigger(feedback: .selection)
 			}
 		}
 	}
-	var sensoryFeedback: SensoryFeedback?
-	var sensoryFeedbackBool = false
-	var showAlert = false
-	var showConfirmationDialog = false
-	var stateSources: StateSources = .isLoading
-	var stateTopHeadlines: StateTopHeadlines = .isLoading
+	@Published var sensoryFeedback: SensoryFeedback?
+	@Published var sensoryFeedbackBool = false
+	@Published var showAlert = false
+	@Published var showConfirmationDialog = false
+	@Published var stateSources: StateSources = .isLoading
+	@Published var stateTopHeadlines: StateTopHeadlines = .isLoading
+	let apiKeyTotalAmount = 5
+	let settingsTip = SettingsTip()
+	var listDisabled: Bool { stateTopHeadlines != .loaded }
+	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
 
 	// MARK: - Inits
 
@@ -115,29 +113,35 @@ final class ContentViewModel: Sendable {
 		cancellables.removeAll()
 	}
 
-	func fetchSources(sensoryFeedback: Bool? = nil) async {
-		stateSources = .isLoading
-		do {
-			try await fetchSourcesUseCase
-				.fetch(apiKey: apiKeyVersion)
-		} catch {
-			updateStateSources(completion: .failure(error),
-							   state: countries?.isEmpty == true ? .emptyFetch : .loaded)
+	@MainActor
+	func fetchSources(sensoryFeedback: Bool? = nil) {
+		Task {
+			stateSources = .isLoading
+			do {
+				try await fetchSourcesUseCase
+					.fetch(apiKey: apiKeyVersion)
+			} catch {
+				updateStateSources(completion: .failure(error),
+								   state: countries?.isEmpty == true ? .emptyFetch : .loaded)
+			}
 		}
 	}
 
-	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
-		if !selectedCountry.isEmpty {
-			if let state {
-				stateTopHeadlines = state
-			}
-			do {
-				try await fetchTopHeadlinesUseCase
-					.fetch(apiKey: apiKeyVersion,
-						   country: selectedCountry)
-			} catch {
-				updateStateTopHeadlines(completion: .failure(error),
-										state: articles?.isEmpty == true ? .emptyFetch : .loaded)
+	@MainActor
+	func fetchTopHeadlines(state: StateTopHeadlines? = nil) {
+		Task {
+			if !selectedCountry.isEmpty {
+				if let state {
+					stateTopHeadlines = state
+				}
+				do {
+					try await fetchTopHeadlinesUseCase
+						.fetch(apiKey: apiKeyVersion,
+							   country: selectedCountry)
+				} catch {
+					updateStateTopHeadlines(completion: .failure(error),
+											state: articles?.isEmpty == true ? .emptyFetch : .loaded)
+				}
 			}
 		}
 	}
@@ -166,7 +170,7 @@ final class ContentViewModel: Sendable {
 		}
 	}
 
-	func showSettingsTip() async throws {
+	func showSettingsTip() throws {
 		SettingsTip.show = true
 	}
 

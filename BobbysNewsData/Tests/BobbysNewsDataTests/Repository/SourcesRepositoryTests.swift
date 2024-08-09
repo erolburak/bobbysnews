@@ -14,23 +14,26 @@ class SourcesRepositoryTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellables: Set<AnyCancellable>!
+	private var entity: EntityMock!
 	private var sut: SourcesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellables = Set<AnyCancellable>()
+		entity = EntityMock()
 		sut = SourcesRepositoryMock()
 	}
 
 	override func tearDownWithError() throws {
 		cancellables.removeAll()
+		entity = nil
 		sut = nil
 	}
 
 	func testDelete() async throws {
 		// Given
-		sut.sourcesPersistenceController.queriesSubject.value = EntityMock.sourcesDB
+		sut.sourcesPersistenceController.queriesSubject.value = entity.sourcesDB
 		// When
 		try sut
 			.delete()

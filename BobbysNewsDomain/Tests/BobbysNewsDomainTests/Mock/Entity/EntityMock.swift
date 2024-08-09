@@ -14,34 +14,34 @@ class EntityMock {
 	// MARK: - Properties
 
 	/// Mocks which represent Domain entities
-	static let article = Article(author: "Test",
-								 content: "Test",
-								 country: "Test",
-								 publishedAt: .distantPast,
-								 source: source,
-								 story: "Test",
-								 title: "Test",
-								 url: URL(string: "Test"),
-								 urlToImage: URL(string: "Test"))
-	static let errors: [Errors] = [.error("ErrorDescription"),
-								   .fetchSources,
-								   .fetchTopHeadlines,
-								   .invalidApiKey,
-								   .limitedRequests,
-								   .read,
-								   .reset]
-	static let source = Source(category: "Test",
+	lazy var article = Article(author: "Test",
+							   content: "Test",
 							   country: "Test",
-							   id: "Test",
-							   language: "Test",
-							   name: "Test",
+							   publishedAt: .distantPast,
+							   source: source,
 							   story: "Test",
-							   url: URL(string: "Test"))
-	static let sources = Sources(sources: [source])
-	static let topHeadlines = TopHeadlines(articles: [article])
+							   title: "Test",
+							   url: URL(string: "Test"),
+							   urlToImage: URL(string: "Test"))
+	lazy var errors: [Errors] = [.error("ErrorDescription"),
+								 .fetchSources,
+								 .fetchTopHeadlines,
+								 .invalidApiKey,
+								 .limitedRequests,
+								 .read,
+								 .reset]
+	lazy var source = Source(category: "Test",
+							 country: "Test",
+							 id: "Test",
+							 language: "Test",
+							 name: "Test",
+							 story: "Test",
+							 url: URL(string: "Test"))
+	lazy var sources = Sources(sources: [source])
+	lazy var topHeadlines = TopHeadlines(articles: [article])
 
 	/// Mocks which represent DB entities
-	static let articleDB = {
+	lazy var articleDB = {
 		let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
 		articleDB.author = "Test"
 		articleDB.content = "Test"
@@ -54,7 +54,7 @@ class EntityMock {
 		articleDB.urlToImage = URL(string: "Test")
 		return articleDB
 	}()
-	static let sourceDB = {
+	lazy var sourceDB = {
 		let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
 		sourceDB.category = "Test"
 		sourceDB.country = "Test"
@@ -65,6 +65,6 @@ class EntityMock {
 		sourceDB.url = URL(string: "Test")
 		return sourceDB
 	}()
-	static let sourcesDB = [sourceDB]
-	static let topHeadlinesDB = [articleDB]
+	lazy var sourcesDB = [sourceDB]
+	lazy var topHeadlinesDB = [articleDB]
 }

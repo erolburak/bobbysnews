@@ -10,13 +10,27 @@ import XCTest
 
 class TopHeadlinesAPITests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
+	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
+
 	// MARK: - Actions
 
 	func testTopHeadlinesAPI() {
 		// Given
 		let topHeadlinesAPI: TopHeadlinesAPI?
 		// When
-		topHeadlinesAPI = EntityMock.topHeadlinesAPI
+		topHeadlinesAPI = entity.topHeadlinesAPI
 		// Then
 		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.author, "Test")
 		XCTAssertEqual(topHeadlinesAPI?.articles?.first?.content, "Test")

@@ -39,7 +39,7 @@ final class ContentViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
+			let settingsImage = app.images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
 		}
@@ -56,10 +56,10 @@ final class ContentViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
+			let settingsImage = app.images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
-			let countryPicker = app.collectionViews.buttons["Country selection"]
+			let countryPicker = app.buttons["Country selection"]
 			XCTAssertTrue(countryPicker.waitForExistence(timeout: 5))
 			countryPicker.tap()
 			let countryPickerItemDE = app.buttons["CountryPickerItem" + "de"]
@@ -79,10 +79,10 @@ final class ContentViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
+			let settingsImage = app.images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
-			let apiKeyPicker = app.collectionViews.buttons["API key selection"]
+			let apiKeyPicker = app.buttons["API key selection"]
 			XCTAssertTrue(apiKeyPicker.waitForExistence(timeout: 5))
 			apiKeyPicker.tap()
 			let apiKeyPickerItem2 = app.buttons["ApiKeyPickerItem2"]
@@ -102,7 +102,7 @@ final class ContentViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let settingsImage = app.navigationBars["Top headlines"].images["SettingsImage"]
+			let settingsImage = app.images["SettingsImage"]
 			XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
 			settingsImage.tap()
 			let resetButton = app.buttons["ResetButton"]

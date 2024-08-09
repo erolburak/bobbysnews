@@ -22,7 +22,7 @@ public protocol PSourcesPersistenceController {
 	func save(sourcesAPI: SourcesAPI)
 }
 
-final class SourcesPersistenceController: PSourcesPersistenceController {
+final class SourcesPersistenceController: PSourcesPersistenceController, @unchecked Sendable {
 
 	// MARK: - Private Properties
 

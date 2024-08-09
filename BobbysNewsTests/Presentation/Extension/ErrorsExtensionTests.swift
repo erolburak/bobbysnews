@@ -10,10 +10,22 @@ import XCTest
 
 class ErrorsExtensionTests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
 	// MARK: - Actions
 
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
+
 	func testErrors() {
-		for error in EntityMock.errors {
+		for error in entity.errors {
 			// Given
 			let description: String?
 			let recoverySuggestion: String?

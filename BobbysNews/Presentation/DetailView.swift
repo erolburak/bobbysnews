@@ -13,7 +13,7 @@ struct DetailView: View {
 
 	// MARK: - Properties
 
-	@State var viewModel: DetailViewModel
+	@StateObject var viewModel: DetailViewModel
 
 	// MARK: - Layouts
 

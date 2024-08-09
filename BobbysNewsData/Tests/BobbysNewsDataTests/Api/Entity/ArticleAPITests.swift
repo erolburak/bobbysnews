@@ -10,13 +10,25 @@ import XCTest
 
 class ArticleAPITests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
 	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
 
 	func testAticleAPI() {
 		// Given
 		let articleAPI: ArticleAPI?
 		// When
-		articleAPI = EntityMock.articleAPI
+		articleAPI = entity.articleAPI
 		// Then
 		XCTAssertEqual(articleAPI?.author, "Test")
 		XCTAssertEqual(articleAPI?.content, "Test")

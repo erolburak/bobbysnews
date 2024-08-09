@@ -8,15 +8,16 @@
 import BobbysNewsDomain
 import Foundation
 
-@Observable
-final class DetailViewModel {
+final class DetailViewModel: ObservableObject {
 
 	// MARK: - Properties
 
-	var article: Article
-	var scrollPosition: Int?
-	var showNavigationTitle = false
-	var showWebView = false {
+	@Published var article: Article
+	@Published var scrollPosition: Int?
+	@Published var showNavigationTitle = false
+	@Published var webViewIsLoading = true
+	@Published var webViewShowError = false
+	@Published var showWebView = false {
 		willSet {
 			if !newValue {
 				webViewIsLoading = true
@@ -27,8 +28,6 @@ final class DetailViewModel {
 	var title: String {
 		article.source?.name ?? String(localized: "EmptyArticleSource")
 	}
-	var webViewIsLoading = true
-	var webViewShowError = false
 
 	// MARK: - Inits
 

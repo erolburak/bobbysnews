@@ -7,6 +7,10 @@
 
 public final class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
 
+	// MARK: - Private Properties
+
+	private let entity = EntityMock()
+
 	// MARK: - Actions
 
 	public func fetch(apiKey: Int,
@@ -14,7 +18,7 @@ public final class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkContro
 		if country.isEmpty {
 			throw NetworkConfiguration.Errors.fetchTopHeadlines
 		} else {
-			return EntityMock.topHeadlinesAPI
+			return entity.topHeadlinesAPI
 		}
 	}
 }

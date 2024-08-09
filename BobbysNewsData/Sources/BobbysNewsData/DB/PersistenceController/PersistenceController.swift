@@ -7,7 +7,7 @@
 
 import CoreData
 
-public final class PersistenceController {
+public final class PersistenceController: @unchecked Sendable {
 
 	// MARK: - Private Properties
 

@@ -23,7 +23,7 @@ public protocol PTopHeadlinesPersistenceController {
 			  topHeadlinesAPI: TopHeadlinesAPI)
 }
 
-final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
+final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController, @unchecked Sendable {
 
 	// MARK: - Private Properties
 

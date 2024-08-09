@@ -12,26 +12,26 @@ public class EntityMock {
 	// MARK: - Properties
 
 	/// Mocks which represent API entities
-	public static let articleAPI = ArticleAPI(author: "Test",
-											  content: "Test",
-											  publishedAt: .distantPast,
-											  source: sourceAPI,
-											  story: "Test",
-											  title: "Test",
-											  url: URL(string: "Test"),
-											  urlToImage: URL(string: "Test"))
-	public static let sourceAPI = SourceAPI(category: "Test",
-											country: "Test",
-											id: "Test",
-											language: "Test",
-											name: "Test",
-											story: "Test",
-											url: URL(string: "Test"))
-	public static let sourcesAPI = SourcesAPI(sources: [sourceAPI])
-	public static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
+	lazy var articleAPI = ArticleAPI(author: "Test",
+									 content: "Test",
+									 publishedAt: .distantPast,
+									 source: sourceAPI,
+									 story: "Test",
+									 title: "Test",
+									 url: URL(string: "Test"),
+									 urlToImage: URL(string: "Test"))
+	lazy var sourceAPI = SourceAPI(category: "Test",
+								   country: "Test",
+								   id: "Test",
+								   language: "Test",
+								   name: "Test",
+								   story: "Test",
+								   url: URL(string: "Test"))
+	public lazy var sourcesAPI = SourcesAPI(sources: [sourceAPI])
+	public lazy var topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
 
 	/// Mocks which represent DB entities
-	public static let articleDB = {
+	public lazy var articleDB = {
 		let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
 		articleDB.author = "Test"
 		articleDB.content = "Test"
@@ -44,7 +44,7 @@ public class EntityMock {
 		articleDB.urlToImage = URL(string: "Test")
 		return articleDB
 	}()
-	public static let sourceDB = {
+	public lazy var sourceDB = {
 		let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
 		sourceDB.category = "Test"
 		sourceDB.country = "Test"
@@ -55,6 +55,6 @@ public class EntityMock {
 		sourceDB.url = URL(string: "Test")
 		return sourceDB
 	}()
-	public static let sourcesDB = [sourceDB]
-	public static let topHeadlinesDB = [articleDB]
+	public lazy var sourcesDB = [sourceDB]
+	public lazy var topHeadlinesDB = [articleDB]
 }
