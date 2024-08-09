@@ -23,6 +23,7 @@
   },
   "testTargets" : [
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:BobbysNews.xcodeproj",
         "identifier" : "BF72AA9D2AA0BFD400368DA5",
@@ -30,6 +31,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:BobbysNews.xcodeproj",
         "identifier" : "BF72AAA72AA0BFD400368DA5",
@@ -37,6 +39,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:BobbysNewsData",
         "identifier" : "BobbysNewsDataTests",
@@ -44,6 +47,7 @@
       }
     },
     {
+      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:BobbysNewsDomain",
         "identifier" : "BobbysNewsDomainTests",

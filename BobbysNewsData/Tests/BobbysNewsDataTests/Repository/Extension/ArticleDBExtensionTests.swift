@@ -10,11 +10,23 @@ import XCTest
 
 class ArticleDBExtensionTests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
 	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
 
 	func testArticleDB() {
 		// Given
-		let articleAPI = EntityMock.articleAPI
+		let articleAPI = entity.articleAPI
 		// When
 		let articleDB = ArticleDB(from: articleAPI,
 								  country: "Test")

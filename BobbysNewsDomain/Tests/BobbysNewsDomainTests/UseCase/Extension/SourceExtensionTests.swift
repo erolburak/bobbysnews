@@ -10,11 +10,23 @@ import XCTest
 
 class SourceExtensionTests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
 	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
 
 	func testSource() {
 		// Given
-		let sourceDB = EntityMock.sourceDB
+		let sourceDB = entity.sourceDB
 		// When
 		let source = Source(from: sourceDB)
 		// Then

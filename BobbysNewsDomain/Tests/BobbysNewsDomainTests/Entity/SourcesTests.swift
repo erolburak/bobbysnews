@@ -10,13 +10,25 @@ import XCTest
 
 class SourcesTests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
 	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
 
 	func testSources() {
 		// Given
 		let sources: Sources?
 		// When
-		sources = EntityMock.sources
+		sources = entity.sources
 		// Then
 		XCTAssertEqual(sources?.sources?.first?.category, "Test")
 		XCTAssertEqual(sources?.sources?.first?.country, "Test")

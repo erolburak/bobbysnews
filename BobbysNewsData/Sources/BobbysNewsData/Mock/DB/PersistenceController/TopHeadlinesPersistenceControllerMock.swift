@@ -9,9 +9,13 @@ import Combine
 
 public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersistenceController {
 
+	// MARK: - Private Properties
+
+	private let entity = EntityMock()
+
 	// MARK: - Properties
 
-	public let queriesSubject: CurrentValueSubject<[ArticleDB]?, Never> = CurrentValueSubject(EntityMock.topHeadlinesDB)
+	public lazy var queriesSubject: CurrentValueSubject<[ArticleDB]?, Never> = CurrentValueSubject(entity.topHeadlinesDB)
 
 	// MARK: - Actions
 
@@ -20,7 +24,7 @@ public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersisten
 	}
 
 	public func fetchRequest(country: String) {
-		queriesSubject.send(EntityMock.topHeadlinesDB.filter { $0.country == country })
+		queriesSubject.send(entity.topHeadlinesDB.filter { $0.country == country })
 	}
 
 	public func read() -> AnyPublisher<[ArticleDB], Error> {
@@ -35,6 +39,6 @@ public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersisten
 		queriesSubject.send((topHeadlinesAPI.articles?.compactMap { articleAPI in
 			ArticleDB(from: articleAPI,
 					  country: country)
-		} ?? []) + EntityMock.topHeadlinesDB)
+		} ?? []) + entity.topHeadlinesDB)
 	}
 }

@@ -5,7 +5,7 @@
 //  Created by Burak Erol on 01.09.23.
 //
 
-public struct TopHeadlines: Sendable {
+public struct TopHeadlines {
 
 	// MARK: - Properties
 

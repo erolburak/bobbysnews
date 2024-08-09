@@ -10,13 +10,25 @@ import XCTest
 
 class TopHeadlinesTests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
 	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
 
 	func testTopHeadlines() {
 		// Given
 		let topHeadlines: TopHeadlines?
 		// When
-		topHeadlines = EntityMock.topHeadlines
+		topHeadlines = entity.topHeadlines
 		// Then
 		XCTAssertEqual(topHeadlines?.articles?.first?.author, "Test")
 		XCTAssertEqual(topHeadlines?.articles?.first?.content, "Test")

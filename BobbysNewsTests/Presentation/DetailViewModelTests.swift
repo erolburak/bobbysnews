@@ -12,21 +12,24 @@ class DetailViewModelTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var entity: EntityMock!
 	private var sut: DetailViewModel!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
-		sut = ViewModelFactory.shared.detailViewModel(article: EntityMock.article)
+		entity = EntityMock()
+		sut = DetailViewModel(article: entity.article)
 	}
 
 	override func tearDownWithError() throws {
+		entity = nil
 		sut = nil
 	}
 
 	func testDetailViewModel() {
 		// Given
-		let article = EntityMock.article
+		let article = entity.article
 		let detailViewModel: DetailViewModel?
 		// When
 		detailViewModel = DetailViewModel(article: article)

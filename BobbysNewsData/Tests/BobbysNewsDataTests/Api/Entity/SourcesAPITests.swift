@@ -10,13 +10,27 @@ import XCTest
 
 class SourcesAPITests: XCTestCase {
 
+	// MARK: - Private Properties
+
+	private var entity: EntityMock!
+
+	// MARK: - Actions
+
+	override func setUpWithError() throws {
+		entity = EntityMock()
+	}
+
+	override func tearDownWithError() throws {
+		entity = nil
+	}
+
 	// MARK: - Actions
 
 	func testSourcesAPI() {
 		// Given
 		let sourcesAPI: SourcesAPI?
 		// When
-		sourcesAPI = EntityMock.sourcesAPI
+		sourcesAPI = entity.sourcesAPI
 		// Then
 		XCTAssertEqual(sourcesAPI?.sources?.first?.category, "Test")
 		XCTAssertEqual(sourcesAPI?.sources?.first?.country, "Test")

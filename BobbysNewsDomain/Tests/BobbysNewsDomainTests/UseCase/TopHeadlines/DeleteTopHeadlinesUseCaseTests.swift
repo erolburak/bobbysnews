@@ -13,24 +13,27 @@ class DeleteTopHeadlinesUseCaseTests: XCTestCase {
 
 	// MARK: - Private Properties
 
+	private var entity: EntityMock!
 	private var mock: TopHeadlinesRepositoryMock!
 	private var sut: DeleteTopHeadlinesUseCase!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
+		entity = EntityMock()
 		mock = TopHeadlinesRepositoryMock()
 		sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: mock)
 	}
 
 	override func tearDownWithError() throws {
+		entity = nil
 		mock = nil
 		sut = nil
 	}
 
 	func testDelete() throws {
 		// Given
-		mock.topHeadlinesPersistenceController.queriesSubject.value = EntityMock.topHeadlinesDB
+		mock.topHeadlinesPersistenceController.queriesSubject.value = entity.topHeadlinesDB
 		// When
 		try sut
 			.delete()

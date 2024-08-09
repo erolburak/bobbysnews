@@ -14,17 +14,20 @@ class SourcesPersistenceControllerTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellables: Set<AnyCancellable>!
+	private var entity: EntityMock!
 	private var sut: SourcesPersistenceControllerMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellables = Set<AnyCancellable>()
+		entity = EntityMock()
 		sut = SourcesPersistenceControllerMock()
 	}
 
 	override func tearDownWithError() throws {
 		cancellables.removeAll()
+		entity = nil
 		sut = nil
 	}
 
@@ -44,7 +47,7 @@ class SourcesPersistenceControllerTests: XCTestCase {
 	func testRead() async {
 		// Given
 		var sources: [SourceDB]?
-		sut.queriesSubject.value = EntityMock.sourcesDB
+		sut.queriesSubject.value = entity.sourcesDB
 		// When
 		let expectation = expectation(description: "Read")
 		sut.read()
@@ -61,7 +64,7 @@ class SourcesPersistenceControllerTests: XCTestCase {
 
 	func testSave() throws {
 		// Given
-		let sourcesAPI = EntityMock.sourcesAPI
+		let sourcesAPI = entity.sourcesAPI
 		// When
 		sut.save(sourcesAPI: sourcesAPI)
 		// Then

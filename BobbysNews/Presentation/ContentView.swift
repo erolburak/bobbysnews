@@ -16,7 +16,7 @@ struct ContentView: View {
 
 	// MARK: - Properties
 
-	@State var viewModel: ContentViewModel
+	@StateObject var viewModel: ContentViewModel
 
 	// MARK: - Layouts
 
@@ -43,7 +43,7 @@ struct ContentView: View {
 			.disabled(viewModel.listDisabled)
 			.opacity(viewModel.listOpacity)
 			.refreshable {
-				await viewModel.fetchTopHeadlines()
+				viewModel.fetchTopHeadlines()
 			}
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
@@ -70,9 +70,7 @@ struct ContentView: View {
 							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
 								Button("CountriesLoad",
 									   systemImage: "arrow.down.to.line.circle.fill") {
-									Task {
-										await viewModel.fetchSources(sensoryFeedback: true)
-									}
+									viewModel.fetchSources(sensoryFeedback: true)
 								}
 							}
 						}
@@ -108,7 +106,7 @@ struct ContentView: View {
 							.onAppear {
 								Task {
 									try await Task.sleep(for: .seconds(1))
-									try await viewModel.showSettingsTip()
+									try viewModel.showSettingsTip()
 								}
 							}
 							.accessibilityIdentifier("SettingsImage")
@@ -148,9 +146,7 @@ struct ContentView: View {
 						Text(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
 					} actions: {
 						Button("Refresh") {
-							Task {
-								await viewModel.fetchTopHeadlines(state: .isLoading)
-							}
+							viewModel.fetchTopHeadlines(state: .isLoading)
 						}
 						.textCase(.uppercase)
 						.font(.system(.subheadline,
@@ -170,7 +166,7 @@ struct ContentView: View {
 		}
 		.task {
 			viewModel.onAppear(selectedCountry: country)
-			await viewModel.fetchSources()
+			viewModel.fetchSources()
 		}
 		.onDisappear() {
 			viewModel.onDisappear()
@@ -178,9 +174,7 @@ struct ContentView: View {
 		.onChange(of: viewModel.selectedCountry) { _, newValue in
 			country = newValue
 			viewModel.articles?.removeAll()
-			Task {
-				await viewModel.fetchTopHeadlines(state: .isLoading)
-			}
+			viewModel.fetchTopHeadlines(state: .isLoading)
 		}
 		.sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
 			viewModel.sensoryFeedback

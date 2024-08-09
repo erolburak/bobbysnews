@@ -25,7 +25,7 @@ final class DetailViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
+			let navigationLink = app.buttons["NavigationLinkItem"]
 			if navigationLink.waitForExistence(timeout: 5) {
 				navigationLink.tap()
 				let shareLink = app.buttons["ShareLink"]
@@ -45,7 +45,7 @@ final class DetailViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
+			let navigationLink = app.buttons["NavigationLinkItem"]
 			if navigationLink.waitForExistence(timeout: 5) {
 				navigationLink.tap()
 				let readButton = app.buttons["ReadButton"]
@@ -66,7 +66,7 @@ final class DetailViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let navigationLink = app.scrollViews.otherElements.buttons["NavigationLinkItem"]
+			let navigationLink = app.buttons["NavigationLinkItem"]
 			if navigationLink.waitForExistence(timeout: 5) {
 				navigationLink.tap()
 				let readButton = app.buttons["ReadButton"]

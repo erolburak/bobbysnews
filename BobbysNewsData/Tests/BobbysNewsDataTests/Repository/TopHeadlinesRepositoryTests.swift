@@ -14,23 +14,26 @@ class TopHeadlinesRepositoryTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellables: Set<AnyCancellable>!
+	private var entity: EntityMock!
 	private var sut: TopHeadlinesRepositoryMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellables = Set<AnyCancellable>()
+		entity = EntityMock()
 		sut = TopHeadlinesRepositoryMock()
 	}
 
 	override func tearDownWithError() throws {
 		cancellables.removeAll()
+		entity = nil
 		sut = nil
 	}
 
 	func testDelete() async throws {
 		// Given
-		sut.topHeadlinesPersistenceController.queriesSubject.value = EntityMock.topHeadlinesDB
+		sut.topHeadlinesPersistenceController.queriesSubject.value = entity.topHeadlinesDB
 		// When
 		try sut
 			.delete()

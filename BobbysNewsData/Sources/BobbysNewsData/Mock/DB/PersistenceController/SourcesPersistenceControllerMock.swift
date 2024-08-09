@@ -9,9 +9,13 @@ import Combine
 
 public final class SourcesPersistenceControllerMock: PSourcesPersistenceController {
 
+	// MARK: - Private Properties
+
+	private let entity = EntityMock()
+
 	// MARK: - Properties
 
-	public let queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(EntityMock.sourcesDB)
+	public lazy var queriesSubject: CurrentValueSubject<[SourceDB]?, Never> = CurrentValueSubject(entity.sourcesDB)
 
 	// MARK: - Actions
 
@@ -20,7 +24,7 @@ public final class SourcesPersistenceControllerMock: PSourcesPersistenceControll
 	}
 
 	public func fetchRequest() {
-		queriesSubject.send(EntityMock.sourcesDB)
+		queriesSubject.send(entity.sourcesDB)
 	}
 
 	public func read() -> AnyPublisher<[SourceDB], Error> {
@@ -33,6 +37,6 @@ public final class SourcesPersistenceControllerMock: PSourcesPersistenceControll
 	public func save(sourcesAPI: SourcesAPI) {
 		queriesSubject.send((sourcesAPI.sources?.compactMap { sourceAPI in
 			SourceDB(from: sourceAPI)
-		} ?? []) + EntityMock.sourcesDB)
+		} ?? []) + entity.sourcesDB)
 	}
 }

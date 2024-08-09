@@ -14,17 +14,20 @@ class TopHeadlinesPersistenceControllerTests: XCTestCase {
 	// MARK: - Private Properties
 
 	private var cancellables: Set<AnyCancellable>!
+	private var entity: EntityMock!
 	private var sut: TopHeadlinesPersistenceControllerMock!
 
 	// MARK: - Actions
 
 	override func setUpWithError() throws {
 		cancellables = Set<AnyCancellable>()
+		entity = EntityMock()
 		sut = TopHeadlinesPersistenceControllerMock()
 	}
 
 	override func tearDownWithError() throws {
 		cancellables.removeAll()
+		entity = nil
 		sut = nil
 	}
 
@@ -44,7 +47,7 @@ class TopHeadlinesPersistenceControllerTests: XCTestCase {
 	func testRead() async {
 		// Given
 		var topHeadlines: [ArticleDB]?
-		sut.queriesSubject.value = EntityMock.topHeadlinesDB
+		sut.queriesSubject.value = entity.topHeadlinesDB
 		// When
 		let expectation = expectation(description: "Read")
 		sut.read()
@@ -61,7 +64,7 @@ class TopHeadlinesPersistenceControllerTests: XCTestCase {
 
 	func testSave() throws {
 		// Given
-		let topHeadlinesAPI = EntityMock.topHeadlinesAPI
+		let topHeadlinesAPI = entity.topHeadlinesAPI
 		// When
 		sut.save(country: "Test",
 				 topHeadlinesAPI: topHeadlinesAPI)
