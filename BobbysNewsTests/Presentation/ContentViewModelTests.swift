@@ -130,11 +130,11 @@ class ContentViewModelTests: XCTestCase {
 		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
 	}
 
-	func testShowSettingsTip() async throws {
+	func testShowSettingsTip() throws {
 		// Given
 		ContentViewModel.SettingsTip.show = false
 		// When
-		try await sut.showSettingsTip()
+		try sut.showSettingsTip()
 		// Then
 		XCTAssertTrue(ContentViewModel.SettingsTip.show)
 	}
