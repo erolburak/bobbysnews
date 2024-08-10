@@ -6,43 +6,47 @@
 //
 
 @testable import BobbysNewsDomain
-import XCTest
+import Foundation
+import Testing
 
-class ArticleTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct ArticleTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing Aticle!")
 	func testArticle() {
 		// Given
 		let article: Article?
 		// When
-		article = entity.article
+		article = EntityMock.article
 		// Then
-		XCTAssertEqual(article?.author, "Test")
-		XCTAssertEqual(article?.content, "Test")
-		XCTAssertNotNil(article?.publishedAt)
-		XCTAssertEqual(article?.source?.category, "Test")
-		XCTAssertEqual(article?.source?.country, "Test")
-		XCTAssertEqual(article?.source?.id, "Test")
-		XCTAssertEqual(article?.source?.language, "Test")
-		XCTAssertEqual(article?.source?.name, "Test")
-		XCTAssertEqual(article?.source?.story, "Test")
-		XCTAssertEqual(article?.source?.url, URL(string: "Test"))
-		XCTAssertEqual(article?.story, "Test")
-		XCTAssertEqual(article?.title, "Test")
-		XCTAssertEqual(article?.url, URL(string: "Test"))
-		XCTAssertEqual(article?.urlToImage, URL(string: "Test"))
+		#expect(article?.author == "Test",
+				"Initializing Article article?.author failed!")
+		#expect(article?.content == "Test",
+				"Initializing Article article?.content failed!")
+		#expect(article?.publishedAt == .distantPast,
+				"Initializing Article article?.publishedAt failed!")
+		#expect(article?.source?.category == "Test",
+				"Initializing Article article?.source?.category failed!")
+		#expect(article?.source?.country == "Test",
+				"Initializing Article article?.source?.country failed!")
+		#expect(article?.source?.id == "Test",
+				"Initializing Article article?.source?.id failed!")
+		#expect(article?.source?.language == "Test",
+				"Initializing Article article?.source?.language failed!")
+		#expect(article?.source?.name == "Test",
+				"Initializing Article article?.source?.name failed!")
+		#expect(article?.source?.story == "Test",
+				"Initializing Article article?.source?.story failed!")
+		#expect(article?.source?.url == URL(string: "Test"),
+				"Initializing Article article?.source?.url failed!")
+		#expect(article?.story == "Test",
+				"Initializing Article article?.story failed!")
+		#expect(article?.title == "Test",
+				"Initializing Article article?.title failed!")
+		#expect(article?.url == URL(string: "Test"),
+				"Initializing Article article?.url failed!")
+		#expect(article?.urlToImage == URL(string: "Test"),
+				"Initializing Article article?.urlToImage failed!")
 	}
 }

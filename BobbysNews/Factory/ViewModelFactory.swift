@@ -7,6 +7,7 @@
 
 import BobbysNewsDomain
 
+@MainActor
 final class ViewModelFactory {
 
 	// MARK: - Private Properties
@@ -15,7 +16,6 @@ final class ViewModelFactory {
 
 	// MARK: - Properties
 
-	@MainActor
 	static let shared = ViewModelFactory()
 
 	// MARK: - Actions

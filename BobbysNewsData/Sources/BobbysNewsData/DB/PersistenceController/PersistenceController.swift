@@ -7,7 +7,7 @@
 
 import CoreData
 
-public final class PersistenceController: @unchecked Sendable {
+public final class PersistenceController {
 
 	// MARK: - Private Properties
 
@@ -15,6 +15,7 @@ public final class PersistenceController: @unchecked Sendable {
 
 	// MARK: - Properties
 
+	nonisolated(unsafe)
 	public static let shared = PersistenceController()
 	public let backgroundContext: NSManagedObjectContext
 

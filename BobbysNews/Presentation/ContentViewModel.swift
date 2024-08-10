@@ -6,10 +6,11 @@
 //
 
 import BobbysNewsDomain
-import Combine
 import TipKit
 
-final class ContentViewModel: ObservableObject {
+@MainActor
+@Observable
+final class ContentViewModel {
 
 	// MARK: - Type Definitions
 
@@ -54,37 +55,33 @@ final class ContentViewModel: ObservableObject {
 	private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
 	private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
 
-	// MARK: - Private Properties
-
-	private var cancellables = Set<AnyCancellable>()
-
 	// MARK: - Properties
 
-	@Published var alertError: Errors?
-	@Published var apiKeyVersion = 1 {
+	let apiKeyTotalAmount = 5
+	let settingsTip = SettingsTip()
+	var alertError: Errors?
+	var apiKeyVersion = 1 {
 		didSet {
 			sensoryFeedbackTrigger(feedback: .selection)
 		}
 	}
-	@Published var articles: [Article]?
-	@Published var countries: [String]?
-	@Published var selectedCountry = "" {
+	var articles: [Article]?
+	var countries: [String]?
+	var listDisabled: Bool { stateTopHeadlines != .loaded }
+	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
+	var selectedCountry = "" {
 		willSet {
 			if !newValue.isEmpty {
 				sensoryFeedbackTrigger(feedback: .selection)
 			}
 		}
 	}
-	@Published var sensoryFeedback: SensoryFeedback?
-	@Published var sensoryFeedbackBool = false
-	@Published var showAlert = false
-	@Published var showConfirmationDialog = false
-	@Published var stateSources: StateSources = .isLoading
-	@Published var stateTopHeadlines: StateTopHeadlines = .isLoading
-	let apiKeyTotalAmount = 5
-	let settingsTip = SettingsTip()
-	var listDisabled: Bool { stateTopHeadlines != .loaded }
-	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
+	var sensoryFeedback: SensoryFeedback?
+	var sensoryFeedbackBool = false
+	var showAlert = false
+	var showConfirmationDialog = false
+	var stateSources: StateSources = .isLoading
+	var stateTopHeadlines: StateTopHeadlines = .isLoading
 
 	// MARK: - Inits
 
@@ -109,39 +106,29 @@ final class ContentViewModel: ObservableObject {
 		readTopHeadlines()
 	}
 
-	func onDisappear() {
-		cancellables.removeAll()
-	}
-
-	@MainActor
-	func fetchSources(sensoryFeedback: Bool? = nil) {
-		Task {
-			stateSources = .isLoading
-			do {
-				try await fetchSourcesUseCase
-					.fetch(apiKey: apiKeyVersion)
-			} catch {
-				updateStateSources(completion: .failure(error),
-								   state: countries?.isEmpty == true ? .emptyFetch : .loaded)
-			}
+	func fetchSources(sensoryFeedback: Bool? = nil) async {
+		stateSources = .isLoading
+		do {
+			try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)
+			readSources()
+		} catch {
+			updateStateSources(error: error,
+							   state: countries?.isEmpty == true ? .emptyFetch : .loaded)
 		}
 	}
 
-	@MainActor
-	func fetchTopHeadlines(state: StateTopHeadlines? = nil) {
-		Task {
-			if !selectedCountry.isEmpty {
-				if let state {
-					stateTopHeadlines = state
-				}
-				do {
-					try await fetchTopHeadlinesUseCase
-						.fetch(apiKey: apiKeyVersion,
-							   country: selectedCountry)
-				} catch {
-					updateStateTopHeadlines(completion: .failure(error),
-											state: articles?.isEmpty == true ? .emptyFetch : .loaded)
-				}
+	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
+		if !selectedCountry.isEmpty {
+			if let state {
+				stateTopHeadlines = state
+			}
+			do {
+				try await fetchTopHeadlinesUseCase.fetch(apiKey: apiKeyVersion,
+														 country: selectedCountry)
+				readTopHeadlines()
+			} catch {
+				updateStateTopHeadlines(error: error,
+										state: articles?.isEmpty == true ? .emptyFetch : .loaded)
 			}
 		}
 	}
@@ -153,11 +140,9 @@ final class ContentViewModel: ObservableObject {
 	func reset() {
 		do {
 			/// Delete all persisted sources
-			try deleteSourcesUseCase
-				.delete()
+			try deleteSourcesUseCase.delete()
 			/// Delete all persisted topHeadlines
-			try deleteTopHeadlinesUseCase
-				.delete()
+			try deleteTopHeadlinesUseCase.delete()
 			apiKeyVersion = 1
 			articles = nil
 			countries = nil
@@ -175,50 +160,38 @@ final class ContentViewModel: ObservableObject {
 	}
 
 	private func configureTipKit() {
-		Task {
-			try? Tips.configure([.displayFrequency(.immediate),
-								 .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
-		}
+		try? Tips.configure([.displayFrequency(.immediate),
+							 .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
 	}
 
 	private func readSources() {
-		readSourcesUseCase
-			.read()
-			.compactMap { $0.sources }
-			.receive(on: DispatchWorkloop.main)
-			.sink(receiveCompletion: { [weak self] completion in
-				if case .failure = completion {
-					self?.updateStateSources(completion: completion,
-											 state: .emptyRead)
-				}
-			}, receiveValue: { [weak self] sources in
-				/// Set of unique countries
-				let countries = Set(sources.compactMap { $0.country == "zh" ? "cn" : $0.country })
-					.sorted(by: { lhs, rhs in
-						Locale.current.localizedString(forRegionCode: lhs) ?? "" <= Locale.current.localizedString(forRegionCode: rhs) ?? ""})
-				self?.countries = countries
-				self?.updateStateSources(completion: .finished,
-										 state: countries.isEmpty ? self?.stateSources == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
-			})
-			.store(in: &cancellables)
+		do {
+			guard let sources = try readSourcesUseCase.read().sources else {
+				throw Errors.read
+			}
+			/// Set of unique countries
+			let countries = Set(sources.compactMap { $0.country == "zh" ? "cn" : $0.country })
+				.sorted(by: { lhs, rhs in
+					Locale.current.localizedString(forRegionCode: lhs) ?? "" <= Locale.current.localizedString(forRegionCode: rhs) ?? ""})
+			self.countries = countries
+			updateStateSources(state: countries.isEmpty ? stateSources == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
+		} catch {
+			updateStateSources(error: error,
+							   state: .emptyRead)
+		}
 	}
 
 	private func readTopHeadlines() {
-		readTopHeadlinesUseCase
-			.read()
-			.compactMap { $0.articles }
-			.receive(on: DispatchWorkloop.main)
-			.sink(receiveCompletion: { [weak self] completion in
-				if case .failure = completion {
-					self?.updateStateTopHeadlines(completion: completion,
-												  state: .emptyRead)
-				}
-			}, receiveValue: { [weak self] articles in
-				self?.articles = articles
-				self?.updateStateTopHeadlines(completion: .finished,
-											  state: articles.isEmpty ? self?.stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
-			})
-			.store(in: &cancellables)
+		do {
+			guard let articles = try readTopHeadlinesUseCase.read(country: selectedCountry).articles else {
+				throw Errors.read
+			}
+			self.articles = articles
+			updateStateTopHeadlines(state: articles.isEmpty ? stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
+		} catch {
+			updateStateTopHeadlines(error: error,
+									state: .emptyRead)
+		}
 	}
 
 	private func sensoryFeedbackTrigger(feedback: SensoryFeedback) {
@@ -232,25 +205,21 @@ final class ContentViewModel: ObservableObject {
 		sensoryFeedbackTrigger(feedback: .error)
 	}
 
-	private func updateStateSources(completion: Subscribers.Completion<Error>,
+	private func updateStateSources(error: Error? = nil,
 									state: StateSources) {
-		switch completion {
-		case .finished:
-			stateSources = state
-		case .failure(let error):
-			stateSources = state
-			showAlert(error: error as? Errors ?? .error(error.localizedDescription))
+		guard let error else {
+			return stateSources = state
 		}
+		stateSources = state
+		showAlert(error: error as? Errors ?? .error(error.localizedDescription))
 	}
 
-	private func updateStateTopHeadlines(completion: Subscribers.Completion<Error>,
+	private func updateStateTopHeadlines(error: Error? = nil,
 										 state: StateTopHeadlines) {
-		switch completion {
-		case .finished:
-			stateTopHeadlines = state
-		case .failure(let error):
-			stateTopHeadlines = state
-			showAlert(error: error as? Errors ?? .error(error.localizedDescription))
+		guard let error else {
+			return stateTopHeadlines = state
 		}
+		stateTopHeadlines = state
+		showAlert(error: error as? Errors ?? .error(error.localizedDescription))
 	}
 }

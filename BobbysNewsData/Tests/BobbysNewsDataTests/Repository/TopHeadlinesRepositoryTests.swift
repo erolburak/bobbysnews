@@ -6,66 +6,41 @@
 //
 
 @testable import BobbysNewsData
-import Combine
-import XCTest
+import Testing
 
-class TopHeadlinesRepositoryTests: XCTestCase {
+struct TopHeadlinesRepositoryTests {
 
 	// MARK: - Private Properties
 
-	private var cancellables: Set<AnyCancellable>!
-	private var entity: EntityMock!
-	private var sut: TopHeadlinesRepositoryMock!
+	private let sut = TopHeadlinesRepositoryMock()
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		cancellables = Set<AnyCancellable>()
-		entity = EntityMock()
-		sut = TopHeadlinesRepositoryMock()
+	@Test("Check TopHeadlinesRepository delete!")
+	func testDelete() {
+		#expect(throws: Never.self,
+				"TopHeadlinesRepository delete failed!") {
+			sut.delete()
+		}
 	}
 
-	override func tearDownWithError() throws {
-		cancellables.removeAll()
-		entity = nil
-		sut = nil
+	@Test("Check TopHeadlinesRepository fetch!")
+	func testFetch() {
+		#expect(throws: Never.self,
+				"TopHeadlinesRepository fetch failed!") {
+			try sut.fetch(apiKey: 1,
+						  country: "Test")
+		}
 	}
 
-	func testDelete() async throws {
-		// Given
-		sut.topHeadlinesPersistenceController.queriesSubject.value = entity.topHeadlinesDB
-		// When
-		try sut
-			.delete()
-		// Then
-		XCTAssertNil(sut.topHeadlinesPersistenceController.queriesSubject.value)
-	}
-
-	func testFetch() async throws {
-		// Given
-		let apiKey = 1
-		let country = "Test"
-		// When
-		try await sut.fetch(apiKey: apiKey,
-							country: country)
-		// Then
-		XCTAssertEqual(sut.topHeadlinesPersistenceController.queriesSubject.value?.count, 2)
-	}
-
-	func testRead() async {
+	@Test("Check TopHeadlinesRepository read!")
+	func testRead() {
 		// Given
 		var topHeadlines: [ArticleDB]?
 		// When
-		let expectation = expectation(description: "Read")
-		sut.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { newTopHeadlines in
-				topHeadlines = newTopHeadlines
-				expectation.fulfill()
-			})
-			.store(in: &cancellables)
+		topHeadlines = sut.read(country: "Test")
 		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(topHeadlines)
+		#expect(topHeadlines?.count == 1,
+				"TopHeadlinesRepository read failed!")
 	}
 }

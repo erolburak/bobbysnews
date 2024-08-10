@@ -18,9 +18,9 @@ The **BobbysNews** app is my own project, which uses the [NewsAPI](https://newsa
 - SwiftUI
 - CoreData
 - UserDefaults
-- Combine
 - TipKit
 - CloudKit Database
+- SwiftTesting
 - XCTest
 - [NewsAPI](https://newsapi.org)
 

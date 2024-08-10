@@ -6,61 +6,66 @@
 //
 
 @testable import BobbysNewsData
-import XCTest
+import Foundation
+import Testing
 
-class NetworkConfigurationTests: XCTestCase {
-	
+struct NetworkConfigurationTests {
+
 	// MARK: - Private Properties
-	
-	private var sut: NetworkConfiguration!
-	
-	// MARK: - Actions
-	
-	override func setUpWithError() throws {
-		sut = NetworkConfiguration()
-	}
-	
-	override func tearDownWithError() throws {
-		sut = nil
-	}
 
+	private let sut = NetworkConfiguration()
+
+	// MARK: - Actions
+
+	@Test("Check NetworkConfiguration apiBaseUrl!")
 	func testApiBaseUrl() {
 		// Given
 		let apiBaseUrl: String?
 		// When
 		apiBaseUrl = NetworkConfiguration.apiBaseUrl
 		// Then
-		XCTAssertNotNil(apiBaseUrl)
+		#expect(apiBaseUrl != nil,
+				"NetworkConfiguration apiBaseUrl failed!")
 	}
 
+	@Test("Check NetworkConfiguration apiKey!")
 	func testApiKey() {
 		// Given
 		let apiKey: String?
 		// When
 		apiKey = NetworkConfiguration.apiKey(1)
 		// Then
-		XCTAssertNotNil(apiKey)
+		#expect(apiKey != nil,
+				"NetworkConfiguration apiKey failed!")
 	}
 
-	func testValidateResponse() throws {
+	@Test("Check NetworkConfiguration validateResponse!")
+	func testValidateResponse() {
 		// Given
 		let response = HTTPURLResponse(url: URL(string: "Test")!,
 									   statusCode: 200,
 									   httpVersion: nil,
 									   headerFields: nil)
 		// Then
-		XCTAssertNoThrow(try sut.validateResponse(defaultError: .fetchSources,
-												  response: response))
+		#expect(throws: Never.self,
+				"NetworkConfiguration validateResponse failed!") {
+			try sut.validateResponse(defaultError: .fetchSources,
+									 response: response)
+		}
 	}
 
-	func testValidateResponseThrowsError() throws {
+	@Test("Check NetworkConfiguration validateResponseThrowsError!")
+	func testValidateResponseThrowsError() {
 		// Given
 		let response = HTTPURLResponse(url: URL(string: "Test")!,
 									   statusCode: 401,
 									   httpVersion: nil,
 									   headerFields: nil)
 		// Then
-		XCTAssertThrowsError(try sut.validateResponse(defaultError: .fetchSources,
-													  response: response))
+		#expect(throws: Error.self,
+				"NetworkConfiguration validateResponseThrowsError failed!") {
+			try sut.validateResponse(defaultError: .fetchSources,
+									 response: response)
+		}
 	}
 }

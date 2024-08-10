@@ -7,36 +7,32 @@
 
 @testable import BobbysNewsDomain
 import BobbysNewsData
-import XCTest
+import Testing
 
-class FetchTopHeadlinesUseCaseTests: XCTestCase {
+struct FetchTopHeadlinesUseCaseTests {
 
 	// MARK: - Private Properties
 
-	private var mock: TopHeadlinesRepositoryMock!
-	private var sut: FetchTopHeadlinesUseCase!
+	private let mock: TopHeadlinesRepositoryMock!
+	private let sut: FetchTopHeadlinesUseCase!
 
-	// MARK: - Actions
+	// MARK: - Inits
 
-	override func setUpWithError() throws {
+	init() {
 		mock = TopHeadlinesRepositoryMock()
 		sut = FetchTopHeadlinesUseCase(topHeadlinesRepository: mock)
 	}
 
-	override func tearDownWithError() throws {
-		mock = nil
-		sut = nil
-	}
-
+	@Test("Check FetchTopHeadlinesUseCase fetch!")
 	func testFetch() async throws {
 		// Given
 		let apiKey = 1
 		let country = "Test"
 		// When
-		try await sut
-			.fetch(apiKey: apiKey,
-				   country: country)
+		try await sut.fetch(apiKey: apiKey,
+							country: country)
 		// Then
-		XCTAssertEqual(mock.topHeadlinesPersistenceController.queriesSubject.value?.count, 2)
+		#expect(mock.topHeadlinesPersistenceController.read(country: country).count == 1,
+				"FetchTopHeadlinesUseCase fetch failed!")
 	}
 }

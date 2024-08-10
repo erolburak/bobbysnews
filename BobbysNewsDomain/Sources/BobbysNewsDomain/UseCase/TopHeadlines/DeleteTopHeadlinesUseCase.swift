@@ -29,7 +29,6 @@ public final class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
 	// MARK: - Actions
 
 	public func delete() throws {
-		try topHeadlinesRepository
-			.delete()
+		try topHeadlinesRepository.delete()
 	}
 }

@@ -6,75 +6,79 @@
 //
 
 @testable import BobbysNewsDomain
-import XCTest
+import Testing
 
-class RepositoryFactoryTests: XCTestCase {
+struct RepositoryFactoryTests {
 	
 	// MARK: - Private Properties
 	
-	private var sut: UseCaseFactory!
+	private let sut = UseCaseFactory()
 	
 	// MARK: - Actions
-	
-	override func setUpWithError() throws {
-		sut = UseCaseFactory()
-	}
-	
-	override func tearDownWithError() throws {
-		sut = nil
-	}
 
+	@Test("Check initializing DeleteSourcesUseCase!")
 	func testDeleteSourcesUseCaseIsNotNil() {
 		// Given
 		let deleteSourcesUseCase: PDeleteSourcesUseCase?
 		// When
 		deleteSourcesUseCase = sut.deleteSourcesUseCase
 		// Then
-		XCTAssertNotNil(deleteSourcesUseCase)
+		#expect(deleteSourcesUseCase != nil,
+				"Initializing DeleteSourcesUseCase failed!")
 	}
 
+	@Test("Check initializing FetchSourcesUseCase!")
 	func testFetchSourcesUseCaseIsNotNil() {
 		// Given
 		let fetchSourcesUseCase: PFetchSourcesUseCase?
 		// When
 		fetchSourcesUseCase = sut.fetchSourcesUseCase
 		// Then
-		XCTAssertNotNil(fetchSourcesUseCase)
+		#expect(fetchSourcesUseCase != nil,
+				"Initializing FetchSourcesUseCase failed!")
 	}
 
+	@Test("Check initializing ReadSourcesUseCase!")
 	func testReadSourcesUseCaseIsNotNil() {
 		// Given
 		let readSourcesUseCase: PReadSourcesUseCase?
 		// When
 		readSourcesUseCase = sut.readSourcesUseCase
 		// Then
-		XCTAssertNotNil(readSourcesUseCase)
+		#expect(readSourcesUseCase != nil,
+				"Initializing ReadSourcesUseCase failed!")
 	}
 
+	@Test("Check initializing DeleteTopHeadlinesUseCase!")
 	func testDeleteTopHeadlinesUseCaseIsNotNil() {
 		// Given
 		let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase?
 		// When
 		deleteTopHeadlinesUseCase = sut.deleteTopHeadlinesUseCase
 		// Then
-		XCTAssertNotNil(deleteTopHeadlinesUseCase)
+		#expect(deleteTopHeadlinesUseCase != nil,
+				"Initializing DeleteTopHeadlinesUseCase failed!")
 	}
 
+	@Test("Check initializing FetchTopHeadlinesUseCase!")
 	func testFetchTopHeadlinesUseCaseIsNotNil() {
 		// Given
 		let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase?
 		// When
 		fetchTopHeadlinesUseCase = sut.fetchTopHeadlinesUseCase
 		// Then
-		XCTAssertNotNil(fetchTopHeadlinesUseCase)
+		#expect(fetchTopHeadlinesUseCase != nil,
+				"Initializing FetchTopHeadlinesUseCase failed!")
 	}
 
+	@Test("Check initializing ReadTopHeadlinesUseCase!")
 	func testReadTopHeadlinesUseCaseIsNotNil() {
 		// Given
 		let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase?
 		// When
 		readTopHeadlinesUseCase = sut.readTopHeadlinesUseCase
 		// Then
-		XCTAssertNotNil(readTopHeadlinesUseCase)
+		#expect(readTopHeadlinesUseCase != nil,
+				"Initializing ReadTopHeadlinesUseCase failed!")
 	}
 }

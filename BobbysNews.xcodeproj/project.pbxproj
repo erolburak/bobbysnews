@@ -15,6 +15,11 @@
 		BF188EBE2AA0E3AD00955836 /* DetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EBD2AA0E3AD00955836 /* DetailViewModelTests.swift */; };
 		BF2F65492B65497E00930B4B /* BobbysNewsData in Frameworks */ = {isa = PBXBuildFile; productRef = BF2F65482B65497E00930B4B /* BobbysNewsData */; };
 		BF2F654B2B65497E00930B4B /* BobbysNewsDomain in Frameworks */ = {isa = PBXBuildFile; productRef = BF2F654A2B65497E00930B4B /* BobbysNewsDomain */; };
+		BF5E5C8C2C67E912001AD24E /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB87832B61927300A51F36 /* ViewModelFactory.swift */; };
+		BF5E5C8D2C67E91E001AD24E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD66962AA3B4BD00BB49CE /* Date+Extension.swift */; };
+		BF5E5C8E2C67E923001AD24E /* Errors+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */; };
+		BF5E5C8F2C67E92C001AD24E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EB42AA0E17400955836 /* ContentViewModel.swift */; };
+		BF5E5C902C67E931001AD24E /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EBB2AA0E39600955836 /* DetailViewModel.swift */; };
 		BF72AA922AA0BFD300368DA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF72AA912AA0BFD300368DA5 /* ContentView.swift */; };
 		BF72AA942AA0BFD400368DA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BF72AA932AA0BFD400368DA5 /* Assets.xcassets */; };
 		BF72AAA32AA0BFD400368DA5 /* ContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF72AAA22AA0BFD400368DA5 /* ContentViewModelTests.swift */; };
@@ -437,12 +442,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF5E5C8E2C67E923001AD24E /* Errors+Extension.swift in Sources */,
 				BFD1B8C42AA634B9000ED973 /* DateExtensionTests.swift in Sources */,
 				BFBDEA1A2B61C25F00548AB5 /* ErrorsExtensionTests.swift in Sources */,
 				BF72AAA32AA0BFD400368DA5 /* ContentViewModelTests.swift in Sources */,
+				BF5E5C8F2C67E92C001AD24E /* ContentViewModel.swift in Sources */,
 				BF188EBE2AA0E3AD00955836 /* DetailViewModelTests.swift in Sources */,
 				BFD1B8AE2AA5E70F000ED973 /* ViewModelFactoryTests.swift in Sources */,
+				BF5E5C8D2C67E91E001AD24E /* Date+Extension.swift in Sources */,
 				BF1786A62B63B5C50030FB12 /* EntityMock.swift in Sources */,
+				BF5E5C902C67E931001AD24E /* DetailViewModel.swift in Sources */,
+				BF5E5C8C2C67E912001AD24E /* ViewModelFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

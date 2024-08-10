@@ -6,38 +6,33 @@
 //
 
 @testable import BobbysNewsData
-import XCTest
+import Foundation
+import Testing
 
-class SourcesAPITests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct SourcesAPITests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
-	// MARK: - Actions
-
+	@Test("Check initializing SourcesAPI!")
 	func testSourcesAPI() {
 		// Given
 		let sourcesAPI: SourcesAPI?
 		// When
-		sourcesAPI = entity.sourcesAPI
+		sourcesAPI = EntityMock.sourcesAPI
 		// Then
-		XCTAssertEqual(sourcesAPI?.sources?.first?.category, "Test")
-		XCTAssertEqual(sourcesAPI?.sources?.first?.country, "Test")
-		XCTAssertEqual(sourcesAPI?.sources?.first?.id, "Test")
-		XCTAssertEqual(sourcesAPI?.sources?.first?.language, "Test")
-		XCTAssertEqual(sourcesAPI?.sources?.first?.name, "Test")
-		XCTAssertEqual(sourcesAPI?.sources?.first?.story, "Test")
-		XCTAssertEqual(sourcesAPI?.sources?.first?.url, URL(string: "Test"))
+		#expect(sourcesAPI?.sources?.first?.category == "Test",
+				"Initializing SourcesAPI sourcesAPI?.sources?.first?.category failed!")
+		#expect(sourcesAPI?.sources?.first?.country == "Test",
+				"Initializing SourcesAPI sourcesAPI?.sources?.first?.country failed!")
+		#expect(sourcesAPI?.sources?.first?.id == "Test",
+				"Initializing SourcesAPI sourcesAPI?.sources?.first?.id failed!")
+		#expect(sourcesAPI?.sources?.first?.language == "Test",
+				"Initializing SourcesAPI sourcesAPI?.sources?.first?.language failed!")
+		#expect(sourcesAPI?.sources?.first?.name == "Test",
+				"Initializing SourcesAPI sourcesAPI?.sources?.first?.name failed!")
+		#expect(sourcesAPI?.sources?.first?.story == "Test",
+				"Initializing SourcesAPI sourcesAPI?.sources?.first?.story failed!")
+		#expect(sourcesAPI?.sources?.first?.url == URL(string: "Test"),
+				"Initializing SourcesAPI sourcesAPI?.sources?.first?.url failed!")
 	}
 }

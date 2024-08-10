@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public protocol PFetchTopHeadlinesUseCase {
+public protocol PFetchTopHeadlinesUseCase: Sendable {
 
 	// MARK: - Actions
 
@@ -31,8 +31,7 @@ public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
 	public func fetch(apiKey: Int,
 					  country: String) async throws {
-		try await topHeadlinesRepository
-			.fetch(apiKey: apiKey,
-				   country: country)
+		try await topHeadlinesRepository.fetch(apiKey: apiKey,
+											   country: country)
 	}
 }

@@ -6,13 +6,12 @@
 //
 
 import BobbysNewsData
-import Combine
 
 public protocol PReadSourcesUseCase {
 
 	// MARK: - Actions
 
-	func read() -> AnyPublisher<Sources, Error>
+	func read() throws -> Sources
 }
 
 public final class ReadSourcesUseCase: PReadSourcesUseCase {
@@ -29,14 +28,10 @@ public final class ReadSourcesUseCase: PReadSourcesUseCase {
 
 	// MARK: - Actions
 
-	public func read() -> AnyPublisher<Sources, Error> {
-		sourcesRepository
-			.read()
+	public func read() throws -> Sources {
+		Sources(sources: try sourcesRepository.read()
 			.compactMap {
-				Sources(sources: $0.compactMap { sourceDB in
-					Source(from: sourceDB)
-				})
-			}
-			.eraseToAnyPublisher()
+				Source(from: $0)
+			})
 	}
 }

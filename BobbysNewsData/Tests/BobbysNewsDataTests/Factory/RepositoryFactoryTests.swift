@@ -6,39 +6,35 @@
 //
 
 @testable import BobbysNewsData
-import XCTest
+import Testing
 
-class RepositoryFactoryTests: XCTestCase {
-	
+struct RepositoryFactoryTests {
+
 	// MARK: - Private Properties
-	
-	private var sut: RepositoryFactory!
-	
-	// MARK: - Actions
-	
-	override func setUpWithError() throws {
-		sut = RepositoryFactory()
-	}
-	
-	override func tearDownWithError() throws {
-		sut = nil
-	}
 
+	private let sut = RepositoryFactory()
+
+	// MARK: - Actions
+
+	@Test("Check initializing SourcesRepository!")
 	func testSourcesRepositoryIsNotNil() {
 		// Given
 		let sourcesRepository: PSourcesRepository?
 		// When
 		sourcesRepository = sut.sourcesRepository
 		// Then
-		XCTAssertNotNil(sourcesRepository)
+		#expect(sourcesRepository != nil,
+				"Initializing SourcesRepository failed!")
 	}
 
+	@Test("Check initializing TopHeadlinesRepository!")
 	func testTopHeadlinesRepositoryIsNotNil() {
 		// Given
 		let topHeadlinesRepository: PTopHeadlinesRepository?
 		// When
 		topHeadlinesRepository = sut.topHeadlinesRepository
 		// Then
-		XCTAssertNotNil(topHeadlinesRepository)
+		#expect(topHeadlinesRepository != nil,
+				"Initializing TopHeadlinesRepository failed!")
 	}
 }

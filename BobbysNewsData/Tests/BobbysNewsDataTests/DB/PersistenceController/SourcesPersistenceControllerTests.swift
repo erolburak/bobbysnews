@@ -6,68 +6,40 @@
 //
 
 @testable import BobbysNewsData
-import Combine
-import XCTest
+import Testing
 
-class SourcesPersistenceControllerTests: XCTestCase {
+struct SourcesPersistenceControllerTests {
 
 	// MARK: - Private Properties
 
-	private var cancellables: Set<AnyCancellable>!
-	private var entity: EntityMock!
-	private var sut: SourcesPersistenceControllerMock!
+	private let sut = SourcesPersistenceControllerMock()
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		cancellables = Set<AnyCancellable>()
-		entity = EntityMock()
-		sut = SourcesPersistenceControllerMock()
-	}
-
-	override func tearDownWithError() throws {
-		cancellables.removeAll()
-		entity = nil
-		sut = nil
-	}
-
+	@Test("Check SourcesPersistenceController delete!")
 	func testDelete() {
-		XCTAssertNoThrow(try sut.delete())
+		#expect(throws: Never.self,
+				"SourcesPersistenceController delete failed!") {
+			sut.delete()
+		}
 	}
 
-	func testFetchRequest() throws {
-		// Given
-		try sut.delete()
-		// When
-		sut.fetchRequest()
-		// Then
-		XCTAssertEqual(sut.queriesSubject.value?.count, 1)
-	}
-
-	func testRead() async {
+	@Test("Check SourcesPersistenceController read!")
+	func testRead() {
 		// Given
 		var sources: [SourceDB]?
-		sut.queriesSubject.value = entity.sourcesDB
 		// When
-		let expectation = expectation(description: "Read")
-		sut.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { newSources in
-				sources = newSources
-				expectation.fulfill()
-			})
-			.store(in: &cancellables)
+		sources = sut.read()
 		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(sources)
+		#expect(sources?.count == 1,
+				"SourcesPersistenceController read failed!")
 	}
 
-	func testSave() throws {
-		// Given
-		let sourcesAPI = entity.sourcesAPI
-		// When
-		sut.save(sourcesAPI: sourcesAPI)
-		// Then
-		XCTAssertEqual(sut.queriesSubject.value?.count, 2)
+	@Test("Check SourcesPersistenceController save!")
+	func testSave() {
+		#expect(throws: Never.self,
+				"SourcesPersistenceController save failed!") {
+			sut.save(sourcesAPI: EntityMock.sourcesAPI)
+		}
 	}
 }

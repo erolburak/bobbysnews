@@ -12,32 +12,32 @@ struct EntityMock {
 
 	// MARK: - Private Properties
 
-	private lazy var source = Source(category: "Test",
-									 country: "Test",
-									 id: "Test",
-									 language: "Test",
-									 name: "Test",
-									 story: "Test",
-									 url: URL(string: "Test"))
+	private static let source = Source(category: "Test",
+									   country: "Test",
+									   id: "Test",
+									   language: "Test",
+									   name: "Test",
+									   story: "Test",
+									   url: URL(string: "Test"))
 
 	// MARK: - Properties
 
-	lazy var article = Article(author: "Test",
-							   content: "Test",
-							   country: "us",
-							   publishedAt: .now,
-							   source: source,
-							   story: "Test",
-							   title: "Test",
-							   url: URL(string: "Test"),
-							   urlToImage: URL(string: "Test"))
-	lazy var errors: [Errors] = [.error(String(localized: "ErrorDescription")),
-								 .fetchSources,
-								 .fetchTopHeadlines,
-								 .invalidApiKey,
-								 .limitedRequests,
-								 .read,
-								 .reset]
-	lazy var sources = Sources(sources: [source])
-	lazy var topHeadlines = TopHeadlines(articles: [article])
+	static let article = Article(author: "Test",
+								 content: "Test",
+								 country: "us",
+								 publishedAt: .now,
+								 source: source,
+								 story: "Test",
+								 title: "Test",
+								 url: URL(string: "Test"),
+								 urlToImage: URL(string: "Test"))
+	static let errors: [Errors] = [.error(String(localized: "ErrorDescription")),
+								   .fetchSources,
+								   .fetchTopHeadlines,
+								   .invalidApiKey,
+								   .limitedRequests,
+								   .read,
+								   .reset]
+	static let sources = Sources(sources: [source])
+	static let topHeadlines = TopHeadlines(articles: [article])
 }

@@ -8,6 +8,7 @@
 import BobbysNewsDomain
 import SwiftUI
 
+@MainActor
 struct ContentView: View {
 
 	// MARK: - Private Properties
@@ -16,7 +17,7 @@ struct ContentView: View {
 
 	// MARK: - Properties
 
-	@StateObject var viewModel: ContentViewModel
+	@State var viewModel: ContentViewModel
 
 	// MARK: - Layouts
 
@@ -43,7 +44,7 @@ struct ContentView: View {
 			.disabled(viewModel.listDisabled)
 			.opacity(viewModel.listOpacity)
 			.refreshable {
-				viewModel.fetchTopHeadlines()
+				await viewModel.fetchTopHeadlines()
 			}
 			.toolbar {
 				ToolbarItem(placement: .primaryAction) {
@@ -70,7 +71,9 @@ struct ContentView: View {
 							Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
 								Button("CountriesLoad",
 									   systemImage: "arrow.down.to.line.circle.fill") {
-									viewModel.fetchSources(sensoryFeedback: true)
+									Task {
+										await viewModel.fetchSources(sensoryFeedback: true)
+									}
 								}
 							}
 						}
@@ -146,7 +149,9 @@ struct ContentView: View {
 						Text(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
 					} actions: {
 						Button("Refresh") {
-							viewModel.fetchTopHeadlines(state: .isLoading)
+							Task {
+								await viewModel.fetchTopHeadlines(state: .isLoading)
+							}
 						}
 						.textCase(.uppercase)
 						.font(.system(.subheadline,
@@ -166,15 +171,14 @@ struct ContentView: View {
 		}
 		.task {
 			viewModel.onAppear(selectedCountry: country)
-			viewModel.fetchSources()
-		}
-		.onDisappear() {
-			viewModel.onDisappear()
+			await viewModel.fetchSources()
 		}
 		.onChange(of: viewModel.selectedCountry) { _, newValue in
 			country = newValue
 			viewModel.articles?.removeAll()
-			viewModel.fetchTopHeadlines(state: .isLoading)
+			Task {
+				await viewModel.fetchTopHeadlines(state: .isLoading)
+			}
 		}
 		.sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
 			viewModel.sensoryFeedback

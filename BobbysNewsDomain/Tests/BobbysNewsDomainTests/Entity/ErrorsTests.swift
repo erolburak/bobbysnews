@@ -6,32 +6,22 @@
 //
 
 @testable import BobbysNewsDomain
-import XCTest
+import Testing
 
-class ErrorsTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct ErrorsTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing Errors!")
 	func testErrors() {
-		for error in entity.errors {
+		for error in EntityMock.errors {
 			// Given
 			var newError: Error?
 			// When
 			newError = error
 			// Then
-			XCTAssertNotNil(newError)
+			#expect(newError != nil,
+					"Initializing Error failed!")
 		}
 	}
 }

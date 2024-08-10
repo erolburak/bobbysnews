@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ArticleAPI: Decodable {
+public struct ArticleAPI: Decodable, Sendable {
 
 	// MARK: - Type Definitions
 

@@ -6,36 +6,34 @@
 //
 
 @testable import BobbysNewsDomain
-import XCTest
+import Foundation
+import Testing
 
-class SourceExtensionTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct SourceExtensionTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing Source!")
 	func testSource() {
 		// Given
+		var entity = EntityMock()
 		let sourceDB = entity.sourceDB
 		// When
 		let source = Source(from: sourceDB)
 		// Then
-		XCTAssertEqual(source?.category, sourceDB.category)
-		XCTAssertEqual(source?.country, sourceDB.country)
-		XCTAssertEqual(source?.id, sourceDB.id)
-		XCTAssertEqual(source?.language, sourceDB.language)
-		XCTAssertEqual(source?.name, sourceDB.name)
-		XCTAssertEqual(source?.story, sourceDB.story)
-		XCTAssertEqual(source?.url, sourceDB.url)
+		#expect(source?.category == "Test",
+				"Initializing Source source?.category failed!")
+		#expect(source?.country == "Test",
+				"Initializing Source source?.country failed!")
+		#expect(source?.id == "Test",
+				"Initializing Source source?.id failed!")
+		#expect(source?.language == "Test",
+				"Initializing Source source?.language failed!")
+		#expect(source?.name == "Test",
+				"Initializing Source source?.name failed!")
+		#expect(source?.story == "Test",
+				"Initializing Source source?.story failed!")
+		#expect(source?.url == URL(string: "Test"),
+				"Initializing Source source?.url failed!")
 	}
 }

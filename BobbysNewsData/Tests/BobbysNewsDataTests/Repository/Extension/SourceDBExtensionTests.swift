@@ -6,36 +6,32 @@
 //
 
 @testable import BobbysNewsData
-import XCTest
+import Testing
 
-class SourceDBExtensionTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct SourceDBExtensionTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing SourceDB!")
 	func testSourceDB() {
 		// Given
-		let sourceAPI = entity.sourceAPI
+		let sourceAPI = EntityMock.sourceAPI
 		// When
 		let sourceDB = SourceDB(from: sourceAPI)
 		// Then
-		XCTAssertEqual(sourceDB.category, sourceAPI.category)
-		XCTAssertEqual(sourceDB.country, sourceAPI.country)
-		XCTAssertEqual(sourceDB.id, sourceAPI.id)
-		XCTAssertEqual(sourceDB.language, sourceAPI.language)
-		XCTAssertEqual(sourceDB.name, sourceAPI.name)
-		XCTAssertEqual(sourceDB.story, sourceAPI.story)
-		XCTAssertEqual(sourceDB.url, sourceAPI.url)
+		#expect(sourceDB.category == sourceAPI.category,
+				"Initializing SourceDB sourceDB.category failed!")
+		#expect(sourceDB.country == sourceAPI.country,
+				"Initializing SourceDB sourceDB.country failed!")
+		#expect(sourceDB.id == sourceAPI.id,
+				"Initializing SourceDB sourceDB.id failed!")
+		#expect(sourceDB.language == sourceAPI.language,
+				"Initializing SourceDB sourceDB.language failed!")
+		#expect(sourceDB.name == sourceAPI.name,
+				"Initializing SourceDB sourceDB.name failed!")
+		#expect(sourceDB.story == sourceAPI.story,
+				"Initializing SourceDB sourceDB.story failed!")
+		#expect(sourceDB.url == sourceAPI.url,
+				"Initializing SourceDB sourceDB.url failed!")
 	}
 }

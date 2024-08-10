@@ -5,13 +5,14 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNews
-import XCTest
+import Foundation
+import Testing
 
-class DateExtensionTests: XCTestCase {
+struct DateExtensionTests {
 
 	// MARK: - Actions
 
+	@Test("Check date to relative formatter with today!")
 	func testToRelativeIsToday() {
 		// Given
 		let date = Date.now
@@ -19,9 +20,11 @@ class DateExtensionTests: XCTestCase {
 		// When
 		let relativeDate = date.toRelative
 		// Then
-		XCTAssertTrue(relativeDate.contains(relative))
+		#expect(relativeDate.contains(relative),
+				"Date to relative formatter with today failed!")
 	}
 
+	@Test("Check date to relative formatter with yesterday!")
 	func testToRelativeIsYesterday() {
 		// Given
 		let date = Calendar.current.date(byAdding: DateComponents(day: -1),
@@ -30,6 +33,7 @@ class DateExtensionTests: XCTestCase {
 		// When
 		let relativeDate = date?.toRelative ?? relative
 		// Then
-		XCTAssertTrue(relativeDate.contains(relative))
+		#expect(relativeDate.contains(relative),
+				"Date to relative formatter with yesterday failed!")
 	}
 }

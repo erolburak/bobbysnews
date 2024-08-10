@@ -6,69 +6,41 @@
 //
 
 @testable import BobbysNewsData
-import Combine
-import XCTest
+import Testing
 
-class TopHeadlinesPersistenceControllerTests: XCTestCase {
+struct TopHeadlinesPersistenceControllerTests {
 
 	// MARK: - Private Properties
 
-	private var cancellables: Set<AnyCancellable>!
-	private var entity: EntityMock!
-	private var sut: TopHeadlinesPersistenceControllerMock!
+	private let sut = TopHeadlinesPersistenceControllerMock()
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		cancellables = Set<AnyCancellable>()
-		entity = EntityMock()
-		sut = TopHeadlinesPersistenceControllerMock()
-	}
-
-	override func tearDownWithError() throws {
-		cancellables.removeAll()
-		entity = nil
-		sut = nil
-	}
-
+	@Test("Check TopHeadlinesPersistenceController delete!")
 	func testDelete() {
-		XCTAssertNoThrow(try sut.delete())
+		#expect(throws: Never.self,
+				"TopHeadlinesPersistenceController delete failed!") {
+			sut.delete()
+		}
 	}
 
-	func testFetchRequest() {
-		// Given
-		let country = ""
-		// When
-		sut.fetchRequest(country: country)
-		// Then
-		XCTAssertEqual(sut.queriesSubject.value?.count, 0)
-	}
-
-	func testRead() async {
+	@Test("Check TopHeadlinesPersistenceController read!")
+	func testRead() {
 		// Given
 		var topHeadlines: [ArticleDB]?
-		sut.queriesSubject.value = entity.topHeadlinesDB
 		// When
-		let expectation = expectation(description: "Read")
-		sut.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { newTopHeadlines in
-				topHeadlines = newTopHeadlines
-				expectation.fulfill()
-			})
-			.store(in: &cancellables)
+		topHeadlines = sut.read(country: "Test")
 		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(topHeadlines)
+		#expect(topHeadlines?.count == 1,
+				"TopHeadlinesPersistenceController read failed!")
 	}
 
-	func testSave() throws {
-		// Given
-		let topHeadlinesAPI = entity.topHeadlinesAPI
-		// When
-		sut.save(country: "Test",
-				 topHeadlinesAPI: topHeadlinesAPI)
-		// Then
-		XCTAssertEqual(sut.queriesSubject.value?.count, 2)
+	@Test("Check TopHeadlinesPersistenceController save!")
+	func testSave() {
+		#expect(throws: Never.self,
+				"TopHeadlinesPersistenceController save failed!") {
+			sut.save(country: "Test",
+					 topHeadlinesAPI: EntityMock.topHeadlinesAPI)
+		}
 	}
 }

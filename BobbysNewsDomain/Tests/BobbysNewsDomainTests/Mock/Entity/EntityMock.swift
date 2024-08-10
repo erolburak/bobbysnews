@@ -9,36 +9,36 @@ import BobbysNewsData
 import BobbysNewsDomain
 import Foundation
 
-class EntityMock {
+struct EntityMock {
 
 	// MARK: - Properties
 
 	/// Mocks which represent Domain entities
-	lazy var article = Article(author: "Test",
-							   content: "Test",
+	static let article = Article(author: "Test",
+								 content: "Test",
+								 country: "Test",
+								 publishedAt: .distantPast,
+								 source: source,
+								 story: "Test",
+								 title: "Test",
+								 url: URL(string: "Test"),
+								 urlToImage: URL(string: "Test"))
+	static let errors: [Errors] = [.error("ErrorDescription"),
+								   .fetchSources,
+								   .fetchTopHeadlines,
+								   .invalidApiKey,
+								   .limitedRequests,
+								   .read,
+								   .reset]
+	static let source = Source(category: "Test",
 							   country: "Test",
-							   publishedAt: .distantPast,
-							   source: source,
+							   id: "Test",
+							   language: "Test",
+							   name: "Test",
 							   story: "Test",
-							   title: "Test",
-							   url: URL(string: "Test"),
-							   urlToImage: URL(string: "Test"))
-	lazy var errors: [Errors] = [.error("ErrorDescription"),
-								 .fetchSources,
-								 .fetchTopHeadlines,
-								 .invalidApiKey,
-								 .limitedRequests,
-								 .read,
-								 .reset]
-	lazy var source = Source(category: "Test",
-							 country: "Test",
-							 id: "Test",
-							 language: "Test",
-							 name: "Test",
-							 story: "Test",
-							 url: URL(string: "Test"))
-	lazy var sources = Sources(sources: [source])
-	lazy var topHeadlines = TopHeadlines(articles: [article])
+							   url: URL(string: "Test"))
+	static let sources = Sources(sources: [source])
+	static let topHeadlines = TopHeadlines(articles: [article])
 
 	/// Mocks which represent DB entities
 	lazy var articleDB = {
