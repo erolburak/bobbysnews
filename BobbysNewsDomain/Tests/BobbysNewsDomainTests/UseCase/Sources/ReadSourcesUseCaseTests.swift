@@ -7,43 +7,24 @@
 
 @testable import BobbysNewsDomain
 import BobbysNewsData
-import Combine
-import XCTest
+import Testing
 
-class ReadSourcesUseCaseTests: XCTestCase {
+struct ReadSourcesUseCaseTests {
 
 	// MARK: - Private Properties
 
-	private var cancellables: Set<AnyCancellable>!
-	private var sut: ReadSourcesUseCase!
+	private let sut = ReadSourcesUseCase(sourcesRepository: SourcesRepositoryMock())
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		cancellables = Set<AnyCancellable>()
-		sut = ReadSourcesUseCase(sourcesRepository: SourcesRepositoryMock())
-	}
-
-	override func tearDownWithError() throws {
-		cancellables.removeAll()
-		sut = nil
-	}
-
-	func testRead() async {
+	@Test("Check ReadSourcesUseCase read!")
+	func testRead() throws {
 		// Given
 		var sources: Sources?
 		// When
-		let expectation = expectation(description: "Read")
-		sut
-			.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: {
-				sources = $0
-				expectation.fulfill()
-			})
-			.store(in: &cancellables)
+		sources = try sut.read()
 		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(sources)
+		#expect(sources?.sources?.count == 1,
+				"ReadSourcesUseCase read failed!")
 	}
 }

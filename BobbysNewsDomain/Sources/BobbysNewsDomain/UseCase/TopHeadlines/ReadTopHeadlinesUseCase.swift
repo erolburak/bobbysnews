@@ -6,13 +6,12 @@
 //
 
 import BobbysNewsData
-import Combine
 
 public protocol PReadTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	func read() -> AnyPublisher<TopHeadlines, Error>
+	func read(country: String) throws -> TopHeadlines
 }
 
 public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
@@ -29,14 +28,10 @@ public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
 	// MARK: - Actions
 
-	public func read() -> AnyPublisher<TopHeadlines, Error> {
-		topHeadlinesRepository
-			.read()
+	public func read(country: String) throws -> TopHeadlines {
+		TopHeadlines(articles: try topHeadlinesRepository.read(country: country)
 			.compactMap {
-				TopHeadlines(articles: $0.compactMap { articleDB in
-					Article(from: articleDB)
-				})
-			}
-			.eraseToAnyPublisher()
+				Article(from: $0)
+			})
 	}
 }

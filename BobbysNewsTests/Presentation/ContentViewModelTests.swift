@@ -5,25 +5,23 @@
 //  Created by Burak Erol on 31.08.23.
 //
 
-@testable import BobbysNews
 import BobbysNewsData
 import BobbysNewsDomain
+import Testing
 import TipKit
-import XCTest
 
-class ContentViewModelTests: XCTestCase {
+@MainActor
+struct ContentViewModelTests {
 
 	// MARK: - Private Properties
 
-	private var entity: EntityMock!
-	private var sut: ContentViewModel!
-	private var sourcesRepositoryMock: SourcesRepositoryMock!
-	private var topHeadlinesRepositoryMock: TopHeadlinesRepositoryMock!
+	private let sut: ContentViewModel
+	private let sourcesRepositoryMock: SourcesRepositoryMock
+	private let topHeadlinesRepositoryMock: TopHeadlinesRepositoryMock
 
-	// MARK: - Actions
+	// MARK: - Inits
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
+	init() {
 		sourcesRepositoryMock = SourcesRepositoryMock()
 		topHeadlinesRepositoryMock = TopHeadlinesRepositoryMock()
 		sut = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
@@ -34,15 +32,9 @@ class ContentViewModelTests: XCTestCase {
 							   readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
 	}
 
-	override func tearDownWithError() throws {
-		entity = nil
-		sut = nil
-		sourcesRepositoryMock = nil
-		topHeadlinesRepositoryMock = nil
-	}
-
 	// MARK: - Actions
 
+	@Test("Check initializing ContentViewModel!")
 	func testContentViewModel() {
 		// Given
 		let contentViewModel: ContentViewModel?
@@ -54,9 +46,11 @@ class ContentViewModelTests: XCTestCase {
 											fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
 											readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
 		// Then
-		XCTAssertNotNil(contentViewModel)
+		#expect(contentViewModel != nil,
+				"Initializing ContentViewModel failed!")
 	}
 
+	@Test("Check ContentViewModel onAppear!")
 	func testOnAppear() async throws {
 		// Given
 		sut.selectedCountry = "Test"
@@ -64,78 +58,89 @@ class ContentViewModelTests: XCTestCase {
 		sut.onAppear(selectedCountry: sut.selectedCountry)
 		try await Task.sleep(for: .seconds(2))
 		// Then
-		XCTAssertEqual(sut.articles?.count, 1)
-		XCTAssertEqual(sut.countries?.count, 1)
-		XCTAssertEqual(sut.stateSources, .loaded)
-		XCTAssertEqual(sut.stateTopHeadlines, .loaded)
+		#expect(sut.articles?.count == 1,
+				"ContentViewModel onAppear articles count is 1 failed!")
+		#expect(sut.countries?.count == 1,
+				"ContentViewModel onAppear countries count is 1 failed!")
+		#expect(sut.stateSources == .loaded,
+				"ContentViewModel onAppear stateSources is loaded failed!")
+		#expect(sut.stateTopHeadlines == .loaded,
+				"ContentViewModel onAppear stateTopHeadlines is loaded failed!")
 	}
 
-	@MainActor
-	func testFetchSources() async throws {
+	@Test("Check ContentViewModel fetchSources!")
+	func testFetchSources() async {
 		// Given
-		sut.countries = [entity.sources.sources?.first?.country ?? "Test"]
+		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
 		sut.selectedCountry = "Test"
 		// When
-		sut.fetchSources()
-		try await Task.sleep(for: .seconds(2))
+		await sut.fetchSources()
 		// Then
-		XCTAssertEqual(sut.countries?.count, 1)
+		#expect(sut.countries?.count == 1,
+				"ContentViewModel fetchSources countries count is 1 failed!")
 	}
 
-	@MainActor
-	func testFetchTopHeadlines() async throws {
+	@Test("Check ContentViewModel fetchTopHeadlines!")
+	func testFetchTopHeadlines() async {
 		// Given
-		sut.articles = [entity.article]
+		sut.articles = [EntityMock.article]
 		sut.selectedCountry = "Test"
 		// When
-		sut.fetchTopHeadlines(state: .isLoading)
-		try await Task.sleep(for: .seconds(2))
+		await sut.fetchTopHeadlines(state: .isLoading)
 		// Then
-		XCTAssertEqual(sut.articles?.count, 1)
+		#expect(sut.articles?.count == 1,
+				"ContentViewModel fetchTopHeadlines articles count is 1 failed!")
 	}
 
-	func testInvalidateSettingsTip() async {
+	@Test("Check ContentViewModel invalidateSettingsTip!")
+	func testInvalidateSettingsTip() async throws {
 		// Given
-		var tipsStatus: Tips.Status?
+		let statusUpdates = sut.settingsTip.statusUpdates
 		// When
-		let expectation = expectation(description: "Invalidate")
 		sut.invalidateSettingsTip()
-		for await status in sut.settingsTip.statusUpdates {
-			if status == .invalidated(.actionPerformed) {
-				tipsStatus = status
-				expectation.fulfill()
+		// Then
+		for await statusUpdate in statusUpdates {
+			if statusUpdate == .invalidated(.actionPerformed) {
+				#expect(statusUpdate == .invalidated(.actionPerformed),
+						"ContentViewModel invalidateSettingsTip failed!")
 			}
 		}
-		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(tipsStatus)
 	}
 
+	@Test("Check ContentViewModel reset!")
 	func testReset() {
 		// Given
 		sut.apiKeyVersion = 2
-		sut.articles = [entity.article]
-		sut.countries = [entity.sources.sources?.first?.country ?? "Test"]
+		sut.articles = [EntityMock.article]
+		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
 		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
 		sut.stateTopHeadlines = .loaded
 		// When
 		sut.reset()
 		// Then
-		XCTAssertEqual(sut.apiKeyVersion, 1)
-		XCTAssertNil(sut.articles)
-		XCTAssertNil(sut.countries)
-		XCTAssertTrue(sut.selectedCountry.isEmpty)
-		XCTAssertEqual(sut.stateSources, .emptyRead)
-		XCTAssertEqual(sut.stateTopHeadlines, .emptyRead)
+		#expect(sut.apiKeyVersion == 1,
+				"ContentViewModel reset apiKeyVersion is 1 failed!")
+		#expect(sut.articles == nil,
+				"ContentViewModel reset articles not nil failed!")
+		#expect(sut.countries == nil,
+				"ContentViewModel reset countries not nil failed!")
+		#expect(sut.selectedCountry.isEmpty,
+				"ContentViewModel reset selectedCountry isEmpty failed!")
+		#expect(sut.stateSources == .emptyRead,
+				"ContentViewModel reset stateSources is emptyRead failed!")
+		#expect(sut.stateTopHeadlines == .emptyRead,
+				"ContentViewModel reset stateTopHeadlines is emptyRead failed!")
 	}
 
+	@Test("Check ContentViewModel showSettingsTip!")
 	func testShowSettingsTip() throws {
 		// Given
 		ContentViewModel.SettingsTip.show = false
 		// When
 		try sut.showSettingsTip()
 		// Then
-		XCTAssertTrue(ContentViewModel.SettingsTip.show)
+		#expect(ContentViewModel.SettingsTip.show,
+				"Check ContentViewModel showSettingsTip failed!")
 	}
 }

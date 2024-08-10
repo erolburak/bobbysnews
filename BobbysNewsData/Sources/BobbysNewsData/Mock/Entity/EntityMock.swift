@@ -7,28 +7,28 @@
 
 import Foundation
 
-public class EntityMock {
+public struct EntityMock {
 
 	// MARK: - Properties
 
 	/// Mocks which represent API entities
-	lazy var articleAPI = ArticleAPI(author: "Test",
-									 content: "Test",
-									 publishedAt: .distantPast,
-									 source: sourceAPI,
+	static let articleAPI = ArticleAPI(author: "Test",
+									   content: "Test",
+									   publishedAt: .distantPast,
+									   source: sourceAPI,
+									   story: "Test",
+									   title: "Test",
+									   url: URL(string: "Test"),
+									   urlToImage: URL(string: "Test"))
+	static let sourceAPI = SourceAPI(category: "Test",
+									 country: "Test",
+									 id: "Test",
+									 language: "Test",
+									 name: "Test",
 									 story: "Test",
-									 title: "Test",
-									 url: URL(string: "Test"),
-									 urlToImage: URL(string: "Test"))
-	lazy var sourceAPI = SourceAPI(category: "Test",
-								   country: "Test",
-								   id: "Test",
-								   language: "Test",
-								   name: "Test",
-								   story: "Test",
-								   url: URL(string: "Test"))
-	public lazy var sourcesAPI = SourcesAPI(sources: [sourceAPI])
-	public lazy var topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
+									 url: URL(string: "Test"))
+	public static let sourcesAPI = SourcesAPI(sources: [sourceAPI])
+	public static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
 
 	/// Mocks which represent DB entities
 	public lazy var articleDB = {

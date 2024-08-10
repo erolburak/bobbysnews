@@ -6,31 +6,24 @@
 //
 
 @testable import BobbysNewsData
-import XCTest
+import Testing
 
-class SourcesNetworkControllerTests: XCTestCase {
+struct SourcesNetworkControllerTests {
 
 	// MARK: - Private Properties
 
-	private var sut: SourcesNetworkControllerMock!
+	private let sut = SourcesNetworkControllerMock()
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		sut = SourcesNetworkControllerMock()
-	}
-
-	override func tearDownWithError() throws {
-		sut = nil
-	}
-
-	func testFetch() async throws {
+	@Test("Check SourcesNetworkController fetch!")
+	func testFetch() {
 		// Given
 		let apiKey = 1
 		// When
-		let sourcesAPI = try await sut
-			.fetch(apiKey: apiKey)
+		let sourcesAPI = sut.fetch(apiKey: apiKey)
 		// Then
-		XCTAssertEqual(sourcesAPI.sources?.count, 1)
+		#expect(sourcesAPI.sources?.count == 1,
+				"SourcesNetworkController fetch failed!")
 	}
 }

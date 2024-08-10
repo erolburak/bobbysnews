@@ -6,36 +6,33 @@
 //
 
 @testable import BobbysNewsDomain
-import XCTest
+import Foundation
+import Testing
 
-class SourceTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct SourceTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing Source!")
 	func testSource() {
 		// Given
 		let source: Source?
 		// When
-		source = entity.source
+		source = EntityMock.source
 		// Then
-		XCTAssertEqual(source?.category, "Test")
-		XCTAssertEqual(source?.country, "Test")
-		XCTAssertEqual(source?.id, "Test")
-		XCTAssertEqual(source?.language, "Test")
-		XCTAssertEqual(source?.name, "Test")
-		XCTAssertEqual(source?.story, "Test")
-		XCTAssertEqual(source?.url, URL(string: "Test"))
+		#expect(source?.category == "Test",
+				"Initializing Source source?.category failed!")
+		#expect(source?.country == "Test",
+				"Initializing Source source?.country failed!")
+		#expect(source?.id == "Test",
+				"Initializing Source source?.id failed!")
+		#expect(source?.language == "Test",
+				"Initializing Source source?.language failed!")
+		#expect(source?.name == "Test",
+				"Initializing Source source?.name failed!")
+		#expect(source?.story == "Test",
+				"Initializing Source source?.story failed!")
+		#expect(source?.url == URL(string: "Test"),
+				"Initializing Source source?.url failed!")
 	}
 }

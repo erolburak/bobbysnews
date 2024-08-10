@@ -5,27 +5,16 @@
 //  Created by Burak Erol on 24.01.24.
 //
 
-@testable import BobbysNews
-import XCTest
+import Testing
 
-class ErrorsExtensionTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+@MainActor
+struct ErrorsExtensionTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing Errors!")
 	func testErrors() {
-		for error in entity.errors {
+		for error in EntityMock.errors {
 			// Given
 			let description: String?
 			let recoverySuggestion: String?
@@ -33,8 +22,10 @@ class ErrorsExtensionTests: XCTestCase {
 			description = error.errorDescription
 			recoverySuggestion = error.recoverySuggestion
 			// Then
-			XCTAssertNotNil(description)
-			XCTAssertNotNil(recoverySuggestion)
+			#expect(description != nil,
+					"Initializing Error description failed!")
+			#expect(recoverySuggestion != nil,
+					"Initializing Error recoverySuggestion failed!")
 		}
 	}
 }

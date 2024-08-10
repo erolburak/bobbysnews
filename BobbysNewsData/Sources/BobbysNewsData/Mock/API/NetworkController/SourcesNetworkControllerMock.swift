@@ -7,13 +7,9 @@
 
 public final class SourcesNetworkControllerMock: PSourcesNetworkController {
 
-	// MARK: - Private Properties
-
-	private let entity = EntityMock()
-
 	// MARK: - Actions
 
-	public func fetch(apiKey: Int) async throws -> SourcesAPI {
-		entity.sourcesAPI
+	public func fetch(apiKey: Int) -> SourcesAPI {
+		EntityMock.sourcesAPI
 	}
 }

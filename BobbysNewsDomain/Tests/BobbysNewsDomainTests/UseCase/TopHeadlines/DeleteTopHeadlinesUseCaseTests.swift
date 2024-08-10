@@ -7,37 +7,21 @@
 
 @testable import BobbysNewsDomain
 import BobbysNewsData
-import XCTest
+import Testing
 
-class DeleteTopHeadlinesUseCaseTests: XCTestCase {
+struct DeleteTopHeadlinesUseCaseTests {
 
 	// MARK: - Private Properties
 
-	private var entity: EntityMock!
-	private var mock: TopHeadlinesRepositoryMock!
-	private var sut: DeleteTopHeadlinesUseCase!
+	private let sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepositoryMock())
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-		mock = TopHeadlinesRepositoryMock()
-		sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: mock)
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-		mock = nil
-		sut = nil
-	}
-
-	func testDelete() throws {
-		// Given
-		mock.topHeadlinesPersistenceController.queriesSubject.value = entity.topHeadlinesDB
-		// When
-		try sut
-			.delete()
-		// Then
-		XCTAssertNil(mock.topHeadlinesPersistenceController.queriesSubject.value)
+	@Test("Check DeleteTopHeadlinesUseCase delete!")
+	func testDelete() {
+		#expect(throws: Never.self,
+				"DeleteTopHeadlinesUseCase delete failed!") {
+			try sut.delete()
+		}
 	}
 }

@@ -6,36 +6,33 @@
 //
 
 @testable import BobbysNewsData
-import XCTest
+import Foundation
+import Testing
 
-class SourceAPITests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct SourceAPITests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing SourceAPI!")
 	func testSourceAPI() {
 		// Given
 		let sourceAPI: SourceAPI?
 		// When
-		sourceAPI = entity.sourceAPI
+		sourceAPI = EntityMock.sourceAPI
 		// Then
-		XCTAssertEqual(sourceAPI?.category, "Test")
-		XCTAssertEqual(sourceAPI?.country, "Test")
-		XCTAssertEqual(sourceAPI?.id, "Test")
-		XCTAssertEqual(sourceAPI?.language, "Test")
-		XCTAssertEqual(sourceAPI?.name, "Test")
-		XCTAssertEqual(sourceAPI?.story, "Test")
-		XCTAssertEqual(sourceAPI?.url, URL(string: "Test"))
+		#expect(sourceAPI?.category == "Test",
+				"Initializing AticleAPI sourceAPI?.category failed!")
+		#expect(sourceAPI?.country == "Test",
+				"Initializing AticleAPI sourceAPI?.country failed!")
+		#expect(sourceAPI?.id == "Test",
+				"Initializing AticleAPI sourceAPI?.id failed!")
+		#expect(sourceAPI?.language == "Test",
+				"Initializing AticleAPI sourceAPI?.language failed!")
+		#expect(sourceAPI?.name == "Test",
+				"Initializing AticleAPI sourceAPI?.name failed!")
+		#expect(sourceAPI?.story == "Test",
+				"Initializing AticleAPI sourceAPI?.story failed!")
+		#expect(sourceAPI?.url == URL(string: "Test"),
+				"Initializing AticleAPI sourceAPI?.url failed!")
 	}
 }

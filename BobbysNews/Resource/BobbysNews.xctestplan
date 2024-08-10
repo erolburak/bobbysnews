@@ -23,6 +23,7 @@
   },
   "testTargets" : [
     {
+      "parallelizable" : false,
       "target" : {
         "containerPath" : "container:BobbysNews.xcodeproj",
         "identifier" : "BF72AA9D2AA0BFD400368DA5",
@@ -37,6 +38,7 @@
       }
     },
     {
+      "parallelizable" : false,
       "target" : {
         "containerPath" : "container:BobbysNewsData",
         "identifier" : "BobbysNewsDataTests",
@@ -44,6 +46,7 @@
       }
     },
     {
+      "parallelizable" : false,
       "target" : {
         "containerPath" : "container:BobbysNewsDomain",
         "identifier" : "BobbysNewsDomainTests",

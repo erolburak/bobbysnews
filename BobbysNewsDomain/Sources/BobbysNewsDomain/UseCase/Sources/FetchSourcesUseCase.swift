@@ -7,7 +7,7 @@
 
 import BobbysNewsData
 
-public protocol PFetchSourcesUseCase {
+public protocol PFetchSourcesUseCase: Sendable {
 
 	// MARK: - Actions
 
@@ -29,7 +29,6 @@ public final class FetchSourcesUseCase: PFetchSourcesUseCase {
 	// MARK: - Actions
 
 	public func fetch(apiKey: Int) async throws {
-		try await sourcesRepository
-			.fetch(apiKey: apiKey)
+		try await sourcesRepository.fetch(apiKey: apiKey)
 	}
 }

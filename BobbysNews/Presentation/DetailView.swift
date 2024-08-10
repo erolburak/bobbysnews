@@ -9,11 +9,12 @@ import BobbysNewsDomain
 import SwiftUI
 import WebKit
 
+@MainActor
 struct DetailView: View {
 
 	// MARK: - Properties
 
-	@StateObject var viewModel: DetailViewModel
+	@State var viewModel: DetailViewModel
 
 	// MARK: - Layouts
 

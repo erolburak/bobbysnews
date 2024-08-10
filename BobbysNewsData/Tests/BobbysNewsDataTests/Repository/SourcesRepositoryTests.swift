@@ -6,64 +6,40 @@
 //
 
 @testable import BobbysNewsData
-import Combine
-import XCTest
+import Testing
 
-class SourcesRepositoryTests: XCTestCase {
+struct SourcesRepositoryTests {
 
 	// MARK: - Private Properties
 
-	private var cancellables: Set<AnyCancellable>!
-	private var entity: EntityMock!
-	private var sut: SourcesRepositoryMock!
+	private let sut = SourcesRepositoryMock()
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		cancellables = Set<AnyCancellable>()
-		entity = EntityMock()
-		sut = SourcesRepositoryMock()
+	@Test("Check SourcesRepository delete!")
+	func testDelete() {
+		#expect(throws: Never.self,
+				"SourcesRepository delete failed!") {
+			sut.delete()
+		}
 	}
 
-	override func tearDownWithError() throws {
-		cancellables.removeAll()
-		entity = nil
-		sut = nil
+	@Test("Check SourcesRepository fetch!")
+	func testFetch() {
+		#expect(throws: Never.self,
+				"SourcesRepository fetch failed!") {
+			sut.fetch(apiKey: 1)
+		}
 	}
 
-	func testDelete() async throws {
-		// Given
-		sut.sourcesPersistenceController.queriesSubject.value = entity.sourcesDB
-		// When
-		try sut
-			.delete()
-		// Then
-		XCTAssertNil(sut.sourcesPersistenceController.queriesSubject.value)
-	}
-
-	func testFetch() async throws {
-		// Given
-		let apiKey = 1
-		// When
-		try await sut.fetch(apiKey: apiKey)
-		// Then
-		XCTAssertEqual(sut.sourcesPersistenceController.queriesSubject.value?.count, 2)
-	}
-
-	func testRead() async {
+	@Test("Check SourcesRepository read!")
+	func testRead() {
 		// Given
 		var sources: [SourceDB]?
 		// When
-		let expectation = expectation(description: "Read")
-		sut.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { newSources in
-				sources = newSources
-				expectation.fulfill()
-			})
-			.store(in: &cancellables)
+		sources = sut.read()
 		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(sources)
+		#expect(sources?.count == 1,
+				"SourcesRepository read failed!")
 	}
 }

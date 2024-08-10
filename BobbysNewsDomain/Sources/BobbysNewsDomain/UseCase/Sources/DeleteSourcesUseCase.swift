@@ -29,7 +29,6 @@ public final class DeleteSourcesUseCase: PDeleteSourcesUseCase {
 	// MARK: - Actions
 
 	public func delete() throws {
-		try sourcesRepository
-			.delete()
+		try sourcesRepository.delete()
 	}
 }

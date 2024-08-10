@@ -6,33 +6,26 @@
 //
 
 @testable import BobbysNewsData
-import XCTest
+import Testing
 
-class TopHeadlinesNetworkControllerTests: XCTestCase {
+struct TopHeadlinesNetworkControllerTests {
 
 	// MARK: - Private Properties
 
-	private var sut: TopHeadlinesNetworkControllerMock!
+	private let sut = TopHeadlinesNetworkControllerMock()
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		sut = TopHeadlinesNetworkControllerMock()
-	}
-
-	override func tearDownWithError() throws {
-		sut = nil
-	}
-
-	func testFetch() async throws {
+	@Test("Check TopHeadlinesNetworkController fetch!")
+	func testFetch() throws {
 		// Given
 		let apiKey = 1
 		let country = "Test"
 		// When
-		let topHeadlinesAPI = try await sut
-			.fetch(apiKey: apiKey,
-				   country: country)
+		let topHeadlinesAPI = try sut.fetch(apiKey: apiKey,
+											country: country)
 		// Then
-		XCTAssertEqual(topHeadlinesAPI.articles?.count, 1)
+		#expect(topHeadlinesAPI.articles?.count == 1,
+				"TopHeadlinesNetworkController fetch failed!")
 	}
 }

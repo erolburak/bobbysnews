@@ -5,43 +5,32 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNews
-import XCTest
+import Testing
 
-class ViewModelFactoryTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
-	private var sut: ViewModelFactory!
+@MainActor
+struct ViewModelFactoryTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-		sut = ViewModelFactory()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-		sut = nil
-	}
-
+	@Test("Check initializing ContentViewModel!")
 	func testContentViewModelIsNotNil() {
 		// Given
 		let contentViewModel: ContentViewModel?
 		// When
-		contentViewModel = sut.contentViewModel()
+		contentViewModel = ViewModelFactory().contentViewModel()
 		// Then
-		XCTAssertNotNil(contentViewModel)
+		#expect(contentViewModel != nil,
+				"Initializing ContentViewModel failed!")
 	}
 
+	@Test("Check initializing DetailViewModel!")
 	func testDetailViewModelIsNotNil() {
 		// Given
 		let detailViewModel: DetailViewModel?
 		// When
-		detailViewModel = sut.detailViewModel(article: entity.article)
+		detailViewModel = ViewModelFactory().detailViewModel(article: EntityMock.article)
 		// Then
-		XCTAssertNotNil(detailViewModel)
+		#expect(detailViewModel != nil,
+				"Initializing DetailViewModel failed!")
 	}
 }

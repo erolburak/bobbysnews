@@ -6,43 +6,47 @@
 //
 
 @testable import BobbysNewsDomain
-import XCTest
+import Foundation
+import Testing
 
-class TopHeadlinesTests: XCTestCase {
-
-	// MARK: - Private Properties
-
-	private var entity: EntityMock!
+struct TopHeadlinesTests {
 
 	// MARK: - Actions
 
-	override func setUpWithError() throws {
-		entity = EntityMock()
-	}
-
-	override func tearDownWithError() throws {
-		entity = nil
-	}
-
+	@Test("Check initializing TopHeadlines!")
 	func testTopHeadlines() {
 		// Given
 		let topHeadlines: TopHeadlines?
 		// When
-		topHeadlines = entity.topHeadlines
+		topHeadlines = EntityMock.topHeadlines
 		// Then
-		XCTAssertEqual(topHeadlines?.articles?.first?.author, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.content, "Test")
-		XCTAssertNotNil(topHeadlines?.articles?.first?.publishedAt)
-		XCTAssertEqual(topHeadlines?.articles?.first?.source?.category, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.source?.country, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.source?.id, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.source?.language, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.source?.name, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.source?.story, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.source?.url, URL(string: "Test"))
-		XCTAssertEqual(topHeadlines?.articles?.first?.story, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.title, "Test")
-		XCTAssertEqual(topHeadlines?.articles?.first?.url, URL(string: "Test"))
-		XCTAssertEqual(topHeadlines?.articles?.first?.urlToImage, URL(string: "Test"))
+		#expect(topHeadlines?.articles?.first?.author == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.author failed!")
+		#expect(topHeadlines?.articles?.first?.content == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.content failed!")
+		#expect(topHeadlines?.articles?.first?.publishedAt == .distantPast,
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.publishedAt failed!")
+		#expect(topHeadlines?.articles?.first?.source?.category == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.source?.category failed!")
+		#expect(topHeadlines?.articles?.first?.source?.country == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.source?.country failed!")
+		#expect(topHeadlines?.articles?.first?.source?.id == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.source?.id failed!")
+		#expect(topHeadlines?.articles?.first?.source?.language == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.source?.language failed!")
+		#expect(topHeadlines?.articles?.first?.source?.name == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.source?.name failed!")
+		#expect(topHeadlines?.articles?.first?.source?.story == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.source?.story failed!")
+		#expect(topHeadlines?.articles?.first?.source?.url == URL(string: "Test"),
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.source?.url failed!")
+		#expect(topHeadlines?.articles?.first?.story == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.story failed!")
+		#expect(topHeadlines?.articles?.first?.title == "Test",
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.title failed!")
+		#expect(topHeadlines?.articles?.first?.url == URL(string: "Test"),
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.url failed!")
+		#expect(topHeadlines?.articles?.first?.urlToImage == URL(string: "Test"),
+				"Initializing TopHeadlines topHeadlines?.articles?.first?.urlToImage failed!")
 	}
 }
