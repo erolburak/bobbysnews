@@ -7,7 +7,6 @@
 
 import Testing
 
-@MainActor
 struct ViewModelFactoryTests {
 
 	// MARK: - Actions

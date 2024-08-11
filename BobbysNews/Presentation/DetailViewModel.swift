@@ -8,7 +8,6 @@
 import BobbysNewsDomain
 import Foundation
 
-@MainActor
 @Observable
 final class DetailViewModel {
 

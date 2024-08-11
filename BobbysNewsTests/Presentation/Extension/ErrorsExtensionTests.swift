@@ -7,7 +7,6 @@
 
 import Testing
 
-@MainActor
 struct ErrorsExtensionTests {
 
 	// MARK: - Actions

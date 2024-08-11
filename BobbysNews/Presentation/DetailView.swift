@@ -9,7 +9,6 @@ import BobbysNewsDomain
 import SwiftUI
 import WebKit
 
-@MainActor
 struct DetailView: View {
 
 	// MARK: - Properties

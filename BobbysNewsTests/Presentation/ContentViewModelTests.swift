@@ -10,7 +10,6 @@ import BobbysNewsDomain
 import Testing
 import TipKit
 
-@MainActor
 struct ContentViewModelTests {
 
 	// MARK: - Private Properties
@@ -69,6 +68,7 @@ struct ContentViewModelTests {
 	}
 
 	@Test("Check ContentViewModel fetchSources!")
+	@MainActor
 	func testFetchSources() async {
 		// Given
 		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
@@ -81,6 +81,7 @@ struct ContentViewModelTests {
 	}
 
 	@Test("Check ContentViewModel fetchTopHeadlines!")
+	@MainActor
 	func testFetchTopHeadlines() async {
 		// Given
 		sut.articles = [EntityMock.article]
