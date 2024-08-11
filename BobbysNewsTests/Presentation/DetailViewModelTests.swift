@@ -7,7 +7,6 @@
 
 import Testing
 
-@MainActor
 struct DetailViewModelTests {
 
 	// MARK: - Actions

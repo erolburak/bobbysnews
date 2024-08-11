@@ -8,7 +8,6 @@
 import BobbysNewsDomain
 import TipKit
 
-@MainActor
 @Observable
 final class ContentViewModel {
 
@@ -106,6 +105,7 @@ final class ContentViewModel {
 		readTopHeadlines()
 	}
 
+	@MainActor
 	func fetchSources(sensoryFeedback: Bool? = nil) async {
 		stateSources = .isLoading
 		do {
@@ -117,6 +117,7 @@ final class ContentViewModel {
 		}
 	}
 
+	@MainActor
 	func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
 		if !selectedCountry.isEmpty {
 			if let state {
