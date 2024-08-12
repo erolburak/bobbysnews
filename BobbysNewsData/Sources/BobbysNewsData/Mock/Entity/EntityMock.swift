@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EntityMock {
+struct EntityMock {
 
 	// MARK: - Properties
 
@@ -27,24 +27,11 @@ public struct EntityMock {
 									 name: "Test",
 									 story: "Test",
 									 url: URL(string: "Test"))
-	public static let sourcesAPI = SourcesAPI(sources: [sourceAPI])
-	public static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
+	static let sourcesAPI = SourcesAPI(sources: [sourceAPI])
+	static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
 
 	/// Mocks which represent DB entities
-	public lazy var articleDB = {
-		let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
-		articleDB.author = "Test"
-		articleDB.content = "Test"
-		articleDB.country = "Test"
-		articleDB.publishedAt = .distantPast
-		articleDB.source = sourceDB
-		articleDB.story = "Test"
-		articleDB.title = "Test"
-		articleDB.url = URL(string: "Test")
-		articleDB.urlToImage = URL(string: "Test")
-		return articleDB
-	}()
-	public lazy var sourceDB = {
+	lazy var sourcesDB = {
 		let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
 		sourceDB.category = "Test"
 		sourceDB.country = "Test"
@@ -53,8 +40,19 @@ public struct EntityMock {
 		sourceDB.name = "Test"
 		sourceDB.story = "Test"
 		sourceDB.url = URL(string: "Test")
-		return sourceDB
+		return [sourceDB]
 	}()
-	public lazy var sourcesDB = [sourceDB]
-	public lazy var topHeadlinesDB = [articleDB]
+	lazy var topHeadlinesDB = {
+		let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
+		articleDB.author = "Test"
+		articleDB.content = "Test"
+		articleDB.country = "Test"
+		articleDB.publishedAt = .distantPast
+		articleDB.source = sourcesDB.first
+		articleDB.story = "Test"
+		articleDB.title = "Test"
+		articleDB.url = URL(string: "Test")
+		articleDB.urlToImage = URL(string: "Test")
+		return [articleDB]
+	}()
 }

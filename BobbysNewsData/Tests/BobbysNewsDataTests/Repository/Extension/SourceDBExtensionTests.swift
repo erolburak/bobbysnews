@@ -12,26 +12,20 @@ struct SourceDBExtensionTests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing SourceDB!")
+	@Test("Check SourceDB initializing!")
 	func testSourceDB() {
 		// Given
 		let sourceAPI = EntityMock.sourceAPI
 		// When
 		let sourceDB = SourceDB(from: sourceAPI)
 		// Then
-		#expect(sourceDB.category == sourceAPI.category,
-				"Initializing SourceDB sourceDB.category failed!")
-		#expect(sourceDB.country == sourceAPI.country,
-				"Initializing SourceDB sourceDB.country failed!")
-		#expect(sourceDB.id == sourceAPI.id,
-				"Initializing SourceDB sourceDB.id failed!")
-		#expect(sourceDB.language == sourceAPI.language,
-				"Initializing SourceDB sourceDB.language failed!")
-		#expect(sourceDB.name == sourceAPI.name,
-				"Initializing SourceDB sourceDB.name failed!")
-		#expect(sourceDB.story == sourceAPI.story,
-				"Initializing SourceDB sourceDB.story failed!")
-		#expect(sourceDB.url == sourceAPI.url,
-				"Initializing SourceDB sourceDB.url failed!")
+		#expect(sourceDB.category == sourceAPI.category &&
+				sourceDB.country == sourceAPI.country &&
+				sourceDB.id == sourceAPI.id &&
+				sourceDB.language == sourceAPI.language &&
+				sourceDB.name == sourceAPI.name &&
+				sourceDB.story == sourceAPI.story &&
+				sourceDB.url == sourceAPI.url,
+				"SourceDB initializing failed!")
 	}
 }

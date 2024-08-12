@@ -21,10 +21,9 @@ struct ErrorsExtensionTests {
 			description = error.errorDescription
 			recoverySuggestion = error.recoverySuggestion
 			// Then
-			#expect(description != nil,
-					"Initializing Error description failed!")
-			#expect(recoverySuggestion != nil,
-					"Initializing Error recoverySuggestion failed!")
+			#expect(description != nil &&
+					recoverySuggestion != nil,
+					"Error initializing failed!")
 		}
 	}
 }

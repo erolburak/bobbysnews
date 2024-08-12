@@ -13,16 +13,16 @@ extension ArticleDB {
 	public convenience init(from api: ArticleAPI,
 							country: String) {
 		self.init(context: PersistenceController.shared.backgroundContext)
-		self.author = api.author
-		self.content = api.content
+		author = api.author
+		content = api.content
 		self.country = country
-		self.publishedAt = api.publishedAt
+		publishedAt = api.publishedAt
 		if let sourceAPI = api.source {
-			self.source = SourceDB(from: sourceAPI)
+			source = SourceDB(from: sourceAPI)
 		}
-		self.story = api.story
-		self.title = api.title
-		self.url = api.url
-		self.urlToImage = api.urlToImage
+		story = api.story
+		title = api.title
+		url = api.url
+		urlToImage = api.urlToImage
 	}
 }

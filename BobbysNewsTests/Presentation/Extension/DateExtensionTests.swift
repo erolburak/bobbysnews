@@ -12,8 +12,8 @@ struct DateExtensionTests {
 
 	// MARK: - Actions
 
-	@Test("Check date to relative formatter with today!")
-	func testToRelativeIsToday() {
+	@Test("Check DateExtension toRelative with now!")
+	func testToRelativeWithNow() {
 		// Given
 		let date = Date.now
 		let relative = "Today"
@@ -21,19 +21,19 @@ struct DateExtensionTests {
 		let relativeDate = date.toRelative
 		// Then
 		#expect(relativeDate.contains(relative),
-				"Date to relative formatter with today failed!")
+				"DateExtension toRelative with now failed!")
 	}
 
-	@Test("Check date to relative formatter with yesterday!")
-	func testToRelativeIsYesterday() {
+	@Test("Check DateExtension toRelative with yesterday!")
+	func testToRelativeWithYesterday() {
 		// Given
 		let date = Calendar.current.date(byAdding: DateComponents(day: -1),
-										 to: .now)
+										 to: .now) ?? .now
 		let relative = "Yesterday"
 		// When
-		let relativeDate = date?.toRelative ?? relative
+		let relativeDate = date.toRelative
 		// Then
 		#expect(relativeDate.contains(relative),
-				"Date to relative formatter with yesterday failed!")
+				"DateExtension toRelative with yesterday failed!")
 	}
 }

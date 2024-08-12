@@ -13,8 +13,8 @@ struct FetchTopHeadlinesUseCaseTests {
 
 	// MARK: - Private Properties
 
-	private let mock: TopHeadlinesRepositoryMock!
-	private let sut: FetchTopHeadlinesUseCase!
+	private let mock: TopHeadlinesRepositoryMock
+	private let sut: FetchTopHeadlinesUseCase
 
 	// MARK: - Inits
 

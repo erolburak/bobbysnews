@@ -13,26 +13,20 @@ struct SourceTests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing Source!")
+	@Test("Check Source initializing!")
 	func testSource() {
 		// Given
 		let source: Source?
 		// When
-		source = EntityMock.source
+		source = EntityMock.sources.sources?.first
 		// Then
-		#expect(source?.category == "Test",
-				"Initializing Source source?.category failed!")
-		#expect(source?.country == "Test",
-				"Initializing Source source?.country failed!")
-		#expect(source?.id == "Test",
-				"Initializing Source source?.id failed!")
-		#expect(source?.language == "Test",
-				"Initializing Source source?.language failed!")
-		#expect(source?.name == "Test",
-				"Initializing Source source?.name failed!")
-		#expect(source?.story == "Test",
-				"Initializing Source source?.story failed!")
-		#expect(source?.url == URL(string: "Test"),
-				"Initializing Source source?.url failed!")
+		#expect(source?.category == "Test" &&
+				source?.country == "Test" &&
+				source?.id == "Test" &&
+				source?.language == "Test" &&
+				source?.name == "Test" &&
+				source?.story == "Test" &&
+				source?.url == URL(string: "Test"),
+				"Source initializing failed!")
 	}
 }

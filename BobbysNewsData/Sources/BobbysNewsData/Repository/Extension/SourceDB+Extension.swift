@@ -12,12 +12,12 @@ extension SourceDB {
 	@discardableResult
 	public convenience init(from api: SourceAPI) {
 		self.init(context: PersistenceController.shared.backgroundContext)
-		self.category = api.category
-		self.country = api.country
-		self.id = api.id
-		self.language = api.language
-		self.name = api.name
-		self.story = api.story
-		self.url = api.url
+		category = api.category
+		country = api.country
+		id = api.id
+		language = api.language
+		name = api.name
+		story = api.story
+		url = api.url
 	}
 }

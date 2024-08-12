@@ -13,40 +13,27 @@ struct ArticleTests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing Aticle!")
+	@Test("Check Aticle initializing!")
 	func testArticle() {
 		// Given
 		let article: Article?
 		// When
-		article = EntityMock.article
+		article = EntityMock.topHeadlines.articles?.first
 		// Then
-		#expect(article?.author == "Test",
-				"Initializing Article article?.author failed!")
-		#expect(article?.content == "Test",
-				"Initializing Article article?.content failed!")
-		#expect(article?.publishedAt == .distantPast,
-				"Initializing Article article?.publishedAt failed!")
-		#expect(article?.source?.category == "Test",
-				"Initializing Article article?.source?.category failed!")
-		#expect(article?.source?.country == "Test",
-				"Initializing Article article?.source?.country failed!")
-		#expect(article?.source?.id == "Test",
-				"Initializing Article article?.source?.id failed!")
-		#expect(article?.source?.language == "Test",
-				"Initializing Article article?.source?.language failed!")
-		#expect(article?.source?.name == "Test",
-				"Initializing Article article?.source?.name failed!")
-		#expect(article?.source?.story == "Test",
-				"Initializing Article article?.source?.story failed!")
-		#expect(article?.source?.url == URL(string: "Test"),
-				"Initializing Article article?.source?.url failed!")
-		#expect(article?.story == "Test",
-				"Initializing Article article?.story failed!")
-		#expect(article?.title == "Test",
-				"Initializing Article article?.title failed!")
-		#expect(article?.url == URL(string: "Test"),
-				"Initializing Article article?.url failed!")
-		#expect(article?.urlToImage == URL(string: "Test"),
-				"Initializing Article article?.urlToImage failed!")
+		#expect(article?.author == "Test" &&
+				article?.content == "Test" &&
+				article?.publishedAt == .distantPast &&
+				article?.source?.category == "Test" &&
+				article?.source?.country == "Test" &&
+				article?.source?.id == "Test" &&
+				article?.source?.language == "Test" &&
+				article?.source?.name == "Test" &&
+				article?.source?.story == "Test" &&
+				article?.source?.url == URL(string: "Test") &&
+				article?.story == "Test" &&
+				article?.title == "Test" &&
+				article?.url == URL(string: "Test") &&
+				article?.urlToImage == URL(string: "Test"),
+				"Article initializing failed!")
 	}
 }

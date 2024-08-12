@@ -12,7 +12,7 @@ struct ErrorsTests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing Errors!")
+	@Test("Check Errors initializing!")
 	func testErrors() {
 		for error in EntityMock.errors {
 			// Given
@@ -21,7 +21,7 @@ struct ErrorsTests {
 			newError = error
 			// Then
 			#expect(newError != nil,
-					"Initializing Error failed!")
+					"Error initializing failed!")
 		}
 	}
 }
