@@ -13,14 +13,14 @@ extension XCUIApplication {
 
 	/// Detects if limited request alert is visible
 	var isLimitedRequestAlertVisible: Bool {
-		self.alerts["Limited requests"].waitForExistence(timeout: 5)
+		alerts["Limited requests"].waitForExistence(timeout: 5)
 	}
 
 	// MARK: - Actions
 
 	/// Detects if settings tip is visible and closes it
 	func closeSettingsTip() {
-		let closeSettingsTipButton = self.popovers.buttons["Close"]
+		let closeSettingsTipButton = popovers.buttons["Close"]
 		if closeSettingsTipButton.waitForExistence(timeout: 5) {
 			closeSettingsTipButton.tap()
 		}

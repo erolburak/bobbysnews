@@ -7,6 +7,7 @@
 
 import XCTest
 
+@MainActor
 final class BobbysNewsUITests: XCTestCase {
 
 	// MARK: - Actions
@@ -15,7 +16,6 @@ final class BobbysNewsUITests: XCTestCase {
 		continueAfterFailure = false
 	}
 
-	@MainActor
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             measure(metrics: [XCTApplicationLaunchMetric()]) {

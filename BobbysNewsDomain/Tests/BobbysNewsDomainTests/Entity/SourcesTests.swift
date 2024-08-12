@@ -13,26 +13,20 @@ struct SourcesTests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing Sources!")
+	@Test("Check Sources initializing!")
 	func testSources() {
 		// Given
 		let sources: Sources?
 		// When
 		sources = EntityMock.sources
 		// Then
-		#expect(sources?.sources?.first?.category == "Test",
-				"Initializing Sources sources?.sources?.first?.category failed!")
-		#expect(sources?.sources?.first?.country == "Test",
-				"Initializing Sources sources?.sources?.first?.country failed!")
-		#expect(sources?.sources?.first?.id == "Test",
-				"Initializing Sources sources?.sources?.first?.id failed!")
-		#expect(sources?.sources?.first?.language == "Test",
-				"Initializing Sources sources?.sources?.first?.language failed!")
-		#expect(sources?.sources?.first?.name == "Test",
-				"Initializing Sources sources?.sources?.first?.name failed!")
-		#expect(sources?.sources?.first?.story == "Test",
-				"Initializing Sources sources?.sources?.first?.story failed!")
-		#expect(sources?.sources?.first?.url == URL(string: "Test"),
-				"Initializing Sources sources?.sources?.first?.url failed!")
+		#expect(sources?.sources?.first?.category == "Test" &&
+				sources?.sources?.first?.country == "Test" &&
+				sources?.sources?.first?.id == "Test" &&
+				sources?.sources?.first?.language == "Test" &&
+				sources?.sources?.first?.name == "Test" &&
+				sources?.sources?.first?.story == "Test" &&
+				sources?.sources?.first?.url == URL(string: "Test"),
+				"Sources initializing failed!")
 	}
 }

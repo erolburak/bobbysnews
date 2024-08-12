@@ -13,26 +13,20 @@ struct SourceAPITests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing SourceAPI!")
+	@Test("Check SourceAPI initializing!")
 	func testSourceAPI() {
 		// Given
 		let sourceAPI: SourceAPI?
 		// When
 		sourceAPI = EntityMock.sourceAPI
 		// Then
-		#expect(sourceAPI?.category == "Test",
-				"Initializing AticleAPI sourceAPI?.category failed!")
-		#expect(sourceAPI?.country == "Test",
-				"Initializing AticleAPI sourceAPI?.country failed!")
-		#expect(sourceAPI?.id == "Test",
-				"Initializing AticleAPI sourceAPI?.id failed!")
-		#expect(sourceAPI?.language == "Test",
-				"Initializing AticleAPI sourceAPI?.language failed!")
-		#expect(sourceAPI?.name == "Test",
-				"Initializing AticleAPI sourceAPI?.name failed!")
-		#expect(sourceAPI?.story == "Test",
-				"Initializing AticleAPI sourceAPI?.story failed!")
-		#expect(sourceAPI?.url == URL(string: "Test"),
-				"Initializing AticleAPI sourceAPI?.url failed!")
+		#expect(sourceAPI?.category == "Test" &&
+				sourceAPI?.country == "Test" &&
+				sourceAPI?.id == "Test" &&
+				sourceAPI?.language == "Test" &&
+				sourceAPI?.name == "Test" &&
+				sourceAPI?.story == "Test" &&
+				sourceAPI?.url == URL(string: "Test"),
+				"SourceAPI initializing failed!")
 	}
 }

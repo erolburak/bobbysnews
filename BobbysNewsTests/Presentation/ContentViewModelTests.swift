@@ -33,7 +33,7 @@ struct ContentViewModelTests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing ContentViewModel!")
+	@Test("Check ContentViewModel initializing!")
 	func testContentViewModel() {
 		// Given
 		let contentViewModel: ContentViewModel?
@@ -46,7 +46,7 @@ struct ContentViewModelTests {
 											readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
 		// Then
 		#expect(contentViewModel != nil,
-				"Initializing ContentViewModel failed!")
+				"ContentViewModel initializing failed!")
 	}
 
 	@Test("Check ContentViewModel onAppear!")
@@ -57,14 +57,11 @@ struct ContentViewModelTests {
 		sut.onAppear(selectedCountry: sut.selectedCountry)
 		try await Task.sleep(for: .seconds(2))
 		// Then
-		#expect(sut.articles?.count == 1,
-				"ContentViewModel onAppear articles count is 1 failed!")
-		#expect(sut.countries?.count == 1,
-				"ContentViewModel onAppear countries count is 1 failed!")
-		#expect(sut.stateSources == .loaded,
-				"ContentViewModel onAppear stateSources is loaded failed!")
-		#expect(sut.stateTopHeadlines == .loaded,
-				"ContentViewModel onAppear stateTopHeadlines is loaded failed!")
+		#expect(sut.articles?.count == 1 &&
+				sut.countries?.count == 1 &&
+				sut.stateSources == .loaded &&
+				sut.stateTopHeadlines == .loaded,
+				"ContentViewModel onAppear failed!")
 	}
 
 	@Test("Check ContentViewModel fetchSources!")
@@ -77,24 +74,24 @@ struct ContentViewModelTests {
 		await sut.fetchSources()
 		// Then
 		#expect(sut.countries?.count == 1,
-				"ContentViewModel fetchSources countries count is 1 failed!")
+				"ContentViewModel fetchSources failed!")
 	}
 
 	@Test("Check ContentViewModel fetchTopHeadlines!")
 	@MainActor
 	func testFetchTopHeadlines() async {
 		// Given
-		sut.articles = [EntityMock.article]
+		sut.articles = EntityMock.topHeadlines.articles
 		sut.selectedCountry = "Test"
 		// When
 		await sut.fetchTopHeadlines(state: .isLoading)
 		// Then
 		#expect(sut.articles?.count == 1,
-				"ContentViewModel fetchTopHeadlines articles count is 1 failed!")
+				"ContentViewModel fetchTopHeadlines failed!")
 	}
 
 	@Test("Check ContentViewModel invalidateSettingsTip!")
-	func testInvalidateSettingsTip() async throws {
+	func testInvalidateSettingsTip() async {
 		// Given
 		let statusUpdates = sut.settingsTip.statusUpdates
 		// When
@@ -112,7 +109,7 @@ struct ContentViewModelTests {
 	func testReset() {
 		// Given
 		sut.apiKeyVersion = 2
-		sut.articles = [EntityMock.article]
+		sut.articles = EntityMock.topHeadlines.articles
 		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
 		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
@@ -120,18 +117,13 @@ struct ContentViewModelTests {
 		// When
 		sut.reset()
 		// Then
-		#expect(sut.apiKeyVersion == 1,
-				"ContentViewModel reset apiKeyVersion is 1 failed!")
-		#expect(sut.articles == nil,
-				"ContentViewModel reset articles not nil failed!")
-		#expect(sut.countries == nil,
-				"ContentViewModel reset countries not nil failed!")
-		#expect(sut.selectedCountry.isEmpty,
-				"ContentViewModel reset selectedCountry isEmpty failed!")
-		#expect(sut.stateSources == .emptyRead,
-				"ContentViewModel reset stateSources is emptyRead failed!")
-		#expect(sut.stateTopHeadlines == .emptyRead,
-				"ContentViewModel reset stateTopHeadlines is emptyRead failed!")
+		#expect(sut.apiKeyVersion == 1 &&
+				sut.articles == nil &&
+				sut.countries == nil &&
+				sut.selectedCountry.isEmpty &&
+				sut.stateSources == .emptyRead &&
+				sut.stateTopHeadlines == .emptyRead,
+				"ContentViewModel reset failed!")
 	}
 
 	@Test("Check ContentViewModel showSettingsTip!")
@@ -142,6 +134,6 @@ struct ContentViewModelTests {
 		try sut.showSettingsTip()
 		// Then
 		#expect(ContentViewModel.SettingsTip.show,
-				"Check ContentViewModel showSettingsTip failed!")
+				"ContentViewModel showSettingsTip failed!")
 	}
 }

@@ -35,7 +35,7 @@ final class SourcesNetworkController: PSourcesNetworkController {
 		}
 		let (data, response) = try await URLSession.shared.data(from: url)
 		try NetworkConfiguration.shared.validateResponse(defaultError: .fetchSources,
-													  response: response as? HTTPURLResponse)
+														 response: response as? HTTPURLResponse)
 		return try jsonDecoder.decode(SourcesAPI.self,
 									  from: data)
 	}

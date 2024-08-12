@@ -11,7 +11,7 @@ struct ViewModelFactoryTests {
 
 	// MARK: - Actions
 
-	@Test("Check initializing ContentViewModel!")
+	@Test("Check ContentViewModel initializing!")
 	func testContentViewModelIsNotNil() {
 		// Given
 		let contentViewModel: ContentViewModel?
@@ -19,10 +19,10 @@ struct ViewModelFactoryTests {
 		contentViewModel = ViewModelFactory().contentViewModel()
 		// Then
 		#expect(contentViewModel != nil,
-				"Initializing ContentViewModel failed!")
+				"ContentViewModel initializing failed!")
 	}
 
-	@Test("Check initializing DetailViewModel!")
+	@Test("Check DetailViewModel initializing!")
 	func testDetailViewModelIsNotNil() {
 		// Given
 		let detailViewModel: DetailViewModel?
@@ -30,6 +30,6 @@ struct ViewModelFactoryTests {
 		detailViewModel = ViewModelFactory().detailViewModel(article: EntityMock.article)
 		// Then
 		#expect(detailViewModel != nil,
-				"Initializing DetailViewModel failed!")
+				"DetailViewModel initializing failed!")
 	}
 }

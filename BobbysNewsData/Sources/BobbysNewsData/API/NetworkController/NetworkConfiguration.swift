@@ -30,7 +30,7 @@ struct NetworkConfiguration {
 
 	static let apiBaseUrl = "https://newsapi.org/v2/"
 	static func apiKey(_ key: Int) -> String {
-		return apiKeys[key]
+		apiKeys[key]
 	}
 	static let shared = NetworkConfiguration()
 

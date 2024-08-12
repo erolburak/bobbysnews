@@ -7,6 +7,7 @@
 
 import XCTest
 
+@MainActor
 final class DetailViewTests: XCTestCase {
 
 	// MARK: - Actions
@@ -19,7 +20,6 @@ final class DetailViewTests: XCTestCase {
 	/// 1) Close settings tip
 	/// 2) Open detail view
 	/// 3) Press share
-	@MainActor
 	func testShareLink() {
 		let app = XCUIApplication()
 		app.launch()
@@ -39,7 +39,6 @@ final class DetailViewTests: XCTestCase {
 	/// 1) Close settings tip
 	/// 2) Open detail view
 	/// 3) Press read
-	@MainActor
 	func testReadButton() {
 		let app = XCUIApplication()
 		app.launch()
@@ -60,7 +59,6 @@ final class DetailViewTests: XCTestCase {
 	/// 2) Open detail view
 	/// 3) Press read
 	/// 4) Close web view
-	@MainActor
 	func testCloseButton() {
 		let app = XCUIApplication()
 		app.launch()

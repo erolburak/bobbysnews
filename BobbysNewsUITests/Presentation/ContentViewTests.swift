@@ -7,6 +7,7 @@
 
 import XCTest
 
+@MainActor
 final class ContentViewTests: XCTestCase {
 
 	// MARK: - Actions
@@ -18,7 +19,6 @@ final class ContentViewTests: XCTestCase {
 	/// Test navigation link item to open detail view steps:
 	/// 1) Close settings tip
 	/// 2) Open detail view
-	@MainActor
 	func testNavigationLinkItem() {
 		let app = XCUIApplication()
 		app.launch()
@@ -33,7 +33,6 @@ final class ContentViewTests: XCTestCase {
 	/// Test settings button to open settings menu steps:
 	/// 1) Close settings tip
 	/// 2) Open settings menu
-	@MainActor
 	func testSettingsButton() {
 		let app = XCUIApplication()
 		app.launch()
@@ -50,7 +49,6 @@ final class ContentViewTests: XCTestCase {
 	/// 2) Open settings menu
 	/// 3) Open country picker
 	/// 4) Set selected country to DE
-	@MainActor
 	func testCountryPickerItem() {
 		let app = XCUIApplication()
 		app.launch()
@@ -73,7 +71,6 @@ final class ContentViewTests: XCTestCase {
 	/// 2) Open settings menu
 	/// 3) Open api key picker
 	/// 4) Set selected api key to 2
-	@MainActor
 	func testApiKeyPickerItem() {
 		let app = XCUIApplication()
 		app.launch()
@@ -96,7 +93,6 @@ final class ContentViewTests: XCTestCase {
 	/// 2) Open settings menu
 	/// 3) Press reset
 	/// 4) Check if `ResetConfirmationDialogButton` exists
-	@MainActor
 	func testResetButton() {
 		let app = XCUIApplication()
 		app.launch()

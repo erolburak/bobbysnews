@@ -39,23 +39,8 @@ struct NetworkConfigurationTests {
 				"NetworkConfiguration apiKey failed!")
 	}
 
-	@Test("Check NetworkConfiguration validateResponse!")
-	func testValidateResponse() {
-		// Given
-		let response = HTTPURLResponse(url: URL(string: "Test")!,
-									   statusCode: 200,
-									   httpVersion: nil,
-									   headerFields: nil)
-		// Then
-		#expect(throws: Never.self,
-				"NetworkConfiguration validateResponse failed!") {
-			try sut.validateResponse(defaultError: .fetchSources,
-									 response: response)
-		}
-	}
-
-	@Test("Check NetworkConfiguration validateResponseThrowsError!")
-	func testValidateResponseThrowsError() {
+	@Test("Check NetworkConfiguration validateResponse with error!")
+	func testValidateResponseWithError() {
 		// Given
 		let response = HTTPURLResponse(url: URL(string: "Test")!,
 									   statusCode: 401,
@@ -63,7 +48,22 @@ struct NetworkConfigurationTests {
 									   headerFields: nil)
 		// Then
 		#expect(throws: Error.self,
-				"NetworkConfiguration validateResponseThrowsError failed!") {
+				"NetworkConfiguration validateResponse with error failed!") {
+			try sut.validateResponse(defaultError: .fetchSources,
+									 response: response)
+		}
+	}
+
+	@Test("Check NetworkConfiguration validateResponse with success!")
+	func testValidateResponseWithSuccess() {
+		// Given
+		let response = HTTPURLResponse(url: URL(string: "Test")!,
+									   statusCode: 200,
+									   httpVersion: nil,
+									   headerFields: nil)
+		// Then
+		#expect(throws: Never.self,
+				"NetworkConfiguration validateResponse with success failed!") {
 			try sut.validateResponse(defaultError: .fetchSources,
 									 response: response)
 		}
