@@ -28,8 +28,8 @@ struct ContentView: View {
 					NavigationLink(value: $article.wrappedValue) {
 						ListItem(article: $article,
 								 translationSessionConfiguration: viewModel.translationSessionConfiguration)
-						.accessibilityIdentifier(article.id == viewModel.articles.first?.id ? "ListItem" : "")
 					}
+					.accessibilityIdentifier(article.id == viewModel.articles.first?.id ? "NavigationLink" : "")
 				}
 				.navigationDestination(for: Article.self) { article in
 					DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article))
