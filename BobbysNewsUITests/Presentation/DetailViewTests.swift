@@ -25,9 +25,9 @@ final class DetailViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let listItem = app.buttons["ListItem"]
-			if listItem.waitForExistence(timeout: 5) {
-				listItem.tap()
+			let navigationLink = app.buttons["NavigationLink"]
+			if navigationLink.waitForExistence(timeout: 5) {
+				navigationLink.tap()
 				let shareLink = app.buttons["ShareLink"]
 				XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
 				shareLink.tap()
@@ -44,9 +44,9 @@ final class DetailViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let listItem = app.buttons["ListItem"]
-			if listItem.waitForExistence(timeout: 5) {
-				listItem.tap()
+			let navigationLink = app.buttons["NavigationLink"]
+			if navigationLink.waitForExistence(timeout: 5) {
+				navigationLink.tap()
 				let readButton = app.buttons["ReadButton"]
 				XCTAssertTrue(readButton.waitForExistence(timeout: 5))
 				readButton.tap()
@@ -64,9 +64,9 @@ final class DetailViewTests: XCTestCase {
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let listItem = app.buttons["ListItem"]
-			if listItem.waitForExistence(timeout: 5) {
-				listItem.tap()
+			let navigationLink = app.buttons["NavigationLink"]
+			if navigationLink.waitForExistence(timeout: 5) {
+				navigationLink.tap()
 				let readButton = app.buttons["ReadButton"]
 				XCTAssertTrue(readButton.waitForExistence(timeout: 5))
 				readButton.tap()
