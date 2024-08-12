@@ -57,8 +57,8 @@ struct ContentViewModelTests {
 		sut.onAppear(selectedCountry: sut.selectedCountry)
 		try await Task.sleep(for: .seconds(2))
 		// Then
-		#expect(sut.articles?.count == 1 &&
-				sut.countries?.count == 1 &&
+		#expect(sut.articles.count == 1 &&
+				sut.countries.count == 1 &&
 				sut.stateSources == .loaded &&
 				sut.stateTopHeadlines == .loaded,
 				"ContentViewModel onAppear failed!")
@@ -73,7 +73,7 @@ struct ContentViewModelTests {
 		// When
 		await sut.fetchSources()
 		// Then
-		#expect(sut.countries?.count == 1,
+		#expect(sut.countries.count == 1,
 				"ContentViewModel fetchSources failed!")
 	}
 
@@ -81,12 +81,12 @@ struct ContentViewModelTests {
 	@MainActor
 	func testFetchTopHeadlines() async {
 		// Given
-		sut.articles = EntityMock.topHeadlines.articles
+		sut.articles = EntityMock.topHeadlines.articles ?? []
 		sut.selectedCountry = "Test"
 		// When
 		await sut.fetchTopHeadlines(state: .isLoading)
 		// Then
-		#expect(sut.articles?.count == 1,
+		#expect(sut.articles.count == 1,
 				"ContentViewModel fetchTopHeadlines failed!")
 	}
 
@@ -109,7 +109,7 @@ struct ContentViewModelTests {
 	func testReset() {
 		// Given
 		sut.apiKeyVersion = 2
-		sut.articles = EntityMock.topHeadlines.articles
+		sut.articles = EntityMock.topHeadlines.articles ?? []
 		sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
 		sut.selectedCountry = "Test"
 		sut.stateSources = .loaded
@@ -118,8 +118,8 @@ struct ContentViewModelTests {
 		sut.reset()
 		// Then
 		#expect(sut.apiKeyVersion == 1 &&
-				sut.articles == nil &&
-				sut.countries == nil &&
+				sut.articles.isEmpty &&
+				sut.countries.isEmpty &&
 				sut.selectedCountry.isEmpty &&
 				sut.stateSources == .emptyRead &&
 				sut.stateTopHeadlines == .emptyRead,

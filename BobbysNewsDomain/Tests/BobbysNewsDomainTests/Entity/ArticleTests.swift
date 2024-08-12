@@ -22,6 +22,7 @@ struct ArticleTests {
 		// Then
 		#expect(article?.author == "Test" &&
 				article?.content == "Test" &&
+				article?.contentTranslation == nil &&
 				article?.publishedAt == .distantPast &&
 				article?.source?.category == "Test" &&
 				article?.source?.country == "Test" &&
@@ -32,6 +33,7 @@ struct ArticleTests {
 				article?.source?.url == URL(string: "Test") &&
 				article?.story == "Test" &&
 				article?.title == "Test" &&
+				article?.titleTranslation == nil &&
 				article?.url == URL(string: "Test") &&
 				article?.urlToImage == URL(string: "Test"),
 				"Article initializing failed!")

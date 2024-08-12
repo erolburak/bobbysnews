@@ -7,6 +7,7 @@
 
 import BobbysNewsDomain
 import TipKit
+import Translation
 
 @Observable
 final class ContentViewModel {
@@ -37,7 +38,7 @@ final class ContentViewModel {
 		var message: Text? = Text("SettingsTipMessage")
 		var rules: [Rule] {
 			[#Rule(Self.$show) {
-				$0 == true
+				$0
 			}]
 		}
 		var title = Text("Settings")
@@ -64,8 +65,8 @@ final class ContentViewModel {
 			sensoryFeedbackTrigger(feedback: .selection)
 		}
 	}
-	var articles: [Article]?
-	var countries: [String]?
+	var articles: [Article] = []
+	var countries: [String] = []
 	var listDisabled: Bool { stateTopHeadlines != .loaded }
 	var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
 	var selectedCountry = "" {
@@ -81,6 +82,17 @@ final class ContentViewModel {
 	var showConfirmationDialog = false
 	var stateSources: StateSources = .isLoading
 	var stateTopHeadlines: StateTopHeadlines = .isLoading
+	var translationBool = false {
+		willSet {
+			if newValue, translationSessionConfiguration == nil {
+				translationSessionConfiguration = TranslationSession.Configuration()
+			} else {
+				translationSessionConfiguration = nil
+				readTopHeadlines()
+			}
+		}
+	}
+	var translationSessionConfiguration: TranslationSession.Configuration?
 
 	// MARK: - Inits
 
@@ -113,7 +125,7 @@ final class ContentViewModel {
 			readSources()
 		} catch {
 			updateStateSources(error: error,
-							   state: countries?.isEmpty == true ? .emptyFetch : .loaded)
+							   state: countries.isEmpty ? .emptyFetch : .loaded)
 		}
 	}
 
@@ -129,7 +141,7 @@ final class ContentViewModel {
 				readTopHeadlines()
 			} catch {
 				updateStateTopHeadlines(error: error,
-										state: articles?.isEmpty == true ? .emptyFetch : .loaded)
+										state: articles.isEmpty ? .emptyFetch : .loaded)
 			}
 		}
 	}
@@ -145,8 +157,8 @@ final class ContentViewModel {
 			/// Delete all persisted topHeadlines
 			try deleteTopHeadlinesUseCase.delete()
 			apiKeyVersion = 1
-			articles = nil
-			countries = nil
+			articles.removeAll()
+			countries.removeAll()
 			selectedCountry = ""
 			stateSources = .emptyRead
 			stateTopHeadlines = .emptyRead
