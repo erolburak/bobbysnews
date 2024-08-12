@@ -14,6 +14,12 @@ final class DetailViewModel {
 	// MARK: - Properties
 
 	var article: Article
+	var articleContent: String {
+		article.contentTranslation ?? article.content ?? String(localized: "EmptyArticleContent")
+	}
+	var articleTitle: String {
+		article.titleTranslation ?? article.title ?? String(localized: "EmptyArticleTitle")
+	}
 	var scrollPosition: Int?
 	var showNavigationTitle = false
 	var showWebView = false {

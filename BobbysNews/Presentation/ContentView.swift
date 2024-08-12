@@ -7,6 +7,7 @@
 
 import BobbysNewsDomain
 import SwiftUI
+import Translation
 
 struct ContentView: View {
 
@@ -23,16 +24,12 @@ struct ContentView: View {
     var body: some View {
 		NavigationStack {
 			ScrollView {
-				ForEach(viewModel.articles ?? []) { article in
-					NavigationLink(value: article) {
-						Item(article: article)
+				ForEach($viewModel.articles) { $article in
+					NavigationLink(value: $article.wrappedValue) {
+						ListItem(article: $article,
+								 translationSessionConfiguration: viewModel.translationSessionConfiguration)
+						.accessibilityIdentifier(article.id == viewModel.articles.first?.id ? "ListItem" : "")
 					}
-					.contextMenu {
-						if let url = article.url {
-							ShareLink("Share", item: url)
-						}
-					}
-					.accessibilityIdentifier(article.id == viewModel.articles?.first?.id ? "NavigationLinkItem" : "")
 				}
 				.navigationDestination(for: Article.self) { article in
 					DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article))
@@ -52,9 +49,9 @@ struct ContentView: View {
 						case .isLoading:
 							Text("CountriesLoading")
 						case .loaded:
-							if let countries = viewModel.countries {
+							if !viewModel.countries.isEmpty {
 								Picker(selection: $viewModel.selectedCountry) {
-									ForEach(countries,
+									ForEach(viewModel.countries,
 											id: \.self) { country in
 										Text(Locale.current.localizedString(forRegionCode: country) ?? "")
 											.tag(country)
@@ -75,6 +72,13 @@ struct ContentView: View {
 									}
 								}
 							}
+						}
+
+						Section {
+							Toggle("Translation",
+								   systemImage: "translate",
+								   isOn: $viewModel.translationBool)
+							.accessibilityIdentifier("TranslationToggle")
 						}
 
 						Section {
@@ -174,7 +178,7 @@ struct ContentView: View {
 		}
 		.onChange(of: viewModel.selectedCountry) { _, newValue in
 			country = newValue
-			viewModel.articles?.removeAll()
+			viewModel.articles.removeAll()
 			Task {
 				await viewModel.fetchTopHeadlines(state: .isLoading)
 			}
@@ -183,8 +187,27 @@ struct ContentView: View {
 			viewModel.sensoryFeedback
 		}
     }
+}
 
-	private func Item(article: Article) -> some View {
+#Preview("ContentView") {
+	ContentView(viewModel: ViewModelFactory.shared.contentViewModel())
+}
+
+private struct ListItem: View {
+
+	// MARK: - Private Properties
+
+	@State private var showTranslationPresentation = false
+	@State private var translationPresentationText = ""
+
+	// MARK: - Properties
+
+	@Binding var article: Article
+	let translationSessionConfiguration: TranslationSession.Configuration?
+
+	// MARK: - Layouts
+
+	var body: some View {
 		HStack {
 			VStack(alignment: .leading) {
 				Text(article.source?.name ?? String(localized: "EmptyArticleSource"))
@@ -198,7 +221,7 @@ struct ContentView: View {
 
 				Spacer()
 
-				Text(article.title ?? String(localized: "EmptyArticleTitle"))
+				Text((translationSessionConfiguration == nil ? article.title : article.titleTranslation) ?? String(localized: "EmptyArticleTitle"))
 					.font(.system(.subheadline,
 								  weight: .semibold))
 					.lineLimit(2)
@@ -231,9 +254,37 @@ struct ContentView: View {
 		}
 		.padding(.horizontal)
 		.padding(.vertical, 20)
+		.contextMenu {
+			if let url = article.url {
+				ShareLink("Share",
+						  item: url)
+					.accessibilityIdentifier("ShareLink")
+			}
+			if let title = article.title {
+				Button("Translate",
+					   systemImage: "translate") {
+					translationPresentationText = title
+					showTranslationPresentation = true
+				}
+				.accessibilityIdentifier("TranslateButton")
+			}
+		}
+		.translationPresentation(isPresented: $showTranslationPresentation,
+								 text: translationPresentationText)
+		.translationTask(translationSessionConfiguration) { session in
+			Task {
+				if let content = article.content {
+					article.contentTranslation = try await session.translate(content).targetText
+				}
+				if let title = article.title {
+					article.titleTranslation = try await session.translate(title).targetText
+				}
+			}
+		}
 	}
 }
 
-#Preview {
-	ContentView(viewModel: ViewModelFactory.shared.contentViewModel())
+#Preview("ListItem") {
+	ListItem(article: .constant(PreviewMock.article),
+			 translationSessionConfiguration: nil)
 }

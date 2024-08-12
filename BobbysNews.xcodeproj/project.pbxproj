@@ -30,6 +30,8 @@
 		BF91F8CD2AB24DA800CEF82E /* XCUIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF91F8CC2AB24DA800CEF82E /* XCUIApplication+Extension.swift */; };
 		BFAB87852B61927300A51F36 /* BobbysNewsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB87842B61927300A51F36 /* BobbysNewsApp.swift */; };
 		BFAB87862B61927300A51F36 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB87832B61927300A51F36 /* ViewModelFactory.swift */; };
+		BFB0BB0B2C6A81710039EB66 /* PreviewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0BB0A2C6A816D0039EB66 /* PreviewMock.swift */; };
+		BFB0BB0C2C6A81710039EB66 /* PreviewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0BB0A2C6A816D0039EB66 /* PreviewMock.swift */; };
 		BFBDEA182B61BDBE00548AB5 /* Errors+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */; };
 		BFBDEA1A2B61C25F00548AB5 /* ErrorsExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDEA192B61C25F00548AB5 /* ErrorsExtensionTests.swift */; };
 		BFD1B8AE2AA5E70F000ED973 /* ViewModelFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD1B8AD2AA5E70F000ED973 /* ViewModelFactoryTests.swift */; };
@@ -79,6 +81,7 @@
 		BF91F8CC2AB24DA800CEF82E /* XCUIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIApplication+Extension.swift"; sourceTree = "<group>"; };
 		BFAB87832B61927300A51F36 /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 		BFAB87842B61927300A51F36 /* BobbysNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobbysNewsApp.swift; sourceTree = "<group>"; };
+		BFB0BB0A2C6A816D0039EB66 /* PreviewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMock.swift; sourceTree = "<group>"; };
 		BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Errors+Extension.swift"; sourceTree = "<group>"; };
 		BFBDEA192B61C25F00548AB5 /* ErrorsExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsExtensionTests.swift; sourceTree = "<group>"; };
 		BFC3369D2BF563BC0008FC76 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -157,6 +160,7 @@
 			children = (
 				BFAB87872B61927E00A51F36 /* App */,
 				BFAB878A2B61975F00A51F36 /* Factory */,
+				BFB0BB082C6A81580039EB66 /* Mock */,
 				BFBDD9152AA0C38200A4D6DF /* Presentation */,
 				BFBDD9162AA0C47200A4D6DF /* Resource */,
 			);
@@ -205,6 +209,22 @@
 				BFAB87832B61927300A51F36 /* ViewModelFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		BFB0BB082C6A81580039EB66 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				BFB0BB092C6A81650039EB66 /* Preview */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		BFB0BB092C6A81650039EB66 /* Preview */ = {
+			isa = PBXGroup;
+			children = (
+				BFB0BB0A2C6A816D0039EB66 /* PreviewMock.swift */,
+			);
+			path = Preview;
 			sourceTree = "<group>";
 		};
 		BFBDD9152AA0C38200A4D6DF /* Presentation */ = {
@@ -428,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF188EBA2AA0E38B00955836 /* DetailView.swift in Sources */,
+				BFB0BB0B2C6A81710039EB66 /* PreviewMock.swift in Sources */,
 				BF188EBC2AA0E39600955836 /* DetailViewModel.swift in Sources */,
 				BFDD66972AA3B4BD00BB49CE /* Date+Extension.swift in Sources */,
 				BFAB87852B61927300A51F36 /* BobbysNewsApp.swift in Sources */,
@@ -452,6 +473,7 @@
 				BF5E5C8D2C67E91E001AD24E /* Date+Extension.swift in Sources */,
 				BF1786A62B63B5C50030FB12 /* EntityMock.swift in Sources */,
 				BF5E5C902C67E931001AD24E /* DetailViewModel.swift in Sources */,
+				BFB0BB0C2C6A81710039EB66 /* PreviewMock.swift in Sources */,
 				BF5E5C8C2C67E912001AD24E /* ViewModelFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

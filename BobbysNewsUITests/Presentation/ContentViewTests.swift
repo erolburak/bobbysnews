@@ -19,14 +19,14 @@ final class ContentViewTests: XCTestCase {
 	/// Test navigation link item to open detail view steps:
 	/// 1) Close settings tip
 	/// 2) Open detail view
-	func testNavigationLinkItem() {
+	func testListItem() {
 		let app = XCUIApplication()
 		app.launch()
 		app.closeSettingsTip()
 		if !app.isLimitedRequestAlertVisible {
-			let navigationLink = app.buttons["NavigationLinkItem"]
-			XCTAssertTrue(navigationLink.waitForExistence(timeout: 5))
-			navigationLink.tap()
+			let listItem = app.buttons["ListItem"]
+			XCTAssertTrue(listItem.waitForExistence(timeout: 5))
+			listItem.tap()
 		}
 	}
 

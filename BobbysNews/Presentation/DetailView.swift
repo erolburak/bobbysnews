@@ -72,11 +72,11 @@ struct DetailView: View {
 
 				VStack(alignment: .leading,
 					   spacing: 8) {
-					Text(viewModel.article.title ?? String(localized: "EmptyArticleTitle"))
+					Text(viewModel.articleTitle)
 						.font(.system(.headline,
 									  weight: .black))
 					
-					Text(viewModel.article.content ?? String(localized: "EmptyArticleContent"))
+					Text(viewModel.articleContent)
 						.font(.callout)
 						.padding(.top, 8)
 
@@ -181,83 +181,77 @@ struct DetailView: View {
 			}
 		}
 	}
+}
 
-	private struct WebView: UIViewRepresentable {
+#Preview("DetailView") {
+	NavigationStack {
+		DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: PreviewMock.article))
+	}
+}
 
-		// MARK: - Properties
+private struct WebView: UIViewRepresentable {
 
-		@Binding var isLoading: Bool
-		@Binding var showError: Bool
-		let url: URL
+	// MARK: - Properties
+
+	@Binding var isLoading: Bool
+	@Binding var showError: Bool
+	let url: URL
+
+	// MARK: - Actions
+
+	func makeCoordinator() -> Coordinator {
+		Coordinator(parent: self)
+	}
+
+	func makeUIView(context: Context) -> WKWebView {
+		let wkWebView = WKWebView()
+		wkWebView.navigationDelegate = context.coordinator
+		wkWebView.load(URLRequest(url: url))
+		return wkWebView
+	}
+
+	func updateUIView(_ uiView: WKWebView,
+					  context: Context) {}
+
+	// MARK: - Coordinator
+
+	class Coordinator: NSObject,
+					   WKNavigationDelegate {
+
+		// MARK: - Private Properties
+
+		private let parent: WebView
+
+		// MARK: - Inits
+
+		init(parent: WebView) {
+			self.parent = parent
+		}
 
 		// MARK: - Actions
 
-		func makeCoordinator() -> Coordinator {
-			Coordinator(parent: self)
+		func webView(_ webView: WKWebView,
+					 didStartProvisionalNavigation navigation: WKNavigation!) {
+			parent.isLoading = true
+		}
+		
+		func webView(_ webView: WKWebView,
+					 didFail navigation: WKNavigation!,
+					 withError error: any Error) {
+			parent.showError = true
 		}
 
-		func makeUIView(context: Context) -> WKWebView {
-			let wkWebView = WKWebView()
-			wkWebView.navigationDelegate = context.coordinator
-			wkWebView.load(URLRequest(url: url))
-			return wkWebView
-		}
-
-		func updateUIView(_ uiView: WKWebView,
-						  context: Context) {}
-
-		// MARK: - Coordinator
-
-		class Coordinator: NSObject,
-						   WKNavigationDelegate {
-
-			// MARK: - Private Properties
-
-			private let parent: WebView
-
-			// MARK: - Inits
-
-			init(parent: WebView) {
-				self.parent = parent
-			}
-
-			// MARK: - Actions
-
-			func webView(_ webView: WKWebView,
-						 didStartProvisionalNavigation navigation: WKNavigation!) {
-				parent.isLoading = true
-			}
-			
-			func webView(_ webView: WKWebView,
-						 didFail navigation: WKNavigation!,
-						 withError error: any Error) {
-				parent.showError = true
-			}
-
-			func webView(_ webView: WKWebView,
-						 didFinish navigation: WKNavigation!) {
-				parent.isLoading = false
-			}
+		func webView(_ webView: WKWebView,
+					 didFinish navigation: WKNavigation!) {
+			parent.isLoading = false
 		}
 	}
 }
 
-#Preview {
-	NavigationStack {
-		DetailView(viewModel: ViewModelFactory().detailViewModel(article: Article(author: "Author",
-																			 content: "ContentStart\n\n\n\n\n\n\n\n\n\n\n\n\n\nContentEnd",
-																			 country: "Country",
-																			 publishedAt: .now,
-																			 source: Source(category: "SourceCategory",
-																							country: "SourceCountry",
-																							id: "SourceId",
-																							language: "SourceLanguage",
-																							name: "SourceName",
-																							story: "SourceStory",
-																							url: URL(string: "https://github.com/erolburak/bobbysnews")),
-																			 story: "Story",
-																			 title: "Title",
-																			 url: URL(string: "https://github.com/erolburak/bobbysnews"),
-																			 urlToImage: URL(string: "https://raw.githubusercontent.com/erolburak/bobbysnews/main/BobbysNews/Resource/Assets.xcassets/AppIcon.appiconset/%E2%80%8EAppIcon.png"))))
+#Preview("WebView") {
+	if let url = URL(string: "https://github.com/erolburak/bobbysnews") {
+		WebView(isLoading: .constant(false),
+				showError: .constant(false),
+				url: url)
 	}
 }

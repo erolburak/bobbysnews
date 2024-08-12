@@ -9,6 +9,10 @@ import Testing
 
 struct ViewModelFactoryTests {
 
+	// MARK: - Private Properties
+
+	private let sut = ViewModelFactory()
+
 	// MARK: - Actions
 
 	@Test("Check ContentViewModel initializing!")
@@ -16,7 +20,7 @@ struct ViewModelFactoryTests {
 		// Given
 		let contentViewModel: ContentViewModel?
 		// When
-		contentViewModel = ViewModelFactory().contentViewModel()
+		contentViewModel = sut.contentViewModel()
 		// Then
 		#expect(contentViewModel != nil,
 				"ContentViewModel initializing failed!")
@@ -27,7 +31,7 @@ struct ViewModelFactoryTests {
 		// Given
 		let detailViewModel: DetailViewModel?
 		// When
-		detailViewModel = ViewModelFactory().detailViewModel(article: EntityMock.article)
+		detailViewModel = sut.detailViewModel(article: EntityMock.article)
 		// Then
 		#expect(detailViewModel != nil,
 				"DetailViewModel initializing failed!")

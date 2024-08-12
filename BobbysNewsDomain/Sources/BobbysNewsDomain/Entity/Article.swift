@@ -21,6 +21,8 @@ public struct Article: Hashable, Identifiable, Sendable {
 	public let title: String?
 	public let url: URL?
 	public let urlToImage: URL?
+	public var contentTranslation: String?
+	public var titleTranslation: String?
 
 	// MARK: - Inits
 
