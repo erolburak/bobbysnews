@@ -20,44 +20,43 @@ struct DetailView: View {
 	var body: some View {
 		ScrollView {
 			VStack(alignment: .leading) {
-				VStack {
-					Text(viewModel.title)
-						.font(.system(.subheadline,
-									  weight: .black))
-						.lineLimit(1)
+				Text(viewModel.title)
+					.font(.system(.subheadline,
+								  weight: .black))
+					.lineLimit(1)
+					.frame(maxWidth: .infinity,
+						   alignment: .center)
+					.onGeometryChange(for: CGFloat.self) { geometryProxy in
+						geometryProxy.frame(in: .scrollView(axis: .vertical)).minY
+					} action: { newValue in
+						viewModel.titleScrollOffset = newValue
+					}
 
-					Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-						.font(.system(size: 8,
-									  weight: .semibold))
-						.padding(.bottom, 18)
+				Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+					.font(.system(size: 8,
+								  weight: .semibold))
+					.frame(maxWidth: .infinity,
+						   alignment: .center)
+
+				AsyncImage(url: viewModel.article.urlToImage) { phase in
+					if let image = phase.image {
+						image
+							.resizable()
+							.scaledToFill()
+							.frame(width: .infinity,
+								   height: 280,
+								   alignment: .center)
+							.clipped()
+					} else {
+						Image(systemName: "photo.circle.fill")
+							.resizable()
+							.aspectRatio(contentMode: .fit)
+							.frame(height: 24)
+							.foregroundStyle(.gray)
+					}
 				}
 				.frame(maxWidth: .infinity,
-					   alignment: .top)
-				.multilineTextAlignment(.center)
-				.id(0)
-
-				GeometryReader { geometry in
-					AsyncImage(url: viewModel.article.urlToImage) { phase in
-						if let image = phase.image {
-							image
-								.resizable()
-								.scaledToFill()
-								.frame(width: geometry.size.width,
-									   height: 280,
-									   alignment: .center)
-								.clipped()
-						} else {
-							Image(systemName: "photo.circle.fill")
-								.resizable()
-								.aspectRatio(contentMode: .fit)
-								.frame(height: 24)
-								.foregroundStyle(.gray)
-						}
-					}
-					.frame(width: geometry.size.width,
-						   height: 280)
-				}
-				.frame(height: 280)
+					   idealHeight: 280)
 				.background(.bar)
 				.clipShape(.rect(topLeadingRadius: 40,
 								 topTrailingRadius: 40))
@@ -67,15 +66,13 @@ struct DetailView: View {
 								   startPoint: UnitPoint(x: 0.5, y: 0.9),
 								   endPoint: UnitPoint(x: 0.5, y: 1))
 				}
-				.padding(.top, -18)
-				.id(1)
 
 				VStack(alignment: .leading,
 					   spacing: 8) {
 					Text(viewModel.articleTitle)
 						.font(.system(.headline,
 									  weight: .black))
-					
+
 					Text(viewModel.articleContent)
 						.font(.callout)
 						.padding(.top, 8)
@@ -85,7 +82,6 @@ struct DetailView: View {
 									  weight: .semibold))
 				}
 				.padding(.horizontal)
-				.id(2)
 
 				if viewModel.article.url != nil {
 					VStack {
@@ -106,13 +102,9 @@ struct DetailView: View {
 					.foregroundStyle(.secondary)
 					.padding(.horizontal)
 					.padding(.top, 40)
-					.id(3)
 				}
 			}
 		}
-		.scrollPosition(id: $viewModel.scrollPosition,
-						anchor: .top)
-		.scrollTargetLayout()
 		.textSelection(.enabled)
 		.toolbar {
 			ToolbarItem(placement: .principal) {
@@ -124,18 +116,11 @@ struct DetailView: View {
 						.font(.system(size: 8,
 									  weight: .semibold))
 				}
-				.offset(y: viewModel.showNavigationTitle ? 0 : 40)
-				.opacity(viewModel.showNavigationTitle ? 1 : 0)
-				.transition(.slide)
-				.onChange(of: viewModel.scrollPosition,
-						  initial: true) { _, newValue in
-					withAnimation {
-						if newValue == 0 {
-							viewModel.showNavigationTitle = false
-						} else if newValue == 1 {
-							viewModel.showNavigationTitle = true
-						}
-					}
+				.offset(y: viewModel.navigationTitleScrollOffset)
+				.onGeometryChange(for: CGFloat.self) { geometryProxy in
+					geometryProxy.size.height + 8
+				} action: { newValue in
+					viewModel.navigationTitleOffset = newValue
 				}
 			}
 
@@ -234,7 +219,7 @@ private struct WebView: UIViewRepresentable {
 					 didStartProvisionalNavigation navigation: WKNavigation!) {
 			parent.isLoading = true
 		}
-		
+
 		func webView(_ webView: WKWebView,
 					 didFail navigation: WKNavigation!,
 					 withError error: any Error) {
