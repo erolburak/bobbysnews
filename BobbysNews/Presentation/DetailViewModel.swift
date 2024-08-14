@@ -20,8 +20,17 @@ final class DetailViewModel {
 	var articleTitle: String {
 		article.titleTranslation ?? article.title ?? String(localized: "EmptyArticleTitle")
 	}
-	var scrollPosition: Int?
-	var showNavigationTitle = false
+	var navigationTitleOffset: CGFloat?
+	var navigationTitleScrollOffset: CGFloat {
+		guard let navigationTitleOffset,
+			  let titleScrollOffset else {
+			return .zero
+		}
+		if titleScrollOffset < .zero {
+			return max(.zero, navigationTitleOffset - abs(titleScrollOffset))
+		}
+		return navigationTitleOffset
+	}
 	var showWebView = false {
 		willSet {
 			if !newValue {
@@ -33,6 +42,7 @@ final class DetailViewModel {
 	var title: String {
 		article.source?.name ?? String(localized: "EmptyArticleSource")
 	}
+	var titleScrollOffset: CGFloat?
 	var webViewIsLoading = true
 	var webViewShowError = false
 
