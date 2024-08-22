@@ -10,73 +10,72 @@ import Combine
 import XCTest
 
 class TopHeadlinesDataControllerTests: XCTestCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private var cancellable: Set<AnyCancellable>!
+    private var sut: TopHeadlinesDataController!
 
-	private var cancellable: Set<AnyCancellable>!
-	private var sut: TopHeadlinesDataController!
+    // MARK: - Actions
 
-	// MARK: - Actions
+    override func setUpWithError() throws {
+        cancellable = Set<AnyCancellable>()
+        sut = TopHeadlinesDataController()
+    }
 
-	override func setUpWithError() throws {
-		cancellable = Set<AnyCancellable>()
-		sut = TopHeadlinesDataController()
-	}
+    override func tearDownWithError() throws {
+        cancellable.removeAll()
+        sut = nil
+    }
 
-	override func tearDownWithError() throws {
-		cancellable.removeAll()
-		sut = nil
-	}
+    func testDelete() {
+        XCTAssertNoThrow(try sut.delete(country: nil))
+    }
 
-	func testDelete() {
-		XCTAssertNoThrow(try sut.delete(country: nil))
-	}
+    func testFetchRequest() {
+        // Given
+        let country = ""
+        // When
+        sut.fetchRequest(country: country)
+        // Then
+        XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 0)
+    }
 
-	func testFetchRequest() {
-		// Given
-		let country = ""
-		// When
-		sut.fetchRequest(country: country)
-		// Then
-		XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 0)
-	}
+    func testRead() async {
+        // Given
+        var topHeadlines: TopHeadlines?
+        sut.queriesSubject.value = EntityMock.topHeadlinesEntity
+        // When
+        let expectation = expectation(description: "Read")
+        sut.read()
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { newTopHeadlines in
+                      topHeadlines = newTopHeadlines
+                      expectation.fulfill()
+                  })
+            .store(in: &cancellable)
+        // Then
+        await fulfillment(of: [expectation], timeout: 1)
+        XCTAssertNotNil(topHeadlines)
+    }
 
-	func testRead() async {
-		// Given
-		var topHeadlines: TopHeadlines?
-		sut.queriesSubject.value = EntityMock.topHeadlinesEntity
-		// When
-		let expectation = expectation(description: "Read")
-		sut.read()
-			.sink(receiveCompletion: { _ in },
-				  receiveValue: { newTopHeadlines in
-				topHeadlines = newTopHeadlines
-				expectation.fulfill()
-			})
-			.store(in: &cancellable)
-		// Then
-		await fulfillment(of: [expectation], timeout: 1)
-		XCTAssertNotNil(topHeadlines)
-	}
+    func testSaveWithExistingTopHeadlines() throws {
+        // Given
+        try sut.delete(country: nil)
+        let topHeadlinesApi = ApiMock.topHeadlinesApi1
+        // When
+        sut.save(country: "Test",
+                 topHeadlinesApi: topHeadlinesApi)
+        // Then
+        XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 2)
+    }
 
-	func testSaveWithExistingTopHeadlines() throws {
-		// Given
-		try sut.delete(country: nil)
-		let topHeadlinesApi = ApiMock.topHeadlinesApi1
-		// When
-		sut.save(country: "Test",
-				 topHeadlinesApi: topHeadlinesApi)
-		// Then
-		XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 2)
-	}
-
-	func testSaveWithNewTopHeadlines() {
-		// Given
-		let topHeadlinesApi = ApiMock.topHeadlinesApi2
-		// When
-		sut.save(country: "Test",
-				 topHeadlinesApi: topHeadlinesApi)
-		// Then
-		XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 4)
-	}
+    func testSaveWithNewTopHeadlines() {
+        // Given
+        let topHeadlinesApi = ApiMock.topHeadlinesApi2
+        // When
+        sut.save(country: "Test",
+                 topHeadlinesApi: topHeadlinesApi)
+        // Then
+        XCTAssertEqual(sut.queriesSubject.value?.articles?.count, 4)
+    }
 }

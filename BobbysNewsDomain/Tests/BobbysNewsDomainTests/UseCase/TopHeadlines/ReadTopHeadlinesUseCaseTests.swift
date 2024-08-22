@@ -1,5 +1,5 @@
 //
-//  ReadApiHeadlinesUseCaseTests.swift
+//  ReadTopHeadlinesUseCaseTests.swift
 //  BobbysNewsDomain
 //
 //  Created by Burak Erol on 04.09.23.

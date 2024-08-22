@@ -8,6 +8,8 @@ The **BobbysNews** app is my own project, which uses the [NewsAPI](https://newsa
 
 ## SETUP
 - IDE: Xcode
+- [SPM](https://github.com/swiftlang/swift-package-manager)
+- [SwiftFormat](https://github.com/nicklockwood/SwiftFormat)
 - CI/CD: [GitHub Actions](https://docs.github.com/en/actions)
 
 ## ARCHITECTURE

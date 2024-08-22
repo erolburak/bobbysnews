@@ -195,8 +195,8 @@ private struct WebView: UIViewRepresentable {
         return wkWebView
     }
 
-    func updateUIView(_ uiView: WKWebView,
-                      context: Context) {}
+    func updateUIView(_: WKWebView,
+                      context _: Context) {}
 
     // MARK: - Coordinator
 
@@ -215,21 +215,21 @@ private struct WebView: UIViewRepresentable {
 
         // MARK: - Methods
 
-        func webView(_ webView: WKWebView,
-                     didStartProvisionalNavigation navigation: WKNavigation!)
+        func webView(_: WKWebView,
+                     didStartProvisionalNavigation _: WKNavigation!)
         {
             parent.isLoading = true
         }
 
-        func webView(_ webView: WKWebView,
-                     didFail navigation: WKNavigation!,
-                     withError error: any Error)
+        func webView(_: WKWebView,
+                     didFail _: WKNavigation!,
+                     withError _: any Error)
         {
             parent.showError = true
         }
 
-        func webView(_ webView: WKWebView,
-                     didFinish navigation: WKNavigation!)
+        func webView(_: WKWebView,
+                     didFinish _: WKNavigation!)
         {
             parent.isLoading = false
         }

@@ -12,39 +12,39 @@ extension Errors {
 
     var errorDescription: String? {
         switch self {
-        case .error(let error):
-            return error.description
+        case let .error(error):
+            error.description
         case .fetchSources:
-            return String(localized: "ErrorDescriptionFetchSources")
+            String(localized: "ErrorDescriptionFetchSources")
         case .fetchTopHeadlines:
-            return String(localized: "ErrorDescriptionFetchTopHeadlines")
+            String(localized: "ErrorDescriptionFetchTopHeadlines")
         case .invalidApiKey:
-            return String(localized: "ErrorDescriptionInvalidApiKey")
+            String(localized: "ErrorDescriptionInvalidApiKey")
         case .limitedRequests:
-            return String(localized: "ErrorDescriptionLimitedRequests")
+            String(localized: "ErrorDescriptionLimitedRequests")
         case .read:
-            return String(localized: "ErrorDescriptionRead")
+            String(localized: "ErrorDescriptionRead")
         case .reset:
-            return String(localized: "ErrorDescriptionReset")
+            String(localized: "ErrorDescriptionReset")
         }
     }
 
     var recoverySuggestion: String? {
         switch self {
         case .error:
-            return String(localized: "ErrorRecoverySuggestionError")
+            String(localized: "ErrorRecoverySuggestionError")
         case .fetchSources:
-            return String(localized: "ErrorRecoverySuggestionFetchSources")
+            String(localized: "ErrorRecoverySuggestionFetchSources")
         case .fetchTopHeadlines:
-            return String(localized: "ErrorRecoverySuggestionFetchTopHeadlines")
+            String(localized: "ErrorRecoverySuggestionFetchTopHeadlines")
         case .invalidApiKey:
-            return String(localized: "ErrorRecoverySuggestionInvalidApiKey")
+            String(localized: "ErrorRecoverySuggestionInvalidApiKey")
         case .limitedRequests:
-            return String(localized: "ErrorRecoverySuggestionLimitedRequests")
+            String(localized: "ErrorRecoverySuggestionLimitedRequests")
         case .read:
-            return String(localized: "ErrorRecoverySuggestionRead")
+            String(localized: "ErrorRecoverySuggestionRead")
         case .reset:
-            return String(localized: "ErrorRecoverySuggestionReset")
+            String(localized: "ErrorRecoverySuggestionReset")
         }
     }
 }

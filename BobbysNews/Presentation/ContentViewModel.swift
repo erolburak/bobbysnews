@@ -121,7 +121,7 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func fetchSources(sensoryFeedback: Bool? = nil) async {
+    func fetchSources(sensoryFeedback _: Bool? = nil) async {
         stateSources = .isLoading
         do {
             try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)

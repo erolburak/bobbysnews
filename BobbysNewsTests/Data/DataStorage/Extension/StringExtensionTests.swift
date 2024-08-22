@@ -9,24 +9,23 @@
 import XCTest
 
 class StringExtensionTests: XCTestCase {
+    // MARK: - Actions
 
-	// MARK: - Actions
+    func testToDateIsNotNil() {
+        // Given
+        let dateString = "2001-02-03T12:34:56Z"
+        // When
+        let date = dateString.toDate
+        // Then
+        XCTAssertNotNil(date)
+    }
 
-	func testToDateIsNotNil() {
-		// Given
-		let dateString = "2001-02-03T12:34:56Z"
-		// When
-		let date = dateString.toDate
-		// Then
-		XCTAssertNotNil(date)
-	}
-
-	func testToDateIsNil() {
-		// Given
-		let dateString = "2001-02-03"
-		// When
-		let date = dateString.toDate
-		// Then
-		XCTAssertNil(date)
-	}
+    func testToDateIsNil() {
+        // Given
+        let dateString = "2001-02-03"
+        // When
+        let date = dateString.toDate
+        // Then
+        XCTAssertNil(date)
+    }
 }
