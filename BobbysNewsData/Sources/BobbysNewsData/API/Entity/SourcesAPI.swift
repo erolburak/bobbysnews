@@ -6,8 +6,7 @@
 //
 
 public struct SourcesAPI: Decodable, Sendable {
+    // MARK: - Properties
 
-	// MARK: - Properties
-
-	public let sources: [SourceAPI]?
+    public let sources: [SourceAPI]?
 }

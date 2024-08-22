@@ -8,30 +8,28 @@
 import BobbysNewsData
 
 public protocol PReadTopHeadlinesUseCase {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func read(country: String) throws -> TopHeadlines
+    func read(country: String) throws -> TopHeadlines
 }
 
 public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let topHeadlinesRepository: PTopHeadlinesRepository
 
-	private let topHeadlinesRepository: PTopHeadlinesRepository
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    public init(topHeadlinesRepository: PTopHeadlinesRepository) {
+        self.topHeadlinesRepository = topHeadlinesRepository
+    }
 
-	public init(topHeadlinesRepository: PTopHeadlinesRepository) {
-		self.topHeadlinesRepository = topHeadlinesRepository
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func read(country: String) throws -> TopHeadlines {
-		TopHeadlines(articles: try topHeadlinesRepository.read(country: country)
-			.compactMap {
-				Article(from: $0)
-			})
-	}
+    public func read(country: String) throws -> TopHeadlines {
+        try TopHeadlines(articles: topHeadlinesRepository.read(country: country)
+            .compactMap {
+                Article(from: $0)
+            })
+    }
 }

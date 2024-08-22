@@ -6,15 +6,15 @@
 //
 
 public final class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func fetch(apiKey: Int,
-					  country: String) throws -> TopHeadlinesAPI {
-		if country.isEmpty {
-			throw NetworkConfiguration.Errors.fetchTopHeadlines
-		} else {
-			return EntityMock.topHeadlinesAPI
-		}
-	}
+    public func fetch(apiKey: Int,
+                      country: String) throws -> TopHeadlinesAPI
+    {
+        if country.isEmpty {
+            throw NetworkConfiguration.Errors.fetchTopHeadlines
+        } else {
+            return EntityMock.topHeadlinesAPI
+        }
+    }
 }

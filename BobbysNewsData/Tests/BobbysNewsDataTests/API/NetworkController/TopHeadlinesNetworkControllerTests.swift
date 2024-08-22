@@ -9,23 +9,22 @@
 import Testing
 
 struct TopHeadlinesNetworkControllerTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sut = TopHeadlinesNetworkControllerMock()
 
-	private let sut = TopHeadlinesNetworkControllerMock()
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check TopHeadlinesNetworkController fetch!")
-	func testFetch() throws {
-		// Given
-		let apiKey = 1
-		let country = "Test"
-		// When
-		let topHeadlinesAPI = try sut.fetch(apiKey: apiKey,
-											country: country)
-		// Then
-		#expect(topHeadlinesAPI.articles?.count == 1,
-				"TopHeadlinesNetworkController fetch failed!")
-	}
+    @Test("Check TopHeadlinesNetworkController fetch!")
+    func testFetch() throws {
+        // Given
+        let apiKey = 1
+        let country = "Test"
+        // When
+        let topHeadlinesAPI = try sut.fetch(apiKey: apiKey,
+                                            country: country)
+        // Then
+        #expect(topHeadlinesAPI.articles?.count == 1,
+                "TopHeadlinesNetworkController fetch failed!")
+    }
 }

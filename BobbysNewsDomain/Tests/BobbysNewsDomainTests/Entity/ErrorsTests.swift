@@ -9,19 +9,18 @@
 import Testing
 
 struct ErrorsTests {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check Errors initializing!")
-	func testErrors() {
-		for error in EntityMock.errors {
-			// Given
-			var newError: Error?
-			// When
-			newError = error
-			// Then
-			#expect(newError != nil,
-					"Error initializing failed!")
-		}
-	}
+    @Test("Check Errors initializing!")
+    func testErrors() {
+        for error in EntityMock.errors {
+            // Given
+            var newError: Error?
+            // When
+            newError = error
+            // Then
+            #expect(newError != nil,
+                    "Error initializing failed!")
+        }
+    }
 }

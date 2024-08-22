@@ -8,19 +8,18 @@
 import BobbysNewsData
 
 extension Source {
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
-
-	init?(from db: SourceDB?) {
-		guard let db else {
-			return nil
-		}
-		self.init(category: db.category,
-				  country: db.country,
-				  id: db.id,
-				  language: db.language,
-				  name: db.name,
-				  story: db.story,
-				  url: db.url)
-	}
+    init?(from db: SourceDB?) {
+        guard let db else {
+            return nil
+        }
+        self.init(category: db.category,
+                  country: db.country,
+                  id: db.id,
+                  language: db.language,
+                  name: db.name,
+                  story: db.story,
+                  url: db.url)
+    }
 }

@@ -5,26 +5,25 @@
 //  Created by Burak Erol on 05.09.23.
 //
 
-@testable import BobbysNewsDomain
 import BobbysNewsData
+@testable import BobbysNewsDomain
 import Testing
 
 struct ReadSourcesUseCaseTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sut = ReadSourcesUseCase(sourcesRepository: SourcesRepositoryMock())
 
-	private let sut = ReadSourcesUseCase(sourcesRepository: SourcesRepositoryMock())
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check ReadSourcesUseCase read!")
-	func testRead() throws {
-		// Given
-		var sources: Sources?
-		// When
-		sources = try sut.read()
-		// Then
-		#expect(sources?.sources?.count == 1,
-				"ReadSourcesUseCase read failed!")
-	}
+    @Test("Check ReadSourcesUseCase read!")
+    func testRead() throws {
+        // Given
+        var sources: Sources?
+        // When
+        sources = try sut.read()
+        // Then
+        #expect(sources?.sources?.count == 1,
+                "ReadSourcesUseCase read failed!")
+    }
 }

@@ -8,27 +8,25 @@
 import BobbysNewsData
 
 public protocol PDeleteSourcesUseCase {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func delete() throws
+    func delete() throws
 }
 
 public final class DeleteSourcesUseCase: PDeleteSourcesUseCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sourcesRepository: PSourcesRepository
 
-	private let sourcesRepository: PSourcesRepository
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    public init(sourcesRepository: PSourcesRepository) {
+        self.sourcesRepository = sourcesRepository
+    }
 
-	public init(sourcesRepository: PSourcesRepository) {
-		self.sourcesRepository = sourcesRepository
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func delete() throws {
-		try sourcesRepository.delete()
-	}
+    public func delete() throws {
+        try sourcesRepository.delete()
+    }
 }

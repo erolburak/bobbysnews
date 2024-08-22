@@ -9,38 +9,39 @@
 import Testing
 
 struct TopHeadlinesRepositoryTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sut = TopHeadlinesRepositoryMock()
 
-	private let sut = TopHeadlinesRepositoryMock()
+    // MARK: - Methods
 
-	// MARK: - Actions
+    @Test("Check TopHeadlinesRepository delete!")
+    func testDelete() {
+        #expect(throws: Never.self,
+                "TopHeadlinesRepository delete failed!")
+        {
+            sut.delete()
+        }
+    }
 
-	@Test("Check TopHeadlinesRepository delete!")
-	func testDelete() {
-		#expect(throws: Never.self,
-				"TopHeadlinesRepository delete failed!") {
-			sut.delete()
-		}
-	}
+    @Test("Check TopHeadlinesRepository fetch!")
+    func testFetch() {
+        #expect(throws: Never.self,
+                "TopHeadlinesRepository fetch failed!")
+        {
+            try sut.fetch(apiKey: 1,
+                          country: "Test")
+        }
+    }
 
-	@Test("Check TopHeadlinesRepository fetch!")
-	func testFetch() {
-		#expect(throws: Never.self,
-				"TopHeadlinesRepository fetch failed!") {
-			try sut.fetch(apiKey: 1,
-						  country: "Test")
-		}
-	}
-
-	@Test("Check TopHeadlinesRepository read!")
-	func testRead() {
-		// Given
-		var topHeadlines: [ArticleDB]?
-		// When
-		topHeadlines = sut.read(country: "Test")
-		// Then
-		#expect(topHeadlines?.count == 1,
-				"TopHeadlinesRepository read failed!")
-	}
+    @Test("Check TopHeadlinesRepository read!")
+    func testRead() {
+        // Given
+        var topHeadlines: [ArticleDB]?
+        // When
+        topHeadlines = sut.read(country: "Test")
+        // Then
+        #expect(topHeadlines?.count == 1,
+                "TopHeadlinesRepository read failed!")
+    }
 }

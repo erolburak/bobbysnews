@@ -8,28 +8,27 @@
 import BobbysNewsDomain
 
 final class ViewModelFactory {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let useCaseFactory = UseCaseFactory()
 
-	private let useCaseFactory = UseCaseFactory()
+    // MARK: - Properties
 
-	// MARK: - Properties
+    @MainActor
+    static let shared = ViewModelFactory()
 
-	@MainActor
-	static let shared = ViewModelFactory()
+    // MARK: - Methods
 
-	// MARK: - Actions
+    func contentViewModel() -> ContentViewModel {
+        ContentViewModel(deleteSourcesUseCase: useCaseFactory.deleteSourcesUseCase,
+                         fetchSourcesUseCase: useCaseFactory.fetchSourcesUseCase,
+                         readSourcesUseCase: useCaseFactory.readSourcesUseCase,
+                         deleteTopHeadlinesUseCase: useCaseFactory.deleteTopHeadlinesUseCase,
+                         fetchTopHeadlinesUseCase: useCaseFactory.fetchTopHeadlinesUseCase,
+                         readTopHeadlinesUseCase: useCaseFactory.readTopHeadlinesUseCase)
+    }
 
-	func contentViewModel() -> ContentViewModel {
-		ContentViewModel(deleteSourcesUseCase: useCaseFactory.deleteSourcesUseCase,
-						 fetchSourcesUseCase: useCaseFactory.fetchSourcesUseCase,
-						 readSourcesUseCase: useCaseFactory.readSourcesUseCase,
-						 deleteTopHeadlinesUseCase: useCaseFactory.deleteTopHeadlinesUseCase,
-						 fetchTopHeadlinesUseCase: useCaseFactory.fetchTopHeadlinesUseCase,
-						 readTopHeadlinesUseCase: useCaseFactory.readTopHeadlinesUseCase)
-	}
-
-	func detailViewModel(article: Article) -> DetailViewModel {
-		DetailViewModel(article: article)
-	}
+    func detailViewModel(article: Article) -> DetailViewModel {
+        DetailViewModel(article: article)
+    }
 }

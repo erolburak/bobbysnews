@@ -6,8 +6,7 @@
 //
 
 public struct TopHeadlinesAPI: Decodable, Sendable {
+    // MARK: - Properties
 
-	// MARK: - Properties
-
-	public let articles: [ArticleAPI]?
+    public let articles: [ArticleAPI]?
 }

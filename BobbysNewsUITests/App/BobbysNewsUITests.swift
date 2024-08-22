@@ -9,12 +9,11 @@ import XCTest
 
 @MainActor
 final class BobbysNewsUITests: XCTestCase {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	override func setUpWithError() throws {
-		continueAfterFailure = false
-	}
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+    }
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {

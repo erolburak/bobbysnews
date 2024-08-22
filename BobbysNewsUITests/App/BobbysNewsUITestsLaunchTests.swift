@@ -9,21 +9,20 @@ import XCTest
 
 @MainActor
 final class BobbysNewsUITestsLaunchTests: XCTestCase {
+    // MARK: - Methods
 
-	// MARK: - Actions
+    override class var runsForEachTargetApplicationUIConfiguration: Bool {
+        true
+    }
 
-	override class var runsForEachTargetApplicationUIConfiguration: Bool {
-		true
-	}
-
-	override func setUpWithError() throws {
-		continueAfterFailure = false
-	}
+    override func setUpWithError() throws {
+        continueAfterFailure = false
+    }
 
     func testLaunch() throws {
         let app = XCUIApplication()
         app.launch()
-		let attachment = XCTAttachment(screenshot: app.screenshot())
+        let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "Launch Screen"
         attachment.lifetime = .keepAlways
         add(attachment)

@@ -8,30 +8,28 @@
 import BobbysNewsData
 
 public protocol PReadSourcesUseCase {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func read() throws -> Sources
+    func read() throws -> Sources
 }
 
 public final class ReadSourcesUseCase: PReadSourcesUseCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sourcesRepository: PSourcesRepository
 
-	private let sourcesRepository: PSourcesRepository
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    public init(sourcesRepository: PSourcesRepository) {
+        self.sourcesRepository = sourcesRepository
+    }
 
-	public init(sourcesRepository: PSourcesRepository) {
-		self.sourcesRepository = sourcesRepository
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func read() throws -> Sources {
-		Sources(sources: try sourcesRepository.read()
-			.compactMap {
-				Source(from: $0)
-			})
-	}
+    public func read() throws -> Sources {
+        try Sources(sources: sourcesRepository.read()
+            .compactMap {
+                Source(from: $0)
+            })
+    }
 }

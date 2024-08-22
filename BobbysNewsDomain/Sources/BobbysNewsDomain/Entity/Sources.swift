@@ -6,14 +6,13 @@
 //
 
 public struct Sources: Sendable {
+    // MARK: - Properties
 
-	// MARK: - Properties
+    public let sources: [Source]?
 
-	public let sources: [Source]?
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
-
-	public init(sources: [Source]?) {
-		self.sources = sources
-	}
+    public init(sources: [Source]?) {
+        self.sources = sources
+    }
 }

@@ -8,27 +8,25 @@
 import BobbysNewsData
 
 public protocol PFetchSourcesUseCase: Sendable {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func fetch(apiKey: Int) async throws
+    func fetch(apiKey: Int) async throws
 }
 
 public final class FetchSourcesUseCase: PFetchSourcesUseCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sourcesRepository: PSourcesRepository
 
-	private let sourcesRepository: PSourcesRepository
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    public init(sourcesRepository: PSourcesRepository) {
+        self.sourcesRepository = sourcesRepository
+    }
 
-	public init(sourcesRepository: PSourcesRepository) {
-		self.sourcesRepository = sourcesRepository
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func fetch(apiKey: Int) async throws {
-		try await sourcesRepository.fetch(apiKey: apiKey)
-	}
+    public func fetch(apiKey: Int) async throws {
+        try await sourcesRepository.fetch(apiKey: apiKey)
+    }
 }

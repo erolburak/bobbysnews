@@ -8,32 +8,32 @@
 import Foundation
 
 public struct Source: Hashable, Sendable {
+    // MARK: - Properties
 
-	// MARK: - Properties
+    public let category: String?
+    public let country: String?
+    public let id: String?
+    public let language: String?
+    public let name: String?
+    public let story: String?
+    public let url: URL?
 
-	public let category: String?
-	public let country: String?
-	public let id: String?
-	public let language: String?
-	public let name: String?
-	public let story: String?
-	public let url: URL?
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
-
-	public init(category: String?,
-				country: String?,
-				id: String?,
-				language: String?,
-				name: String?,
-				story: String?,
-				url: URL?) {
-		self.category = category
-		self.country = country
-		self.id = id
-		self.language = language
-		self.name = name
-		self.story = story
-		self.url = url
-	}
+    public init(category: String?,
+                country: String?,
+                id: String?,
+                language: String?,
+                name: String?,
+                story: String?,
+                url: URL?)
+    {
+        self.category = category
+        self.country = country
+        self.id = id
+        self.language = language
+        self.name = name
+        self.story = story
+        self.url = url
+    }
 }

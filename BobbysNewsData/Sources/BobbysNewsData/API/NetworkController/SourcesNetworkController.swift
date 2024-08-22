@@ -8,35 +8,33 @@
 import Foundation
 
 protocol PSourcesNetworkController: Sendable {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func fetch(apiKey: Int) async throws -> SourcesAPI
+    func fetch(apiKey: Int) async throws -> SourcesAPI
 }
 
 final class SourcesNetworkController: PSourcesNetworkController {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let jsonDecoder = JSONDecoder()
 
-	private let jsonDecoder = JSONDecoder()
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    init() {
+        jsonDecoder.dateDecodingStrategy = .iso8601
+    }
 
-	init() {
-		jsonDecoder.dateDecodingStrategy = .iso8601
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func fetch(apiKey: Int) async throws -> SourcesAPI {
-		let endpoint = "top-headlines/sources?apiKey=\(NetworkConfiguration.apiKey(apiKey))"
-		guard let url = URL(string: NetworkConfiguration.apiBaseUrl + endpoint) else {
-			throw NetworkConfiguration.Errors.fetchSources
-		}
-		let (data, response) = try await URLSession.shared.data(from: url)
-		try NetworkConfiguration.shared.validateResponse(defaultError: .fetchSources,
-														 response: response as? HTTPURLResponse)
-		return try jsonDecoder.decode(SourcesAPI.self,
-									  from: data)
-	}
+    func fetch(apiKey: Int) async throws -> SourcesAPI {
+        let endpoint = "top-headlines/sources?apiKey=\(NetworkConfiguration.apiKey(apiKey))"
+        guard let url = URL(string: NetworkConfiguration.apiBaseUrl + endpoint) else {
+            throw NetworkConfiguration.Errors.fetchSources
+        }
+        let (data, response) = try await URLSession.shared.data(from: url)
+        try NetworkConfiguration.shared.validateResponse(defaultError: .fetchSources,
+                                                         response: response as? HTTPURLResponse)
+        return try jsonDecoder.decode(SourcesAPI.self,
+                                      from: data)
+    }
 }

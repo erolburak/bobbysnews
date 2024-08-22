@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct BobbysNewsApp: App {
-
-	// MARK: - Layouts
+    // MARK: - Layouts
 
     var body: some Scene {
         WindowGroup {
-			ContentView(viewModel: ViewModelFactory.shared.contentViewModel())
-		}
+            ContentView(viewModel: ViewModelFactory.shared.contentViewModel())
+        }
     }
 }
