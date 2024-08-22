@@ -10,24 +10,23 @@ import Foundation
 import Testing
 
 struct SourceExtensionTests {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check SourceExtension Source initializing!")
-	func testSource() {
-		// Given
-		var entity = EntityMock()
-		let sourceDB = entity.sourceDB
-		// When
-		let source = Source(from: sourceDB)
-		// Then
-		#expect(source?.category == "Test" &&
-				source?.country == "Test" &&
-				source?.id == "Test" &&
-				source?.language == "Test" &&
-				source?.name == "Test" &&
-				source?.story == "Test" &&
-				source?.url == URL(string: "Test"),
-				"SourceExtension Source initializing failed!")
-	}
+    @Test("Check SourceExtension Source initializing!")
+    func testSource() {
+        // Given
+        var entity = EntityMock()
+        let sourceDB = entity.sourceDB
+        // When
+        let source = Source(from: sourceDB)
+        // Then
+        #expect(source?.category == "Test" &&
+            source?.country == "Test" &&
+            source?.id == "Test" &&
+            source?.language == "Test" &&
+            source?.name == "Test" &&
+            source?.story == "Test" &&
+            source?.url == URL(string: "Test"),
+            "SourceExtension Source initializing failed!")
+    }
 }

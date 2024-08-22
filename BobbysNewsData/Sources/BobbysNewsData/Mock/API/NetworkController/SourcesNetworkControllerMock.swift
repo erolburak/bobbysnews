@@ -6,10 +6,9 @@
 //
 
 public final class SourcesNetworkControllerMock: PSourcesNetworkController {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func fetch(apiKey: Int) -> SourcesAPI {
-		EntityMock.sourcesAPI
-	}
+    public func fetch(apiKey: Int) -> SourcesAPI {
+        EntityMock.sourcesAPI
+    }
 }

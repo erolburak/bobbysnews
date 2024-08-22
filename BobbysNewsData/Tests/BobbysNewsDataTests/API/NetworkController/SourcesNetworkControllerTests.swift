@@ -9,21 +9,20 @@
 import Testing
 
 struct SourcesNetworkControllerTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sut = SourcesNetworkControllerMock()
 
-	private let sut = SourcesNetworkControllerMock()
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check SourcesNetworkController fetch!")
-	func testFetch() {
-		// Given
-		let apiKey = 1
-		// When
-		let sourcesAPI = sut.fetch(apiKey: apiKey)
-		// Then
-		#expect(sourcesAPI.sources?.count == 1,
-				"SourcesNetworkController fetch failed!")
-	}
+    @Test("Check SourcesNetworkController fetch!")
+    func testFetch() {
+        // Given
+        let apiKey = 1
+        // When
+        let sourcesAPI = sut.fetch(apiKey: apiKey)
+        // Then
+        #expect(sourcesAPI.sources?.count == 1,
+                "SourcesNetworkController fetch failed!")
+    }
 }

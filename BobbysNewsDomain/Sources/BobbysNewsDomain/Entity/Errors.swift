@@ -8,8 +8,7 @@
 import Foundation
 
 public enum Errors: LocalizedError {
+    // MARK: - Properties
 
-	// MARK: - Properties
-
-	case error(String), fetchSources, fetchTopHeadlines, invalidApiKey, limitedRequests, read, reset
+    case error(String), fetchSources, fetchTopHeadlines, invalidApiKey, limitedRequests, read, reset
 }

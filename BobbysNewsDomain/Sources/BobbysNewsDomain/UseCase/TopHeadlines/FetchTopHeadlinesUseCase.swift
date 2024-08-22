@@ -8,30 +8,29 @@
 import BobbysNewsData
 
 public protocol PFetchTopHeadlinesUseCase: Sendable {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func fetch(apiKey: Int,
-			   country: String) async throws
+    func fetch(apiKey: Int,
+               country: String) async throws
 }
 
 public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let topHeadlinesRepository: PTopHeadlinesRepository
 
-	private let topHeadlinesRepository: PTopHeadlinesRepository
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    public init(topHeadlinesRepository: PTopHeadlinesRepository) {
+        self.topHeadlinesRepository = topHeadlinesRepository
+    }
 
-	public init(topHeadlinesRepository: PTopHeadlinesRepository) {
-		self.topHeadlinesRepository = topHeadlinesRepository
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func fetch(apiKey: Int,
-					  country: String) async throws {
-		try await topHeadlinesRepository.fetch(apiKey: apiKey,
-											   country: country)
-	}
+    public func fetch(apiKey: Int,
+                      country: String) async throws
+    {
+        try await topHeadlinesRepository.fetch(apiKey: apiKey,
+                                               country: country)
+    }
 }

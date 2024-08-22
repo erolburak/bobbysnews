@@ -6,14 +6,13 @@
 //
 
 public struct TopHeadlines: Sendable {
+    // MARK: - Properties
 
-	// MARK: - Properties
+    public let articles: [Article]?
 
-	public let articles: [Article]?
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
-
-	public init(articles: [Article]?) {
-		self.articles = articles
-	}
+    public init(articles: [Article]?) {
+        self.articles = articles
+    }
 }

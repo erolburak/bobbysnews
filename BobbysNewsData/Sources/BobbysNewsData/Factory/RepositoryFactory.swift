@@ -6,18 +6,17 @@
 //
 
 public class RepositoryFactory {
+    // MARK: - Properties
 
-	// MARK: - Properties
+    /// Sources
+    public let sourcesRepository: PSourcesRepository
+    /// TopHeadlines
+    public let topHeadlinesRepository: PTopHeadlinesRepository
 
-	/// Sources
-	public let sourcesRepository: PSourcesRepository
-	/// TopHeadlines
-	public let topHeadlinesRepository: PTopHeadlinesRepository
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
-
-	public init() {
-		sourcesRepository = SourcesRepository()
-		topHeadlinesRepository = TopHeadlinesRepository()
-	}
+    public init() {
+        sourcesRepository = SourcesRepository()
+        topHeadlinesRepository = TopHeadlinesRepository()
+    }
 }

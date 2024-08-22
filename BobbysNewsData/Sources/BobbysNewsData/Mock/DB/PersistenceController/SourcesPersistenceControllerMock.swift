@@ -6,15 +6,14 @@
 //
 
 public final class SourcesPersistenceControllerMock: PSourcesPersistenceController {
+    // MARK: - Methods
 
-	// MARK: - Actions
+    public func delete() {}
 
-	public func delete() {}
+    public func read() -> [SourceDB] {
+        var entity = EntityMock()
+        return entity.sourcesDB
+    }
 
-	public func read() -> [SourceDB] {
-		var entity = EntityMock()
-		return entity.sourcesDB
-	}
-
-	public func save(sourcesAPI: SourcesAPI) {}
+    public func save(sourcesAPI: SourcesAPI) {}
 }

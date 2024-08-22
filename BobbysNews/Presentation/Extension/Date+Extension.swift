@@ -8,23 +8,22 @@
 import Foundation
 
 extension Date {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private static let relativeDateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = .current
+        dateFormatter.timeZone = .current
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        dateFormatter.doesRelativeDateFormatting = true
+        return dateFormatter
+    }()
 
-	private static let relativeDateFormatter = {
-		let dateFormatter = DateFormatter()
-		dateFormatter.calendar = .current
-		dateFormatter.timeZone = .current
-		dateFormatter.dateStyle = .medium
-		dateFormatter.timeStyle = .short
-		dateFormatter.doesRelativeDateFormatting = true
-		return dateFormatter
-	}()
+    // MARK: - Properties
 
-	// MARK: - Properties
-
-	/// Formats date to string in a relative form -> `Yesterday`, `Today`, `Tomorrow`...
-	var toRelative: String {
-		Date.relativeDateFormatter.string(from: self)
-	}
+    /// Formats date to string in a relative form -> `Yesterday`, `Today`, `Tomorrow`...
+    var toRelative: String {
+        Date.relativeDateFormatter.string(from: self)
+    }
 }

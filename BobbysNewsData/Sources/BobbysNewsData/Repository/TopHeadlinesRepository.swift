@@ -6,42 +6,42 @@
 //
 
 public protocol PTopHeadlinesRepository: Sendable {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func delete() throws
-	func fetch(apiKey: Int,
-			   country: String) async throws
-	func read(country: String) throws -> [ArticleDB]
+    func delete() throws
+    func fetch(apiKey: Int,
+               country: String) async throws
+    func read(country: String) throws -> [ArticleDB]
 }
 
 final class TopHeadlinesRepository: PTopHeadlinesRepository {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let topHeadlinesPersistenceController = TopHeadlinesPersistenceController()
+    private let topHeadlinesNetworkController = TopHeadlinesNetworkController()
 
-	private let topHeadlinesPersistenceController = TopHeadlinesPersistenceController()
-	private let topHeadlinesNetworkController = TopHeadlinesNetworkController()
+    // MARK: - Methods
 
-	// MARK: - Actions
+    func delete() throws {
+        try topHeadlinesPersistenceController.delete()
+    }
 
-	func delete() throws {
-		try topHeadlinesPersistenceController.delete()
-	}
+    func fetch(apiKey: Int,
+               country: String) async throws
+    {
+        let topHeadlinesAPI = try await topHeadlinesNetworkController.fetch(apiKey: apiKey,
+                                                                            country: country)
+        if topHeadlinesAPI.articles != nil ||
+            topHeadlinesAPI.articles?.isEmpty == false
+        {
+            try topHeadlinesPersistenceController.save(country: country,
+                                                       topHeadlinesAPI: topHeadlinesAPI)
+        } else {
+            try delete()
+        }
+    }
 
-	func fetch(apiKey: Int,
-			   country: String) async throws {
-		let topHeadlinesAPI = try await topHeadlinesNetworkController.fetch(apiKey: apiKey,
-																			country: country)
-		if topHeadlinesAPI.articles != nil ||
-			topHeadlinesAPI.articles?.isEmpty == false {
-			try topHeadlinesPersistenceController.save(country: country,
-													   topHeadlinesAPI: topHeadlinesAPI)
-		} else {
-			try delete()
-		}
-	}
-
-	func read(country: String) throws -> [ArticleDB] {
-		try topHeadlinesPersistenceController.read(country: country)
-	}
+    func read(country: String) throws -> [ArticleDB] {
+        try topHeadlinesPersistenceController.read(country: country)
+    }
 }

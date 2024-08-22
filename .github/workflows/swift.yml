@@ -24,7 +24,7 @@ jobs:
         xcode-version: latest
     - name: Setup Swift
       uses: swift-actions/setup-swift@v2
-    - name: Test iPhone 15 Pro
-      run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 15 Pro' | xcbeautify && exit ${PIPESTATUS[0]}
-    - name: Test iPad Pro 13-inch (M4)
-      run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Build & Test iPhone 15 Pro
+      run: xcodebuild clean build test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 15 Pro' | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Build & Test iPad Pro 13-inch (M4)
+      run: xcodebuild clean build test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' | xcbeautify && exit ${PIPESTATUS[0]}

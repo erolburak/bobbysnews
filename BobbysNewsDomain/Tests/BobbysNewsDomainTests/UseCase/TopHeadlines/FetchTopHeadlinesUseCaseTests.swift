@@ -5,34 +5,33 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNewsDomain
 import BobbysNewsData
+@testable import BobbysNewsDomain
 import Testing
 
 struct FetchTopHeadlinesUseCaseTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let mock: TopHeadlinesRepositoryMock
+    private let sut: FetchTopHeadlinesUseCase
 
-	private let mock: TopHeadlinesRepositoryMock
-	private let sut: FetchTopHeadlinesUseCase
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    init() {
+        mock = TopHeadlinesRepositoryMock()
+        sut = FetchTopHeadlinesUseCase(topHeadlinesRepository: mock)
+    }
 
-	init() {
-		mock = TopHeadlinesRepositoryMock()
-		sut = FetchTopHeadlinesUseCase(topHeadlinesRepository: mock)
-	}
-
-	@Test("Check FetchTopHeadlinesUseCase fetch!")
-	func testFetch() async throws {
-		// Given
-		let apiKey = 1
-		let country = "Test"
-		// When
-		try await sut.fetch(apiKey: apiKey,
-							country: country)
-		// Then
-		#expect(mock.topHeadlinesPersistenceController.read(country: country).count == 1,
-				"FetchTopHeadlinesUseCase fetch failed!")
-	}
+    @Test("Check FetchTopHeadlinesUseCase fetch!")
+    func testFetch() async throws {
+        // Given
+        let apiKey = 1
+        let country = "Test"
+        // When
+        try await sut.fetch(apiKey: apiKey,
+                            country: country)
+        // Then
+        #expect(mock.topHeadlinesPersistenceController.read(country: country).count == 1,
+                "FetchTopHeadlinesUseCase fetch failed!")
+    }
 }

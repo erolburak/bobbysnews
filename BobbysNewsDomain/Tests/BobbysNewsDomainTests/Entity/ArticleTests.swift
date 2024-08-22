@@ -10,32 +10,31 @@ import Foundation
 import Testing
 
 struct ArticleTests {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check Aticle initializing!")
-	func testArticle() {
-		// Given
-		let article: Article?
-		// When
-		article = EntityMock.topHeadlines.articles?.first
-		// Then
-		#expect(article?.author == "Test" &&
-				article?.content == "Test" &&
-				article?.contentTranslation == nil &&
-				article?.publishedAt == .distantPast &&
-				article?.source?.category == "Test" &&
-				article?.source?.country == "Test" &&
-				article?.source?.id == "Test" &&
-				article?.source?.language == "Test" &&
-				article?.source?.name == "Test" &&
-				article?.source?.story == "Test" &&
-				article?.source?.url == URL(string: "Test") &&
-				article?.story == "Test" &&
-				article?.title == "Test" &&
-				article?.titleTranslation == nil &&
-				article?.url == URL(string: "Test") &&
-				article?.urlToImage == URL(string: "Test"),
-				"Article initializing failed!")
-	}
+    @Test("Check Aticle initializing!")
+    func testArticle() {
+        // Given
+        let article: Article?
+        // When
+        article = EntityMock.topHeadlines.articles?.first
+        // Then
+        #expect(article?.author == "Test" &&
+            article?.content == "Test" &&
+            article?.contentTranslation == nil &&
+            article?.publishedAt == .distantPast &&
+            article?.source?.category == "Test" &&
+            article?.source?.country == "Test" &&
+            article?.source?.id == "Test" &&
+            article?.source?.language == "Test" &&
+            article?.source?.name == "Test" &&
+            article?.source?.story == "Test" &&
+            article?.source?.url == URL(string: "Test") &&
+            article?.story == "Test" &&
+            article?.title == "Test" &&
+            article?.titleTranslation == nil &&
+            article?.url == URL(string: "Test") &&
+            article?.urlToImage == URL(string: "Test"),
+            "Article initializing failed!")
+    }
 }

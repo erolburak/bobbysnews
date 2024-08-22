@@ -5,34 +5,33 @@
 //  Created by Burak Erol on 05.09.23.
 //
 
-@testable import BobbysNewsDomain
 import BobbysNewsData
+@testable import BobbysNewsDomain
 import Testing
 
 struct FetchSourcesUseCaseTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let mock: SourcesRepositoryMock
+    private let sut: FetchSourcesUseCase
 
-	private let mock: SourcesRepositoryMock
-	private let sut: FetchSourcesUseCase
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    init() {
+        mock = SourcesRepositoryMock()
+        sut = FetchSourcesUseCase(sourcesRepository: mock)
+    }
 
-	init() {
-		mock = SourcesRepositoryMock()
-		sut = FetchSourcesUseCase(sourcesRepository: mock)
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check FetchSourcesUseCase fetch!")
-	func testFetch() async throws {
-		// Given
-		let apiKey = 1
-		// When
-		try await sut.fetch(apiKey: apiKey)
-		// Then
-		#expect(mock.sourcesPersistenceController.read().count == 1,
-				"FetchSourcesUseCase fetch failed!")
-	}
+    @Test("Check FetchSourcesUseCase fetch!")
+    func testFetch() async throws {
+        // Given
+        let apiKey = 1
+        // When
+        try await sut.fetch(apiKey: apiKey)
+        // Then
+        #expect(mock.sourcesPersistenceController.read().count == 1,
+                "FetchSourcesUseCase fetch failed!")
+    }
 }

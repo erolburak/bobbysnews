@@ -5,23 +5,23 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNewsDomain
 import BobbysNewsData
+@testable import BobbysNewsDomain
 import Testing
 
 struct DeleteTopHeadlinesUseCaseTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepositoryMock())
 
-	private let sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepositoryMock())
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	@Test("Check DeleteTopHeadlinesUseCase delete!")
-	func testDelete() {
-		#expect(throws: Never.self,
-				"DeleteTopHeadlinesUseCase delete failed!") {
-			try sut.delete()
-		}
-	}
+    @Test("Check DeleteTopHeadlinesUseCase delete!")
+    func testDelete() {
+        #expect(throws: Never.self,
+                "DeleteTopHeadlinesUseCase delete failed!")
+        {
+            try sut.delete()
+        }
+    }
 }

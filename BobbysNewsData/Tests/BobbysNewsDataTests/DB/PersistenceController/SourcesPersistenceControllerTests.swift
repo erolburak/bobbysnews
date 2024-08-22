@@ -9,37 +9,38 @@
 import Testing
 
 struct SourcesPersistenceControllerTests {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let sut = SourcesPersistenceControllerMock()
 
-	private let sut = SourcesPersistenceControllerMock()
+    // MARK: - Methods
 
-	// MARK: - Actions
+    @Test("Check SourcesPersistenceController delete!")
+    func testDelete() {
+        #expect(throws: Never.self,
+                "SourcesPersistenceController delete failed!")
+        {
+            sut.delete()
+        }
+    }
 
-	@Test("Check SourcesPersistenceController delete!")
-	func testDelete() {
-		#expect(throws: Never.self,
-				"SourcesPersistenceController delete failed!") {
-			sut.delete()
-		}
-	}
+    @Test("Check SourcesPersistenceController read!")
+    func testRead() {
+        // Given
+        var sources: [SourceDB]?
+        // When
+        sources = sut.read()
+        // Then
+        #expect(sources?.count == 1,
+                "SourcesPersistenceController read failed!")
+    }
 
-	@Test("Check SourcesPersistenceController read!")
-	func testRead() {
-		// Given
-		var sources: [SourceDB]?
-		// When
-		sources = sut.read()
-		// Then
-		#expect(sources?.count == 1,
-				"SourcesPersistenceController read failed!")
-	}
-
-	@Test("Check SourcesPersistenceController save!")
-	func testSave() {
-		#expect(throws: Never.self,
-				"SourcesPersistenceController save failed!") {
-			sut.save(sourcesAPI: EntityMock.sourcesAPI)
-		}
-	}
+    @Test("Check SourcesPersistenceController save!")
+    func testSave() {
+        #expect(throws: Never.self,
+                "SourcesPersistenceController save failed!")
+        {
+            sut.save(sourcesAPI: EntityMock.sourcesAPI)
+        }
+    }
 }

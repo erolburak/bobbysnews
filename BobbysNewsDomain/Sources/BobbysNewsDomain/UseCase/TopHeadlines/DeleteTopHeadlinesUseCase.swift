@@ -8,27 +8,25 @@
 import BobbysNewsData
 
 public protocol PDeleteTopHeadlinesUseCase {
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	func delete() throws
+    func delete() throws
 }
 
 public final class DeleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private let topHeadlinesRepository: PTopHeadlinesRepository
 
-	private let topHeadlinesRepository: PTopHeadlinesRepository
+    // MARK: - Lifecycles
 
-	// MARK: - Inits
+    public init(topHeadlinesRepository: PTopHeadlinesRepository) {
+        self.topHeadlinesRepository = topHeadlinesRepository
+    }
 
-	public init(topHeadlinesRepository: PTopHeadlinesRepository) {
-		self.topHeadlinesRepository = topHeadlinesRepository
-	}
+    // MARK: - Methods
 
-	// MARK: - Actions
-
-	public func delete() throws {
-		try topHeadlinesRepository.delete()
-	}
+    public func delete() throws {
+        try topHeadlinesRepository.delete()
+    }
 }
