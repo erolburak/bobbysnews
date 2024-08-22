@@ -15,5 +15,5 @@ public final class SourcesPersistenceControllerMock: PSourcesPersistenceControll
         return entity.sourcesDB
     }
 
-    public func save(sourcesAPI: SourcesAPI) {}
+    public func save(sourcesAPI _: SourcesAPI) {}
 }

@@ -8,7 +8,7 @@
 public final class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
     // MARK: - Methods
 
-    public func fetch(apiKey: Int,
+    public func fetch(apiKey _: Int,
                       country: String) throws -> TopHeadlinesAPI
     {
         if country.isEmpty {

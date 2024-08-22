@@ -15,6 +15,6 @@ public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersisten
         return entity.topHeadlinesDB.filter { $0.country == country }
     }
 
-    public func save(country: String,
-                     topHeadlinesAPI: TopHeadlinesAPI) {}
+    public func save(country _: String,
+                     topHeadlinesAPI _: TopHeadlinesAPI) {}
 }

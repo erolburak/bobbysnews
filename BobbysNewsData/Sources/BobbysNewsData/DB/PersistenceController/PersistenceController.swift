@@ -27,13 +27,13 @@ public final class PersistenceController {
         else {
             fatalError("Error initializing managed object model with module url!")
         }
-#if DEBUG
-        container = NSPersistentContainer(name: "BobbysNews",
-                                          managedObjectModel: managedObjectModel)
-#else
-        container = NSPersistentCloudKitContainer(name: "BobbysNews",
-                                                  managedObjectModel: managedObjectModel)
-#endif
+        #if DEBUG
+            container = NSPersistentContainer(name: "BobbysNews",
+                                              managedObjectModel: managedObjectModel)
+        #else
+            container = NSPersistentCloudKitContainer(name: "BobbysNews",
+                                                      managedObjectModel: managedObjectModel)
+        #endif
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")

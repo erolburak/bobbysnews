@@ -9,21 +9,20 @@
 import XCTest
 
 class SourceApiTests: XCTestCase {
+    // MARK: - Actions
 
-	// MARK: - Actions
-
-	func testSourceApi() {
-		// Given
-		let sourceApi: SourceApi?
-		// When
-		sourceApi = SourceApi(category: "Test",
-							  country: "Test",
-							  id: "Test",
-							  language: "Test",
-							  name: "Test",
-							  story: "Test",
-							  url: URL(string: "Test"))
-		// Then
-		XCTAssertNotNil(sourceApi)
-	}
+    func testSourceApi() {
+        // Given
+        let sourceApi: SourceApi?
+        // When
+        sourceApi = SourceApi(category: "Test",
+                              country: "Test",
+                              id: "Test",
+                              language: "Test",
+                              name: "Test",
+                              story: "Test",
+                              url: URL(string: "Test"))
+        // Then
+        XCTAssertNotNil(sourceApi)
+    }
 }

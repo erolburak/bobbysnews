@@ -9,42 +9,41 @@
 import XCTest
 
 class TopHeadlinesRepositoryTests: XCTestCase {
+    // MARK: - Private Properties
 
-	// MARK: - Private Properties
+    private var sut: TopHeadlinesRepositoryMock!
 
-	private var sut: TopHeadlinesRepositoryMock!
+    // MARK: - Actions
 
-	// MARK: - Actions
+    override func setUpWithError() throws {
+        sut = TopHeadlinesRepositoryMock()
+    }
 
-	override func setUpWithError() throws {
-		sut = TopHeadlinesRepositoryMock()
-	}
+    override func tearDownWithError() throws {
+        sut = nil
+    }
 
-	override func tearDownWithError() throws {
-		sut = nil
-	}
+    func testFetchIsNotNil() async throws {
+        // Given
+        var topHeadlinesApi: TopHeadlinesApi?
+        // When
+        topHeadlinesApi = try await sut.fetch(apiKey: "Test",
+                                              country: "Test")
+        // Then
+        XCTAssertNotNil(topHeadlinesApi)
+    }
 
-	func testFetchIsNotNil() async throws {
-		// Given
-		var topHeadlinesApi: TopHeadlinesApi?
-		// When
-		topHeadlinesApi = try await sut.fetch(apiKey: "Test",
-											  country: "Test")
-		// Then
-		XCTAssertNotNil(topHeadlinesApi)
-	}
-
-	func testFetchIsNil() async throws {
-		// Given
-		var topHeadlinesApi: TopHeadlinesApi?
-		// When
-		do {
-			topHeadlinesApi = try await sut.fetch(apiKey: "",
-												  country: "")
-		} catch {
-			// Then
-			XCTAssertNil(topHeadlinesApi)
-			XCTAssertNotNil(error)
-		}
-	}
+    func testFetchIsNil() async throws {
+        // Given
+        var topHeadlinesApi: TopHeadlinesApi?
+        // When
+        do {
+            topHeadlinesApi = try await sut.fetch(apiKey: "",
+                                                  country: "")
+        } catch {
+            // Then
+            XCTAssertNil(topHeadlinesApi)
+            XCTAssertNotNil(error)
+        }
+    }
 }
