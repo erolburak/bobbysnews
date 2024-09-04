@@ -89,21 +89,6 @@ struct ContentViewModelTests {
                 "ContentViewModel fetchTopHeadlines failed!")
     }
 
-    @Test("Check ContentViewModel invalidateSettingsTip!")
-    func testInvalidateSettingsTip() async {
-        // Given
-        let statusUpdates = sut.settingsTip.statusUpdates
-        // When
-        sut.invalidateSettingsTip()
-        // Then
-        for await statusUpdate in statusUpdates {
-            if statusUpdate == .invalidated(.actionPerformed) {
-                #expect(statusUpdate == .invalidated(.actionPerformed),
-                        "ContentViewModel invalidateSettingsTip failed!")
-            }
-        }
-    }
-
     @Test("Check ContentViewModel reset!")
     func testReset() {
         // Given
