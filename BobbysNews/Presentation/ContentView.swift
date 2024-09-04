@@ -120,9 +120,6 @@ struct ContentView: View {
                             }
                             .accessibilityIdentifier("SettingsImage")
                     }
-                    .onTapGesture {
-                        viewModel.invalidateSettingsTip()
-                    }
                     .confirmationDialog("ResetConfirmationDialog",
                                         isPresented: $viewModel.showConfirmationDialog,
                                         titleVisibility: .visible)
@@ -138,37 +135,41 @@ struct ContentView: View {
             }
         }
         .overlay(alignment: .center) {
-            if viewModel.selectedCountry.isEmpty {
-                ContentUnavailableView("EmptySelectedCountry",
-                                       systemImage: "flag.circle.fill",
-                                       description: Text("EmptySelectedCountryMessage"))
-            } else {
-                switch viewModel.stateTopHeadlines {
-                case .isLoading:
-                    Text("TopHeadlinesLoading")
-                        .fontWeight(.black)
-                case .loaded:
-                    EmptyView()
-                case .emptyFetch, .emptyRead:
-                    ContentUnavailableView {
-                        Label(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
-                              systemImage: "newspaper.circle.fill")
-                    } description: {
-                        Text(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
-                    } actions: {
-                        Button("Refresh") {
-                            Task {
-                                await viewModel.fetchTopHeadlines(state: .isLoading)
+            Group {
+                if viewModel.selectedCountry.isEmpty {
+                    ContentUnavailableView("EmptySelectedCountry",
+                                           systemImage: "flag.circle.fill",
+                                           description: Text("EmptySelectedCountryMessage"))
+                } else {
+                    switch viewModel.stateTopHeadlines {
+                    case .isLoading:
+                        Text("TopHeadlinesLoading")
+                            .fontWeight(.black)
+                    case .loaded:
+                        EmptyView()
+                    case .emptyFetch, .emptyRead:
+                        ContentUnavailableView {
+                            Label(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
+                                  systemImage: "newspaper.circle.fill")
+                        } description: {
+                            Text(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
+                        } actions: {
+                            Button("Refresh") {
+                                Task {
+                                    await viewModel.fetchTopHeadlines(state: .isLoading)
+                                }
                             }
+                            .textCase(.uppercase)
+                            .font(.system(.subheadline,
+                                          weight: .black))
+                            .foregroundStyle(.secondary)
+                            .accessibilityIdentifier("RefreshButton")
                         }
-                        .textCase(.uppercase)
-                        .font(.system(.subheadline,
-                                      weight: .black))
-                        .foregroundStyle(.secondary)
-                        .accessibilityIdentifier("RefreshButton")
                     }
                 }
             }
+            .symbolEffect(.bounce,
+                          options: .nonRepeating)
         }
         .alert(isPresented: $viewModel.showAlert,
                error: viewModel.alertError)
@@ -235,21 +236,30 @@ private struct ListItem: View {
 
             Spacer()
 
-            AsyncImage(url: article.urlToImage) { phase in
-                if let image = phase.image {
-                    image
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 80,
-                               height: 80,
-                               alignment: .center)
-                        .clipped()
+            Group {
+                if let urlToImage = article.urlToImage {
+                    AsyncImage(url: urlToImage,
+                               transaction: .init(animation: .easeIn(duration: 0.75))) { asyncImagePhase in
+                        if let image = asyncImagePhase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 80,
+                                       height: 80,
+                                       alignment: .center)
+                                .clipped()
+                        } else {
+                            ProgressView()
+                        }
+                    }
                 } else {
                     Image(systemName: "photo.circle.fill")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(height: 24)
                         .foregroundStyle(.gray)
+                        .symbolEffect(.bounce,
+                                      options: .nonRepeating)
                 }
             }
             .frame(width: 80,

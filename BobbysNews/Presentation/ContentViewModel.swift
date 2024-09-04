@@ -149,10 +149,6 @@ final class ContentViewModel {
         }
     }
 
-    func invalidateSettingsTip() {
-        settingsTip.invalidate(reason: .actionPerformed)
-    }
-
     func reset() {
         do {
             /// Delete all persisted sources

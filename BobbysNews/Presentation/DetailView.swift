@@ -37,21 +37,27 @@ struct DetailView: View {
                     .frame(maxWidth: .infinity,
                            alignment: .center)
 
-                AsyncImage(url: viewModel.article.urlToImage) { phase in
-                    if let image = phase.image {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: .infinity,
-                                   height: 280,
-                                   alignment: .center)
-                            .clipped()
+                Group {
+                    if let urlToImage = viewModel.article.urlToImage {
+                        AsyncImage(url: urlToImage,
+                                   transaction: .init(animation: .easeIn(duration: 0.75))) { asyncImagePhase in
+                            if let image = asyncImagePhase.image {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .containerRelativeFrame(.horizontal)
+                            } else {
+                                ProgressView()
+                            }
+                        }
                     } else {
                         Image(systemName: "photo.circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 24)
+                            .frame(height: 32)
                             .foregroundStyle(.gray)
+                            .symbolEffect(.bounce,
+                                          options: .nonRepeating)
                     }
                 }
                 .frame(maxWidth: .infinity,
@@ -143,6 +149,8 @@ struct DetailView: View {
                             ContentUnavailableView("ErrorWebView",
                                                    systemImage: "newspaper.circle.fill",
                                                    description: Text("ErrorWebViewMessage"))
+                            .symbolEffect(.bounce,
+                                          options: .nonRepeating)
                         }
                     }
                     .navigationTitle("Headline")
