@@ -239,7 +239,8 @@ private struct ListItem: View {
             Group {
                 if let urlToImage = article.urlToImage {
                     AsyncImage(url: urlToImage,
-                               transaction: .init(animation: .easeIn(duration: 0.75))) { asyncImagePhase in
+                               transaction: .init(animation: .easeIn(duration: 0.75)))
+                    { asyncImagePhase in
                         if let image = asyncImagePhase.image {
                             image
                                 .resizable()

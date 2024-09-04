@@ -40,7 +40,8 @@ struct DetailView: View {
                 Group {
                     if let urlToImage = viewModel.article.urlToImage {
                         AsyncImage(url: urlToImage,
-                                   transaction: .init(animation: .easeIn(duration: 0.75))) { asyncImagePhase in
+                                   transaction: .init(animation: .easeIn(duration: 0.75)))
+                        { asyncImagePhase in
                             if let image = asyncImagePhase.image {
                                 image
                                     .resizable()
@@ -149,8 +150,8 @@ struct DetailView: View {
                             ContentUnavailableView("ErrorWebView",
                                                    systemImage: "newspaper.circle.fill",
                                                    description: Text("ErrorWebViewMessage"))
-                            .symbolEffect(.bounce,
-                                          options: .nonRepeating)
+                                .symbolEffect(.bounce,
+                                              options: .nonRepeating)
                         }
                     }
                     .navigationTitle("Headline")
