@@ -8,13 +8,6 @@
 import XCTest
 
 extension XCUIApplication {
-    // MARK: - Properties
-
-    /// Detects if limited request alert is visible
-    var isLimitedRequestAlertVisible: Bool {
-        alerts["Limited requests"].waitForExistence(timeout: 5)
-    }
-
     // MARK: - Methods
 
     /// Launch app steps:
