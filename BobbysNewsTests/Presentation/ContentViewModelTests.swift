@@ -51,7 +51,7 @@ struct ContentViewModelTests {
     @Test("Check ContentViewModel onAppear!")
     func testOnAppear() async throws {
         // Given
-        sut.selectedCountry = "Test"
+        sut.selectedCountry = "en-gb"
         // When
         sut.onAppear(selectedCountry: sut.selectedCountry)
         try await Task.sleep(for: .seconds(2))
@@ -67,8 +67,8 @@ struct ContentViewModelTests {
     @MainActor
     func testFetchSources() async {
         // Given
-        sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
-        sut.selectedCountry = "Test"
+        sut.countries = [EntityMock.sources.sources?.first?.country ?? "en-gb"]
+        sut.selectedCountry = "en-gb"
         // When
         await sut.fetchSources()
         // Then
@@ -81,7 +81,7 @@ struct ContentViewModelTests {
     func testFetchTopHeadlines() async {
         // Given
         sut.articles = EntityMock.topHeadlines.articles ?? []
-        sut.selectedCountry = "Test"
+        sut.selectedCountry = "en-gb"
         // When
         await sut.fetchTopHeadlines(state: .isLoading)
         // Then
@@ -94,8 +94,8 @@ struct ContentViewModelTests {
         // Given
         sut.apiKeyVersion = 2
         sut.articles = EntityMock.topHeadlines.articles ?? []
-        sut.countries = [EntityMock.sources.sources?.first?.country ?? "Test"]
-        sut.selectedCountry = "Test"
+        sut.countries = [EntityMock.sources.sources?.first?.country ?? "en-gb"]
+        sut.selectedCountry = "en-gb"
         sut.stateSources = .loaded
         sut.stateTopHeadlines = .loaded
         // When

@@ -16,63 +16,48 @@ final class DetailViewTests: XCTestCase {
     }
 
     /// Test share link to open share view steps:
-    /// 1) Close settings tip
-    /// 2) Open detail view
-    /// 3) Press share
+    /// 1) Open detail view
+    /// 1) Press share
     func testShareLink() {
-        let app = XCUIApplication()
-        app.launch()
-        app.closeSettingsTip()
-        if !app.isLimitedRequestAlertVisible {
-            let navigationLink = app.buttons["NavigationLink"]
-            if navigationLink.waitForExistence(timeout: 5) {
-                navigationLink.tap()
-                let shareLink = app.buttons["ShareLink"]
-                XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
-                shareLink.tap()
-            }
+        let app = XCUIApplication().appLaunch()
+        let navigationLink = app.buttons["NavigationLink"]
+        if navigationLink.waitForExistence(timeout: 5) {
+            navigationLink.tap()
+            let shareLink = app.buttons["ShareLink"]
+            XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
+            shareLink.tap()
         }
     }
 
     /// Test read button to open web view steps:
-    /// 1) Close settings tip
-    /// 2) Open detail view
-    /// 3) Press read
+    /// 1) Open detail view
+    /// 2) Press read
     func testReadButton() {
-        let app = XCUIApplication()
-        app.launch()
-        app.closeSettingsTip()
-        if !app.isLimitedRequestAlertVisible {
-            let navigationLink = app.buttons["NavigationLink"]
-            if navigationLink.waitForExistence(timeout: 5) {
-                navigationLink.tap()
-                let readButton = app.buttons["ReadButton"]
-                XCTAssertTrue(readButton.waitForExistence(timeout: 5))
-                readButton.tap()
-            }
+        let app = XCUIApplication().appLaunch()
+        let navigationLink = app.buttons["NavigationLink"]
+        if navigationLink.waitForExistence(timeout: 5) {
+            navigationLink.tap()
+            let readButton = app.buttons["ReadButton"]
+            XCTAssertTrue(readButton.waitForExistence(timeout: 5))
+            readButton.tap()
         }
     }
 
     /// Test close button of web view steps:
-    /// 1) Close settings tip
-    /// 2) Open detail view
-    /// 3) Press read
-    /// 4) Close web view
+    /// 1) Open detail view
+    /// 2) Press read
+    /// 3) Close web view
     func testCloseButton() {
-        let app = XCUIApplication()
-        app.launch()
-        app.closeSettingsTip()
-        if !app.isLimitedRequestAlertVisible {
-            let navigationLink = app.buttons["NavigationLink"]
-            if navigationLink.waitForExistence(timeout: 5) {
-                navigationLink.tap()
-                let readButton = app.buttons["ReadButton"]
-                XCTAssertTrue(readButton.waitForExistence(timeout: 5))
-                readButton.tap()
-                let closeButton = app.buttons["CloseButton"]
-                XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
-                closeButton.tap()
-            }
+        let app = XCUIApplication().appLaunch()
+        let navigationLink = app.buttons["NavigationLink"]
+        if navigationLink.waitForExistence(timeout: 5) {
+            navigationLink.tap()
+            let readButton = app.buttons["ReadButton"]
+            XCTAssertTrue(readButton.waitForExistence(timeout: 5))
+            readButton.tap()
+            let closeButton = app.buttons["CloseButton"]
+            XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
+            closeButton.tap()
         }
     }
 }

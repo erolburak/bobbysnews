@@ -17,7 +17,7 @@ struct ArticleDBExtensionTests {
         let articleAPI = EntityMock.articleAPI
         // When
         let articleDB = ArticleDB(from: articleAPI,
-                                  country: "Test")
+                                  country: "en-gb")
         // Then
         #expect(articleDB.author == articleAPI.author &&
             articleDB.content == articleAPI.content &&
