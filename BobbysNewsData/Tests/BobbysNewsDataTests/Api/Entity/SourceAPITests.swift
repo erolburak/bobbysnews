@@ -20,7 +20,7 @@ struct SourceAPITests {
         sourceAPI = EntityMock.sourceAPI
         // Then
         #expect(sourceAPI?.category == "Test" &&
-            sourceAPI?.country == "Test" &&
+            sourceAPI?.country == "en-gb" &&
             sourceAPI?.id == "Test" &&
             sourceAPI?.language == "Test" &&
             sourceAPI?.name == "Test" &&

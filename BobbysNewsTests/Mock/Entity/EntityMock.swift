@@ -12,7 +12,7 @@ enum EntityMock {
     // MARK: - Private Properties
 
     private static let source = Source(category: "Test",
-                                       country: "Test",
+                                       country: "en-gb",
                                        id: "Test",
                                        language: "Test",
                                        name: "Test",
@@ -23,7 +23,7 @@ enum EntityMock {
 
     static let article = Article(author: "Test",
                                  content: "Test",
-                                 country: "us",
+                                 country: "en-gb",
                                  publishedAt: .now,
                                  source: source,
                                  story: "Test",

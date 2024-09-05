@@ -23,7 +23,7 @@ struct TopHeadlinesTests {
             topHeadlines?.articles?.first?.content == "Test" &&
             topHeadlines?.articles?.first?.publishedAt == .distantPast &&
             topHeadlines?.articles?.first?.source?.category == "Test" &&
-            topHeadlines?.articles?.first?.source?.country == "Test" &&
+            topHeadlines?.articles?.first?.source?.country == "en-gb" &&
             topHeadlines?.articles?.first?.source?.id == "Test" &&
             topHeadlines?.articles?.first?.source?.language == "Test" &&
             topHeadlines?.articles?.first?.source?.name == "Test" &&

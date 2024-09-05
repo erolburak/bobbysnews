@@ -30,7 +30,7 @@ struct TopHeadlinesRepositoryTests {
                 "TopHeadlinesRepository fetch failed!")
         {
             try sut.fetch(apiKey: 1,
-                          country: "Test")
+                          country: "en-gb")
         }
     }
 
@@ -39,7 +39,7 @@ struct TopHeadlinesRepositoryTests {
         // Given
         var topHeadlines: [ArticleDB]?
         // When
-        topHeadlines = sut.read(country: "Test")
+        topHeadlines = sut.read(country: "en-gb")
         // Then
         #expect(topHeadlines?.count == 1,
                 "TopHeadlinesRepository read failed!")

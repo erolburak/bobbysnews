@@ -137,9 +137,13 @@ struct ContentView: View {
         .overlay(alignment: .center) {
             Group {
                 if viewModel.selectedCountry.isEmpty {
-                    ContentUnavailableView("EmptySelectedCountry",
-                                           systemImage: "flag.circle.fill",
-                                           description: Text("EmptySelectedCountryMessage"))
+                    ContentUnavailableView {
+                        Label("EmptySelectedCountry",
+                              systemImage: "flag.circle.fill")
+                    } description: {
+                        Text("EmptySelectedCountryMessage")
+                            .accessibilityIdentifier("EmptySelectedCountryMessage")
+                    }
                 } else {
                     switch viewModel.stateTopHeadlines {
                     case .isLoading:
@@ -270,6 +274,7 @@ private struct ListItem: View {
         }
         .padding(.horizontal)
         .padding(.vertical, 20)
+        .contentShape(.rect)
         .contextMenu {
             if let url = article.url {
                 ShareLink("Share",

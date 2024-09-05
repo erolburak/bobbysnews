@@ -21,7 +21,11 @@ public final class FetchSourcesUseCase: PFetchSourcesUseCase {
     // MARK: - Lifecycles
 
     public init(sourcesRepository: PSourcesRepository) {
-        self.sourcesRepository = sourcesRepository
+        if CommandLine.arguments.contains("–uitesting") {
+            self.sourcesRepository = SourcesRepositoryMock()
+        } else {
+            self.sourcesRepository = sourcesRepository
+        }
     }
 
     // MARK: - Methods
