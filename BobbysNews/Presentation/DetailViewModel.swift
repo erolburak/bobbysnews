@@ -22,6 +22,14 @@ final class DetailViewModel {
     }
 
     var navigationTitleOffset: CGFloat?
+    var navigationTitleOpacity: Double {
+        guard let titleScrollOffset
+        else {
+            return .zero
+        }
+        return titleScrollOffset > .zero ? .zero : 1
+    }
+
     var navigationTitleScrollOffset: CGFloat {
         guard let navigationTitleOffset,
               let titleScrollOffset

@@ -13,6 +13,7 @@ struct ContentView: View {
     // MARK: - Private Properties
 
     @AppStorage("country") private var country = ""
+    @Namespace private var animation
 
     // MARK: - Properties
 
@@ -24,14 +25,17 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 ForEach($viewModel.articles) { $article in
-                    NavigationLink(value: $article.wrappedValue) {
+                    NavigationLink {
+                        DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article))
+                            .navigationTransition(.zoom(sourceID: article.id,
+                                                        in: animation))
+                    } label: {
                         ListItem(article: $article,
                                  translationSessionConfiguration: viewModel.translationSessionConfiguration)
                     }
+                    .matchedTransitionSource(id: article.id,
+                                             in: animation)
                     .accessibilityIdentifier(article.id == viewModel.articles.first?.id ? "NavigationLink" : "")
-                }
-                .navigationDestination(for: Article.self) { article in
-                    DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article))
                 }
             }
             .navigationTitle("TopHeadlines")

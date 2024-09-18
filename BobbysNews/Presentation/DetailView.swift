@@ -19,23 +19,23 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text(viewModel.title)
-                    .font(.system(.subheadline,
-                                  weight: .black))
-                    .lineLimit(1)
-                    .frame(maxWidth: .infinity,
-                           alignment: .center)
-                    .onGeometryChange(for: CGFloat.self) { geometryProxy in
-                        geometryProxy.frame(in: .scrollView(axis: .vertical)).minY
-                    } action: { newValue in
-                        viewModel.titleScrollOffset = newValue
-                    }
+                Group {
+                    Text(viewModel.title)
+                        .font(.system(.subheadline,
+                                      weight: .black))
+                        .lineLimit(1)
+                        .onGeometryChange(for: CGFloat.self) { geometryProxy in
+                            geometryProxy.frame(in: .scrollView(axis: .vertical)).minY
+                        } action: { newValue in
+                            viewModel.titleScrollOffset = newValue
+                        }
 
-                Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-                    .font(.system(size: 8,
-                                  weight: .semibold))
-                    .frame(maxWidth: .infinity,
-                           alignment: .center)
+                    Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+                        .font(.system(size: 8,
+                                      weight: .semibold))
+                }
+                .frame(maxWidth: .infinity,
+                       alignment: .center)
 
                 Group {
                     if let urlToImage = viewModel.article.urlToImage {
@@ -117,13 +117,16 @@ struct DetailView: View {
             ToolbarItem(placement: .principal) {
                 VStack {
                     Text(viewModel.title)
-                        .font(.headline)
+                        .font(.system(.subheadline,
+                                      weight: .black))
+                        .lineLimit(1)
 
                     Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
                         .font(.system(size: 8,
                                       weight: .semibold))
                 }
                 .offset(y: viewModel.navigationTitleScrollOffset)
+                .opacity(viewModel.navigationTitleOpacity)
                 .onGeometryChange(for: CGFloat.self) { geometryProxy in
                     geometryProxy.size.height + 8
                 } action: { newValue in
