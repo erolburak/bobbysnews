@@ -36,6 +36,11 @@ struct DetailView: View {
                 }
                 .frame(maxWidth: .infinity,
                        alignment: .center)
+                .onGeometryChange(for: CGFloat.self) { geometryProxy in
+                    geometryProxy.size.height
+                } action: { newValue in
+                    viewModel.titleHeight = newValue
+                }
 
                 Group {
                     if let urlToImage = viewModel.article.urlToImage {
@@ -125,13 +130,7 @@ struct DetailView: View {
                         .font(.system(size: 8,
                                       weight: .semibold))
                 }
-                .offset(y: viewModel.navigationTitleScrollOffset)
                 .opacity(viewModel.navigationTitleOpacity)
-                .onGeometryChange(for: CGFloat.self) { geometryProxy in
-                    geometryProxy.size.height + 8
-                } action: { newValue in
-                    viewModel.navigationTitleOffset = newValue
-                }
             }
 
             if let url = viewModel.article.url {
