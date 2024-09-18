@@ -99,7 +99,6 @@ struct ContentView: View {
                                       systemImage: "key.fill")
                             }
                             .pickerStyle(.menu)
-                            .menuActionDismissBehavior(.disabled)
                             .accessibilityIdentifier("ApiKeyPicker")
                         }
 

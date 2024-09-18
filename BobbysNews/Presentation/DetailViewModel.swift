@@ -21,25 +21,14 @@ final class DetailViewModel {
         article.titleTranslation ?? article.title ?? String(localized: "EmptyArticleTitle")
     }
 
-    var navigationTitleOffset: CGFloat?
     var navigationTitleOpacity: Double {
-        guard let titleScrollOffset
+        guard let titleHeight,
+              let titleScrollOffset,
+              titleScrollOffset < .zero
         else {
             return .zero
         }
-        return titleScrollOffset > .zero ? .zero : 1
-    }
-
-    var navigationTitleScrollOffset: CGFloat {
-        guard let navigationTitleOffset,
-              let titleScrollOffset
-        else {
-            return .zero
-        }
-        if titleScrollOffset < .zero {
-            return max(.zero, navigationTitleOffset - abs(titleScrollOffset))
-        }
-        return navigationTitleOffset
+        return abs(titleScrollOffset) / titleHeight
     }
 
     var showWebView = false {
@@ -55,7 +44,8 @@ final class DetailViewModel {
         article.source?.name ?? String(localized: "EmptyArticleSource")
     }
 
-    var titleScrollOffset: CGFloat?
+    var titleHeight: Double?
+    var titleScrollOffset: Double?
     var webViewIsLoading = true
     var webViewShowError = false
 
