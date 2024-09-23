@@ -16,12 +16,13 @@ struct DetailViewModelTests {
         let article = EntityMock.article
         let detailViewModel: DetailViewModel?
         // When
-        detailViewModel = DetailViewModel(article: article)
+        detailViewModel = DetailViewModel(article: article,
+                                          articleImage: nil)
         // Then
         #expect(detailViewModel != nil &&
             detailViewModel?.article.author == article.author &&
             detailViewModel?.article.content == article.content &&
-            detailViewModel?.article.contentTranslation == nil &&
+            detailViewModel?.article.contentTranslated == nil &&
             detailViewModel?.article.publishedAt == article.publishedAt &&
             detailViewModel?.article.source?.category == article.source?.category &&
             detailViewModel?.article.source?.country == article.source?.country &&
@@ -32,7 +33,7 @@ struct DetailViewModelTests {
             detailViewModel?.article.source?.url == article.source?.url &&
             detailViewModel?.article.story == article.story &&
             detailViewModel?.article.title == article.title &&
-            detailViewModel?.article.titleTranslation == nil &&
+            detailViewModel?.article.titleTranslated == nil &&
             detailViewModel?.article.url == article.url &&
             detailViewModel?.article.urlToImage == article.urlToImage,
             "DetailViewModel initializing failed!")

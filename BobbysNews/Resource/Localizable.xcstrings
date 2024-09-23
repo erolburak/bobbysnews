@@ -98,6 +98,22 @@
         }
       }
     },
+    "Disable" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deaktivieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disable"
+          }
+        }
+      }
+    },
     "EmptyArticleAuthor" : {
       "localizations" : {
         "de" : {
@@ -305,6 +321,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select a country in the settings."
+          }
+        }
+      }
+    },
+    "EmptyTranslateTopHeadlines" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine übersetzten Schlagzeilen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No translated top headlines"
+          }
+        }
+      }
+    },
+    "EmptyTranslateTopHeadlinesMessage" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geladene übersetzte Schlagzeilen werden hier angezeigt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available translated top headlines are displayed here."
           }
         }
       }
@@ -768,6 +816,22 @@
         }
       }
     },
+    "TopHeadlinesTranslating" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlagzeilen werden übersetzt …"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Top headlines translating …"
+          }
+        }
+      }
+    },
     "Translate" : {
       "localizations" : {
         "de" : {
@@ -780,22 +844,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Translate"
-          }
-        }
-      }
-    },
-    "Translation" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Übersetzung"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Translation"
           }
         }
       }

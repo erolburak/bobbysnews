@@ -22,7 +22,7 @@ struct ArticleExtensionTests {
         // Then
         #expect(article.author == "Test" &&
             article.content == "Test" &&
-            article.contentTranslation == nil &&
+            article.contentTranslated == nil &&
             article.publishedAt == .distantPast &&
             article.source?.category == "Test" &&
             article.source?.country == "en-gb" &&
@@ -33,7 +33,7 @@ struct ArticleExtensionTests {
             article.source?.url == URL(string: "Test") &&
             article.story == "Test" &&
             article.title == "Test" &&
-            article.titleTranslation == nil &&
+            article.titleTranslated == nil &&
             article.url == URL(string: "Test") &&
             article.urlToImage == URL(string: "Test"),
             "ArticleExtension Article initializing failed!")

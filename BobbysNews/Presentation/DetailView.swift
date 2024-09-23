@@ -43,9 +43,14 @@ struct DetailView: View {
                 }
 
                 Group {
-                    if let urlToImage = viewModel.article.urlToImage {
+                    if let image = viewModel.articleImage {
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .containerRelativeFrame(.horizontal)
+                    } else if let urlToImage = viewModel.article.urlToImage {
                         AsyncImage(url: urlToImage,
-                                   transaction: .init(animation: .easeIn(duration: 0.75)))
+                                   transaction: Transaction(animation: .easeIn(duration: 0.75)))
                         { asyncImagePhase in
                             if let image = asyncImagePhase.image {
                                 image
@@ -182,7 +187,8 @@ struct DetailView: View {
 
 #Preview("DetailView") {
     NavigationStack {
-        DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: PreviewMock.article))
+        DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: PreviewMock.article,
+                                                                      articleImage: nil))
     }
 }
 

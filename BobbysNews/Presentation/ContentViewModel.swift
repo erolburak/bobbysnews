@@ -22,9 +22,9 @@ final class ContentViewModel {
 
     enum StateTopHeadlines {
         /// General States
-        case isLoading, loaded
+        case isLoading, loaded, isTranslating
         /// Empty States
-        case emptyFetch, emptyRead
+        case emptyFetch, emptyRead, emptyTranslate
     }
 
     struct SettingsTip: Tip {
@@ -83,17 +83,7 @@ final class ContentViewModel {
     var showConfirmationDialog = false
     var stateSources: StateSources = .isLoading
     var stateTopHeadlines: StateTopHeadlines = .isLoading
-    var translationBool = false {
-        willSet {
-            if newValue, translationSessionConfiguration == nil {
-                translationSessionConfiguration = TranslationSession.Configuration()
-            } else {
-                translationSessionConfiguration = nil
-                readTopHeadlines()
-            }
-        }
-    }
-
+    var translate = false
     var translationSessionConfiguration: TranslationSession.Configuration?
 
     // MARK: - Lifecycles
@@ -161,6 +151,7 @@ final class ContentViewModel {
             selectedCountry = ""
             stateSources = .emptyRead
             stateTopHeadlines = .emptyRead
+            translate = false
             sensoryFeedbackTrigger(feedback: .success)
         } catch {
             showAlert(error: .reset)
@@ -169,6 +160,59 @@ final class ContentViewModel {
 
     func showSettingsTip() throws {
         SettingsTip.show = true
+    }
+
+    func translate(translate: Bool) {
+        if translate, translationSessionConfiguration == nil {
+            translationSessionConfiguration = TranslationSession.Configuration()
+        } else if translate {
+            translationSessionConfiguration?.invalidate()
+        } else {
+            readTopHeadlines()
+        }
+    }
+
+    @MainActor
+    func translate(translateSession: TranslationSession) async {
+        stateTopHeadlines = .isTranslating
+        var contentRequests: [TranslationSession.Request]? = []
+        var titleRequests: [TranslationSession.Request]? = []
+        for (index, article) in articles.enumerated() {
+            if let content = article.content {
+                contentRequests?.append(TranslationSession.Request(sourceText: content,
+                                                                   clientIdentifier: "\(index)"))
+            }
+            if let title = article.title {
+                titleRequests?.append(TranslationSession.Request(sourceText: title,
+                                                                 clientIdentifier: "\(index)"))
+            }
+        }
+        do {
+            if let contentRequests,
+               !contentRequests.isEmpty
+            {
+                for try await response in translateSession.translate(batch: contentRequests) {
+                    guard let index = Int(response.clientIdentifier ?? "") else {
+                        continue
+                    }
+                    articles[index].contentTranslated = response.targetText
+                }
+            }
+            if let titleRequests,
+               !titleRequests.isEmpty
+            {
+                for try await response in translateSession.translate(batch: titleRequests) {
+                    guard let index = Int(response.clientIdentifier ?? "") else {
+                        continue
+                    }
+                    articles[index].titleTranslated = response.targetText
+                }
+            }
+            updateStateTopHeadlines(state: contentRequests?.isEmpty == true && titleRequests?.isEmpty == true ? .emptyTranslate : .loaded)
+        } catch {
+            updateStateTopHeadlines(error: error,
+                                    state: .emptyTranslate)
+        }
     }
 
     private func configureTipKit() {

@@ -6,6 +6,7 @@
 //
 
 import BobbysNewsDomain
+import SwiftUI
 
 final class ViewModelFactory {
     // MARK: - Private Properties
@@ -28,7 +29,10 @@ final class ViewModelFactory {
                          readTopHeadlinesUseCase: useCaseFactory.readTopHeadlinesUseCase)
     }
 
-    func detailViewModel(article: Article) -> DetailViewModel {
-        DetailViewModel(article: article)
+    func detailViewModel(article: Article,
+                         articleImage: Image?) -> DetailViewModel
+    {
+        DetailViewModel(article: article,
+                        articleImage: articleImage)
     }
 }
