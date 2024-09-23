@@ -25,7 +25,7 @@ struct ArticleExtensionTests {
             article.contentTranslated == nil &&
             article.publishedAt == .distantPast &&
             article.source?.category == "Test" &&
-            article.source?.country == "en-gb" &&
+            article.source?.country == "uk" &&
             article.source?.id == "Test" &&
             article.source?.language == "Test" &&
             article.source?.name == "Test" &&

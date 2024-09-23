@@ -19,7 +19,7 @@ struct TopHeadlinesNetworkControllerTests {
     func testFetch() throws {
         // Given
         let apiKey = 1
-        let country = "en-gb"
+        let country = "uk"
         // When
         let topHeadlinesAPI = try sut.fetch(apiKey: apiKey,
                                             country: country)

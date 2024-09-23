@@ -162,16 +162,6 @@ final class ContentViewModel {
         SettingsTip.show = true
     }
 
-    func translate(translate: Bool) {
-        if translate, translationSessionConfiguration == nil {
-            translationSessionConfiguration = TranslationSession.Configuration()
-        } else if translate {
-            translationSessionConfiguration?.invalidate()
-        } else {
-            readTopHeadlines()
-        }
-    }
-
     @MainActor
     func translate(translateSession: TranslationSession) async {
         stateTopHeadlines = .isTranslating
@@ -212,6 +202,16 @@ final class ContentViewModel {
         } catch {
             updateStateTopHeadlines(error: error,
                                     state: .emptyTranslate)
+        }
+    }
+
+    func translateConfiguration() {
+        if translate, translationSessionConfiguration == nil {
+            translationSessionConfiguration = TranslationSession.Configuration()
+        } else if translate {
+            translationSessionConfiguration?.invalidate()
+        } else {
+            readTopHeadlines()
         }
     }
 

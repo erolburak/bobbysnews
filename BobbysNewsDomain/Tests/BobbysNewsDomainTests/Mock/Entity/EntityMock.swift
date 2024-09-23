@@ -21,7 +21,7 @@ struct EntityMock {
                                    .read,
                                    .reset]
     static let sources = Sources(sources: [Source(category: "Test",
-                                                  country: "en-gb",
+                                                  country: "uk",
                                                   id: "Test",
                                                   language: "Test",
                                                   name: "Test",
@@ -29,7 +29,7 @@ struct EntityMock {
                                                   url: URL(string: "Test"))])
     static let topHeadlines = TopHeadlines(articles: [Article(author: "Test",
                                                               content: "Test",
-                                                              country: "en-gb",
+                                                              country: "uk",
                                                               publishedAt: .distantPast,
                                                               source: sources.sources?.first,
                                                               story: "Test",
@@ -42,7 +42,7 @@ struct EntityMock {
         let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
         articleDB.author = "Test"
         articleDB.content = "Test"
-        articleDB.country = "en-gb"
+        articleDB.country = "uk"
         articleDB.publishedAt = .distantPast
         articleDB.source = sourceDB
         articleDB.story = "Test"
@@ -55,7 +55,7 @@ struct EntityMock {
     lazy var sourceDB = {
         let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
         sourceDB.category = "Test"
-        sourceDB.country = "en-gb"
+        sourceDB.country = "uk"
         sourceDB.id = "Test"
         sourceDB.language = "Test"
         sourceDB.name = "Test"

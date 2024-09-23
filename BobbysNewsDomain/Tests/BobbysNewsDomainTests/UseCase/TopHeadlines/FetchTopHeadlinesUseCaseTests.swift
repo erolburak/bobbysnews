@@ -26,7 +26,7 @@ struct FetchTopHeadlinesUseCaseTests {
     func testFetch() async throws {
         // Given
         let apiKey = 1
-        let country = "en-gb"
+        let country = "uk"
         // When
         try await sut.fetch(apiKey: apiKey,
                             country: country)

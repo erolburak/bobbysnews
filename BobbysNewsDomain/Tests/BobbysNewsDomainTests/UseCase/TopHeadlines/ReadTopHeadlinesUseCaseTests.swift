@@ -19,7 +19,7 @@ struct ReadApiHeadlinesUseCaseTests {
     @Test("Check ReadTopHeadlinesUseCase read!")
     func testRead() throws {
         // Given
-        let country = "en-gb"
+        let country = "uk"
         var topHeadlines: TopHeadlines?
         // When
         topHeadlines = try sut.read(country: country)
