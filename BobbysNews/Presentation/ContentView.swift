@@ -13,7 +13,6 @@ struct ContentView: View {
     // MARK: - Private Properties
 
     @AppStorage("country") private var country = ""
-    @Namespace private var animation
 
     // MARK: - Properties
 
@@ -25,17 +24,7 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 ForEach($viewModel.articles) { $article in
-                    NavigationLink {
-                        DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article))
-                            .navigationTransition(.zoom(sourceID: article.id,
-                                                        in: animation))
-                    } label: {
-                        ListItem(article: $article,
-                                 translationSessionConfiguration: viewModel.translationSessionConfiguration)
-                    }
-                    .matchedTransitionSource(id: article.id,
-                                             in: animation)
-                    .accessibilityIdentifier(article.id == viewModel.articles.first?.id ? "NavigationLink" : "")
+                    ListItem(article: $article)
                 }
             }
             .navigationTitle("TopHeadlines")
@@ -77,13 +66,14 @@ struct ContentView: View {
                                     }
                                 }
                             }
+                            .menuActionDismissBehavior(.disabled)
                         }
 
                         Section {
-                            Toggle("Translation",
+                            Toggle("Translate",
                                    systemImage: "translate",
-                                   isOn: $viewModel.translationBool)
-                                .accessibilityIdentifier("TranslationToggle")
+                                   isOn: $viewModel.translate)
+                                .accessibilityIdentifier("TranslateToggle")
                         }
 
                         Section {
@@ -149,8 +139,8 @@ struct ContentView: View {
                     }
                 } else {
                     switch viewModel.stateTopHeadlines {
-                    case .isLoading:
-                        Text("TopHeadlinesLoading")
+                    case .isLoading, .isTranslating:
+                        Text(viewModel.stateTopHeadlines == .isLoading ? "TopHeadlinesLoading" : "TopHeadlinesTranslating")
                             .fontWeight(.black)
                     case .loaded:
                         EmptyView()
@@ -171,6 +161,22 @@ struct ContentView: View {
                                           weight: .black))
                             .foregroundStyle(.secondary)
                             .accessibilityIdentifier("RefreshButton")
+                        }
+                    case .emptyTranslate:
+                        ContentUnavailableView {
+                            Label("EmptyTranslateTopHeadlines",
+                                  systemImage: "translate")
+                        } description: {
+                            Text("EmptyTranslateTopHeadlinesMessage")
+                        } actions: {
+                            Button("Disable") {
+                                viewModel.translate = false
+                            }
+                            .textCase(.uppercase)
+                            .font(.system(.subheadline,
+                                          weight: .black))
+                            .foregroundStyle(.secondary)
+                            .accessibilityIdentifier("DisableButton")
                         }
                     }
                 }
@@ -200,6 +206,12 @@ struct ContentView: View {
         .sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
             viewModel.sensoryFeedback
         }
+        .onChange(of: viewModel.translate) { _, newValue in
+            viewModel.translate(translate: newValue)
+        }
+        .translationTask(viewModel.translationSessionConfiguration) { translateSession in
+            await viewModel.translate(translateSession: translateSession)
+        }
     }
 }
 
@@ -210,106 +222,109 @@ struct ContentView: View {
 private struct ListItem: View {
     // MARK: - Private Properties
 
+    @Namespace private var animation
+    @State private var articleImage: Image?
     @State private var showTranslationPresentation = false
     @State private var translationPresentationText = ""
 
     // MARK: - Properties
 
     @Binding var article: Article
-    let translationSessionConfiguration: TranslationSession.Configuration?
 
     // MARK: - Layouts
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(article.source?.name ?? String(localized: "EmptyArticleSource"))
-                    .font(.system(.subheadline,
-                                  weight: .black))
-                    .lineLimit(1)
+        NavigationLink {
+            DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article,
+                                                                          articleImage: articleImage))
+                .navigationTransition(.zoom(sourceID: article.id,
+                                            in: animation))
+        } label: {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(article.source?.name ?? String(localized: "EmptyArticleSource"))
+                        .font(.system(.subheadline,
+                                      weight: .black))
+                        .lineLimit(1)
 
-                Text(article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-                    .font(.system(size: 8,
-                                  weight: .semibold))
+                    Text(article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+                        .font(.system(size: 8,
+                                      weight: .semibold))
+
+                    Spacer()
+
+                    Text((article.titleTranslated ?? article.title) ?? String(localized: "EmptyArticleTitle"))
+                        .font(.system(.subheadline,
+                                      weight: .semibold))
+                        .lineLimit(2)
+                }
+                .multilineTextAlignment(.leading)
 
                 Spacer()
 
-                Text((translationSessionConfiguration == nil ? article.title : article.titleTranslation) ?? String(localized: "EmptyArticleTitle"))
-                    .font(.system(.subheadline,
-                                  weight: .semibold))
-                    .lineLimit(2)
-            }
-            .multilineTextAlignment(.leading)
-
-            Spacer()
-
-            Group {
-                if let urlToImage = article.urlToImage {
-                    AsyncImage(url: urlToImage,
-                               transaction: .init(animation: .easeIn(duration: 0.75)))
-                    { asyncImagePhase in
-                        if let image = asyncImagePhase.image {
-                            image
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 80,
-                                       height: 80,
-                                       alignment: .center)
-                                .clipped()
-                        } else {
-                            ProgressView()
+                Group {
+                    if let urlToImage = article.urlToImage {
+                        AsyncImage(url: urlToImage,
+                                   transaction: Transaction(animation: .easeIn(duration: 0.75)))
+                        { asyncImagePhase in
+                            if let image = asyncImagePhase.image {
+                                image
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 80,
+                                           height: 80,
+                                           alignment: .center)
+                                    .clipped()
+                                    .onAppear {
+                                        articleImage = image
+                                    }
+                            } else {
+                                ProgressView()
+                            }
                         }
+                    } else {
+                        Image(systemName: "photo.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 24)
+                            .foregroundStyle(.gray)
+                            .symbolEffect(.bounce,
+                                          options: .nonRepeating)
                     }
-                } else {
-                    Image(systemName: "photo.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 24)
-                        .foregroundStyle(.gray)
-                        .symbolEffect(.bounce,
-                                      options: .nonRepeating)
                 }
+                .frame(width: 80,
+                       height: 80)
+                .background(.bar)
+                .clipShape(.rect(cornerRadius: 12))
             }
-            .frame(width: 80,
-                   height: 80)
-            .background(.bar)
-            .clipShape(.rect(cornerRadius: 12))
-        }
-        .padding(.horizontal)
-        .padding(.vertical, 20)
-        .contentShape(.rect)
-        .contextMenu {
-            if let url = article.url {
-                ShareLink("Share",
-                          item: url)
-                    .accessibilityIdentifier("ShareLink")
-            }
-            if let title = article.title {
-                Button("Translate",
-                       systemImage: "translate")
-                {
-                    translationPresentationText = title
-                    showTranslationPresentation = true
-                }
-                .accessibilityIdentifier("TranslateButton")
-            }
-        }
-        .translationPresentation(isPresented: $showTranslationPresentation,
-                                 text: translationPresentationText)
-        .translationTask(translationSessionConfiguration) { session in
-            Task {
-                if let content = article.content {
-                    article.contentTranslation = try await session.translate(content).targetText
+            .padding(.horizontal)
+            .padding(.vertical, 20)
+            .contentShape(.rect)
+            .contextMenu {
+                if let url = article.url {
+                    ShareLink("Share",
+                              item: url)
+                        .accessibilityIdentifier("ShareLink")
                 }
                 if let title = article.title {
-                    article.titleTranslation = try await session.translate(title).targetText
+                    Button("Translate",
+                           systemImage: "translate")
+                    {
+                        translationPresentationText = title
+                        showTranslationPresentation = true
+                    }
+                    .accessibilityIdentifier("TranslateButton")
                 }
             }
+            .translationPresentation(isPresented: $showTranslationPresentation,
+                                     text: translationPresentationText)
         }
+        .matchedTransitionSource(id: article.id,
+                                 in: animation)
+        .accessibilityIdentifier("NavigationLink")
     }
 }
 
 #Preview("ListItem") {
-    ListItem(article: .constant(PreviewMock.article),
-             translationSessionConfiguration: nil)
+    ListItem(article: .constant(PreviewMock.article))
 }

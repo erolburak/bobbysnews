@@ -30,7 +30,8 @@ struct ViewModelFactoryTests {
         // Given
         let detailViewModel: DetailViewModel?
         // When
-        detailViewModel = sut.detailViewModel(article: EntityMock.article)
+        detailViewModel = sut.detailViewModel(article: EntityMock.article,
+                                              articleImage: nil)
         // Then
         #expect(detailViewModel != nil,
                 "DetailViewModel initializing failed!")

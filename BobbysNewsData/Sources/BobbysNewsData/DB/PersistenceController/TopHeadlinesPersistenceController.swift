@@ -41,7 +41,9 @@ final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceControlle
         try PersistenceController.shared.backgroundContext.performAndWait {
             let existingArticles = try PersistenceController.shared.backgroundContext.fetch(ArticleDB.fetchRequest())
             topHeadlinesAPI.articles?.forEach { articleAPI in
-                guard articleAPI.title?.isEmpty == false else {
+                guard articleAPI.title?.localizedCaseInsensitiveContains("[removed]") == false,
+                      articleAPI.content?.localizedCaseInsensitiveContains("[removed]") == false
+                else {
                     return
                 }
                 let existingArticle = existingArticles.first { $0.title == articleAPI.title }

@@ -6,7 +6,7 @@
 //
 
 import BobbysNewsDomain
-import Foundation
+import SwiftUI
 
 @Observable
 final class DetailViewModel {
@@ -14,11 +14,13 @@ final class DetailViewModel {
 
     var article: Article
     var articleContent: String {
-        article.contentTranslation ?? article.content ?? String(localized: "EmptyArticleContent")
+        article.contentTranslated ?? article.content ?? String(localized: "EmptyArticleContent")
     }
 
+    var articleImage: Image?
+
     var articleTitle: String {
-        article.titleTranslation ?? article.title ?? String(localized: "EmptyArticleTitle")
+        article.titleTranslated ?? article.title ?? String(localized: "EmptyArticleTitle")
     }
 
     var navigationTitleOpacity: Double {
@@ -51,7 +53,10 @@ final class DetailViewModel {
 
     // MARK: - Lifecycles
 
-    init(article: Article) {
+    init(article: Article,
+         articleImage: Image?)
+    {
         self.article = article
+        self.articleImage = articleImage
     }
 }
