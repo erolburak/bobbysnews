@@ -21,7 +21,7 @@ struct SourceExtensionTests {
         let source = Source(from: sourceDB)
         // Then
         #expect(source?.category == "Test" &&
-            source?.country == "en-gb" &&
+            source?.country == "uk" &&
             source?.id == "Test" &&
             source?.language == "Test" &&
             source?.name == "Test" &&

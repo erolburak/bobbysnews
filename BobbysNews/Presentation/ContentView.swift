@@ -206,8 +206,8 @@ struct ContentView: View {
         .sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
             viewModel.sensoryFeedback
         }
-        .onChange(of: viewModel.translate) { _, newValue in
-            viewModel.translate(translate: newValue)
+        .onChange(of: viewModel.translate) {
+            viewModel.translateConfiguration()
         }
         .translationTask(viewModel.translationSessionConfiguration) { translateSession in
             await viewModel.translate(translateSession: translateSession)

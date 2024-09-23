@@ -23,7 +23,7 @@ struct TopHeadlinesAPITests {
             topHeadlinesAPI?.articles?.first?.content == "Test" &&
             topHeadlinesAPI?.articles?.first?.publishedAt == .distantPast &&
             topHeadlinesAPI?.articles?.first?.source?.category == "Test" &&
-            topHeadlinesAPI?.articles?.first?.source?.country == "en-gb" &&
+            topHeadlinesAPI?.articles?.first?.source?.country == "uk" &&
             topHeadlinesAPI?.articles?.first?.source?.id == "Test" &&
             topHeadlinesAPI?.articles?.first?.source?.language == "Test" &&
             topHeadlinesAPI?.articles?.first?.source?.name == "Test" &&

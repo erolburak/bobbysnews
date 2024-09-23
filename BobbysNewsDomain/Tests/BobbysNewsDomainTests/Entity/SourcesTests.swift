@@ -20,7 +20,7 @@ struct SourcesTests {
         sources = EntityMock.sources
         // Then
         #expect(sources?.sources?.first?.category == "Test" &&
-            sources?.sources?.first?.country == "en-gb" &&
+            sources?.sources?.first?.country == "uk" &&
             sources?.sources?.first?.id == "Test" &&
             sources?.sources?.first?.language == "Test" &&
             sources?.sources?.first?.name == "Test" &&

@@ -23,7 +23,7 @@ struct ArticleAPITests {
             articleAPI?.content == "Test" &&
             articleAPI?.publishedAt == .distantPast &&
             articleAPI?.source?.category == "Test" &&
-            articleAPI?.source?.country == "en-gb" &&
+            articleAPI?.source?.country == "uk" &&
             articleAPI?.source?.id == "Test" &&
             articleAPI?.source?.language == "Test" &&
             articleAPI?.source?.name == "Test" &&
