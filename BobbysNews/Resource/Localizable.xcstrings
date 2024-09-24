@@ -441,6 +441,22 @@
         }
       }
     },
+    "ErrorDescriptionNoNetworkConnection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Netzwerkverbindung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No network connection"
+          }
+        }
+      }
+    },
     "ErrorDescriptionRead" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -571,6 +587,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to fetch. Please try again with a different API key. Developer accounts limited to 100 requests over a 24 hour period (50 requests available every 12 hours). Upgrade to a paid plan if more requests needed."
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionNoNetworkConnection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Netzwerkverbindung. Bitte versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No network connection. Please try again."
           }
         }
       }

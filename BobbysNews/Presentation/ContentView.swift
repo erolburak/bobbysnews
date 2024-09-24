@@ -193,8 +193,7 @@ struct ContentView: View {
             }
         }
         .task {
-            viewModel.onAppear(selectedCountry: country)
-            await viewModel.fetchSources()
+            await viewModel.onAppear(selectedCountry: country)
         }
         .onChange(of: viewModel.selectedCountry) { _, newValue in
             country = newValue

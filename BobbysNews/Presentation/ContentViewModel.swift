@@ -6,6 +6,7 @@
 //
 
 import BobbysNewsDomain
+import Network
 import TipKit
 import Translation
 
@@ -53,6 +54,10 @@ final class ContentViewModel {
     private let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase
     private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
     private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
+
+    // MARK: - Private Properties
+
+    private var noNetworkConnection = false
 
     // MARK: - Properties
 
@@ -104,14 +109,20 @@ final class ContentViewModel {
         configureTipKit()
     }
 
-    func onAppear(selectedCountry: String) {
+    @MainActor
+    func onAppear(selectedCountry: String) async {
+        await checkNetworkConnection()
         self.selectedCountry = selectedCountry
         readSources()
         readTopHeadlines()
+        await fetchSources()
     }
 
     @MainActor
     func fetchSources(sensoryFeedback _: Bool? = nil) async {
+        guard !noNetworkConnection else {
+            return showAlert(error: .noNetworkConnection)
+        }
         stateSources = .isLoading
         do {
             try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)
@@ -124,6 +135,9 @@ final class ContentViewModel {
 
     @MainActor
     func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
+        guard !noNetworkConnection else {
+            return showAlert(error: .noNetworkConnection)
+        }
         if !selectedCountry.isEmpty {
             if let state {
                 stateTopHeadlines = state
@@ -140,22 +154,23 @@ final class ContentViewModel {
     }
 
     func reset() {
-        do {
-            /// Delete all persisted sources
-            try deleteSourcesUseCase.delete()
-            /// Delete all persisted topHeadlines
-            try deleteTopHeadlinesUseCase.delete()
-            apiKeyVersion = 1
-            articles.removeAll()
-            countries.removeAll()
-            selectedCountry = ""
-            stateSources = .emptyRead
-            stateTopHeadlines = .emptyRead
-            translate = false
-            sensoryFeedbackTrigger(feedback: .success)
-        } catch {
-            showAlert(error: .reset)
-        }
+//        do {
+//            /// Delete all persisted sources
+//            try deleteSourcesUseCase.delete()
+//            /// Delete all persisted topHeadlines
+//            try deleteTopHeadlinesUseCase.delete()
+//            apiKeyVersion = 1
+//            articles.removeAll()
+//            countries.removeAll()
+//            selectedCountry = ""
+//            stateSources = .emptyRead
+//            stateTopHeadlines = .emptyRead
+//            translate = false
+//            sensoryFeedbackTrigger(feedback: .success)
+//        } catch {
+//            showAlert(error: .reset)
+//        }
+        showAlert(error: .noNetworkConnection)
     }
 
     func showSettingsTip() throws {
@@ -163,6 +178,10 @@ final class ContentViewModel {
     }
 
     func translate(translate: Bool) {
+        guard !noNetworkConnection else {
+            self.translate = false
+            return showAlert(error: .noNetworkConnection)
+        }
         if translate, translationSessionConfiguration == nil {
             translationSessionConfiguration = TranslationSession.Configuration()
         } else if translate {
@@ -170,6 +189,7 @@ final class ContentViewModel {
         } else {
             readTopHeadlines()
         }
+        sensoryFeedbackTrigger(feedback: .success)
     }
 
     @MainActor
@@ -212,6 +232,18 @@ final class ContentViewModel {
         } catch {
             updateStateTopHeadlines(error: error,
                                     state: .emptyTranslate)
+        }
+    }
+
+    @MainActor
+    private func checkNetworkConnection() async {
+        for await path in NWPathMonitor() {
+            if path.status == .unsatisfied {
+                noNetworkConnection = true
+                showAlert(error: .noNetworkConnection)
+            } else {
+                noNetworkConnection = false
+            }
         }
     }
 
