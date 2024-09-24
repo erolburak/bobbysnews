@@ -6,10 +6,20 @@
 //
 
 import BobbysNewsDomain
+import Network
 import SwiftUI
 
 @Observable
 final class DetailViewModel {
+    // MARK: - Type Definitions
+
+    enum StateWebView {
+        /// General States
+        case isLoading, loaded
+        /// Error States
+        case error, noNetworkConnection
+    }
+
     // MARK: - Properties
 
     var article: Article
@@ -33,23 +43,14 @@ final class DetailViewModel {
         return abs(titleScrollOffset) / titleHeight
     }
 
-    var showWebView = false {
-        willSet {
-            if !newValue {
-                webViewIsLoading = true
-                webViewShowError = false
-            }
-        }
-    }
-
+    var showWebView = false
+    var stateWebView: StateWebView = .isLoading
     var title: String {
         article.source?.name ?? String(localized: "EmptyArticleSource")
     }
 
     var titleHeight: Double?
     var titleScrollOffset: Double?
-    var webViewIsLoading = true
-    var webViewShowError = false
 
     // MARK: - Lifecycles
 
@@ -58,5 +59,20 @@ final class DetailViewModel {
     {
         self.article = article
         self.articleImage = articleImage
+    }
+
+    // MARK: - Methods
+
+    @MainActor
+    func onAppear() async {
+        Task {
+            await checkNetworkConnection()
+        }
+    }
+
+    private func checkNetworkConnection() async {
+        for await path in NWPathMonitor() {
+            stateWebView = path.status == .unsatisfied ? .noNetworkConnection : .isLoading
+        }
     }
 }

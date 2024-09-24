@@ -6,6 +6,7 @@
 //
 
 import BobbysNewsDomain
+import Network
 import TipKit
 import Translation
 
@@ -104,17 +105,26 @@ final class ContentViewModel {
         configureTipKit()
     }
 
-    func onAppear(selectedCountry: String) {
+    // MARK: - Methods
+
+    @MainActor
+    func onAppear(selectedCountry: String) async {
         self.selectedCountry = selectedCountry
         readSources()
         readTopHeadlines()
+        await fetchSources()
     }
 
     @MainActor
-    func fetchSources(sensoryFeedback _: Bool? = nil) async {
+    func fetchSources(sensoryFeedback: Bool? = nil) async {
+        if sensoryFeedback == true {
+            sensoryFeedbackTrigger(feedback: .success)
+        }
         stateSources = .isLoading
         do {
-            try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)
+            if await checkNetworkConnection() == true {
+                try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)
+            }
             readSources()
         } catch {
             updateStateSources(error: error,
@@ -123,14 +133,21 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
+    func fetchTopHeadlines(state: StateTopHeadlines? = nil,
+                           sensoryFeedback: Bool? = nil) async
+    {
+        if sensoryFeedback == true {
+            sensoryFeedbackTrigger(feedback: .success)
+        }
         if !selectedCountry.isEmpty {
             if let state {
                 stateTopHeadlines = state
             }
             do {
-                try await fetchTopHeadlinesUseCase.fetch(apiKey: apiKeyVersion,
-                                                         country: selectedCountry)
+                if await checkNetworkConnection() == true {
+                    try await fetchTopHeadlinesUseCase.fetch(apiKey: apiKeyVersion,
+                                                             country: selectedCountry)
+                }
                 readTopHeadlines()
             } catch {
                 updateStateTopHeadlines(error: error,
@@ -139,7 +156,8 @@ final class ContentViewModel {
         }
     }
 
-    func reset() {
+    @MainActor
+    func reset() async {
         do {
             /// Delete all persisted sources
             try deleteSourcesUseCase.delete()
@@ -152,9 +170,13 @@ final class ContentViewModel {
             stateSources = .emptyRead
             stateTopHeadlines = .emptyRead
             translate = false
-            sensoryFeedbackTrigger(feedback: .success)
+            await MainActor.run {
+                sensoryFeedbackTrigger(feedback: .success)
+            }
         } catch {
-            showAlert(error: .reset)
+            await MainActor.run {
+                showAlert(error: .reset)
+            }
         }
     }
 
@@ -205,7 +227,12 @@ final class ContentViewModel {
         }
     }
 
-    func translateConfiguration() {
+    @MainActor
+    func translateConfiguration() async {
+        guard await checkNetworkConnection() == true else {
+            translate = false
+            return
+        }
         if translate, translationSessionConfiguration == nil {
             translationSessionConfiguration = TranslationSession.Configuration()
         } else if translate {
@@ -213,11 +240,25 @@ final class ContentViewModel {
         } else {
             readTopHeadlines()
         }
+        sensoryFeedbackTrigger(feedback: .success)
     }
 
     private func configureTipKit() {
         try? Tips.configure([.displayFrequency(.immediate),
                              .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
+    }
+
+    @MainActor
+    private func checkNetworkConnection() async -> Bool? {
+        for await path in NWPathMonitor() {
+            if path.status == .unsatisfied {
+                showAlert(error: .noNetworkConnection)
+                return false
+            } else {
+                return true
+            }
+        }
+        return nil
     }
 
     private func readSources() {

@@ -149,14 +149,14 @@ struct DetailView: View {
             if let url = viewModel.article.url {
                 NavigationStack {
                     Group {
-                        if !viewModel.webViewShowError {
-                            WebView(isLoading: $viewModel.webViewIsLoading,
-                                    showError: $viewModel.webViewShowError,
+                        switch viewModel.stateWebView {
+                        case .isLoading, .loaded:
+                            WebView(stateWebView: $viewModel.stateWebView,
                                     url: url)
-                        } else {
-                            ContentUnavailableView("ErrorWebView",
-                                                   systemImage: "newspaper.circle.fill",
-                                                   description: Text("ErrorWebViewMessage"))
+                        case .error, .noNetworkConnection:
+                            ContentUnavailableView(viewModel.stateWebView == .error ? "ErrorWebView" : "ErrorDescriptionNoNetworkConnection",
+                                                   systemImage: viewModel.stateWebView == .error ? "newspaper.circle.fill" : "network.slash",
+                                                   description: Text(viewModel.stateWebView == .error ? "ErrorWebViewMessage" : "ErrorRecoverySuggestionNoNetworkConnection"))
                                 .symbolEffect(.bounce,
                                               options: .nonRepeating)
                         }
@@ -175,12 +175,15 @@ struct DetailView: View {
                         }
                     }
                     .overlay {
-                        if viewModel.webViewIsLoading {
+                        if viewModel.stateWebView == .isLoading {
                             ProgressView()
                         }
                     }
                 }
             }
+        }
+        .task {
+            await viewModel.onAppear()
         }
     }
 }
@@ -195,8 +198,7 @@ struct DetailView: View {
 private struct WebView: UIViewRepresentable {
     // MARK: - Properties
 
-    @Binding var isLoading: Bool
-    @Binding var showError: Bool
+    @Binding var stateWebView: DetailViewModel.StateWebView
     let url: URL
 
     // MARK: - Methods
@@ -235,28 +237,27 @@ private struct WebView: UIViewRepresentable {
         func webView(_: WKWebView,
                      didStartProvisionalNavigation _: WKNavigation!)
         {
-            parent.isLoading = true
+            parent.stateWebView = .isLoading
         }
 
         func webView(_: WKWebView,
                      didFail _: WKNavigation!,
                      withError _: any Error)
         {
-            parent.showError = true
+            parent.stateWebView = .error
         }
 
         func webView(_: WKWebView,
                      didFinish _: WKNavigation!)
         {
-            parent.isLoading = false
+            parent.stateWebView = .loaded
         }
     }
 }
 
 #Preview("WebView") {
     if let url = URL(string: "https://github.com/erolburak/bobbysnews") {
-        WebView(isLoading: .constant(false),
-                showError: .constant(false),
+        WebView(stateWebView: .constant(.loaded),
                 url: url)
     }
 }

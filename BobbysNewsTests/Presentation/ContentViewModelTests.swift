@@ -49,12 +49,12 @@ struct ContentViewModelTests {
     }
 
     @Test("Check ContentViewModel onAppear!")
-    func testOnAppear() async throws {
+    @MainActor
+    func testOnAppear() async {
         // Given
         sut.selectedCountry = "uk"
         // When
-        sut.onAppear(selectedCountry: sut.selectedCountry)
-        try await Task.sleep(for: .seconds(2))
+        await sut.onAppear(selectedCountry: sut.selectedCountry)
         // Then
         #expect(sut.articles.count == 1 &&
             sut.countries.count == 1 &&
@@ -101,7 +101,8 @@ struct ContentViewModelTests {
     }
 
     @Test("Check ContentViewModel reset!")
-    func testReset() {
+    @MainActor
+    func testReset() async {
         // Given
         sut.apiKeyVersion = 2
         sut.articles = EntityMock.topHeadlines.articles ?? []
@@ -111,7 +112,7 @@ struct ContentViewModelTests {
         sut.stateTopHeadlines = .loaded
         sut.translate = true
         // When
-        sut.reset()
+        await sut.reset()
         // Then
         #expect(sut.apiKeyVersion == 1 &&
             sut.articles.isEmpty &&
@@ -124,12 +125,13 @@ struct ContentViewModelTests {
     }
 
     @Test("Check ContentViewModel translateConfiguration!")
-    func testTranslateConfiguration() {
+    @MainActor
+    func testTranslateConfiguration() async {
         // Given
         sut.translate = true
         sut.translationSessionConfiguration = nil
         // When
-        sut.translateConfiguration()
+        await sut.translateConfiguration()
         // Then
         #expect(sut.translate &&
             sut.translationSessionConfiguration != nil,

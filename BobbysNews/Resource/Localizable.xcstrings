@@ -392,6 +392,7 @@
       }
     },
     "ErrorDescriptionFetchTopHeadlines" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -441,6 +442,22 @@
         }
       }
     },
+    "ErrorDescriptionNoNetworkConnection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Netzwerkverbindung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No network connection"
+          }
+        }
+      }
+    },
     "ErrorDescriptionRead" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -459,6 +476,7 @@
       }
     },
     "ErrorDescriptionReset" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -526,6 +544,7 @@
       }
     },
     "ErrorRecoverySuggestionFetchTopHeadlines" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -575,6 +594,22 @@
         }
       }
     },
+    "ErrorRecoverySuggestionNoNetworkConnection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Netzwerkverbindung. Bitte versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No network connection. Please try again."
+          }
+        }
+      }
+    },
     "ErrorRecoverySuggestionRead" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -593,6 +628,7 @@
       }
     },
     "ErrorRecoverySuggestionReset" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {

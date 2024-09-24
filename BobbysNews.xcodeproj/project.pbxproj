@@ -17,7 +17,6 @@
 		BF2F654B2B65497E00930B4B /* BobbysNewsDomain in Frameworks */ = {isa = PBXBuildFile; productRef = BF2F654A2B65497E00930B4B /* BobbysNewsDomain */; };
 		BF5E5C8C2C67E912001AD24E /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB87832B61927300A51F36 /* ViewModelFactory.swift */; };
 		BF5E5C8D2C67E91E001AD24E /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD66962AA3B4BD00BB49CE /* Date+Extension.swift */; };
-		BF5E5C8E2C67E923001AD24E /* Errors+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */; };
 		BF5E5C8F2C67E92C001AD24E /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EB42AA0E17400955836 /* ContentViewModel.swift */; };
 		BF5E5C902C67E931001AD24E /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF188EBB2AA0E39600955836 /* DetailViewModel.swift */; };
 		BF72AA922AA0BFD300368DA5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF72AA912AA0BFD300368DA5 /* ContentView.swift */; };
@@ -32,8 +31,6 @@
 		BFAB87862B61927300A51F36 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAB87832B61927300A51F36 /* ViewModelFactory.swift */; };
 		BFB0BB0B2C6A81710039EB66 /* PreviewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0BB0A2C6A816D0039EB66 /* PreviewMock.swift */; };
 		BFB0BB0C2C6A81710039EB66 /* PreviewMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB0BB0A2C6A816D0039EB66 /* PreviewMock.swift */; };
-		BFBDEA182B61BDBE00548AB5 /* Errors+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */; };
-		BFBDEA1A2B61C25F00548AB5 /* ErrorsExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBDEA192B61C25F00548AB5 /* ErrorsExtensionTests.swift */; };
 		BFD1B8AE2AA5E70F000ED973 /* ViewModelFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD1B8AD2AA5E70F000ED973 /* ViewModelFactoryTests.swift */; };
 		BFD1B8C42AA634B9000ED973 /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD1B8C32AA634B9000ED973 /* DateExtensionTests.swift */; };
 		BFDD66972AA3B4BD00BB49CE /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDD66962AA3B4BD00BB49CE /* Date+Extension.swift */; };
@@ -82,8 +79,6 @@
 		BFAB87832B61927300A51F36 /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 		BFAB87842B61927300A51F36 /* BobbysNewsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BobbysNewsApp.swift; sourceTree = "<group>"; };
 		BFB0BB0A2C6A816D0039EB66 /* PreviewMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewMock.swift; sourceTree = "<group>"; };
-		BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Errors+Extension.swift"; sourceTree = "<group>"; };
-		BFBDEA192B61C25F00548AB5 /* ErrorsExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorsExtensionTests.swift; sourceTree = "<group>"; };
 		BFC3369D2BF563BC0008FC76 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BFD1B8AD2AA5E70F000ED973 /* ViewModelFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactoryTests.swift; sourceTree = "<group>"; };
 		BFD1B8C32AA634B9000ED973 /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
@@ -264,7 +259,6 @@
 			isa = PBXGroup;
 			children = (
 				BFD1B8C32AA634B9000ED973 /* DateExtensionTests.swift */,
-				BFBDEA192B61C25F00548AB5 /* ErrorsExtensionTests.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -301,7 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				BFDD66962AA3B4BD00BB49CE /* Date+Extension.swift */,
-				BFBDEA172B61BDBE00548AB5 /* Errors+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -455,7 +448,6 @@
 				BFAB87852B61927300A51F36 /* BobbysNewsApp.swift in Sources */,
 				BF72AA922AA0BFD300368DA5 /* ContentView.swift in Sources */,
 				BFAB87862B61927300A51F36 /* ViewModelFactory.swift in Sources */,
-				BFBDEA182B61BDBE00548AB5 /* Errors+Extension.swift in Sources */,
 				BF188EB52AA0E17400955836 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,9 +456,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF5E5C8E2C67E923001AD24E /* Errors+Extension.swift in Sources */,
 				BFD1B8C42AA634B9000ED973 /* DateExtensionTests.swift in Sources */,
-				BFBDEA1A2B61C25F00548AB5 /* ErrorsExtensionTests.swift in Sources */,
 				BF72AAA32AA0BFD400368DA5 /* ContentViewModelTests.swift in Sources */,
 				BF5E5C8F2C67E92C001AD24E /* ContentViewModel.swift in Sources */,
 				BF188EBE2AA0E3AD00955836 /* DetailViewModelTests.swift in Sources */,
