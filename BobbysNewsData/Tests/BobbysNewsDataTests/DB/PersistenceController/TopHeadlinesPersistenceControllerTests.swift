@@ -29,7 +29,7 @@ struct TopHeadlinesPersistenceControllerTests {
         // Given
         var topHeadlines: [ArticleDB]?
         // When
-        topHeadlines = sut.read(country: "en-gb")
+        topHeadlines = sut.read(country: "uk")
         // Then
         #expect(topHeadlines?.count == 1,
                 "TopHeadlinesPersistenceController read failed!")
@@ -40,7 +40,7 @@ struct TopHeadlinesPersistenceControllerTests {
         #expect(throws: Never.self,
                 "TopHeadlinesPersistenceController save failed!")
         {
-            sut.save(country: "en-gb",
+            sut.save(country: "uk",
                      topHeadlinesAPI: EntityMock.topHeadlinesAPI)
         }
     }

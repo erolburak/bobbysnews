@@ -55,10 +55,6 @@ final class ContentViewModel {
     private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
     private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
 
-    // MARK: - Private Properties
-
-    private var noNetworkConnection = false
-
     // MARK: - Properties
 
     let apiKeyTotalAmount = 5
@@ -109,9 +105,10 @@ final class ContentViewModel {
         configureTipKit()
     }
 
+    // MARK: - Methods
+
     @MainActor
     func onAppear(selectedCountry: String) async {
-        await checkNetworkConnection()
         self.selectedCountry = selectedCountry
         readSources()
         readTopHeadlines()
@@ -119,13 +116,15 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func fetchSources(sensoryFeedback _: Bool? = nil) async {
-        guard !noNetworkConnection else {
-            return showAlert(error: .noNetworkConnection)
+    func fetchSources(sensoryFeedback: Bool? = nil) async {
+        if sensoryFeedback == true {
+            sensoryFeedbackTrigger(feedback: .success)
         }
         stateSources = .isLoading
         do {
-            try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)
+            if await checkNetworkConnection() == true {
+                try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)
+            }
             readSources()
         } catch {
             updateStateSources(error: error,
@@ -134,17 +133,21 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func fetchTopHeadlines(state: StateTopHeadlines? = nil) async {
-        guard !noNetworkConnection else {
-            return showAlert(error: .noNetworkConnection)
+    func fetchTopHeadlines(state: StateTopHeadlines? = nil,
+                           sensoryFeedback: Bool? = nil) async
+    {
+        if sensoryFeedback == true {
+            sensoryFeedbackTrigger(feedback: .success)
         }
         if !selectedCountry.isEmpty {
             if let state {
                 stateTopHeadlines = state
             }
             do {
-                try await fetchTopHeadlinesUseCase.fetch(apiKey: apiKeyVersion,
-                                                         country: selectedCountry)
+                if await checkNetworkConnection() == true {
+                    try await fetchTopHeadlinesUseCase.fetch(apiKey: apiKeyVersion,
+                                                             country: selectedCountry)
+                }
                 readTopHeadlines()
             } catch {
                 updateStateTopHeadlines(error: error,
@@ -153,43 +156,32 @@ final class ContentViewModel {
         }
     }
 
-    func reset() {
-//        do {
-//            /// Delete all persisted sources
-//            try deleteSourcesUseCase.delete()
-//            /// Delete all persisted topHeadlines
-//            try deleteTopHeadlinesUseCase.delete()
-//            apiKeyVersion = 1
-//            articles.removeAll()
-//            countries.removeAll()
-//            selectedCountry = ""
-//            stateSources = .emptyRead
-//            stateTopHeadlines = .emptyRead
-//            translate = false
-//            sensoryFeedbackTrigger(feedback: .success)
-//        } catch {
-//            showAlert(error: .reset)
-//        }
-        showAlert(error: .noNetworkConnection)
+    @MainActor
+    func reset() async {
+        do {
+            /// Delete all persisted sources
+            try deleteSourcesUseCase.delete()
+            /// Delete all persisted topHeadlines
+            try deleteTopHeadlinesUseCase.delete()
+            apiKeyVersion = 1
+            articles.removeAll()
+            countries.removeAll()
+            selectedCountry = ""
+            stateSources = .emptyRead
+            stateTopHeadlines = .emptyRead
+            translate = false
+            await MainActor.run {
+                sensoryFeedbackTrigger(feedback: .success)
+            }
+        } catch {
+            await MainActor.run {
+                showAlert(error: .reset)
+            }
+        }
     }
 
     func showSettingsTip() throws {
         SettingsTip.show = true
-    }
-
-    func translate(translate: Bool) {
-        guard !noNetworkConnection else {
-            self.translate = false
-            return showAlert(error: .noNetworkConnection)
-        }
-        if translate, translationSessionConfiguration == nil {
-            translationSessionConfiguration = TranslationSession.Configuration()
-        } else if translate {
-            translationSessionConfiguration?.invalidate()
-        } else {
-            readTopHeadlines()
-        }
-        sensoryFeedbackTrigger(feedback: .success)
     }
 
     @MainActor
@@ -236,20 +228,37 @@ final class ContentViewModel {
     }
 
     @MainActor
-    private func checkNetworkConnection() async {
-        for await path in NWPathMonitor() {
-            if path.status == .unsatisfied {
-                noNetworkConnection = true
-                showAlert(error: .noNetworkConnection)
-            } else {
-                noNetworkConnection = false
-            }
+    func translateConfiguration() async {
+        guard await checkNetworkConnection() == true else {
+            translate = false
+            return
         }
+        if translate, translationSessionConfiguration == nil {
+            translationSessionConfiguration = TranslationSession.Configuration()
+        } else if translate {
+            translationSessionConfiguration?.invalidate()
+        } else {
+            readTopHeadlines()
+        }
+        sensoryFeedbackTrigger(feedback: .success)
     }
 
     private func configureTipKit() {
         try? Tips.configure([.displayFrequency(.immediate),
                              .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
+    }
+
+    @MainActor
+    private func checkNetworkConnection() async -> Bool? {
+        for await path in NWPathMonitor() {
+            if path.status == .unsatisfied {
+                showAlert(error: .noNetworkConnection)
+                return false
+            } else {
+                return true
+            }
+        }
+        return nil
     }
 
     private func readSources() {

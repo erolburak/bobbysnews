@@ -120,7 +120,9 @@ struct ContentView: View {
                         Button("Reset",
                                role: .destructive)
                         {
-                            viewModel.reset()
+                            Task {
+                                await viewModel.reset()
+                            }
                         }
                         .accessibilityIdentifier("ResetConfirmationDialogButton")
                     }
@@ -153,7 +155,8 @@ struct ContentView: View {
                         } actions: {
                             Button("Refresh") {
                                 Task {
-                                    await viewModel.fetchTopHeadlines(state: .isLoading)
+                                    await viewModel.fetchTopHeadlines(state: .isLoading,
+                                                                      sensoryFeedback: true)
                                 }
                             }
                             .textCase(.uppercase)
@@ -205,8 +208,10 @@ struct ContentView: View {
         .sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
             viewModel.sensoryFeedback
         }
-        .onChange(of: viewModel.translate) { _, newValue in
-            viewModel.translate(translate: newValue)
+        .onChange(of: viewModel.translate) {
+            Task {
+                await viewModel.translateConfiguration()
+            }
         }
         .translationTask(viewModel.translationSessionConfiguration) { translateSession in
             await viewModel.translate(translateSession: translateSession)

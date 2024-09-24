@@ -31,9 +31,9 @@ extension XCUIApplication {
             let countryPicker = app.buttons["Country selection"]
             XCTAssertTrue(countryPicker.waitForExistence(timeout: 5))
             countryPicker.tap()
-            let countryPickerItemDE = app.buttons["CountryPickerItem" + "en-gb"]
-            XCTAssertTrue(countryPickerItemDE.waitForExistence(timeout: 5))
-            countryPickerItemDE.tap()
+            let countryPickerItem = app.buttons["CountryPickerItem" + "uk"]
+            XCTAssertTrue(countryPickerItem.waitForExistence(timeout: 5))
+            countryPickerItem.tap()
         }
         return app
     }

@@ -392,6 +392,7 @@
       }
     },
     "ErrorDescriptionFetchTopHeadlines" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -475,6 +476,7 @@
       }
     },
     "ErrorDescriptionReset" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -542,6 +544,7 @@
       }
     },
     "ErrorRecoverySuggestionFetchTopHeadlines" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -625,6 +628,7 @@
       }
     },
     "ErrorRecoverySuggestionReset" : {
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {

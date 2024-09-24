@@ -50,9 +50,9 @@ struct ContentViewModelTests {
 
     @Test("Check ContentViewModel onAppear!")
     @MainActor
-    func testOnAppear() async throws {
+    func testOnAppear() async {
         // Given
-        sut.selectedCountry = "en-gb"
+        sut.selectedCountry = "uk"
         // When
         await sut.onAppear(selectedCountry: sut.selectedCountry)
         // Then
@@ -67,8 +67,8 @@ struct ContentViewModelTests {
     @MainActor
     func testFetchSources() async {
         // Given
-        sut.countries = [EntityMock.sources.sources?.first?.country ?? "en-gb"]
-        sut.selectedCountry = "en-gb"
+        sut.countries = [EntityMock.sources.sources?.first?.country ?? "uk"]
+        sut.selectedCountry = "uk"
         // When
         await sut.fetchSources()
         // Then
@@ -81,33 +81,12 @@ struct ContentViewModelTests {
     func testFetchTopHeadlines() async {
         // Given
         sut.articles = EntityMock.topHeadlines.articles ?? []
-        sut.selectedCountry = "en-gb"
+        sut.selectedCountry = "uk"
         // When
         await sut.fetchTopHeadlines(state: .isLoading)
         // Then
         #expect(sut.articles.count == 1,
                 "ContentViewModel fetchTopHeadlines failed!")
-    }
-
-    @Test("Check ContentViewModel reset!")
-    func testReset() {
-        // Given
-        sut.apiKeyVersion = 2
-        sut.articles = EntityMock.topHeadlines.articles ?? []
-        sut.countries = [EntityMock.sources.sources?.first?.country ?? "en-gb"]
-        sut.selectedCountry = "en-gb"
-        sut.stateSources = .loaded
-        sut.stateTopHeadlines = .loaded
-        // When
-        sut.reset()
-        // Then
-        #expect(sut.apiKeyVersion == 1 &&
-            sut.articles.isEmpty &&
-            sut.countries.isEmpty &&
-            sut.selectedCountry.isEmpty &&
-            sut.stateSources == .emptyRead &&
-            sut.stateTopHeadlines == .emptyRead,
-            "ContentViewModel reset failed!")
     }
 
     @Test("Check ContentViewModel showSettingsTip!")
@@ -119,5 +98,43 @@ struct ContentViewModelTests {
         // Then
         #expect(ContentViewModel.SettingsTip.show,
                 "ContentViewModel showSettingsTip failed!")
+    }
+
+    @Test("Check ContentViewModel reset!")
+    @MainActor
+    func testReset() async {
+        // Given
+        sut.apiKeyVersion = 2
+        sut.articles = EntityMock.topHeadlines.articles ?? []
+        sut.countries = [EntityMock.sources.sources?.first?.country ?? "uk"]
+        sut.selectedCountry = "uk"
+        sut.stateSources = .loaded
+        sut.stateTopHeadlines = .loaded
+        sut.translate = true
+        // When
+        await sut.reset()
+        // Then
+        #expect(sut.apiKeyVersion == 1 &&
+            sut.articles.isEmpty &&
+            sut.countries.isEmpty &&
+            sut.selectedCountry.isEmpty &&
+            sut.stateSources == .emptyRead &&
+            sut.stateTopHeadlines == .emptyRead &&
+            !sut.translate,
+            "ContentViewModel reset failed!")
+    }
+
+    @Test("Check ContentViewModel translateConfiguration!")
+    @MainActor
+    func testTranslateConfiguration() async {
+        // Given
+        sut.translate = true
+        sut.translationSessionConfiguration = nil
+        // When
+        await sut.translateConfiguration()
+        // Then
+        #expect(sut.translate &&
+            sut.translationSessionConfiguration != nil,
+            "ContentViewModel translateConfiguration failed!")
     }
 }

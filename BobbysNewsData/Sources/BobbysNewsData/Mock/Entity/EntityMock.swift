@@ -20,7 +20,7 @@ struct EntityMock {
                                        url: URL(string: "Test"),
                                        urlToImage: URL(string: "Test"))
     static let sourceAPI = SourceAPI(category: "Test",
-                                     country: "en-gb",
+                                     country: "uk",
                                      id: "Test",
                                      language: "Test",
                                      name: "Test",
@@ -33,7 +33,7 @@ struct EntityMock {
     lazy var sourcesDB = {
         let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
         sourceDB.category = "Test"
-        sourceDB.country = "en-gb"
+        sourceDB.country = "uk"
         sourceDB.id = "Test"
         sourceDB.language = "Test"
         sourceDB.name = "Test"
@@ -46,7 +46,7 @@ struct EntityMock {
         let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
         articleDB.author = "Test"
         articleDB.content = "Test"
-        articleDB.country = "en-gb"
+        articleDB.country = "uk"
         articleDB.publishedAt = .distantPast
         articleDB.source = sourcesDB.first
         articleDB.story = "Test"
