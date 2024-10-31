@@ -5,28 +5,52 @@ name: Swift
 on:
   push:
     branches:
-    - main
+      - main
   pull_request:
     branches:
-    - main
+      - main
 
 jobs:
-  tests:
-
+  lint:
     runs-on: macos-latest
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup Xcode
-      uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest
-    - name: Setup Swift
-      uses: swift-actions/setup-swift@v2
-    - name: SwiftFormat
-      run: swiftformat --lint . --reporter github-actions-log --swiftversion 6.0
-    - name: Build & Test iPhone 16 Pro
-      run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16 Pro' | xcbeautify && exit ${PIPESTATUS[0]}
-    - name: Build & Test iPad Pro 13-inch (M4)
-      run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' | xcbeautify && exit ${PIPESTATUS[0]}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+      - name: Run SwiftFormat
+        run: swiftformat --lint . --reporter github-actions-log --swiftversion 6.0
+
+  test_iPhone:
+    needs: lint
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+      - name: Run tests (iPhone 16 Pro)
+        run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16 Pro' | xcbeautify && exit ${PIPESTATUS[0]}
+
+  test_iPad:
+    needs: lint
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+      - name: Run tests (iPad Pro 13-inch (M4))
+        run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' | xcbeautify && exit ${PIPESTATUS[0]}
