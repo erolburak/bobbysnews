@@ -27,14 +27,12 @@ jobs:
 
   test_iPhone:
     needs: setup
-    runs-on: macos-latest
     steps:
       - name: iPhone 16 Pro
         run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16 Pro' | xcbeautify && exit ${PIPESTATUS[0]}
 
   test_iPad:
     needs: setup
-    runs-on: macos-latest
     steps:
       - name: iPad Pro 13-inch (M4)
         run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' | xcbeautify && exit ${PIPESTATUS[0]}
