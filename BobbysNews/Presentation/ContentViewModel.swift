@@ -85,6 +85,7 @@ final class ContentViewModel {
     var stateSources: StateSources = .isLoading
     var stateTopHeadlines: StateTopHeadlines = .isLoading
     var translate = false
+    var translateDisabled = true
     var translationSessionConfiguration: TranslationSession.Configuration?
 
     // MARK: - Lifecycles
@@ -148,6 +149,7 @@ final class ContentViewModel {
                     try await fetchTopHeadlinesUseCase.fetch(apiKey: apiKeyVersion,
                                                              country: selectedCountry)
                 }
+                translate = false
                 readTopHeadlines()
             } catch {
                 updateStateTopHeadlines(error: error,
@@ -170,6 +172,7 @@ final class ContentViewModel {
             stateSources = .emptyRead
             stateTopHeadlines = .emptyRead
             translate = false
+            translateDisabled = true
             await MainActor.run {
                 sensoryFeedbackTrigger(feedback: .success)
             }
@@ -285,6 +288,7 @@ final class ContentViewModel {
                 throw Errors.read
             }
             self.articles = articles
+            translateDisabled = articles.isEmpty
             updateStateTopHeadlines(state: articles.isEmpty ? stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
         } catch {
             updateStateTopHeadlines(error: error,
@@ -306,20 +310,18 @@ final class ContentViewModel {
     private func updateStateSources(error: Error? = nil,
                                     state: StateSources)
     {
-        guard let error else {
-            return stateSources = state
-        }
         stateSources = state
-        showAlert(error: error as? Errors ?? .error(error.localizedDescription))
+        if let error {
+            showAlert(error: error as? Errors ?? .error(error.localizedDescription))
+        }
     }
 
     private func updateStateTopHeadlines(error: Error? = nil,
                                          state: StateTopHeadlines)
     {
-        guard let error else {
-            return stateTopHeadlines = state
-        }
         stateTopHeadlines = state
-        showAlert(error: error as? Errors ?? .error(error.localizedDescription))
+        if let error {
+            showAlert(error: error as? Errors ?? .error(error.localizedDescription))
+        }
     }
 }

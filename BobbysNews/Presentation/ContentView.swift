@@ -73,6 +73,7 @@ struct ContentView: View {
                             Toggle("Translate",
                                    systemImage: "translate",
                                    isOn: $viewModel.translate)
+                                .disabled(viewModel.translateDisabled)
                                 .accessibilityIdentifier("TranslateToggle")
                         }
 
