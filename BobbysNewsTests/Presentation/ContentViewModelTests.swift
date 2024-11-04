@@ -111,6 +111,7 @@ struct ContentViewModelTests {
         sut.stateSources = .loaded
         sut.stateTopHeadlines = .loaded
         sut.translate = true
+        sut.translateDisabled = false
         // When
         await sut.reset()
         // Then
@@ -120,7 +121,8 @@ struct ContentViewModelTests {
             sut.selectedCountry.isEmpty &&
             sut.stateSources == .emptyRead &&
             sut.stateTopHeadlines == .emptyRead &&
-            !sut.translate,
+            !sut.translate &&
+            sut.translateDisabled,
             "ContentViewModel reset failed!")
     }
 

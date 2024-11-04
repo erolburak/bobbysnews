@@ -8,7 +8,7 @@
 import Foundation
 
 public struct ArticleAPI: Decodable, Sendable {
-    // MARK: - Type Definitions
+    // MARK: - Private Type Definitions
 
     private enum CodingKeys: String, CodingKey {
         case author, content, publishedAt, source, title, url, urlToImage

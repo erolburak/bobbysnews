@@ -8,7 +8,7 @@
 import Foundation
 
 public struct SourceAPI: Decodable, Sendable {
-    // MARK: - Type Definitions
+    // MARK: - Private Type Definitions
 
     private enum CodingKeys: String, CodingKey {
         case category, country, id, language, name, url
