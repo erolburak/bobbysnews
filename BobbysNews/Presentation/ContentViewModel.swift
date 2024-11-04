@@ -14,14 +14,14 @@ import Translation
 final class ContentViewModel {
     // MARK: - Type Definitions
 
-    enum StateSources {
+    enum StatesSources {
         /// General States
         case isLoading, loaded
         /// Empty States
         case emptyFetch, emptyRead
     }
 
-    enum StateTopHeadlines {
+    enum StatesTopHeadlines {
         /// General States
         case isLoading, loaded, isTranslating
         /// Empty States
@@ -82,8 +82,8 @@ final class ContentViewModel {
     var sensoryFeedbackBool = false
     var showAlert = false
     var showConfirmationDialog = false
-    var stateSources: StateSources = .isLoading
-    var stateTopHeadlines: StateTopHeadlines = .isLoading
+    var stateSources: StatesSources = .isLoading
+    var stateTopHeadlines: StatesTopHeadlines = .isLoading
     var translate = false
     var translateDisabled = true
     var translationSessionConfiguration: TranslationSession.Configuration?
@@ -134,7 +134,7 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func fetchTopHeadlines(state: StateTopHeadlines? = nil,
+    func fetchTopHeadlines(state: StatesTopHeadlines? = nil,
                            sensoryFeedback: Bool? = nil) async
     {
         if sensoryFeedback == true {
@@ -308,7 +308,7 @@ final class ContentViewModel {
     }
 
     private func updateStateSources(error: Error? = nil,
-                                    state: StateSources)
+                                    state: StatesSources)
     {
         stateSources = state
         if let error {
@@ -317,7 +317,7 @@ final class ContentViewModel {
     }
 
     private func updateStateTopHeadlines(error: Error? = nil,
-                                         state: StateTopHeadlines)
+                                         state: StatesTopHeadlines)
     {
         stateTopHeadlines = state
         if let error {

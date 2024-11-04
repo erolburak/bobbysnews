@@ -198,7 +198,7 @@ struct DetailView: View {
 private struct WebView: UIViewRepresentable {
     // MARK: - Properties
 
-    @Binding var stateWebView: DetailViewModel.StateWebView
+    @Binding var stateWebView: DetailViewModel.StatesWebView
     let url: URL
 
     // MARK: - Methods
