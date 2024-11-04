@@ -13,7 +13,7 @@ import SwiftUI
 final class DetailViewModel {
     // MARK: - Type Definitions
 
-    enum StateWebView {
+    enum StatesWebView {
         /// General States
         case isLoading, loaded
         /// Error States
@@ -44,7 +44,7 @@ final class DetailViewModel {
     }
 
     var showWebView = false
-    var stateWebView: StateWebView = .isLoading
+    var stateWebView: StatesWebView = .isLoading
     var title: String {
         article.source?.name ?? String(localized: "EmptyArticleSource")
     }
