@@ -36,10 +36,7 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty
       - name: Run tests (iPhone 16 Pro)
-        run: xcodebuild -project BobbysNews.xcworkspace \
-          -scheme BobbysNews \
-          -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
-          clean test | xcpretty
+        run: xcodebuild -project BobbysNews.xcworkspace -scheme BobbysNews -destination 'platform=iOS Simulator,name=iPhone 16 Pro' clean test | xcpretty
 
   iPad_test:
     needs: swift_format
@@ -54,7 +51,5 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty
       - name: Run tests (iPad Pro 13-inch (M4))
-        run: xcodebuild -project BobbysNews.xcworkspace \
-          -scheme BobbysNews \
-          -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' \
-          clean test | xcpretty
+      #xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' | xcbeautify && exit ${PIPESTATUS[0]}
+        run: xcodebuild -project BobbysNews.xcworkspace -scheme BobbysNews -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' clean test | xcpretty
