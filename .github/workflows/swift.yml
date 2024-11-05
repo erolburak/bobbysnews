@@ -11,7 +11,8 @@ on:
       - main
 
 jobs:
-  lint:
+  SwiftFormat:
+    name: Run SwiftFormat
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -20,13 +21,12 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
       - name: Run SwiftFormat
         run: swiftformat --lint . --reporter github-actions-log --swiftversion 6.0
 
-  test_iPhone:
-    needs: lint
+  iPhone:
+    name: Run tests (iPhone 16 Pro)
+    needs: SwiftFormat
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -35,13 +35,11 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
-      - name: Run tests (iPhone 16 Pro)
-        run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16 Pro' | xcbeautify && exit ${PIPESTATUS[0]}
-
-  test_iPad:
-    needs: lint
+      - name: Run tests
+        run: set -o pipefail && xcodebuild test -project BobbysNews.xcodeproj -scheme BobbysNews -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=latest' | xcbeautify --renderer github-actions
+  iPad:
+    name: Run tests (iPad Pro 13-inch (M4))
+    needs: SwiftFormat
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -50,7 +48,5 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
-      - name: Run tests (iPad Pro 13-inch (M4))
-        run: xcodebuild test -scheme BobbysNews -project BobbysNews.xcodeproj -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4)' | xcbeautify && exit ${PIPESTATUS[0]}
+      - name: Run tests
+        run: set -o pipefail && xcodebuild test -project BobbysNews.xcodeproj -scheme BobbysNews -destination 'platform=iOS Simulator,name=iPad Pro 13-inch (M4),OS=latest' | xcbeautify --renderer github-actions
