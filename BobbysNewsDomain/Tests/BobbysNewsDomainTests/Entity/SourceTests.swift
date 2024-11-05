@@ -9,6 +9,7 @@
 import Foundation
 import Testing
 
+@Suite("Source tests")
 struct SourceTests {
     // MARK: - Methods
 

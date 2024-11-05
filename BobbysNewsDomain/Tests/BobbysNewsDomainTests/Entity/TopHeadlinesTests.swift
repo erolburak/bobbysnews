@@ -9,6 +9,7 @@
 import Foundation
 import Testing
 
+@Suite("TopHeadlines tests")
 struct TopHeadlinesTests {
     // MARK: - Methods
 

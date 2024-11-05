@@ -9,6 +9,7 @@ import BobbysNewsData
 @testable import BobbysNewsDomain
 import Testing
 
+@Suite("ReadApiHeadlinesUseCase tests")
 struct ReadApiHeadlinesUseCaseTests {
     // MARK: - Private Properties
 

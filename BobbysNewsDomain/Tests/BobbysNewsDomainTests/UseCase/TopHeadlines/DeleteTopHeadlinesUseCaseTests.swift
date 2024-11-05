@@ -9,6 +9,7 @@ import BobbysNewsData
 @testable import BobbysNewsDomain
 import Testing
 
+@Suite("DeleteTopHeadlinesUseCase tests")
 struct DeleteTopHeadlinesUseCaseTests {
     // MARK: - Private Properties
 

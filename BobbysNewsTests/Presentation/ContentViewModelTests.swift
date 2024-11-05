@@ -10,6 +10,7 @@ import BobbysNewsDomain
 import Testing
 import TipKit
 
+@Suite("ContentViewModel tests")
 struct ContentViewModelTests {
     // MARK: - Private Properties
 
