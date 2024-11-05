@@ -8,6 +8,7 @@
 @testable import BobbysNewsData
 import Testing
 
+@Suite("SourceDBExtension tests")
 struct SourceDBExtensionTests {
     // MARK: - Methods
 

@@ -9,6 +9,7 @@
 import Foundation
 import Testing
 
+@Suite("ArticleExtension tests")
 struct ArticleExtensionTests {
     // MARK: - Methods
 

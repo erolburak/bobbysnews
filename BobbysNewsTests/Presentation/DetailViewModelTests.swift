@@ -7,6 +7,7 @@
 
 import Testing
 
+@Suite("DetailViewModel tests")
 struct DetailViewModelTests {
     // MARK: - Private Properties
 

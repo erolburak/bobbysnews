@@ -8,6 +8,7 @@
 import Foundation
 import Testing
 
+@Suite("DateExtension tests")
 struct DateExtensionTests {
     // MARK: - Methods
 

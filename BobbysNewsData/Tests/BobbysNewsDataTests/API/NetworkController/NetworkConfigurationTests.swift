@@ -9,6 +9,7 @@
 import Foundation
 import Testing
 
+@Suite("NetworkConfiguration tests")
 struct NetworkConfigurationTests {
     // MARK: - Private Properties
 

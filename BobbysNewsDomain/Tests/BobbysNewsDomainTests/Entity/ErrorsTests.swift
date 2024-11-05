@@ -8,6 +8,7 @@
 @testable import BobbysNewsDomain
 import Testing
 
+@Suite("Errors tests")
 struct ErrorsTests {
     // MARK: - Methods
 

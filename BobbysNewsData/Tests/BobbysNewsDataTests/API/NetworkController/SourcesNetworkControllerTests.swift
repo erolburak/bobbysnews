@@ -8,6 +8,7 @@
 @testable import BobbysNewsData
 import Testing
 
+@Suite("SourcesNetworkController tests")
 struct SourcesNetworkControllerTests {
     // MARK: - Private Properties
 

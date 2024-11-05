@@ -8,6 +8,7 @@
 @testable import BobbysNewsData
 import Testing
 
+@Suite("TopHeadlinesPersistenceController tests")
 struct TopHeadlinesPersistenceControllerTests {
     // MARK: - Private Properties
 
