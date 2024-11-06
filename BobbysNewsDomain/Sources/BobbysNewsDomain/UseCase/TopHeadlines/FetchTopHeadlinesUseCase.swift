@@ -22,11 +22,15 @@ public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
     // MARK: - Lifecycles
 
     public init(topHeadlinesRepository: PTopHeadlinesRepository) {
-        if CommandLine.arguments.contains("–uitesting") {
-            self.topHeadlinesRepository = TopHeadlinesRepositoryMock()
-        } else {
+        #if DEBUG
+            if CommandLine.arguments.contains("–testing") {
+                self.topHeadlinesRepository = TopHeadlinesRepositoryMock()
+            } else {
+                self.topHeadlinesRepository = topHeadlinesRepository
+            }
+        #else
             self.topHeadlinesRepository = topHeadlinesRepository
-        }
+        #endif
     }
 
     // MARK: - Methods

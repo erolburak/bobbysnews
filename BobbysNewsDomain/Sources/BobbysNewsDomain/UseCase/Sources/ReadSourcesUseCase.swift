@@ -21,11 +21,15 @@ public final class ReadSourcesUseCase: PReadSourcesUseCase {
     // MARK: - Lifecycles
 
     public init(sourcesRepository: PSourcesRepository) {
-        if CommandLine.arguments.contains("–uitesting") {
-            self.sourcesRepository = SourcesRepositoryMock()
-        } else {
+        #if DEBUG
+            if CommandLine.arguments.contains("–testing") {
+                self.sourcesRepository = SourcesRepositoryMock()
+            } else {
+                self.sourcesRepository = sourcesRepository
+            }
+        #else
             self.sourcesRepository = sourcesRepository
-        }
+        #endif
     }
 
     // MARK: - Methods

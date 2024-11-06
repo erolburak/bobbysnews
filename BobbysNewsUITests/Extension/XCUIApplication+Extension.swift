@@ -11,13 +11,13 @@ extension XCUIApplication {
     // MARK: - Methods
 
     /// Launch app steps:
-    /// 1) Set launch arguments to -uitesting
+    /// 1) Set launch arguments to -testing
     /// 2) Close settings tip
     /// 2) Open country picker
-    /// 3) Set selected country to us
+    /// 3) Set selected country to uk
     func appLaunch() -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["–uitesting"]
+        app.launchArguments = ["–testing"]
         app.launch()
         let closeSettingsTipButton = popovers.buttons["Close"]
         if closeSettingsTipButton.waitForExistence(timeout: 5) {
