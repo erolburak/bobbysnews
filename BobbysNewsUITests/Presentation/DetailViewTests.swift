@@ -30,9 +30,9 @@ final class DetailViewTests: XCTestCase {
         XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
         shareLink.tap()
         /// Close share view
-        let closeButton = app.navigationBars["UIActivityContentView"].buttons["Schließen"]
-        XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
-        closeButton.tap()
+        let popoverDismissRegion = app.otherElements["PopoverDismissRegion"]
+        XCTAssertTrue(popoverDismissRegion.waitForExistence(timeout: 5))
+        popoverDismissRegion.tap()
     }
 
     @MainActor
