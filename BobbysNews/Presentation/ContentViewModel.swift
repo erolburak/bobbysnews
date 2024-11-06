@@ -246,11 +246,6 @@ final class ContentViewModel {
         sensoryFeedbackTrigger(feedback: .success)
     }
 
-    private func configureTipKit() {
-        try? Tips.configure([.displayFrequency(.immediate),
-                             .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
-    }
-
     @MainActor
     private func checkNetworkConnection() async -> Bool? {
         for await path in NWPathMonitor() {
@@ -262,6 +257,11 @@ final class ContentViewModel {
             }
         }
         return nil
+    }
+
+    private func configureTipKit() {
+        try? Tips.configure([.displayFrequency(.immediate),
+                             .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
     }
 
     private func readSources() {

@@ -25,14 +25,6 @@ final class ContentViewTests: XCTestCase {
     }
 
     @MainActor
-    private func closeDetailView(with app: XCUIApplication) {
-        /// Close detail view
-        let backButton = app.buttons.element(boundBy: .zero)
-        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
-        backButton.tap()
-    }
-
-    @MainActor
     private func changeApiKey(with app: XCUIApplication) {
         /// Open settings menu
         let settingsImage = app.images["SettingsImage"]
@@ -49,6 +41,14 @@ final class ContentViewTests: XCTestCase {
     }
 
     @MainActor
+    private func closeDetailView(with app: XCUIApplication) {
+        /// Close detail view
+        let backButton = app.buttons.element(boundBy: .zero)
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
+        backButton.tap()
+    }
+
+    @MainActor
     private func resetApp(with app: XCUIApplication) {
         /// Open settings menu
         let settingsImage = app.images["SettingsImage"]
@@ -58,12 +58,12 @@ final class ContentViewTests: XCTestCase {
         let resetButton = app.buttons["ResetButton"]
         XCTAssertTrue(resetButton.waitForExistence(timeout: 5))
         resetButton.tap()
-        /// Check if `ResetConfirmationDialogButton` exists
+        /// Confirm reset
         let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"]
         XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 5))
-        /// Close reset confirmation dialog
-        let cancelButton = app.buttons["Cancel"]
-        XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 5))
-        cancelButton.tap()
+        resetConfirmationDialogButton.tap()
+        /// Check if `EmptySelectedCountryMessage` exists
+        let emptySelectedCountryText = app.staticTexts["EmptySelectedCountryMessage"]
+        XCTAssertTrue(emptySelectedCountryText.waitForExistence(timeout: 5))
     }
 }
