@@ -17,7 +17,7 @@ extension XCUIApplication {
     /// 3) Set selected country to us
     func appLaunch() -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["–uitesting"]
+        app.launchArguments = ["–testing"]
         app.launch()
         let closeSettingsTipButton = popovers.buttons["Close"]
         if closeSettingsTipButton.waitForExistence(timeout: 5) {
