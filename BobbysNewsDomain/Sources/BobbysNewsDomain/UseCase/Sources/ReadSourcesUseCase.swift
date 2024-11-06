@@ -22,11 +22,7 @@ public final class ReadSourcesUseCase: PReadSourcesUseCase {
 
     public init(sourcesRepository: PSourcesRepository) {
         #if DEBUG
-            if CommandLine.arguments.contains("–testing") {
-                self.sourcesRepository = SourcesRepositoryMock()
-            } else {
-                self.sourcesRepository = sourcesRepository
-            }
+            self.sourcesRepository = CommandLine.arguments.contains("–testing") ? SourcesRepositoryMock() : sourcesRepository
         #else
             self.sourcesRepository = sourcesRepository
         #endif

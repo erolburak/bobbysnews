@@ -27,17 +27,13 @@ public final class PersistenceController {
         else {
             fatalError("Error initializing managed object model with module url!")
         }
+        let cloudKitContainer = NSPersistentCloudKitContainer(name: "BobbysNews",
+                                                              managedObjectModel: managedObjectModel)
         #if DEBUG
-            if CommandLine.arguments.contains("-testing") {
-                container = NSPersistentContainer(name: "BobbysNews",
-                                                  managedObjectModel: managedObjectModel)
-            } else {
-                container = NSPersistentCloudKitContainer(name: "BobbysNews",
-                                                          managedObjectModel: managedObjectModel)
-            }
+            container = CommandLine.arguments.contains("-testing") ? NSPersistentContainer(name: "BobbysNews",
+                                                                                           managedObjectModel: managedObjectModel) : cloudKitContainer
         #else
-            container = NSPersistentCloudKitContainer(name: "BobbysNews",
-                                                      managedObjectModel: managedObjectModel)
+            container = cloudKitContainer
         #endif
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
