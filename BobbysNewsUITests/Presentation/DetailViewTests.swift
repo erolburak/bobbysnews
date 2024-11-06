@@ -7,7 +7,6 @@
 
 import XCTest
 
-@MainActor
 final class DetailViewTests: XCTestCase {
     // MARK: - Methods
 
@@ -15,49 +14,36 @@ final class DetailViewTests: XCTestCase {
         continueAfterFailure = false
     }
 
-    /// Test share link to open share view steps:
-    /// 1) Open detail view
-    /// 1) Press share
-    func testShareLink() {
+    @MainActor
+    func testDetailView() {
+        /// Launch app
         let app = XCUIApplication().appLaunch()
-        let navigationLink = app.buttons["NavigationLink"]
-        if navigationLink.waitForExistence(timeout: 5) {
-            navigationLink.tap()
-            let shareLink = app.buttons["ShareLink"]
-            XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
-            shareLink.tap()
-        }
+        app.openDetailView(with: app)
+        openCloseShareView(with: app)
+        openCloseWebView(with: app)
     }
 
-    /// Test read button to open web view steps:
-    /// 1) Open detail view
-    /// 2) Press read
-    func testReadButton() {
-        let app = XCUIApplication().appLaunch()
-        let navigationLink = app.buttons["NavigationLink"]
-        if navigationLink.waitForExistence(timeout: 5) {
-            navigationLink.tap()
-            let readButton = app.buttons["ReadButton"]
-            XCTAssertTrue(readButton.waitForExistence(timeout: 5))
-            readButton.tap()
-        }
+    @MainActor
+    private func openCloseShareView(with app: XCUIApplication) {
+        /// Open share view
+        let shareLink = app.buttons["ShareLink"]
+        XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
+        shareLink.tap()
+        /// Close share view
+        let closeButton = app.navigationBars["UIActivityContentView"].buttons["Schließen"]
+        XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
+        closeButton.tap()
     }
 
-    /// Test close button of web view steps:
-    /// 1) Open detail view
-    /// 2) Press read
-    /// 3) Close web view
-    func testCloseButton() {
-        let app = XCUIApplication().appLaunch()
-        let navigationLink = app.buttons["NavigationLink"]
-        if navigationLink.waitForExistence(timeout: 5) {
-            navigationLink.tap()
-            let readButton = app.buttons["ReadButton"]
-            XCTAssertTrue(readButton.waitForExistence(timeout: 5))
-            readButton.tap()
-            let closeButton = app.buttons["CloseButton"]
-            XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
-            closeButton.tap()
-        }
+    @MainActor
+    private func openCloseWebView(with app: XCUIApplication) {
+        /// Open web view
+        let readButton = app.buttons["ReadButton"]
+        XCTAssertTrue(readButton.waitForExistence(timeout: 5))
+        readButton.tap()
+        /// Close web view
+        let closeButton = app.buttons["CloseButton"]
+        XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
+        closeButton.tap()
     }
 }

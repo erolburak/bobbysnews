@@ -22,11 +22,7 @@ public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
     public init(topHeadlinesRepository: PTopHeadlinesRepository) {
         #if DEBUG
-            if CommandLine.arguments.contains("–testing") {
-                self.topHeadlinesRepository = TopHeadlinesRepositoryMock()
-            } else {
-                self.topHeadlinesRepository = topHeadlinesRepository
-            }
+            self.topHeadlinesRepository = CommandLine.arguments.contains("–testing") ? TopHeadlinesRepositoryMock() : topHeadlinesRepository
         #else
             self.topHeadlinesRepository = topHeadlinesRepository
         #endif
