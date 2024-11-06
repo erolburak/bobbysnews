@@ -19,20 +19,8 @@ final class DetailViewTests: XCTestCase {
         /// Launch app
         let app = XCUIApplication().appLaunch()
         app.openDetailView(with: app)
-        openCloseShareView(with: app)
         openCloseWebView(with: app)
-    }
-
-    @MainActor
-    private func openCloseShareView(with app: XCUIApplication) {
-        /// Open share view
-        let shareLink = app.buttons["ShareLink"]
-        XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
-        shareLink.tap()
-        /// Close share view
-        let popoverDismissRegion = app.otherElements["PopoverDismissRegion"]
-        XCTAssertTrue(popoverDismissRegion.waitForExistence(timeout: 5))
-        popoverDismissRegion.tap()
+        openShareView(with: app)
     }
 
     @MainActor
@@ -45,5 +33,13 @@ final class DetailViewTests: XCTestCase {
         let closeButton = app.buttons["CloseButton"]
         XCTAssertTrue(closeButton.waitForExistence(timeout: 5))
         closeButton.tap()
+    }
+
+    @MainActor
+    private func openShareView(with app: XCUIApplication) {
+        /// Open share view
+        let shareLink = app.buttons["ShareLink"]
+        XCTAssertTrue(shareLink.waitForExistence(timeout: 5))
+        shareLink.tap()
     }
 }
