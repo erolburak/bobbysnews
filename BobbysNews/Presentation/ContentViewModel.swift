@@ -194,12 +194,14 @@ final class ContentViewModel {
         var titleRequests: [TranslationSession.Request]? = []
         for (index, article) in articles.enumerated() {
             if let content = article.content,
-               article.contentTranslated == nil {
+               article.contentTranslated == nil
+            {
                 contentRequests?.append(TranslationSession.Request(sourceText: content,
                                                                    clientIdentifier: "\(index)"))
             }
             if let title = article.title,
-               article.titleTranslated == nil {
+               article.titleTranslated == nil
+            {
                 titleRequests?.append(TranslationSession.Request(sourceText: title,
                                                                  clientIdentifier: "\(index)"))
             }
