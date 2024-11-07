@@ -193,11 +193,13 @@ final class ContentViewModel {
         var contentRequests: [TranslationSession.Request]? = []
         var titleRequests: [TranslationSession.Request]? = []
         for (index, article) in articles.enumerated() {
-            if let content = article.content {
+            if let content = article.content,
+               article.contentTranslated == nil {
                 contentRequests?.append(TranslationSession.Request(sourceText: content,
                                                                    clientIdentifier: "\(index)"))
             }
-            if let title = article.title {
+            if let title = article.title,
+               article.titleTranslated == nil {
                 titleRequests?.append(TranslationSession.Request(sourceText: title,
                                                                  clientIdentifier: "\(index)"))
             }
@@ -241,7 +243,7 @@ final class ContentViewModel {
         } else if translate {
             translationSessionConfiguration?.invalidate()
         } else {
-            readTopHeadlines()
+            deleteTranslations()
         }
         sensoryFeedbackTrigger(feedback: .success)
     }
@@ -262,6 +264,13 @@ final class ContentViewModel {
     private func configureTipKit() {
         try? Tips.configure([.displayFrequency(.immediate),
                              .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
+    }
+
+    private func deleteTranslations() {
+        for index in articles.indices {
+            articles[index].contentTranslated = nil
+            articles[index].titleTranslated = nil
+        }
     }
 
     private func readSources() {
