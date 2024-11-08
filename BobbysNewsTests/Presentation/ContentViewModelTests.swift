@@ -64,6 +64,20 @@ struct ContentViewModelTests {
             "ContentViewModel onAppear failed!")
     }
 
+    @Test("Check ContentViewModel configureTranslations!")
+    @MainActor
+    func testConfigureTranslations() async {
+        // Given
+        sut.translate = true
+        sut.translationSessionConfiguration = nil
+        // When
+        await sut.configureTranslations()
+        // Then
+        #expect(sut.translate &&
+            sut.translationSessionConfiguration != nil,
+            "ContentViewModel translateConfiguration failed!")
+    }
+
     @Test("Check ContentViewModel fetchSources!")
     @MainActor
     func testFetchSources() async {
@@ -125,19 +139,5 @@ struct ContentViewModelTests {
             !sut.translate &&
             sut.translateDisabled,
             "ContentViewModel reset failed!")
-    }
-
-    @Test("Check ContentViewModel translateConfiguration!")
-    @MainActor
-    func testTranslateConfiguration() async {
-        // Given
-        sut.translate = true
-        sut.translationSessionConfiguration = nil
-        // When
-        await sut.translateConfiguration()
-        // Then
-        #expect(sut.translate &&
-            sut.translationSessionConfiguration != nil,
-            "ContentViewModel translateConfiguration failed!")
     }
 }
