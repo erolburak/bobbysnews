@@ -46,6 +46,7 @@ struct DetailViewModelTests {
             sut.article.content == article.content &&
             sut.article.contentTranslated == nil &&
             sut.article.publishedAt == article.publishedAt &&
+            sut.article.showTranslations == article.showTranslations &&
             sut.article.source?.category == article.source?.category &&
             sut.article.source?.country == article.source?.country &&
             sut.article.source?.id == article.source?.id &&

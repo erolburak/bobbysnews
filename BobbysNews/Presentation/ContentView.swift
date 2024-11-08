@@ -211,11 +211,11 @@ struct ContentView: View {
         }
         .onChange(of: viewModel.translate) {
             Task {
-                await viewModel.translateConfiguration()
+                await viewModel.configureTranslations()
             }
         }
         .translationTask(viewModel.translationSessionConfiguration) { translateSession in
-            await viewModel.translate(translateSession: translateSession)
+            await viewModel.fetchTranslations(translateSession: translateSession)
         }
     }
 }
@@ -258,7 +258,7 @@ private struct ListItem: View {
 
                     Spacer()
 
-                    Text((article.titleTranslated ?? article.title) ?? String(localized: "EmptyArticleTitle"))
+                    Text((article.showTranslations ? article.titleTranslated : article.title) ?? String(localized: "EmptyArticleTitle"))
                         .font(.system(.subheadline,
                                       weight: .semibold))
                         .lineLimit(2)

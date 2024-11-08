@@ -66,8 +66,8 @@ final class ContentViewModel {
         }
     }
 
-    var articles: [Article] = []
-    var countries: [String] = []
+    var articles = [Article]()
+    var countries = [String]()
     var listDisabled: Bool { stateTopHeadlines != .loaded }
     var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
     var selectedCountry = "" {
@@ -117,6 +117,21 @@ final class ContentViewModel {
     }
 
     @MainActor
+    func configureTranslations() async {
+        guard await checkNetworkConnection() == true else {
+            translate = false
+            return
+        }
+        if translate, translationSessionConfiguration == nil {
+            translationSessionConfiguration = TranslationSession.Configuration()
+        } else if translate {
+            translationSessionConfiguration?.invalidate()
+        } else {
+            showArticlesTranslations(show: false)
+        }
+    }
+
+    @MainActor
     func fetchSources(sensoryFeedback: Bool? = nil) async {
         if sensoryFeedback == true {
             sensoryFeedbackTrigger(feedback: .success)
@@ -159,6 +174,53 @@ final class ContentViewModel {
     }
 
     @MainActor
+    func fetchTranslations(translateSession: TranslationSession) async {
+        stateTopHeadlines = .isTranslating
+        var contentRequests = [TranslationSession.Request]()
+        var titleRequests = [TranslationSession.Request]()
+        for (index, article) in articles.enumerated() {
+            if let content = article.content,
+               article.contentTranslated == nil
+            {
+                contentRequests.append(TranslationSession.Request(sourceText: content,
+                                                                  clientIdentifier: "\(index)"))
+            }
+            if let title = article.title,
+               article.titleTranslated == nil
+            {
+                titleRequests.append(TranslationSession.Request(sourceText: title,
+                                                                clientIdentifier: "\(index)"))
+            }
+        }
+        do {
+            if !contentRequests.isEmpty {
+                for try await response in translateSession.translate(batch: contentRequests) {
+                    guard let index = Int(response.clientIdentifier ?? "") else {
+                        continue
+                    }
+                    articles[index].contentTranslated = response.targetText
+                }
+            }
+            if !titleRequests.isEmpty {
+                for try await response in translateSession.translate(batch: titleRequests) {
+                    guard let index = Int(response.clientIdentifier ?? "") else {
+                        continue
+                    }
+                    articles[index].titleTranslated = response.targetText
+                }
+            }
+            guard !articles.compactMap(\.contentTranslated).isEmpty,
+                  !articles.compactMap(\.titleTranslated).isEmpty else {
+                return updateStateTopHeadlines(state: .emptyTranslate)
+            }
+            showArticlesTranslations(show: true)
+        } catch {
+            updateStateTopHeadlines(error: error,
+                                    state: .emptyTranslate)
+        }
+    }
+
+    @MainActor
     func reset() async {
         do {
             /// Delete all persisted sources
@@ -188,69 +250,6 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func translate(translateSession: TranslationSession) async {
-        stateTopHeadlines = .isTranslating
-        var contentRequests: [TranslationSession.Request]? = []
-        var titleRequests: [TranslationSession.Request]? = []
-        for (index, article) in articles.enumerated() {
-            if let content = article.content,
-               article.contentTranslated == nil
-            {
-                contentRequests?.append(TranslationSession.Request(sourceText: content,
-                                                                   clientIdentifier: "\(index)"))
-            }
-            if let title = article.title,
-               article.titleTranslated == nil
-            {
-                titleRequests?.append(TranslationSession.Request(sourceText: title,
-                                                                 clientIdentifier: "\(index)"))
-            }
-        }
-        do {
-            if let contentRequests,
-               !contentRequests.isEmpty
-            {
-                for try await response in translateSession.translate(batch: contentRequests) {
-                    guard let index = Int(response.clientIdentifier ?? "") else {
-                        continue
-                    }
-                    articles[index].contentTranslated = response.targetText
-                }
-            }
-            if let titleRequests,
-               !titleRequests.isEmpty
-            {
-                for try await response in translateSession.translate(batch: titleRequests) {
-                    guard let index = Int(response.clientIdentifier ?? "") else {
-                        continue
-                    }
-                    articles[index].titleTranslated = response.targetText
-                }
-            }
-            updateStateTopHeadlines(state: contentRequests?.isEmpty == true && titleRequests?.isEmpty == true ? .emptyTranslate : .loaded)
-        } catch {
-            updateStateTopHeadlines(error: error,
-                                    state: .emptyTranslate)
-        }
-    }
-
-    @MainActor
-    func translateConfiguration() async {
-        guard await checkNetworkConnection() == true else {
-            translate = false
-            return
-        }
-        if translate, translationSessionConfiguration == nil {
-            translationSessionConfiguration = TranslationSession.Configuration()
-        } else if translate {
-            translationSessionConfiguration?.invalidate()
-        } else {
-            deleteTranslations()
-        }
-        sensoryFeedbackTrigger(feedback: .success)
-    }
-
-    @MainActor
     private func checkNetworkConnection() async -> Bool? {
         for await path in NWPathMonitor() {
             if path.status == .unsatisfied {
@@ -266,13 +265,6 @@ final class ContentViewModel {
     private func configureTipKit() {
         try? Tips.configure([.displayFrequency(.immediate),
                              .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
-    }
-
-    private func deleteTranslations() {
-        for index in articles.indices {
-            articles[index].contentTranslated = nil
-            articles[index].titleTranslated = nil
-        }
     }
 
     private func readSources() {
@@ -316,6 +308,14 @@ final class ContentViewModel {
         alertError = error
         showAlert = true
         sensoryFeedbackTrigger(feedback: .error)
+    }
+
+    private func showArticlesTranslations(show: Bool) {
+        for index in articles.indices {
+            articles[index].showTranslations = show
+        }
+        sensoryFeedbackTrigger(feedback: .success)
+        updateStateTopHeadlines(state: articles.isEmpty ? stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
     }
 
     private func updateStateSources(error: Error? = nil,
