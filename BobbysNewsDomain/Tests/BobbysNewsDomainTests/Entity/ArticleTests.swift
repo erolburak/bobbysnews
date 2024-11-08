@@ -24,6 +24,7 @@ struct ArticleTests {
             article?.content == "Test" &&
             article?.contentTranslated == nil &&
             article?.publishedAt == .distantPast &&
+            !article?.showTranslations &&
             article?.source?.category == "Test" &&
             article?.source?.country == "uk" &&
             article?.source?.id == "Test" &&

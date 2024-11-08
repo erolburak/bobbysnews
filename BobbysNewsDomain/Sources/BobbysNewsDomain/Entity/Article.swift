@@ -21,6 +21,7 @@ public struct Article: Hashable, Identifiable, Sendable {
     public let url: URL?
     public let urlToImage: URL?
     public var contentTranslated: String?
+    public var showTranslations = false
     public var titleTranslated: String?
 
     // MARK: - Lifecycles

@@ -24,13 +24,13 @@ final class DetailViewModel {
 
     var article: Article
     var articleContent: String {
-        article.contentTranslated ?? article.content ?? String(localized: "EmptyArticleContent")
+        (article.showTranslations ? article.contentTranslated : article.content) ?? String(localized: "EmptyArticleContent")
     }
 
     var articleImage: Image?
 
     var articleTitle: String {
-        article.titleTranslated ?? article.title ?? String(localized: "EmptyArticleTitle")
+        (article.showTranslations ? article.titleTranslated : article.title) ?? String(localized: "EmptyArticleTitle")
     }
 
     var navigationTitleOpacity: Double {
