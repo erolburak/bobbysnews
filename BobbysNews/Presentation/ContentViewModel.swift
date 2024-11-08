@@ -210,7 +210,8 @@ final class ContentViewModel {
                 }
             }
             guard !articles.compactMap(\.contentTranslated).isEmpty,
-                  !articles.compactMap(\.titleTranslated).isEmpty else {
+                  !articles.compactMap(\.titleTranslated).isEmpty
+            else {
                 return updateStateTopHeadlines(state: .emptyTranslate)
             }
             showArticlesTranslations(show: true)
