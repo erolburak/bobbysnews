@@ -290,7 +290,7 @@ private struct ListItem: View {
                     } else {
                         Image(systemName: "photo.circle.fill")
                             .resizable()
-                            .aspectRatio(contentMode: .fit)
+                            .scaledToFit()
                             .frame(height: 24)
                             .foregroundStyle(.gray)
                             .symbolEffect(.bounce,

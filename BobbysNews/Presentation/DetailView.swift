@@ -18,108 +18,104 @@ struct DetailView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                Group {
-                    Text(viewModel.title)
-                        .font(.system(.subheadline,
-                                      weight: .black))
-                        .lineLimit(1)
-                        .onGeometryChange(for: CGFloat.self) { geometryProxy in
-                            geometryProxy.frame(in: .scrollView(axis: .vertical)).minY
-                        } action: { newValue in
-                            viewModel.titleScrollOffset = newValue
-                        }
-
-                    Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-                        .font(.system(size: 8,
-                                      weight: .semibold))
-                }
-                .frame(maxWidth: .infinity,
-                       alignment: .center)
-                .onGeometryChange(for: CGFloat.self) { geometryProxy in
-                    geometryProxy.size.height
-                } action: { newValue in
-                    viewModel.titleHeight = newValue
-                }
-
-                Group {
-                    if let image = viewModel.articleImage {
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .containerRelativeFrame(.horizontal)
-                    } else if let urlToImage = viewModel.article.urlToImage {
-                        AsyncImage(url: urlToImage,
-                                   transaction: Transaction(animation: .easeIn(duration: 0.75)))
-                        { asyncImagePhase in
-                            if let image = asyncImagePhase.image {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .containerRelativeFrame(.horizontal)
-                            } else {
-                                ProgressView()
-                            }
-                        }
-                    } else {
-                        Image(systemName: "photo.circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 32)
-                            .foregroundStyle(.gray)
-                            .symbolEffect(.bounce,
-                                          options: .nonRepeating)
+            Group {
+                Text(viewModel.title)
+                    .font(.system(.subheadline,
+                                  weight: .black))
+                    .lineLimit(1)
+                    .onGeometryChange(for: CGFloat.self) { geometryProxy in
+                        geometryProxy.frame(in: .scrollView(axis: .vertical)).minY
+                    } action: { newValue in
+                        viewModel.titleScrollOffset = newValue
                     }
+
+                Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+                    .font(.system(size: 8,
+                                  weight: .semibold))
+            }
+            .onGeometryChange(for: CGFloat.self) { geometryProxy in
+                geometryProxy.size.height
+            } action: { newValue in
+                viewModel.titleHeight = newValue
+            }
+
+            Group {
+                if let image = viewModel.articleImage {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } else if let urlToImage = viewModel.article.urlToImage {
+                    AsyncImage(url: urlToImage,
+                               transaction: Transaction(animation: .easeIn(duration: 0.75)))
+                    { asyncImagePhase in
+                        if let image = asyncImagePhase.image {
+                            image
+                                .resizable()
+                                .scaledToFill()
+                        } else {
+                            ProgressView()
+                        }
+                    }
+                } else {
+                    Image(systemName: "photo.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 32)
+                        .foregroundStyle(.gray)
+                        .symbolEffect(.bounce,
+                                      options: .nonRepeating)
                 }
-                .frame(maxWidth: .infinity,
-                       idealHeight: 280)
-                .background(.bar)
-                .clipShape(.rect(topLeadingRadius: 40,
-                                 topTrailingRadius: 40))
-                .overlay {
-                    LinearGradient(gradient: Gradient(colors: [.clear,
-                                                               Color(uiColor: .systemBackground)]),
-                                   startPoint: UnitPoint(x: 0.5, y: 0.9),
-                                   endPoint: UnitPoint(x: 0.5, y: 1))
-                }
+            }
+            .frame(maxWidth: .infinity,
+                   minHeight: 280,
+                   maxHeight: 280)
+            .background(.bar)
+            .clipShape(.rect(topLeadingRadius: 40,
+                             topTrailingRadius: 40))
+            .overlay {
+                LinearGradient(gradient: Gradient(colors: [.clear,
+                                                           Color(uiColor: .systemBackground)]),
+                               startPoint: UnitPoint(x: 0.5, y: 0.9),
+                               endPoint: UnitPoint(x: 0.5, y: 1))
+            }
 
-                VStack(alignment: .leading,
-                       spacing: 8)
-                {
-                    Text(viewModel.articleTitle)
-                        .font(.system(.headline,
-                                      weight: .black))
+            VStack(alignment: .leading,
+                   spacing: 8)
+            {
+                Text(viewModel.articleTitle)
+                    .font(.system(.headline,
+                                  weight: .black))
 
-                    Text(viewModel.articleContent)
-                        .font(.callout)
-                        .padding(.top, 8)
+                Text(viewModel.articleContent)
+                    .font(.callout)
+                    .padding(.top, 8)
 
-                    Text(viewModel.article.author ?? String(localized: "EmptyArticleAuthor"))
-                        .font(.system(size: 8,
+                Text(viewModel.article.author ?? String(localized: "EmptyArticleAuthor"))
+                    .font(.system(size: 8,
+                                  weight: .semibold))
+            }
+            .frame(maxWidth: .infinity,
+                   alignment: .leading)
+            .padding(.horizontal)
+
+            if viewModel.article.url != nil {
+                VStack {
+                    Text("OpenWebView")
+                        .font(.system(.caption2,
                                       weight: .semibold))
+
+                    Button("Read") {
+                        viewModel.showWebView = true
+                    }
+                    .textCase(.uppercase)
+                    .font(.system(.subheadline,
+                                  weight: .black))
+                    .accessibilityIdentifier("ReadButton")
                 }
+                .textSelection(.disabled)
+                .foregroundStyle(.secondary)
                 .padding(.horizontal)
-
-                if viewModel.article.url != nil {
-                    VStack {
-                        Text("OpenWebView")
-                            .font(.system(.caption2,
-                                          weight: .semibold))
-
-                        Button("Read") {
-                            viewModel.showWebView = true
-                        }
-                        .textCase(.uppercase)
-                        .font(.system(.subheadline,
-                                      weight: .black))
-                        .accessibilityIdentifier("ReadButton")
-                    }
-                    .frame(maxWidth: .infinity)
-                    .textSelection(.disabled)
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal)
-                    .padding(.top, 40)
-                }
+                .padding(.top, 40)
             }
         }
         .textSelection(.enabled)
