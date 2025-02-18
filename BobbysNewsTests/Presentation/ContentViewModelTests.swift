@@ -50,12 +50,11 @@ struct ContentViewModelTests {
     }
 
     @Test("Check ContentViewModel onAppear!")
-    @MainActor
-    func testOnAppear() async {
+    func testOnAppear() {
         // Given
         sut.selectedCountry = "uk"
         // When
-        await sut.onAppear(selectedCountry: sut.selectedCountry)
+        sut.onAppear(selectedCountry: sut.selectedCountry)
         // Then
         #expect(sut.articles.count == 1 &&
             sut.countries.count == 1 &&

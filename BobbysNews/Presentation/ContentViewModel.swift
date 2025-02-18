@@ -108,12 +108,10 @@ final class ContentViewModel {
 
     // MARK: - Methods
 
-    @MainActor
-    func onAppear(selectedCountry: String) async {
+    func onAppear(selectedCountry: String) {
         self.selectedCountry = selectedCountry
         readSources()
         readTopHeadlines()
-        await fetchSources()
     }
 
     @MainActor
