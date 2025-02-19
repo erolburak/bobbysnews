@@ -163,7 +163,6 @@ struct ContentView: View {
                             .textCase(.uppercase)
                             .font(.system(.subheadline,
                                           weight: .black))
-                            .foregroundStyle(.secondary)
                             .accessibilityIdentifier("RefreshButton")
                         }
                     case .emptyTranslate:
@@ -179,7 +178,6 @@ struct ContentView: View {
                             .textCase(.uppercase)
                             .font(.system(.subheadline,
                                           weight: .black))
-                            .foregroundStyle(.secondary)
                             .accessibilityIdentifier("DisableButton")
                         }
                     }
@@ -197,7 +195,7 @@ struct ContentView: View {
             }
         }
         .task {
-            await viewModel.onAppear(selectedCountry: country)
+            viewModel.onAppear(selectedCountry: country)
         }
         .onChange(of: viewModel.selectedCountry) { _, newValue in
             country = newValue
