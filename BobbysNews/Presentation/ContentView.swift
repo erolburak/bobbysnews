@@ -52,14 +52,14 @@ struct ContentView: View {
                                     }
                                 } label: {
                                     Label("CountrySelection",
-                                          systemImage: "flag.circle.fill")
+                                          systemImage: "flag")
                                 }
                                 .pickerStyle(.menu)
                             }
                         case .emptyFetch, .emptyRead:
                             Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
                                 Button("CountriesLoad",
-                                       systemImage: "arrow.down.to.line.circle.fill")
+                                       systemImage: "arrow.down.to.line")
                                 {
                                     Task {
                                         await viewModel.fetchSources(sensoryFeedback: true)
@@ -87,7 +87,7 @@ struct ContentView: View {
                                 }
                             } label: {
                                 Label("ApiKeySelection",
-                                      systemImage: "key.fill")
+                                      systemImage: "key")
                             }
                             .pickerStyle(.menu)
                             .accessibilityIdentifier("ApiKeyPicker")
@@ -95,7 +95,7 @@ struct ContentView: View {
 
                         Section {
                             Button("Reset",
-                                   systemImage: "trash.circle.fill",
+                                   systemImage: "trash",
                                    role: .destructive)
                             {
                                 viewModel.showConfirmationDialog = true
@@ -103,7 +103,7 @@ struct ContentView: View {
                             .accessibilityIdentifier("ResetButton")
                         }
                     } label: {
-                        Image(systemName: "gearshape.circle.fill")
+                        Image(systemName: "gearshape")
                             .popoverTip(viewModel.settingsTip,
                                         arrowEdge: .top)
                             .onAppear {
@@ -135,7 +135,7 @@ struct ContentView: View {
                 if viewModel.selectedCountry.isEmpty {
                     ContentUnavailableView {
                         Label("EmptySelectedCountry",
-                              systemImage: "flag.circle.fill")
+                              systemImage: "flag")
                     } description: {
                         Text("EmptySelectedCountryMessage")
                             .accessibilityIdentifier("EmptySelectedCountryMessage")
@@ -150,7 +150,7 @@ struct ContentView: View {
                     case .emptyFetch, .emptyRead:
                         ContentUnavailableView {
                             Label(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
-                                  systemImage: "newspaper.circle.fill")
+                                  systemImage: "newspaper")
                         } description: {
                             Text(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
                         } actions: {
@@ -286,7 +286,7 @@ private struct ListItem: View {
                             }
                         }
                     } else {
-                        Image(systemName: "photo.circle.fill")
+                        Image(systemName: "photo")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 24)
@@ -307,6 +307,8 @@ private struct ListItem: View {
                 if let url = article.url {
                     ShareLink("Share",
                               item: url)
+                        .environment(\.symbolVariants,
+                                     .none)
                         .accessibilityIdentifier("ShareLink")
                 }
                 if let title = article.title {
