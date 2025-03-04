@@ -14,6 +14,8 @@ struct BobbysNewsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(viewModel: ViewModelFactory.shared.contentViewModel())
+                .environment(\.symbolVariants,
+                             .circle.fill)
         }
     }
 }

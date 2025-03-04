@@ -57,7 +57,7 @@ struct DetailView: View {
                         }
                     }
                 } else {
-                    Image(systemName: "photo.circle.fill")
+                    Image(systemName: "photo")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 32)
@@ -137,6 +137,8 @@ struct DetailView: View {
             if let url = viewModel.article.url {
                 ToolbarItem(placement: .primaryAction) {
                     ShareLink(item: url)
+                        .environment(\.symbolVariants,
+                                     .none)
                         .accessibilityIdentifier("ShareLink")
                 }
             }
@@ -151,7 +153,7 @@ struct DetailView: View {
                                     url: url)
                         case .error, .noNetworkConnection:
                             ContentUnavailableView(viewModel.stateWebView == .error ? "ErrorWebView" : "ErrorDescriptionNoNetworkConnection",
-                                                   systemImage: viewModel.stateWebView == .error ? "newspaper.circle.fill" : "network.slash",
+                                                   systemImage: viewModel.stateWebView == .error ? "newspaper" : "network.slash",
                                                    description: Text(viewModel.stateWebView == .error ? "ErrorWebViewMessage" : "ErrorRecoverySuggestionNoNetworkConnection"))
                                 .symbolEffect(.bounce,
                                               options: .nonRepeating)
@@ -163,7 +165,7 @@ struct DetailView: View {
                     .toolbar {
                         ToolbarItem(placement: .cancellationAction) {
                             Button("Close",
-                                   systemImage: "xmark.circle.fill")
+                                   systemImage: "xmark")
                             {
                                 viewModel.showWebView = false
                             }
