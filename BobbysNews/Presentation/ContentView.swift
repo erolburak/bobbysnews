@@ -265,27 +265,22 @@ private struct ListItem: View {
 
                 Spacer()
 
-                Group {
-                    if let urlToImage = article.urlToImage {
-                        AsyncImage(url: urlToImage,
-                                   transaction: Transaction(animation: .easeIn(duration: 0.75)))
-                        { asyncImagePhase in
-                            if let image = asyncImagePhase.image {
-                                image
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 80,
-                                           height: 80,
-                                           alignment: .center)
-                                    .clipped()
-                                    .onAppear {
-                                        articleImage = image
-                                    }
-                            } else {
-                                ProgressView()
+                AsyncImage(url: article.urlToImage,
+                           transaction: Transaction(animation: .easeIn(duration: 0.75)))
+                { asyncImagePhase in
+                    switch asyncImagePhase {
+                    case let .success(image):
+                        image
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 80,
+                                   height: 80,
+                                   alignment: .center)
+                            .clipped()
+                            .onAppear {
+                                articleImage = image
                             }
-                        }
-                    } else {
+                    case .failure:
                         Image(systemName: "photo")
                             .resizable()
                             .scaledToFit()
@@ -293,6 +288,8 @@ private struct ListItem: View {
                             .foregroundStyle(.gray)
                             .symbolEffect(.bounce,
                                           options: .nonRepeating)
+                    default:
+                        ProgressView()
                     }
                 }
                 .frame(width: 80,
