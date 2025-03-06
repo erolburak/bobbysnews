@@ -44,26 +44,27 @@ struct DetailView: View {
                     image
                         .resizable()
                         .scaledToFill()
-                } else if let urlToImage = viewModel.article.urlToImage {
-                    AsyncImage(url: urlToImage,
+                } else {
+                    AsyncImage(url: viewModel.article.urlToImage,
                                transaction: Transaction(animation: .easeIn(duration: 0.75)))
                     { asyncImagePhase in
-                        if let image = asyncImagePhase.image {
+                        switch asyncImagePhase {
+                        case let .success(image):
                             image
                                 .resizable()
                                 .scaledToFill()
-                        } else {
+                        case .failure:
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 32)
+                                .foregroundStyle(.gray)
+                                .symbolEffect(.bounce,
+                                              options: .nonRepeating)
+                        default:
                             ProgressView()
                         }
                     }
-                } else {
-                    Image(systemName: "photo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 32)
-                        .foregroundStyle(.gray)
-                        .symbolEffect(.bounce,
-                                      options: .nonRepeating)
                 }
             }
             .frame(maxWidth: .infinity,
