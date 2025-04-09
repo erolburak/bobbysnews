@@ -25,6 +25,6 @@ jobs:
         with:
           xcode-version: latest
       - name: Run SwiftFormat
-        run: swiftformat --lint . --reporter github-actions-log --swiftversion 6.0
+        run: swiftformat --lint . --reporter github-actions-log --swiftversion 6.1
       - name: Run tests
         run: set -o pipefail && xcodebuild clean test -project BobbysNews.xcodeproj -scheme BobbysNews -destination 'platform=iOS Simulator,name=${{ matrix.name }},OS=latest' | xcbeautify --renderer github-actions
