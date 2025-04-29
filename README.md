@@ -28,7 +28,9 @@ The **BobbysNews** app is my own project, which uses the [NewsAPI](https://newsa
 - [NewsAPI](https://newsapi.org)
 
 ## SCREENSHOTS
-Screenshots for this project are available on my [website](https://erolburak.me/en/portfolio).
+<img width="300" alt="bobbysnews1" src="https://github.com/user-attachments/assets/4016dca9-ad0f-41a6-8ec0-541ebec9aee8">
+<img width="300" alt="bobbysnews2" src="https://github.com/user-attachments/assets/b34a0ed1-c0ff-4ffd-8c3d-d02a63066516">
+<img width="300" alt="bobbysnews3" src="https://github.com/user-attachments/assets/ef51631c-c11b-4bce-a4d1-0715acde671a">
 
 ## HAVE FUN :)
 <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDI3emQxaHl0bm5uZmNsaXRtNzNjcDRvN2s3OXV4NmFxMnR3d2didyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ws6T5PN7wHv3cY8xy8/giphy.gif"/>
