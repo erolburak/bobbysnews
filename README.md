@@ -4,7 +4,7 @@
 BobbysNews
 
 ## DESCRIPTION
-The **BobbysNews** app is my own project, which uses the [NewsAPI](https://newsapi.org) to retrieve headlines from across the web. These headlines are displayed in a list and also contain a detail page for more information.
+The **BobbysNews** app is my own project, which uses a public API to retrieve headlines from across the web. These headlines are displayed in a list and also contain a detail page for more information.
 
 ## SETUP
 - IDE: Xcode
