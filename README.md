@@ -28,9 +28,15 @@ The **BobbysNews** app is my own project, which uses a public API to retrieve he
 - [NewsAPI](https://newsapi.org)
 
 ## SCREENSHOTS
-<img width="240" alt="bobbysnews1" src="https://github.com/user-attachments/assets/4016dca9-ad0f-41a6-8ec0-541ebec9aee8">
-<img width="240" alt="bobbysnews2" src="https://github.com/user-attachments/assets/b34a0ed1-c0ff-4ffd-8c3d-d02a63066516">
-<img width="240" alt="bobbysnews3" src="https://github.com/user-attachments/assets/ef51631c-c11b-4bce-a4d1-0715acde671a">
-
-## HAVE FUN :)
-<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdDI3emQxaHl0bm5uZmNsaXRtNzNjcDRvN2s3OXV4NmFxMnR3d2didyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Ws6T5PN7wHv3cY8xy8/giphy.gif"/>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/689a6b62-3fcd-4519-acc3-39d6842a3fd1">
+  <img width="240" src="https://github.com/user-attachments/assets/4bbd4618-771f-413d-86b7-e8543b5dd69f">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/53e43dfb-7739-42c3-bbbd-681a82e2989f">
+  <img width="240" src="https://github.com/user-attachments/assets/45bb42f1-b391-4080-aaf6-09863d726e2e">
+</picture>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/e3a10b2a-b807-44da-b035-131f7dce219b">
+  <img width="240" src="https://github.com/user-attachments/assets/2324b9f8-4181-4539-9274-e26f88f37be0">
+</picture>
