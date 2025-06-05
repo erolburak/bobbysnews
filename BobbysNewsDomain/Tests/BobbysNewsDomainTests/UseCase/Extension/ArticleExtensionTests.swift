@@ -14,7 +14,7 @@ struct ArticleExtensionTests {
     // MARK: - Methods
 
     @Test("Check ArticleExtension Article initializing!")
-    func testArticle() {
+    func article() {
         // Given
         var entity = EntityMock()
         let articleDB = entity.articleDB

@@ -14,7 +14,7 @@ struct ArticleAPITests {
     // MARK: - Methods
 
     @Test("Check AticleAPI initializing!")
-    func testAticleAPI() {
+    func aticleAPI() {
         // Given
         let articleAPI: ArticleAPI?
         // When

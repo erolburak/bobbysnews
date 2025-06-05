@@ -18,7 +18,7 @@ struct NetworkConfigurationTests {
     // MARK: - Methods
 
     @Test("Check NetworkConfiguration apiBaseUrl!")
-    func testApiBaseUrl() {
+    func apiBaseUrl() {
         // Given
         let apiBaseUrl: String?
         // When
@@ -29,7 +29,7 @@ struct NetworkConfigurationTests {
     }
 
     @Test("Check NetworkConfiguration apiKey!")
-    func testApiKey() {
+    func apiKey() {
         // Given
         let apiKey: String?
         // When
@@ -40,7 +40,7 @@ struct NetworkConfigurationTests {
     }
 
     @Test("Check NetworkConfiguration validateResponse with error!")
-    func testValidateResponseWithError() {
+    func validateResponseWithError() {
         // Given
         let response = HTTPURLResponse(url: URL(string: "Test")!,
                                        statusCode: 401,
@@ -56,7 +56,7 @@ struct NetworkConfigurationTests {
     }
 
     @Test("Check NetworkConfiguration validateResponse with success!")
-    func testValidateResponseWithSuccess() {
+    func validateResponseWithSuccess() {
         // Given
         let response = HTTPURLResponse(url: URL(string: "Test")!,
                                        statusCode: 200,

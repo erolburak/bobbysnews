@@ -17,7 +17,7 @@ struct TopHeadlinesPersistenceControllerTests {
     // MARK: - Methods
 
     @Test("Check TopHeadlinesPersistenceController delete!")
-    func testDelete() {
+    func delete() {
         #expect(throws: Never.self,
                 "TopHeadlinesPersistenceController delete failed!")
         {
@@ -26,7 +26,7 @@ struct TopHeadlinesPersistenceControllerTests {
     }
 
     @Test("Check TopHeadlinesPersistenceController read!")
-    func testRead() {
+    func read() {
         // Given
         var topHeadlines: [ArticleDB]?
         // When
@@ -37,7 +37,7 @@ struct TopHeadlinesPersistenceControllerTests {
     }
 
     @Test("Check TopHeadlinesPersistenceController save!")
-    func testSave() {
+    func save() {
         #expect(throws: Never.self,
                 "TopHeadlinesPersistenceController save failed!")
         {

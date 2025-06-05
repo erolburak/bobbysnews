@@ -14,7 +14,7 @@ struct SourceTests {
     // MARK: - Methods
 
     @Test("Check Source initializing!")
-    func testSource() {
+    func source() {
         // Given
         let source: Source?
         // When

@@ -6,7 +6,7 @@ let package = Package(
     name: "BobbysNewsData",
     platforms: [
         .iOS(
-            .v18
+            .v18,
         ),
     ],
     products: [
@@ -14,18 +14,18 @@ let package = Package(
             name: "BobbysNewsData",
             targets: [
                 "BobbysNewsData",
-            ]
+            ],
         ),
     ],
     targets: [
         .target(
-            name: "BobbysNewsData"
+            name: "BobbysNewsData",
         ),
         .testTarget(
             name: "BobbysNewsDataTests",
             dependencies: [
                 "BobbysNewsData",
-            ]
+            ],
         ),
-    ]
+    ],
 )

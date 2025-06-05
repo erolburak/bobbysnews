@@ -14,7 +14,7 @@ struct SourcesAPITests {
     // MARK: - Methods
 
     @Test("Check SourcesAPI initializing!")
-    func testSourcesAPI() {
+    func sourcesAPI() {
         // Given
         let sourcesAPI: SourcesAPI?
         // When

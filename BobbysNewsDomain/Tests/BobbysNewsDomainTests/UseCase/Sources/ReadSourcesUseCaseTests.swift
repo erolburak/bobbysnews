@@ -18,7 +18,7 @@ struct ReadSourcesUseCaseTests {
     // MARK: - Methods
 
     @Test("Check ReadSourcesUseCase read!")
-    func testRead() throws {
+    func read() throws {
         // Given
         var sources: Sources?
         // When

@@ -34,7 +34,7 @@ struct ContentViewModelTests {
     // MARK: - Methods
 
     @Test("Check ContentViewModel initializing!")
-    func testContentViewModel() {
+    func contentViewModel() {
         // Given
         let contentViewModel: ContentViewModel?
         // When
@@ -50,7 +50,7 @@ struct ContentViewModelTests {
     }
 
     @Test("Check ContentViewModel onAppear!")
-    func testOnAppear() {
+    func onAppear() {
         // Given
         sut.selectedCountry = "uk"
         // When
@@ -65,7 +65,7 @@ struct ContentViewModelTests {
 
     @Test("Check ContentViewModel configureTranslations!")
     @MainActor
-    func testConfigureTranslations() async {
+    func configureTranslations() async {
         // Given
         sut.translate = true
         sut.translationSessionConfiguration = nil
@@ -79,7 +79,7 @@ struct ContentViewModelTests {
 
     @Test("Check ContentViewModel fetchSources!")
     @MainActor
-    func testFetchSources() async {
+    func fetchSources() async {
         // Given
         sut.countries = [EntityMock.sources.sources?.first?.country ?? "uk"]
         sut.selectedCountry = "uk"
@@ -92,7 +92,7 @@ struct ContentViewModelTests {
 
     @Test("Check ContentViewModel fetchTopHeadlines!")
     @MainActor
-    func testFetchTopHeadlines() async {
+    func fetchTopHeadlines() async {
         // Given
         sut.articles = EntityMock.topHeadlines.articles ?? []
         sut.selectedCountry = "uk"
@@ -104,7 +104,7 @@ struct ContentViewModelTests {
     }
 
     @Test("Check ContentViewModel showSettingsTip!")
-    func testShowSettingsTip() throws {
+    func showSettingsTip() throws {
         // Given
         ContentViewModel.SettingsTip.show = false
         // When
@@ -116,7 +116,7 @@ struct ContentViewModelTests {
 
     @Test("Check ContentViewModel reset!")
     @MainActor
-    func testReset() async {
+    func reset() async {
         // Given
         sut.apiKeyVersion = 2
         sut.articles = EntityMock.topHeadlines.articles ?? []

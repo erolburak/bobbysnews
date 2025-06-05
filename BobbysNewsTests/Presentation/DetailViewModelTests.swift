@@ -23,7 +23,7 @@ struct DetailViewModelTests {
     // MARK: - Methods
 
     @Test("Check DetailViewModel initializing!")
-    func testDetailViewModel() {
+    func detailViewModel() {
         // Given
         let detailViewModel: DetailViewModel?
         // When
@@ -36,7 +36,7 @@ struct DetailViewModelTests {
 
     @Test("Check DetailViewModel onAppear!")
     @MainActor
-    func testOnAppear() async {
+    func onAppear() async {
         // Given
         let article = EntityMock.article
         // When

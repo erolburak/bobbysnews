@@ -17,7 +17,7 @@ struct RepositoryFactoryTests {
     // MARK: - Methods
 
     @Test("Check DeleteSourcesUseCase initializing!")
-    func testDeleteSourcesUseCase() {
+    func deleteSourcesUseCase() {
         // Given
         let deleteSourcesUseCase: PDeleteSourcesUseCase?
         // When
@@ -28,7 +28,7 @@ struct RepositoryFactoryTests {
     }
 
     @Test("Check FetchSourcesUseCase initializing!")
-    func testFetchSourcesUseCase() {
+    func fetchSourcesUseCase() {
         // Given
         let fetchSourcesUseCase: PFetchSourcesUseCase?
         // When
@@ -39,7 +39,7 @@ struct RepositoryFactoryTests {
     }
 
     @Test("Check ReadSourcesUseCase initializing!")
-    func testReadSourcesUseCase() {
+    func readSourcesUseCase() {
         // Given
         let readSourcesUseCase: PReadSourcesUseCase?
         // When
@@ -50,7 +50,7 @@ struct RepositoryFactoryTests {
     }
 
     @Test("Check DeleteTopHeadlinesUseCase initializing!")
-    func testDeleteTopHeadlinesUseCase() {
+    func deleteTopHeadlinesUseCase() {
         // Given
         let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase?
         // When
@@ -61,7 +61,7 @@ struct RepositoryFactoryTests {
     }
 
     @Test("Check FetchTopHeadlinesUseCase initializing!")
-    func testFetchTopHeadlinesUseCase() {
+    func fetchTopHeadlinesUseCase() {
         // Given
         let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase?
         // When
@@ -72,7 +72,7 @@ struct RepositoryFactoryTests {
     }
 
     @Test("Check ReadTopHeadlinesUseCase initializing!")
-    func testReadTopHeadlinesUseCase() {
+    func readTopHeadlinesUseCase() {
         // Given
         let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase?
         // When

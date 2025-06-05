@@ -13,7 +13,7 @@ struct SourceDBExtensionTests {
     // MARK: - Methods
 
     @Test("Check SourceDB initializing!")
-    func testSourceDB() {
+    func sourceDB() {
         // Given
         let sourceAPI = EntityMock.sourceAPI
         // When

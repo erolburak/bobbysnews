@@ -14,7 +14,7 @@ struct SourceExtensionTests {
     // MARK: - Methods
 
     @Test("Check SourceExtension Source initializing!")
-    func testSource() {
+    func source() {
         // Given
         var entity = EntityMock()
         let sourceDB = entity.sourceDB
