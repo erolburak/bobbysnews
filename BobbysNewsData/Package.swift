@@ -6,26 +6,26 @@ let package = Package(
     name: "BobbysNewsData",
     platforms: [
         .iOS(
-            .v18,
-        ),
+            .v18
+        )
     ],
     products: [
         .library(
             name: "BobbysNewsData",
             targets: [
-                "BobbysNewsData",
-            ],
-        ),
+                "BobbysNewsData"
+            ]
+        )
     ],
     targets: [
         .target(
-            name: "BobbysNewsData",
+            name: "BobbysNewsData"
         ),
         .testTarget(
             name: "BobbysNewsDataTests",
             dependencies: [
-                "BobbysNewsData",
-            ],
-        ),
-    ],
+                "BobbysNewsData"
+            ]
+        )
+    ]
 )
