@@ -18,7 +18,7 @@ struct ReadApiHeadlinesUseCaseTests {
     // MARK: - Methods
 
     @Test("Check ReadTopHeadlinesUseCase read!")
-    func testRead() throws {
+    func read() throws {
         // Given
         let country = "uk"
         var topHeadlines: TopHeadlines?

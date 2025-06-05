@@ -13,7 +13,7 @@ struct DateExtensionTests {
     // MARK: - Methods
 
     @Test("Check DateExtension toRelative with now!")
-    func testToRelativeWithNow() {
+    func toRelativeWithNow() {
         // Given
         let date = Date.now
         let relative = "Today"
@@ -25,7 +25,7 @@ struct DateExtensionTests {
     }
 
     @Test("Check DateExtension toRelative with yesterday!")
-    func testToRelativeWithYesterday() {
+    func toRelativeWithYesterday() {
         // Given
         let date = Calendar.current.date(byAdding: DateComponents(day: -1),
                                          to: .now) ?? .now

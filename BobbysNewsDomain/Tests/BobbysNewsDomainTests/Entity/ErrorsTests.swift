@@ -13,7 +13,7 @@ struct ErrorsTests {
     // MARK: - Methods
 
     @Test("Check Errors initializing!")
-    func testErrors() {
+    func errors() {
         for error in EntityMock.errors {
             // Given
             var newError: Error?

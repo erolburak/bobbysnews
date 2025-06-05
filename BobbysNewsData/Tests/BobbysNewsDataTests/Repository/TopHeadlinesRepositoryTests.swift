@@ -17,7 +17,7 @@ struct TopHeadlinesRepositoryTests {
     // MARK: - Methods
 
     @Test("Check TopHeadlinesRepository delete!")
-    func testDelete() {
+    func delete() {
         #expect(throws: Never.self,
                 "TopHeadlinesRepository delete failed!")
         {
@@ -26,7 +26,7 @@ struct TopHeadlinesRepositoryTests {
     }
 
     @Test("Check TopHeadlinesRepository fetch!")
-    func testFetch() {
+    func fetch() {
         #expect(throws: Never.self,
                 "TopHeadlinesRepository fetch failed!")
         {
@@ -36,7 +36,7 @@ struct TopHeadlinesRepositoryTests {
     }
 
     @Test("Check TopHeadlinesRepository read!")
-    func testRead() {
+    func read() {
         // Given
         var topHeadlines: [ArticleDB]?
         // When

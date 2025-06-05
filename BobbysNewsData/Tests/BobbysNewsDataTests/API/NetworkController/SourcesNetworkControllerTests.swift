@@ -17,7 +17,7 @@ struct SourcesNetworkControllerTests {
     // MARK: - Methods
 
     @Test("Check SourcesNetworkController fetch!")
-    func testFetch() {
+    func fetch() {
         // Given
         let apiKey = 1
         // When

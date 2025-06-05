@@ -18,7 +18,7 @@ struct DeleteTopHeadlinesUseCaseTests {
     // MARK: - Methods
 
     @Test("Check DeleteTopHeadlinesUseCase delete!")
-    func testDelete() {
+    func delete() {
         #expect(throws: Never.self,
                 "DeleteTopHeadlinesUseCase delete failed!")
         {

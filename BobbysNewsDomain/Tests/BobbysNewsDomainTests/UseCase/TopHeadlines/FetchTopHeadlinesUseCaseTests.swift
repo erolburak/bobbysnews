@@ -24,7 +24,7 @@ struct FetchTopHeadlinesUseCaseTests {
     }
 
     @Test("Check FetchTopHeadlinesUseCase fetch!")
-    func testFetch() async throws {
+    func fetch() async throws {
         // Given
         let apiKey = 1
         let country = "uk"

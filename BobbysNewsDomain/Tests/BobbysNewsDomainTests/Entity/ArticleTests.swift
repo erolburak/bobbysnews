@@ -14,7 +14,7 @@ struct ArticleTests {
     // MARK: - Methods
 
     @Test("Check Aticle initializing!")
-    func testArticle() {
+    func article() {
         // Given
         let article: Article?
         // When

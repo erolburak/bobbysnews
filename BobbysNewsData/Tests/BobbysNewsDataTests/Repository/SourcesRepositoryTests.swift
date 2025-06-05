@@ -17,7 +17,7 @@ struct SourcesRepositoryTests {
     // MARK: - Methods
 
     @Test("Check SourcesRepository delete!")
-    func testDelete() {
+    func delete() {
         #expect(throws: Never.self,
                 "SourcesRepository delete failed!")
         {
@@ -26,7 +26,7 @@ struct SourcesRepositoryTests {
     }
 
     @Test("Check SourcesRepository fetch!")
-    func testFetch() {
+    func fetch() {
         #expect(throws: Never.self,
                 "SourcesRepository fetch failed!")
         {
@@ -35,7 +35,7 @@ struct SourcesRepositoryTests {
     }
 
     @Test("Check SourcesRepository read!")
-    func testRead() {
+    func read() {
         // Given
         var sources: [SourceDB]?
         // When

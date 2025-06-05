@@ -17,7 +17,7 @@ struct SourcesPersistenceControllerTests {
     // MARK: - Methods
 
     @Test("Check SourcesPersistenceController delete!")
-    func testDelete() {
+    func delete() {
         #expect(throws: Never.self,
                 "SourcesPersistenceController delete failed!")
         {
@@ -26,7 +26,7 @@ struct SourcesPersistenceControllerTests {
     }
 
     @Test("Check SourcesPersistenceController read!")
-    func testRead() {
+    func read() {
         // Given
         var sources: [SourceDB]?
         // When
@@ -37,7 +37,7 @@ struct SourcesPersistenceControllerTests {
     }
 
     @Test("Check SourcesPersistenceController save!")
-    func testSave() {
+    func save() {
         #expect(throws: Never.self,
                 "SourcesPersistenceController save failed!")
         {

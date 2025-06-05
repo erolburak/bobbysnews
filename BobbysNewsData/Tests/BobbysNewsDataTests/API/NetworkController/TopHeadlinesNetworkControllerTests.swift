@@ -17,7 +17,7 @@ struct TopHeadlinesNetworkControllerTests {
     // MARK: - Methods
 
     @Test("Check TopHeadlinesNetworkController fetch!")
-    func testFetch() throws {
+    func fetch() throws {
         // Given
         let apiKey = 1
         let country = "uk"

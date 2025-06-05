@@ -18,7 +18,7 @@ struct DeleteSourcesUseCaseTests {
     // MARK: - Methods
 
     @Test("Check DeleteSourcesUseCase delete!")
-    func testDelete() {
+    func delete() {
         #expect(throws: Never.self,
                 "DeleteSourcesUseCase delete failed!")
         {

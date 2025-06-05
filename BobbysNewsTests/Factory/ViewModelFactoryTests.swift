@@ -16,7 +16,7 @@ struct ViewModelFactoryTests {
     // MARK: - Methods
 
     @Test("Check ContentViewModel initializing!")
-    func testContentViewModelIsNotNil() {
+    func contentViewModelIsNotNil() {
         // Given
         let contentViewModel: ContentViewModel?
         // When
@@ -27,7 +27,7 @@ struct ViewModelFactoryTests {
     }
 
     @Test("Check DetailViewModel initializing!")
-    func testDetailViewModelIsNotNil() {
+    func detailViewModelIsNotNil() {
         // Given
         let detailViewModel: DetailViewModel?
         // When

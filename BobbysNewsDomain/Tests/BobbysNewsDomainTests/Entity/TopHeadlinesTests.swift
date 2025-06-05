@@ -14,7 +14,7 @@ struct TopHeadlinesTests {
     // MARK: - Methods
 
     @Test("Check TopHeadlines initializing!")
-    func testTopHeadlines() {
+    func topHeadlines() {
         // Given
         let topHeadlines: TopHeadlines?
         // When

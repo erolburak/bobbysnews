@@ -17,7 +17,7 @@ struct RepositoryFactoryTests {
     // MARK: - Methods
 
     @Test("Check SourcesRepository initializing!")
-    func testSourcesRepository() {
+    func sourcesRepository() {
         // Given
         let sourcesRepository: PSourcesRepository?
         // When
@@ -28,7 +28,7 @@ struct RepositoryFactoryTests {
     }
 
     @Test("Check TopHeadlinesRepository initializing!")
-    func testTopHeadlinesRepository() {
+    func topHeadlinesRepository() {
         // Given
         let topHeadlinesRepository: PTopHeadlinesRepository?
         // When

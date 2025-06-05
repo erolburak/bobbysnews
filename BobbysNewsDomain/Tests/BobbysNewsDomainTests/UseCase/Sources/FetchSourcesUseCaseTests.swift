@@ -26,7 +26,7 @@ struct FetchSourcesUseCaseTests {
     // MARK: - Methods
 
     @Test("Check FetchSourcesUseCase fetch!")
-    func testFetch() async throws {
+    func fetch() async throws {
         // Given
         let apiKey = 1
         // When
