@@ -20,7 +20,7 @@ struct NetworkConfigurationTests {
     @Test("Check NetworkConfiguration apiBaseUrl!")
     func apiBaseUrl() {
         // Given
-        let apiBaseUrl: String?
+        let apiBaseUrl: URL?
         // When
         apiBaseUrl = NetworkConfiguration.apiBaseUrl
         // Then
@@ -28,29 +28,18 @@ struct NetworkConfigurationTests {
                 "NetworkConfiguration apiBaseUrl failed!")
     }
 
-    @Test("Check NetworkConfiguration apiKey!")
-    func apiKey() {
-        // Given
-        let apiKey: String?
-        // When
-        apiKey = NetworkConfiguration.apiKey(1)
-        // Then
-        #expect(apiKey != nil,
-                "NetworkConfiguration apiKey failed!")
-    }
-
     @Test("Check NetworkConfiguration validateResponse with error!")
     func validateResponseWithError() {
         // Given
         let response = HTTPURLResponse(url: URL(string: "Test")!,
-                                       statusCode: 401,
+                                       statusCode: 400,
                                        httpVersion: nil,
                                        headerFields: nil)
         // Then
         #expect(throws: Error.self,
                 "NetworkConfiguration validateResponse with error failed!")
         {
-            try sut.validateResponse(defaultError: .fetchSources,
+            try sut.validateResponse(defaultError: .badRequest,
                                      response: response)
         }
     }
@@ -66,7 +55,7 @@ struct NetworkConfigurationTests {
         #expect(throws: Never.self,
                 "NetworkConfiguration validateResponse with success failed!")
         {
-            try sut.validateResponse(defaultError: .fetchSources,
+            try sut.validateResponse(defaultError: .badRequest,
                                      response: response)
         }
     }

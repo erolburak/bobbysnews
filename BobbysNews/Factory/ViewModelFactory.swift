@@ -21,10 +21,7 @@ final class ViewModelFactory {
     // MARK: - Methods
 
     func contentViewModel() -> ContentViewModel {
-        ContentViewModel(deleteSourcesUseCase: useCaseFactory.deleteSourcesUseCase,
-                         fetchSourcesUseCase: useCaseFactory.fetchSourcesUseCase,
-                         readSourcesUseCase: useCaseFactory.readSourcesUseCase,
-                         deleteTopHeadlinesUseCase: useCaseFactory.deleteTopHeadlinesUseCase,
+        ContentViewModel(deleteTopHeadlinesUseCase: useCaseFactory.deleteTopHeadlinesUseCase,
                          fetchTopHeadlinesUseCase: useCaseFactory.fetchTopHeadlinesUseCase,
                          readTopHeadlinesUseCase: useCaseFactory.readTopHeadlinesUseCase)
     }

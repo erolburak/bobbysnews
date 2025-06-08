@@ -25,7 +25,7 @@ The **BobbysNews** app is my own project, which uses a public API to retrieve he
 - CloudKit Database
 - SwiftTesting
 - XCTest
-- [NewsAPI](https://newsapi.org)
+- [GNews](https://gnews.io)
 
 ## SCREENSHOTS
 <img width="240" src="https://github.com/user-attachments/assets/4bbd4618-771f-413d-86b7-e8543b5dd69f#gh-light-mode-only">

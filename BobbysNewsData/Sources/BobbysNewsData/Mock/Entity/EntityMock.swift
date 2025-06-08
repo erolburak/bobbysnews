@@ -11,48 +11,38 @@ struct EntityMock {
     // MARK: - Properties
 
     /// Mocks which represent API entities
-    static let articleAPI = ArticleAPI(author: "Test",
-                                       content: "Test",
+    static let articleAPI = ArticleAPI(content: "Test",
+                                       image: URL(string: "Test"),
                                        publishedAt: .distantPast,
                                        source: sourceAPI,
                                        story: "Test",
                                        title: "Test",
-                                       url: URL(string: "Test"),
-                                       urlToImage: URL(string: "Test"))
-    static let sourceAPI = SourceAPI(category: "Test",
-                                     country: "uk",
-                                     id: "Test",
-                                     language: "Test",
-                                     name: "Test",
-                                     story: "Test",
+                                       url: URL(string: "Test"))
+    static let errorsAPI: [ErrorsAPI] = [.badRequest,
+                                         .forbidden,
+                                         .internalServerError,
+                                         .serviceUnavailable,
+                                         .tooManyRequests,
+                                         .unauthorized]
+    static let sourceAPI = SourceAPI(name: "Test",
                                      url: URL(string: "Test"))
-    static let sourcesAPI = SourcesAPI(sources: [sourceAPI])
     static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
 
     /// Mocks which represent DB entities
-    lazy var sourcesDB = {
-        let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
-        sourceDB.category = "Test"
-        sourceDB.country = "uk"
-        sourceDB.id = "Test"
-        sourceDB.language = "Test"
-        sourceDB.name = "Test"
-        sourceDB.story = "Test"
-        sourceDB.url = URL(string: "Test")
-        return [sourceDB]
-    }()
-
     lazy var topHeadlinesDB = {
         let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
-        articleDB.author = "Test"
+        articleDB.category = "Test"
         articleDB.content = "Test"
-        articleDB.country = "uk"
+        articleDB.country = "Test"
+        articleDB.image = URL(string: "Test")
         articleDB.publishedAt = .distantPast
-        articleDB.source = sourcesDB.first
+        let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
+        sourceDB.name = "Test"
+        sourceDB.url = URL(string: "Test")
+        articleDB.source = sourceDB
         articleDB.story = "Test"
         articleDB.title = "Test"
         articleDB.url = URL(string: "Test")
-        articleDB.urlToImage = URL(string: "Test")
         return [articleDB]
     }()
 }

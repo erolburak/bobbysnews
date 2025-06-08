@@ -14,12 +14,7 @@ extension Source {
         guard let db else {
             return nil
         }
-        self.init(category: db.category,
-                  country: db.country,
-                  id: db.id,
-                  language: db.language,
-                  name: db.name,
-                  story: db.story,
+        self.init(name: db.name,
                   url: db.url)
     }
 }

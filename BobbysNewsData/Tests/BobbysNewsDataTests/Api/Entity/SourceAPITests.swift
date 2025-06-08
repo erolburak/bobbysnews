@@ -20,12 +20,7 @@ struct SourceAPITests {
         // When
         sourceAPI = EntityMock.sourceAPI
         // Then
-        #expect(sourceAPI?.category == "Test" &&
-            sourceAPI?.country == "uk" &&
-            sourceAPI?.id == "Test" &&
-            sourceAPI?.language == "Test" &&
-            sourceAPI?.name == "Test" &&
-            sourceAPI?.story == "Test" &&
+        #expect(sourceAPI?.name == "Test" &&
             sourceAPI?.url == URL(string: "Test"),
             "SourceAPI initializing failed!")
     }

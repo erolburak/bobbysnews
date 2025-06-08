@@ -26,13 +26,16 @@ struct FetchTopHeadlinesUseCaseTests {
     @Test("Check FetchTopHeadlinesUseCase fetch!")
     func fetch() async throws {
         // Given
-        let apiKey = 1
-        let country = "uk"
+        let apiKey = "Test"
+        let category = "Test"
+        let country = "Test"
         // When
         try await sut.fetch(apiKey: apiKey,
+                            category: category,
                             country: country)
         // Then
-        #expect(mock.topHeadlinesPersistenceController.read(country: country).count == 1,
+        #expect(mock.topHeadlinesPersistenceController.read(category: category,
+                                                            country: country).count == 1,
                 "FetchTopHeadlinesUseCase fetch failed!")
     }
 }

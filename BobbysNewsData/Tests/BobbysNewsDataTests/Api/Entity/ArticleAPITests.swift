@@ -20,20 +20,14 @@ struct ArticleAPITests {
         // When
         articleAPI = EntityMock.articleAPI
         // Then
-        #expect(articleAPI?.author == "Test" &&
-            articleAPI?.content == "Test" &&
+        #expect(articleAPI?.content == "Test" &&
+            articleAPI?.image == URL(string: "Test") &&
             articleAPI?.publishedAt == .distantPast &&
-            articleAPI?.source?.category == "Test" &&
-            articleAPI?.source?.country == "uk" &&
-            articleAPI?.source?.id == "Test" &&
-            articleAPI?.source?.language == "Test" &&
             articleAPI?.source?.name == "Test" &&
-            articleAPI?.source?.story == "Test" &&
             articleAPI?.source?.url == URL(string: "Test") &&
             articleAPI?.story == "Test" &&
             articleAPI?.title == "Test" &&
-            articleAPI?.url == URL(string: "Test") &&
-            articleAPI?.urlToImage == URL(string: "Test"),
+            articleAPI?.url == URL(string: "Test"),
             "AticleAPI initializing failed!")
     }
 }

@@ -15,18 +15,13 @@ struct ContentViewModelTests {
     // MARK: - Private Properties
 
     private let sut: ContentViewModel
-    private let sourcesRepositoryMock: SourcesRepositoryMock
     private let topHeadlinesRepositoryMock: TopHeadlinesRepositoryMock
 
     // MARK: - Lifecycles
 
     init() {
-        sourcesRepositoryMock = SourcesRepositoryMock()
         topHeadlinesRepositoryMock = TopHeadlinesRepositoryMock()
-        sut = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
-                               fetchSourcesUseCase: FetchSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
-                               readSourcesUseCase: ReadSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
-                               deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
+        sut = ContentViewModel(deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
                                fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
                                readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
     }
@@ -38,10 +33,7 @@ struct ContentViewModelTests {
         // Given
         let contentViewModel: ContentViewModel?
         // When
-        contentViewModel = ContentViewModel(deleteSourcesUseCase: DeleteSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
-                                            fetchSourcesUseCase: FetchSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
-                                            readSourcesUseCase: ReadSourcesUseCase(sourcesRepository: sourcesRepositoryMock),
-                                            deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
+        contentViewModel = ContentViewModel(deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
                                             fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
                                             readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
         // Then
@@ -52,14 +44,18 @@ struct ContentViewModelTests {
     @Test("Check ContentViewModel onAppear!")
     func onAppear() {
         // Given
-        sut.selectedCountry = "uk"
+        sut.selectedApiKey = "Test"
+        sut.selectedCategory = .general
+        sut.selectedCountry = "Test"
         // When
-        sut.onAppear(selectedCountry: sut.selectedCountry)
+        sut.onAppear(selectedApiKey: sut.selectedApiKey,
+                     selectedCategory: sut.selectedCategory,
+                     selectedCountry: sut.selectedCountry)
         // Then
         #expect(sut.articles.count == 1 &&
-            sut.countries.count == 1 &&
-            sut.stateSources == .loaded &&
-            sut.stateTopHeadlines == .loaded,
+            !sut.categoriesSorted.isEmpty &&
+            !sut.countriesSorted.isEmpty &&
+            sut.state == .loaded,
             "ContentViewModel onAppear failed!")
     }
 
@@ -77,25 +73,14 @@ struct ContentViewModelTests {
             "ContentViewModel translateConfiguration failed!")
     }
 
-    @Test("Check ContentViewModel fetchSources!")
-    @MainActor
-    func fetchSources() async {
-        // Given
-        sut.countries = [EntityMock.sources.sources?.first?.country ?? "uk"]
-        sut.selectedCountry = "uk"
-        // When
-        await sut.fetchSources()
-        // Then
-        #expect(sut.countries.count == 1,
-                "ContentViewModel fetchSources failed!")
-    }
-
     @Test("Check ContentViewModel fetchTopHeadlines!")
     @MainActor
     func fetchTopHeadlines() async {
         // Given
         sut.articles = EntityMock.topHeadlines.articles ?? []
-        sut.selectedCountry = "uk"
+        sut.selectedApiKey = "Test"
+        sut.selectedCategory = .general
+        sut.selectedCountry = "Test"
         // When
         await sut.fetchTopHeadlines(state: .isLoading)
         // Then
@@ -118,23 +103,23 @@ struct ContentViewModelTests {
     @MainActor
     func reset() async {
         // Given
-        sut.apiKeyVersion = 2
         sut.articles = EntityMock.topHeadlines.articles ?? []
-        sut.countries = [EntityMock.sources.sources?.first?.country ?? "uk"]
-        sut.selectedCountry = "uk"
-        sut.stateSources = .loaded
-        sut.stateTopHeadlines = .loaded
+        sut.countries = [EntityMock.article.country ?? "Test"]
+        sut.selectedApiKey = "Test"
+        sut.selectedCategory = .business
+        sut.selectedCountry = "Test"
+        sut.state = .loaded
         sut.translate = true
         sut.translateDisabled = false
         // When
         await sut.reset()
         // Then
-        #expect(sut.apiKeyVersion == 1 &&
-            sut.articles.isEmpty &&
-            sut.countries.isEmpty &&
+        #expect(sut.articles.isEmpty &&
+            !sut.countries.isEmpty &&
+            sut.selectedApiKey.isEmpty &&
+            sut.selectedCategory == .general &&
             sut.selectedCountry.isEmpty &&
-            sut.stateSources == .emptyRead &&
-            sut.stateTopHeadlines == .emptyRead &&
+            sut.state == .emptyRead &&
             !sut.translate &&
             sut.translateDisabled,
             "ContentViewModel reset failed!")

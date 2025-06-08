@@ -12,6 +12,8 @@ import Translation
 struct ContentView: View {
     // MARK: - Private Properties
 
+    @AppStorage("apiKey") private var apiKey = ""
+    @AppStorage("category") private var category: Categories = .general
     @AppStorage("country") private var country = ""
 
     // MARK: - Properties
@@ -23,8 +25,8 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                ForEach($viewModel.articles) { $article in
-                    ListItem(article: $article)
+                ForEach($viewModel.articles) {
+                    ListItem(article: $0)
                 }
             }
             .navigationTitle("TopHeadlines")
@@ -35,171 +37,37 @@ struct ContentView: View {
                 await viewModel.fetchTopHeadlines()
             }
             .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Menu {
-                        switch viewModel.stateSources {
-                        case .isLoading:
-                            Text("CountriesLoading")
-                        case .loaded:
-                            if !viewModel.countries.isEmpty {
-                                Picker(selection: $viewModel.selectedCountry) {
-                                    ForEach(viewModel.countries,
-                                            id: \.self)
-                                    { country in
-                                        Text(Locale.current.localizedString(forRegionCode: country) ?? "")
-                                            .tag(country)
-                                            .accessibilityIdentifier("CountryPickerItem" + country)
-                                    }
-                                } label: {
-                                    Label("CountrySelection",
-                                          systemImage: "flag")
-                                }
-                                .pickerStyle(.menu)
-                            }
-                        case .emptyFetch, .emptyRead:
-                            Section(viewModel.stateSources == .emptyFetch ? "EmptyFetchSources" : "EmptyReadSources") {
-                                Button("CountriesLoad",
-                                       systemImage: "arrow.down.to.line")
-                                {
-                                    Task {
-                                        await viewModel.fetchSources(sensoryFeedback: true)
-                                    }
-                                }
-                            }
-                            .menuActionDismissBehavior(.disabled)
-                        }
-
-                        Section {
-                            Toggle("Translate",
-                                   systemImage: "translate",
-                                   isOn: $viewModel.translate)
-                                .disabled(viewModel.translateDisabled)
-                                .accessibilityIdentifier("TranslateToggle")
-                        }
-
-                        Section {
-                            Picker(selection: $viewModel.apiKeyVersion) {
-                                ForEach(1 ... viewModel.apiKeyTotalAmount,
-                                        id: \.self)
-                                { version in
-                                    Text("ApiKey\(version)")
-                                        .accessibilityIdentifier("ApiKeyPickerItem\(version)")
-                                }
-                            } label: {
-                                Label("ApiKeySelection",
-                                      systemImage: "key")
-                            }
-                            .pickerStyle(.menu)
-                            .accessibilityIdentifier("ApiKeyPicker")
-                        }
-
-                        Section {
-                            Button("Reset",
-                                   systemImage: "trash",
-                                   role: .destructive)
-                            {
-                                viewModel.showConfirmationDialog = true
-                            }
-                            .accessibilityIdentifier("ResetButton")
-                        }
-                    } label: {
-                        Image(systemName: "gearshape")
-                            .popoverTip(viewModel.settingsTip,
-                                        arrowEdge: .top)
-                            .onAppear {
-                                Task {
-                                    try await Task.sleep(for: .seconds(1))
-                                    try viewModel.showSettingsTip()
-                                }
-                            }
-                            .accessibilityIdentifier("SettingsImage")
-                    }
-                    .confirmationDialog("ResetConfirmationDialog",
-                                        isPresented: $viewModel.showConfirmationDialog,
-                                        titleVisibility: .visible)
-                    {
-                        Button("Reset",
-                               role: .destructive)
-                        {
-                            Task {
-                                await viewModel.reset()
-                            }
-                        }
-                        .accessibilityIdentifier("ResetConfirmationDialogButton")
-                    }
-                }
+                Toolbar()
             }
         }
         .overlay(alignment: .center) {
-            Group {
-                if viewModel.selectedCountry.isEmpty {
-                    ContentUnavailableView {
-                        Label("EmptySelectedCountry",
-                              systemImage: "flag")
-                    } description: {
-                        Text("EmptySelectedCountryMessage")
-                            .accessibilityIdentifier("EmptySelectedCountryMessage")
-                    }
-                } else {
-                    switch viewModel.stateTopHeadlines {
-                    case .isLoading, .isTranslating:
-                        Text(viewModel.stateTopHeadlines == .isLoading ? "TopHeadlinesLoading" : "TopHeadlinesTranslating")
-                            .fontWeight(.black)
-                    case .loaded:
-                        EmptyView()
-                    case .emptyFetch, .emptyRead:
-                        ContentUnavailableView {
-                            Label(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
-                                  systemImage: "newspaper")
-                        } description: {
-                            Text(viewModel.stateTopHeadlines == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
-                        } actions: {
-                            Button("Refresh") {
-                                Task {
-                                    await viewModel.fetchTopHeadlines(state: .isLoading,
-                                                                      sensoryFeedback: true)
-                                }
-                            }
-                            .textCase(.uppercase)
-                            .font(.system(.subheadline,
-                                          weight: .black))
-                            .accessibilityIdentifier("RefreshButton")
-                        }
-                    case .emptyTranslate:
-                        ContentUnavailableView {
-                            Label("EmptyTranslateTopHeadlines",
-                                  systemImage: "translate")
-                        } description: {
-                            Text("EmptyTranslateTopHeadlinesMessage")
-                        } actions: {
-                            Button("Disable") {
-                                viewModel.translate = false
-                            }
-                            .textCase(.uppercase)
-                            .font(.system(.subheadline,
-                                          weight: .black))
-                            .accessibilityIdentifier("DisableButton")
-                        }
-                    }
-                }
-            }
-            .symbolEffect(.bounce,
-                          options: .nonRepeating)
+            Overlay()
         }
         .alert(isPresented: $viewModel.showAlert,
                error: viewModel.alertError)
         { _ in
-        } message: { error in
-            if let message = error.recoverySuggestion {
+        } message: {
+            if let message = $0.recoverySuggestion {
                 Text(message)
             }
         }
         .task {
-            viewModel.onAppear(selectedCountry: country)
+            viewModel.onAppear(selectedApiKey: apiKey,
+                               selectedCategory: category,
+                               selectedCountry: country)
         }
         .onChange(of: viewModel.selectedCountry) { _, newValue in
             country = newValue
             viewModel.articles.removeAll()
+
+            Task {
+                await viewModel.fetchTopHeadlines(state: .isLoading)
+            }
+        }
+        .onChange(of: viewModel.selectedCategory) { _, newValue in
+            category = newValue
+            viewModel.articles.removeAll()
+
             Task {
                 await viewModel.fetchTopHeadlines(state: .isLoading)
             }
@@ -212,8 +80,187 @@ struct ContentView: View {
                 await viewModel.configureTranslations()
             }
         }
-        .translationTask(viewModel.translationSessionConfiguration) { translateSession in
-            await viewModel.fetchTranslations(translateSession: translateSession)
+        .translationTask(viewModel.translationSessionConfiguration) {
+            await viewModel.fetchTranslations(translateSession: $0)
+        }
+    }
+
+    private func Overlay() -> some View {
+        Group {
+            if apiKey.isEmpty,
+               viewModel.articles.isEmpty
+            {
+                ContentUnavailableView {
+                    Label("EmptySelectedApiKey",
+                          systemImage: "key")
+                } description: {
+                    Text("EmptySelectedApiKeyMessage")
+                        .accessibilityIdentifier("EmptySelectedApiKeyMessage")
+                }
+            } else if country.isEmpty {
+                ContentUnavailableView {
+                    Label("EmptySelectedCountry",
+                          systemImage: "flag")
+                } description: {
+                    Text("EmptySelectedCountryMessage")
+                        .accessibilityIdentifier("EmptySelectedCountryMessage")
+                }
+            } else {
+                switch viewModel.state {
+                case .isLoading, .isTranslating:
+                    Text(viewModel.state == .isLoading ? "TopHeadlinesLoading" : "TopHeadlinesTranslating")
+                        .fontWeight(.black)
+                case .loaded:
+                    EmptyView()
+                case .emptyFetch, .emptyRead:
+                    ContentUnavailableView {
+                        Label(viewModel.state == .emptyFetch ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
+                              systemImage: "newspaper")
+                    } description: {
+                        Text(viewModel.state == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
+                    } actions: {
+                        Button("Refresh") {
+                            Task {
+                                await viewModel.fetchTopHeadlines(state: .isLoading,
+                                                                  sensoryFeedback: true)
+                            }
+                        }
+                        .textCase(.uppercase)
+                        .font(.system(.subheadline,
+                                      weight: .black))
+                    }
+                case .emptyTranslate:
+                    ContentUnavailableView {
+                        Label("EmptyTranslateTopHeadlines",
+                              systemImage: "translate")
+                    } description: {
+                        Text("EmptyTranslateTopHeadlinesMessage")
+                    } actions: {
+                        Button("Disable") {
+                            viewModel.translate = false
+                        }
+                        .textCase(.uppercase)
+                        .font(.system(.subheadline,
+                                      weight: .black))
+                    }
+                }
+            }
+        }
+        .symbolEffect(.bounce,
+                      options: .nonRepeating)
+    }
+
+    private func Toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .primaryAction) {
+            Menu {
+                Section("ApiKey") {
+                    Label(viewModel.selectedApiKey.isEmpty ? String(localized: "ApiKeyPlaceholder") : viewModel.selectedApiKey,
+                          systemImage: "key")
+
+                    Button(viewModel.selectedApiKey.isEmpty ? "Add" : "Edit",
+                           systemImage: viewModel.selectedApiKey.isEmpty ? "plus" : "pencil")
+                    {
+                        viewModel.showEditAlert = true
+                    }
+                    .accessibilityIdentifier("ApiKeyAddEditButton")
+                }
+
+                Section("CountrySelection") {
+                    Picker(Locale.current.localizedString(forRegionCode: viewModel.selectedCountry) ?? "-",
+                           systemImage: "flag",
+                           selection: $viewModel.selectedCountry)
+                    {
+                        ForEach(viewModel.countriesSorted,
+                                id: \.self)
+                        {
+                            Text(Locale.current.localizedString(forRegionCode: $0) ?? "")
+                                .tag($0)
+                                .accessibilityIdentifier("CountryPickerItem")
+                        }
+                    }
+                    .accessibilityIdentifier("CountryPicker")
+                    .pickerStyle(.menu)
+                }
+
+                Section("CategorySelection") {
+                    Picker(viewModel.selectedCategory.localized,
+                           systemImage: "tag",
+                           selection: $viewModel.selectedCategory)
+                    {
+                        ForEach(viewModel.categoriesSorted,
+                                id: \.self)
+                        {
+                            Text($0.localized)
+                                .tag($0.localized)
+                                .accessibilityIdentifier("CategoryPickerItem")
+                        }
+                    }
+                    .accessibilityIdentifier("CategoryPicker")
+                    .pickerStyle(.menu)
+                }
+
+                Section {
+                    Toggle("Translate",
+                           systemImage: "translate",
+                           isOn: $viewModel.translate)
+                        .disabled(viewModel.translateDisabled)
+                        .accessibilityIdentifier("TranslateToggle")
+                }
+
+                Section {
+                    Button("Reset",
+                           systemImage: "trash",
+                           role: .destructive)
+                    {
+                        viewModel.showConfirmationDialog = true
+                    }
+                    .accessibilityIdentifier("ResetButton")
+                }
+            } label: {
+                Image(systemName: "gearshape")
+                    .popoverTip(viewModel.settingsTip,
+                                arrowEdge: .bottom)
+                    .onAppear {
+                        Task {
+                            try await Task.sleep(for: .seconds(1))
+                            try viewModel.showSettingsTip()
+                        }
+                    }
+                    .accessibilityIdentifier("SettingsImage")
+            }
+            .alert("ApiKey",
+                   isPresented: $viewModel.showEditAlert)
+            {
+                TextField("ApiKeyPlaceholder",
+                          text: $viewModel.selectedApiKey)
+
+                Button("Cancel",
+                       role: .cancel) {}
+
+                Button("Done") {
+                    apiKey = viewModel.selectedApiKey
+
+                    Task {
+                        await viewModel.fetchTopHeadlines(state: .isLoading)
+                        viewModel.sensoryFeedbackTrigger(feedback: .success)
+                    }
+                }
+                .accessibilityIdentifier("ApiKeyDoneButton")
+            }
+            .confirmationDialog("ResetConfirmationDialog",
+                                isPresented: $viewModel.showConfirmationDialog,
+                                titleVisibility: .visible)
+            {
+                Button("Reset",
+                       role: .destructive)
+                {
+                    Task {
+                        await viewModel.reset()
+                        apiKey = ""
+                    }
+                }
+                .accessibilityIdentifier("ResetConfirmationDialogButton")
+            }
         }
     }
 }
@@ -265,10 +312,10 @@ private struct ListItem: View {
 
                 Spacer()
 
-                AsyncImage(url: article.urlToImage,
+                AsyncImage(url: article.image,
                            transaction: Transaction(animation: .easeIn(duration: 0.75)))
-                { asyncImagePhase in
-                    switch asyncImagePhase {
+                {
+                    switch $0 {
                     case let .success(image):
                         image
                             .resizable()
@@ -306,7 +353,6 @@ private struct ListItem: View {
                               item: url)
                         .environment(\.symbolVariants,
                                      .none)
-                        .accessibilityIdentifier("ShareLink")
                 }
                 if let title = article.title {
                     Button("Translate",
@@ -315,7 +361,6 @@ private struct ListItem: View {
                         translationPresentationText = title
                         showTranslationPresentation = true
                     }
-                    .accessibilityIdentifier("TranslateButton")
                 }
             }
             .translationPresentation(isPresented: $showTranslationPresentation,

@@ -30,8 +30,9 @@ struct TopHeadlinesRepositoryTests {
         #expect(throws: Never.self,
                 "TopHeadlinesRepository fetch failed!")
         {
-            try sut.fetch(apiKey: 1,
-                          country: "uk")
+            try sut.fetch(apiKey: "Test",
+                          category: "Test",
+                          country: "Test")
         }
     }
 
@@ -40,7 +41,8 @@ struct TopHeadlinesRepositoryTests {
         // Given
         var topHeadlines: [ArticleDB]?
         // When
-        topHeadlines = sut.read(country: "uk")
+        topHeadlines = sut.read(category: "Test",
+                                country: "Test")
         // Then
         #expect(topHeadlines?.count == 1,
                 "TopHeadlinesRepository read failed!")

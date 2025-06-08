@@ -1,34 +1,218 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "ApiKey%lld" : {
+    "Add" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API-Schlüssel %lld"
+            "value" : "Hinzufügen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API key %lld"
+            "value" : "Add"
           }
         }
       }
     },
-    "ApiKeySelection" : {
+    "ApiKey" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API-Schlüsselauswahl"
+            "value" : "API-Schlüssel"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API key selection"
+            "value" : "API key"
+          }
+        }
+      }
+    },
+    "ApiKeyPlaceholder" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gültigen API-Schlüssel hinzufügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add valid API key"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
+    "CategoryBusiness" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Business"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Business"
+          }
+        }
+      }
+    },
+    "CategoryEntertainment" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unterhaltung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entertainment"
+          }
+        }
+      }
+    },
+    "CategoryGeneral" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allgemein"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        }
+      }
+    },
+    "CategoryHealth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gesundheit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health"
+          }
+        }
+      }
+    },
+    "CategoryScience" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wissenschaft"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Science"
+          }
+        }
+      }
+    },
+    "CategorySelection" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorieauswahl"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Category selection"
+          }
+        }
+      }
+    },
+    "CategorySports" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sport"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sport"
+          }
+        }
+      }
+    },
+    "CategoryTechnology" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Technik"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Technology"
+          }
+        }
+      }
+    },
+    "CategoryWorld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "World"
           }
         }
       }
@@ -66,22 +250,6 @@
         }
       }
     },
-    "CountriesLoading" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Länder werden geladen ..."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Countries are loading ..."
-          }
-        }
-      }
-    },
     "CountrySelection" : {
       "localizations" : {
         "de" : {
@@ -114,18 +282,34 @@
         }
       }
     },
-    "EmptyArticleAuthor" : {
+    "Done" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kein Author"
+            "value" : "Fertig"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No author"
+            "value" : "Done"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
           }
         }
       }
@@ -194,22 +378,6 @@
         }
       }
     },
-    "EmptyFetchSources" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Länder verfügbar"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No countries available"
-          }
-        }
-      }
-    },
     "EmptyFetchTopHeadlines" : {
       "localizations" : {
         "de" : {
@@ -243,22 +411,6 @@
         }
       }
     },
-    "EmptyReadSources" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Länder geladen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No countries loaded"
-          }
-        }
-      }
-    },
     "EmptyReadTopHeadlines" : {
       "localizations" : {
         "de" : {
@@ -288,6 +440,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loaded top headlines are displayed here."
+          }
+        }
+      }
+    },
+    "EmptySelectedApiKey" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein API-Schlüssel hinzugefügt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No API key added"
+          }
+        }
+      }
+    },
+    "EmptySelectedApiKeyMessage" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge einen gültigen API-Schlüssel in den Einstellungen hinzu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a valid API key in the settings."
           }
         }
       }
@@ -374,19 +558,19 @@
         }
       }
     },
-    "ErrorDescriptionFetchSources" : {
+    "ErrorDescriptionBadRequest" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfrage Quellen"
+            "value" : "Ungültige Abfrage"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fetch sources"
+            "value" : "Bad request"
           }
         }
       }
@@ -408,36 +592,36 @@
         }
       }
     },
-    "ErrorDescriptionInvalidApiKey" : {
+    "ErrorDescriptionForbidden" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ungültiger API-Schlüssel"
+            "value" : "Untersagt"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invalid API key"
+            "value" : "Forbidden"
           }
         }
       }
     },
-    "ErrorDescriptionLimitedRequests" : {
+    "ErrorDescriptionInternalServerError" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Limitierte Abfragen"
+            "value" : "Interner Serverfehler"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Limited requests"
+            "value" : "Internal server error"
           }
         }
       }
@@ -492,6 +676,74 @@
         }
       }
     },
+    "ErrorDescriptionServiceUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service nicht verfügbar"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Service unavailable"
+          }
+        }
+      }
+    },
+    "ErrorDescriptionTooManyRequests" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu viele Abfragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Too many requests"
+          }
+        }
+      }
+    },
+    "ErrorDescriptionUnauthorized" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nicht autorisiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unauthorized"
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionBadRequest" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage fehlgeschlagen. Ihre Abfrage ist ungültig. Bitte versuche es erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch. Your request is invalid. Please try again."
+          }
+        }
+      }
+    },
     "ErrorRecoverySuggestionError" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -526,23 +778,6 @@
         }
       }
     },
-    "ErrorRecoverySuggestionFetchSources" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abfrage Quellen fehlgeschlagen. Bitte versuche es erneut."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Failed to fetch sources. Please try again."
-          }
-        }
-      }
-    },
     "ErrorRecoverySuggestionFetchTopHeadlines" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -560,36 +795,36 @@
         }
       }
     },
-    "ErrorRecoverySuggestionInvalidApiKey" : {
+    "ErrorRecoverySuggestionForbidden" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfrage fehlgeschlagen. Bitte versuche es mit einem anderen API-Schlüssel erneut oder besuche https://newsapi.org, um einen kostenlosen zu erstellen."
+            "value" : "Abfrage fehlgeschlagen. Tageskontingent erreicht. Bitte versuche es später erneut."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to fetch. Please try again with a different API key or visit https://newsapi.org to create a free one."
+            "value" : "Failed to fetch. Daily quota reached. Please try again later."
           }
         }
       }
     },
-    "ErrorRecoverySuggestionLimitedRequests" : {
+    "ErrorRecoverySuggestionInternalServerError" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfrage fehlgeschlagen. Bitte versuche es mit einem anderen API-Schlüssel erneut. Developer Accounts sind auf 100 Anfragen über einen Zeitraum von 24 Stunden begrenzt (50 Anfragen alle 12 Stunden verfügbar). Upgrade auf einen kostenpflichtigen Plan, wenn weitere Anfragen erforderlich sind."
+            "value" : "Abfrage fehlgeschlagen. Wir hatten ein Problem mit unserem Server. Bitte versuche es erneut."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Failed to fetch. Please try again with a different API key. Developer accounts limited to 100 requests over a 24 hour period (50 requests available every 12 hours). Upgrade to a paid plan if more requests needed."
+            "value" : "Failed to fetch. We had a problem with our server. Please try again."
           }
         }
       }
@@ -640,6 +875,57 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Failed to reset. Please try again."
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionServiceUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage fehlgeschlagen. Vorübergehend wegen Wartungsarbeiten offline. Bitte versuche es später erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch. Temporarily offline for maintenance. Please try again later."
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionTooManyRequests" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage fehlgeschlagen. Mehr Abfragen pro Sekunde gestellt als erlaubt sind. Bitte versuche es später erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch. Made more requests per second than allowed. Please try again later."
+          }
+        }
+      }
+    },
+    "ErrorRecoverySuggestionUnauthorized" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfrage fehlgeschlagen. API-Schlüsselauswahl ist ungültig. Bitte versuche es später erneut."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to fetch. API key is invalid. Please try again."
           }
         }
       }
@@ -793,13 +1079,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Länder werden hier in einer Liste dargestellt welche zur Auswahl bereitstehen. Darüber hinaus kann der API-Schlüssel hier gewechselt werden."
+            "value" : "API-Schlüssel, Länder und Kategorien werden hier in einer Liste dargestellt. Darüber hinaus kann hier ein API-Schlüssel hinzugefügt, das Land oder die Kategorie gewechselt werden."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Countries are shown here in a list which are available for selection. In addition, the API key can be changed here."
+            "value" : "API key, countries and categories are shown here in a list. In addition, the API key can be added, country or category can be selected here."
           }
         }
       }

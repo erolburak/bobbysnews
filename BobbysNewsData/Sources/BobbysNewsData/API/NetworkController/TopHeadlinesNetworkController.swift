@@ -10,7 +10,8 @@ import Foundation
 protocol PTopHeadlinesNetworkController: Sendable {
     // MARK: - Methods
 
-    func fetch(apiKey: Int,
+    func fetch(apiKey: String,
+               category: String,
                country: String) async throws -> TopHeadlinesAPI
 }
 
@@ -27,15 +28,23 @@ final class TopHeadlinesNetworkController: PTopHeadlinesNetworkController {
 
     // MARK: - Methods
 
-    func fetch(apiKey: Int,
+    func fetch(apiKey: String,
+               category: String,
                country: String) async throws -> TopHeadlinesAPI
     {
-        let endpoint = "top-headlines?country=\(country)&apiKey=\(NetworkConfiguration.apiKey(apiKey))"
-        guard let url = URL(string: NetworkConfiguration.apiBaseUrl + endpoint) else {
-            throw NetworkConfiguration.Errors.fetchTopHeadlines
+        guard let url = NetworkConfiguration.apiBaseUrl?
+            .appending(path: "top-headlines")
+            .appending(queryItems: [URLQueryItem(name: "category",
+                                                 value: category),
+                                    URLQueryItem(name: "country",
+                                                 value: country),
+                                    URLQueryItem(name: "apikey",
+                                                 value: apiKey)])
+        else {
+            throw ErrorsAPI.badRequest
         }
         let (data, response) = try await URLSession.shared.data(from: url)
-        try NetworkConfiguration.shared.validateResponse(defaultError: .fetchTopHeadlines,
+        try NetworkConfiguration.shared.validateResponse(defaultError: .badRequest,
                                                          response: response as? HTTPURLResponse)
         return try jsonDecoder.decode(TopHeadlinesAPI.self,
                                       from: data)

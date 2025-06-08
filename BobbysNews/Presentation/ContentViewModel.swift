@@ -14,14 +14,7 @@ import Translation
 final class ContentViewModel {
     // MARK: - Type Definitions
 
-    enum StatesSources {
-        /// General States
-        case isLoading, loaded
-        /// Empty States
-        case emptyFetch, emptyRead
-    }
-
-    enum StatesTopHeadlines {
+    enum States {
         /// General States
         case isLoading, loaded, isTranslating
         /// Empty States
@@ -46,30 +39,36 @@ final class ContentViewModel {
 
     // MARK: - Use Cases
 
-    /// Sources
-    private let deleteSourcesUseCase: PDeleteSourcesUseCase
-    private let fetchSourcesUseCase: PFetchSourcesUseCase
-    private let readSourcesUseCase: PReadSourcesUseCase
-    /// TopHeadlines
     private let deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase
     private let fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase
     private let readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
 
     // MARK: - Properties
 
-    let apiKeyTotalAmount = 5
     let settingsTip = SettingsTip()
     var alertError: Errors?
-    var apiKeyVersion = 1 {
-        didSet {
+    var articles = [Article]()
+    var categoriesSorted: [Categories] {
+        Categories.allCases.sorted { $0.localized < $1.localized }
+    }
+
+    var countries: [String] = []
+    var countriesSorted: [String] {
+        countries.sorted {
+            Locale.current.localizedString(forRegionCode: $0) ?? "" <
+                Locale.current.localizedString(forRegionCode: $1) ?? ""
+        }
+    }
+
+    var listDisabled: Bool { state != .loaded }
+    var listOpacity: Double { state == .loaded ? 1 : 0.3 }
+    var selectedApiKey = ""
+    var selectedCategory: Categories = .general {
+        willSet {
             sensoryFeedbackTrigger(feedback: .selection)
         }
     }
 
-    var articles = [Article]()
-    var countries = [String]()
-    var listDisabled: Bool { stateTopHeadlines != .loaded }
-    var listOpacity: Double { stateTopHeadlines == .loaded ? 1 : 0.3 }
     var selectedCountry = "" {
         willSet {
             if !newValue.isEmpty {
@@ -82,24 +81,18 @@ final class ContentViewModel {
     var sensoryFeedbackBool = false
     var showAlert = false
     var showConfirmationDialog = false
-    var stateSources: StatesSources = .isLoading
-    var stateTopHeadlines: StatesTopHeadlines = .isLoading
+    var showEditAlert = false
+    var state: States = .isLoading
     var translate = false
     var translateDisabled = true
     var translationSessionConfiguration: TranslationSession.Configuration?
 
     // MARK: - Lifecycles
 
-    init(deleteSourcesUseCase: PDeleteSourcesUseCase,
-         fetchSourcesUseCase: PFetchSourcesUseCase,
-         readSourcesUseCase: PReadSourcesUseCase,
-         deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase,
+    init(deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase,
          fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase,
          readTopHeadlinesUseCase: PReadTopHeadlinesUseCase)
     {
-        self.deleteSourcesUseCase = deleteSourcesUseCase
-        self.fetchSourcesUseCase = fetchSourcesUseCase
-        self.readSourcesUseCase = readSourcesUseCase
         self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
         self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
         self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
@@ -108,9 +101,14 @@ final class ContentViewModel {
 
     // MARK: - Methods
 
-    func onAppear(selectedCountry: String) {
+    func onAppear(selectedApiKey: String,
+                  selectedCategory: Categories,
+                  selectedCountry: String)
+    {
+        self.selectedApiKey = selectedApiKey
+        self.selectedCategory = selectedCategory
         self.selectedCountry = selectedCountry
-        readSources()
+        readCountries()
         readTopHeadlines()
     }
 
@@ -120,7 +118,9 @@ final class ContentViewModel {
             translate = false
             return
         }
-        if translate, translationSessionConfiguration == nil {
+        if translate,
+           translationSessionConfiguration == nil
+        {
             translationSessionConfiguration = TranslationSession.Configuration()
         } else if translate {
             translationSessionConfiguration?.invalidate()
@@ -130,42 +130,28 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func fetchSources(sensoryFeedback: Bool? = nil) async {
-        if sensoryFeedback == true {
-            sensoryFeedbackTrigger(feedback: .success)
-        }
-        stateSources = .isLoading
-        do {
-            if await checkNetworkConnection() == true {
-                try await fetchSourcesUseCase.fetch(apiKey: apiKeyVersion)
-            }
-            readSources()
-        } catch {
-            updateStateSources(error: error,
-                               state: countries.isEmpty ? .emptyFetch : .loaded)
-        }
-    }
-
-    @MainActor
-    func fetchTopHeadlines(state: StatesTopHeadlines? = nil,
+    func fetchTopHeadlines(state: States? = nil,
                            sensoryFeedback: Bool? = nil) async
     {
         if sensoryFeedback == true {
             sensoryFeedbackTrigger(feedback: .success)
         }
-        if !selectedCountry.isEmpty {
+        if !selectedApiKey.isEmpty,
+           !selectedCountry.isEmpty
+        {
             if let state {
-                stateTopHeadlines = state
+                self.state = state
             }
             do {
                 if await checkNetworkConnection() == true {
-                    try await fetchTopHeadlinesUseCase.fetch(apiKey: apiKeyVersion,
+                    try await fetchTopHeadlinesUseCase.fetch(apiKey: selectedApiKey,
+                                                             category: selectedCategory.rawValue,
                                                              country: selectedCountry)
                 }
                 translate = false
                 readTopHeadlines()
             } catch {
-                updateStateTopHeadlines(error: error,
+                updateStateTopHeadlines(error: error as? LocalizedError,
                                         state: articles.isEmpty ? .emptyFetch : .loaded)
             }
         }
@@ -173,7 +159,7 @@ final class ContentViewModel {
 
     @MainActor
     func fetchTranslations(translateSession: TranslationSession) async {
-        stateTopHeadlines = .isTranslating
+        state = .isTranslating
         var contentRequests = [TranslationSession.Request]()
         var titleRequests = [TranslationSession.Request]()
         for (index, article) in articles.enumerated() {
@@ -214,7 +200,7 @@ final class ContentViewModel {
             }
             showArticlesTranslations(show: true)
         } catch {
-            updateStateTopHeadlines(error: error,
+            updateStateTopHeadlines(error: error as? LocalizedError,
                                     state: .emptyTranslate)
         }
     }
@@ -222,16 +208,14 @@ final class ContentViewModel {
     @MainActor
     func reset() async {
         do {
-            /// Delete all persisted sources
-            try deleteSourcesUseCase.delete()
-            /// Delete all persisted topHeadlines
             try deleteTopHeadlinesUseCase.delete()
-            apiKeyVersion = 1
             articles.removeAll()
             countries.removeAll()
+            selectedApiKey = ""
+            selectedCategory = .general
+            readCountries()
             selectedCountry = ""
-            stateSources = .emptyRead
-            stateTopHeadlines = .emptyRead
+            state = .emptyRead
             translate = false
             translateDisabled = true
             await MainActor.run {
@@ -239,9 +223,14 @@ final class ContentViewModel {
             }
         } catch {
             await MainActor.run {
-                showAlert(error: .reset)
+                showAlert(error: Errors.reset)
             }
         }
+    }
+
+    func sensoryFeedbackTrigger(feedback: SensoryFeedback) {
+        sensoryFeedback = feedback
+        sensoryFeedbackBool.toggle()
     }
 
     func showSettingsTip() throws {
@@ -252,7 +241,7 @@ final class ContentViewModel {
     private func checkNetworkConnection() async -> Bool? {
         for await path in NWPathMonitor() {
             if path.status == .unsatisfied {
-                showAlert(error: .noNetworkConnection)
+                showAlert(error: Errors.noNetworkConnection)
                 return false
             } else {
                 return true
@@ -266,45 +255,42 @@ final class ContentViewModel {
                              .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
     }
 
-    private func readSources() {
-        do {
-            guard let sources = try readSourcesUseCase.read().sources else {
-                throw Errors.read
+    private func readCountries() {
+        countries = Locale.Region.isoRegions
+            .compactMap {
+                $0.subRegions.isEmpty ? $0.identifier.lowercased() : nil
             }
-            /// Set of unique countries
-            let countries = Set(sources.compactMap { $0.country == "zh" ? "cn" : $0.country })
-                .sorted(by: { lhs, rhs in
-                    Locale.current.localizedString(forRegionCode: lhs) ?? "" <= Locale.current.localizedString(forRegionCode: rhs) ?? ""
-                })
-            self.countries = countries
-            updateStateSources(state: countries.isEmpty ? stateSources == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
-        } catch {
-            updateStateSources(error: error,
-                               state: .emptyRead)
-        }
     }
 
     private func readTopHeadlines() {
-        do {
-            guard let articles = try readTopHeadlinesUseCase.read(country: selectedCountry).articles else {
-                throw Errors.read
+        if !selectedApiKey.isEmpty,
+           !selectedCountry.isEmpty
+        {
+            do {
+                guard let articles = try readTopHeadlinesUseCase.read(category: selectedCategory.rawValue,
+                                                                      country: selectedCountry).articles
+                else {
+                    throw Errors.read
+                }
+                self.articles = articles
+                translateDisabled = articles.isEmpty
+                updateStateTopHeadlines(state: articles.isEmpty ? state == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
+            } catch {
+                updateStateTopHeadlines(error: error as? LocalizedError,
+                                        state: .emptyRead)
             }
-            self.articles = articles
-            translateDisabled = articles.isEmpty
-            updateStateTopHeadlines(state: articles.isEmpty ? stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
-        } catch {
-            updateStateTopHeadlines(error: error,
-                                    state: .emptyRead)
         }
     }
 
-    private func sensoryFeedbackTrigger(feedback: SensoryFeedback) {
-        sensoryFeedback = feedback
-        sensoryFeedbackBool.toggle()
-    }
-
-    private func showAlert(error: Errors) {
-        alertError = error
+    private func showAlert(error: LocalizedError) {
+        if let errorDescription = error.errorDescription,
+           let recoverySuggestion = error.recoverySuggestion
+        {
+            alertError = .custom(errorDescription,
+                                 recoverySuggestion)
+        } else {
+            alertError = .error(error.localizedDescription)
+        }
         showAlert = true
         sensoryFeedbackTrigger(feedback: .error)
     }
@@ -314,24 +300,15 @@ final class ContentViewModel {
             articles[index].showTranslations = show
         }
         sensoryFeedbackTrigger(feedback: .success)
-        updateStateTopHeadlines(state: articles.isEmpty ? stateTopHeadlines == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
+        updateStateTopHeadlines(state: articles.isEmpty ? state == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
     }
 
-    private func updateStateSources(error: Error? = nil,
-                                    state: StatesSources)
+    private func updateStateTopHeadlines(error: LocalizedError? = nil,
+                                         state: States)
     {
-        stateSources = state
+        self.state = state
         if let error {
-            showAlert(error: error as? Errors ?? .error(error.localizedDescription))
-        }
-    }
-
-    private func updateStateTopHeadlines(error: Error? = nil,
-                                         state: StatesTopHeadlines)
-    {
-        stateTopHeadlines = state
-        if let error {
-            showAlert(error: error as? Errors ?? .error(error.localizedDescription))
+            showAlert(error: error)
         }
     }
 }

@@ -9,9 +9,11 @@ public protocol PTopHeadlinesRepository: Sendable {
     // MARK: - Methods
 
     func delete() throws
-    func fetch(apiKey: Int,
+    func fetch(apiKey: String,
+               category: String,
                country: String) async throws
-    func read(country: String) throws -> [ArticleDB]
+    func read(category: String,
+              country: String) throws -> [ArticleDB]
 }
 
 final class TopHeadlinesRepository: PTopHeadlinesRepository {
@@ -26,22 +28,26 @@ final class TopHeadlinesRepository: PTopHeadlinesRepository {
         try topHeadlinesPersistenceController.delete()
     }
 
-    func fetch(apiKey: Int,
+    func fetch(apiKey: String,
+               category: String,
                country: String) async throws
     {
         let topHeadlinesAPI = try await topHeadlinesNetworkController.fetch(apiKey: apiKey,
+                                                                            category: category,
                                                                             country: country)
-        if topHeadlinesAPI.articles != nil ||
-            topHeadlinesAPI.articles?.isEmpty == false
-        {
-            try topHeadlinesPersistenceController.save(country: country,
+        if topHeadlinesAPI.articles?.isEmpty == false {
+            try topHeadlinesPersistenceController.save(category: category,
+                                                       country: country,
                                                        topHeadlinesAPI: topHeadlinesAPI)
         } else {
             try delete()
         }
     }
 
-    func read(country: String) throws -> [ArticleDB] {
-        try topHeadlinesPersistenceController.read(country: country)
+    func read(category: String,
+              country: String) throws -> [ArticleDB]
+    {
+        try topHeadlinesPersistenceController.read(category: category,
+                                                   country: country)
     }
 }

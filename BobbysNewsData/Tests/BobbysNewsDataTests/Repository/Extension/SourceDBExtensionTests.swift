@@ -19,12 +19,7 @@ struct SourceDBExtensionTests {
         // When
         let sourceDB = SourceDB(from: sourceAPI)
         // Then
-        #expect(sourceDB.category == sourceAPI.category &&
-            sourceDB.country == sourceAPI.country &&
-            sourceDB.id == sourceAPI.id &&
-            sourceDB.language == sourceAPI.language &&
-            sourceDB.name == sourceAPI.name &&
-            sourceDB.story == sourceAPI.story &&
+        #expect(sourceDB.name == sourceAPI.name &&
             sourceDB.url == sourceAPI.url,
             "SourceDB initializing failed!")
     }

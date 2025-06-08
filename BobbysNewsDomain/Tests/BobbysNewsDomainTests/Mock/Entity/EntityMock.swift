@@ -13,53 +13,43 @@ struct EntityMock {
     // MARK: - Properties
 
     /// Mocks which represent Domain entities
-    static let errors: [Errors] = [.error("ErrorDescription"),
-                                   .fetchSources,
+    static let categories = Categories.allCases
+    static let errors: [Errors] = [.custom("Test",
+                                           "Test"),
+                                   .error("Test"),
                                    .fetchTopHeadlines,
-                                   .invalidApiKey,
-                                   .limitedRequests,
+                                   .noNetworkConnection,
                                    .read,
                                    .reset]
-    static let sources = Sources(sources: [Source(category: "Test",
-                                                  country: "uk",
-                                                  id: "Test",
-                                                  language: "Test",
-                                                  name: "Test",
-                                                  story: "Test",
-                                                  url: URL(string: "Test"))])
-    static let topHeadlines = TopHeadlines(articles: [Article(author: "Test",
+    static let topHeadlines = TopHeadlines(articles: [Article(category: "Test",
                                                               content: "Test",
-                                                              country: "uk",
+                                                              country: "Test",
+                                                              image: URL(string: "Test"),
                                                               publishedAt: .distantPast,
-                                                              source: sources.sources?.first,
+                                                              source: Source(name: "Test",
+                                                                             url: URL(string: "Test")),
                                                               story: "Test",
                                                               title: "Test",
-                                                              url: URL(string: "Test"),
-                                                              urlToImage: URL(string: "Test"))])
+                                                              url: URL(string: "Test"))])
 
     /// Mocks which represent DB entities
     lazy var articleDB = {
         let articleDB = ArticleDB(context: PersistenceController.shared.backgroundContext)
-        articleDB.author = "Test"
+        articleDB.category = "Test"
         articleDB.content = "Test"
-        articleDB.country = "uk"
+        articleDB.country = "Test"
+        articleDB.image = URL(string: "Test")
         articleDB.publishedAt = .distantPast
         articleDB.source = sourceDB
         articleDB.story = "Test"
         articleDB.title = "Test"
         articleDB.url = URL(string: "Test")
-        articleDB.urlToImage = URL(string: "Test")
         return articleDB
     }()
 
     lazy var sourceDB = {
         let sourceDB = SourceDB(context: PersistenceController.shared.backgroundContext)
-        sourceDB.category = "Test"
-        sourceDB.country = "uk"
-        sourceDB.id = "Test"
-        sourceDB.language = "Test"
         sourceDB.name = "Test"
-        sourceDB.story = "Test"
         sourceDB.url = URL(string: "Test")
         return sourceDB
     }()

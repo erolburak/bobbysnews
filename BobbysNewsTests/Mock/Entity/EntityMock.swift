@@ -11,32 +11,26 @@ import Foundation
 enum EntityMock {
     // MARK: - Private Properties
 
-    private static let source = Source(category: "Test",
-                                       country: "uk",
-                                       id: "Test",
-                                       language: "Test",
-                                       name: "Test",
-                                       story: "Test",
+    private static let source = Source(name: "Test",
                                        url: URL(string: "Test"))
 
     // MARK: - Properties
 
-    static let article = Article(author: "Test",
+    static let article = Article(category: "Test",
                                  content: "Test",
-                                 country: "uk",
+                                 country: "Test",
+                                 image: URL(string: "Test"),
                                  publishedAt: .now,
                                  source: source,
                                  story: "Test",
                                  title: "Test",
-                                 url: URL(string: "Test"),
-                                 urlToImage: URL(string: "Test"))
-    static let errors: [Errors] = [.error(String(localized: "ErrorDescription")),
-                                   .fetchSources,
+                                 url: URL(string: "Test"))
+    static let errors: [Errors] = [.custom("Test",
+                                           "Test"),
+                                   .error("Test"),
                                    .fetchTopHeadlines,
-                                   .invalidApiKey,
-                                   .limitedRequests,
+                                   .noNetworkConnection,
                                    .read,
                                    .reset]
-    static let sources = Sources(sources: [source])
     static let topHeadlines = TopHeadlines(articles: [article])
 }

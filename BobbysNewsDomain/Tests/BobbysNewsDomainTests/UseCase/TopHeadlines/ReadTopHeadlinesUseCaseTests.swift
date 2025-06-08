@@ -20,10 +20,12 @@ struct ReadApiHeadlinesUseCaseTests {
     @Test("Check ReadTopHeadlinesUseCase read!")
     func read() throws {
         // Given
-        let country = "uk"
+        let category = "Test"
+        let country = "Test"
         var topHeadlines: TopHeadlines?
         // When
-        topHeadlines = try sut.read(country: country)
+        topHeadlines = try sut.read(category: category,
+                                    country: country)
         // Then
         #expect(topHeadlines?.articles?.count == 1,
                 "ReadTopHeadlinesUseCase read failed!")

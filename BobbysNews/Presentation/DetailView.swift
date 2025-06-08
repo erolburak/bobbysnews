@@ -23,20 +23,20 @@ struct DetailView: View {
                     .font(.system(.subheadline,
                                   weight: .black))
                     .lineLimit(1)
-                    .onGeometryChange(for: CGFloat.self) { geometryProxy in
-                        geometryProxy.frame(in: .scrollView(axis: .vertical)).minY
-                    } action: { newValue in
-                        viewModel.titleScrollOffset = newValue
+                    .onGeometryChange(for: CGFloat.self) {
+                        $0.frame(in: .scrollView(axis: .vertical)).minY
+                    } action: {
+                        viewModel.titleScrollOffset = $0
                     }
 
                 Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
                     .font(.system(size: 8,
                                   weight: .semibold))
             }
-            .onGeometryChange(for: CGFloat.self) { geometryProxy in
-                geometryProxy.size.height
-            } action: { newValue in
-                viewModel.titleHeight = newValue
+            .onGeometryChange(for: CGFloat.self) {
+                $0.size.height
+            } action: {
+                viewModel.titleHeight = $0
             }
 
             Group {
@@ -45,10 +45,10 @@ struct DetailView: View {
                         .resizable()
                         .scaledToFill()
                 } else {
-                    AsyncImage(url: viewModel.article.urlToImage,
+                    AsyncImage(url: viewModel.article.image,
                                transaction: Transaction(animation: .easeIn(duration: 0.75)))
-                    { asyncImagePhase in
-                        switch asyncImagePhase {
+                    {
+                        switch $0 {
                         case let .success(image):
                             image
                                 .resizable()
@@ -90,10 +90,6 @@ struct DetailView: View {
                 Text(viewModel.articleContent)
                     .font(.callout)
                     .padding(.top, 8)
-
-                Text(viewModel.article.author ?? String(localized: "EmptyArticleAuthor"))
-                    .font(.system(size: 8,
-                                  weight: .semibold))
             }
             .frame(maxWidth: .infinity,
                    alignment: .leading)
@@ -121,68 +117,78 @@ struct DetailView: View {
         }
         .textSelection(.enabled)
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                VStack {
-                    Text(viewModel.title)
-                        .font(.system(.subheadline,
-                                      weight: .black))
-                        .lineLimit(1)
-
-                    Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-                        .font(.system(size: 8,
-                                      weight: .semibold))
-                }
-                .opacity(viewModel.navigationTitleOpacity)
-            }
-
-            if let url = viewModel.article.url {
-                ToolbarItem(placement: .primaryAction) {
-                    ShareLink(item: url)
-                        .environment(\.symbolVariants,
-                                     .none)
-                        .accessibilityIdentifier("ShareLink")
-                }
-            }
+            Toolbar()
         }
         .sheet(isPresented: $viewModel.showWebView) {
-            if let url = viewModel.article.url {
-                NavigationStack {
-                    Group {
-                        switch viewModel.stateWebView {
-                        case .isLoading, .loaded:
-                            WebView(stateWebView: $viewModel.stateWebView,
-                                    url: url)
-                        case .error, .noNetworkConnection:
-                            ContentUnavailableView(viewModel.stateWebView == .error ? "ErrorWebView" : "ErrorDescriptionNoNetworkConnection",
-                                                   systemImage: viewModel.stateWebView == .error ? "newspaper" : "network.slash",
-                                                   description: Text(viewModel.stateWebView == .error ? "ErrorWebViewMessage" : "ErrorRecoverySuggestionNoNetworkConnection"))
-                                .symbolEffect(.bounce,
-                                              options: .nonRepeating)
-                        }
-                    }
-                    .navigationTitle("Headline")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .ignoresSafeArea(edges: .bottom)
-                    .toolbar {
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Close",
-                                   systemImage: "xmark")
-                            {
-                                viewModel.showWebView = false
-                            }
-                            .accessibilityIdentifier("CloseButton")
-                        }
-                    }
-                    .overlay {
-                        if viewModel.stateWebView == .isLoading {
-                            ProgressView()
-                        }
-                    }
-                }
-            }
+            Sheet()
         }
         .task {
             await viewModel.onAppear()
+        }
+    }
+
+    @ViewBuilder
+    private func Sheet() -> some View {
+        if let url = viewModel.article.url {
+            NavigationStack {
+                Group {
+                    switch viewModel.stateWebView {
+                    case .isLoading, .loaded:
+                        WebView(stateWebView: $viewModel.stateWebView,
+                                url: url)
+                    case .error, .noNetworkConnection:
+                        ContentUnavailableView(viewModel.stateWebView == .error ? "ErrorWebView" : "ErrorDescriptionNoNetworkConnection",
+                                               systemImage: viewModel.stateWebView == .error ? "newspaper" : "network.slash",
+                                               description: Text(viewModel.stateWebView == .error ? "ErrorWebViewMessage" : "ErrorRecoverySuggestionNoNetworkConnection"))
+                            .symbolEffect(.bounce,
+                                          options: .nonRepeating)
+                    }
+                }
+                .navigationTitle("Headline")
+                .navigationBarTitleDisplayMode(.inline)
+                .ignoresSafeArea(edges: .bottom)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Close",
+                               systemImage: "xmark")
+                        {
+                            viewModel.showWebView = false
+                        }
+                        .accessibilityIdentifier("CloseButton")
+                    }
+                }
+                .overlay {
+                    if viewModel.stateWebView == .isLoading {
+                        ProgressView()
+                    }
+                }
+            }
+        }
+    }
+
+    @ToolbarContentBuilder
+    private func Toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            VStack {
+                Text(viewModel.title)
+                    .font(.system(.subheadline,
+                                  weight: .black))
+                    .lineLimit(1)
+
+                Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+                    .font(.system(size: 8,
+                                  weight: .semibold))
+            }
+            .opacity(viewModel.navigationTitleOpacity)
+        }
+
+        if let url = viewModel.article.url {
+            ToolbarItem(placement: .primaryAction) {
+                ShareLink(item: url)
+                    .environment(\.symbolVariants,
+                                 .none)
+                    .accessibilityIdentifier("ShareLink")
+            }
         }
     }
 }
