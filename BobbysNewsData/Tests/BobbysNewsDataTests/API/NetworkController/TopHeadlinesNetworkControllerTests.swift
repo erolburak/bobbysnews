@@ -19,10 +19,12 @@ struct TopHeadlinesNetworkControllerTests {
     @Test("Check TopHeadlinesNetworkController fetch!")
     func fetch() throws {
         // Given
-        let apiKey = 1
-        let country = "uk"
+        let apiKey = "Test"
+        let category = "Test"
+        let country = "Test"
         // When
         let topHeadlinesAPI = try sut.fetch(apiKey: apiKey,
+                                            category: category,
                                             country: country)
         // Then
         #expect(topHeadlinesAPI.articles?.count == 1,

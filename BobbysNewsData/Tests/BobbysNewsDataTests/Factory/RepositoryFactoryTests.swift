@@ -16,17 +16,6 @@ struct RepositoryFactoryTests {
 
     // MARK: - Methods
 
-    @Test("Check SourcesRepository initializing!")
-    func sourcesRepository() {
-        // Given
-        let sourcesRepository: PSourcesRepository?
-        // When
-        sourcesRepository = sut.sourcesRepository
-        // Then
-        #expect(sourcesRepository != nil,
-                "SourcesRepository initializing failed!")
-    }
-
     @Test("Check TopHeadlinesRepository initializing!")
     func topHeadlinesRepository() {
         // Given

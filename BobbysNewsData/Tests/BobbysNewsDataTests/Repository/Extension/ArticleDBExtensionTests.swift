@@ -18,22 +18,17 @@ struct ArticleDBExtensionTests {
         let articleAPI = EntityMock.articleAPI
         // When
         let articleDB = ArticleDB(from: articleAPI,
-                                  country: "uk")
+                                  category: "Test",
+                                  country: "Test")
         // Then
-        #expect(articleDB.author == articleAPI.author &&
-            articleDB.content == articleAPI.content &&
+        #expect(articleDB.content == articleAPI.content &&
+            articleDB.image == articleAPI.image &&
             articleDB.publishedAt == articleAPI.publishedAt &&
-            articleDB.source?.category == articleAPI.source?.category &&
-            articleDB.source?.country == articleAPI.source?.country &&
-            articleDB.source?.id == articleAPI.source?.id &&
-            articleDB.source?.language == articleAPI.source?.language &&
             articleDB.source?.name == articleAPI.source?.name &&
-            articleDB.source?.story == articleAPI.source?.story &&
             articleDB.source?.url == articleAPI.source?.url &&
             articleDB.story == articleAPI.story &&
             articleDB.title == articleAPI.title &&
-            articleDB.url == articleAPI.url &&
-            articleDB.urlToImage == articleAPI.urlToImage,
+            articleDB.url == articleAPI.url,
             "ArticleDB initializing failed!")
     }
 }

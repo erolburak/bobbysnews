@@ -21,12 +21,7 @@ struct SourceExtensionTests {
         // When
         let source = Source(from: sourceDB)
         // Then
-        #expect(source?.category == "Test" &&
-            source?.country == "uk" &&
-            source?.id == "Test" &&
-            source?.language == "Test" &&
-            source?.name == "Test" &&
-            source?.story == "Test" &&
+        #expect(source?.name == "Test" &&
             source?.url == URL(string: "Test"),
             "SourceExtension Source initializing failed!")
     }

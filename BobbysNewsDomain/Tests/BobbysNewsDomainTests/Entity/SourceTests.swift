@@ -18,14 +18,9 @@ struct SourceTests {
         // Given
         let source: Source?
         // When
-        source = EntityMock.sources.sources?.first
+        source = EntityMock.topHeadlines.articles?.first?.source
         // Then
-        #expect(source?.category == "Test" &&
-            source?.country == "uk" &&
-            source?.id == "Test" &&
-            source?.language == "Test" &&
-            source?.name == "Test" &&
-            source?.story == "Test" &&
+        #expect(source?.name == "Test" &&
             source?.url == URL(string: "Test"),
             "Source initializing failed!")
     }

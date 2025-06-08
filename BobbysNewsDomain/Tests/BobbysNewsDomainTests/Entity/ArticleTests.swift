@@ -20,23 +20,19 @@ struct ArticleTests {
         // When
         article = EntityMock.topHeadlines.articles?.first
         // Then
-        #expect(article?.author == "Test" &&
+        #expect(article?.category == "Test" &&
             article?.content == "Test" &&
             article?.contentTranslated == nil &&
+            article?.country == "Test" &&
+            article?.image == URL(string: "Test") &&
             article?.publishedAt == .distantPast &&
             article?.showTranslations == false &&
-            article?.source?.category == "Test" &&
-            article?.source?.country == "uk" &&
-            article?.source?.id == "Test" &&
-            article?.source?.language == "Test" &&
             article?.source?.name == "Test" &&
-            article?.source?.story == "Test" &&
             article?.source?.url == URL(string: "Test") &&
             article?.story == "Test" &&
             article?.title == "Test" &&
             article?.titleTranslated == nil &&
-            article?.url == URL(string: "Test") &&
-            article?.urlToImage == URL(string: "Test"),
+            article?.url == URL(string: "Test"),
             "Article initializing failed!")
     }
 }

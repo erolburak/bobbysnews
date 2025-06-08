@@ -16,39 +16,6 @@ struct RepositoryFactoryTests {
 
     // MARK: - Methods
 
-    @Test("Check DeleteSourcesUseCase initializing!")
-    func deleteSourcesUseCase() {
-        // Given
-        let deleteSourcesUseCase: PDeleteSourcesUseCase?
-        // When
-        deleteSourcesUseCase = sut.deleteSourcesUseCase
-        // Then
-        #expect(deleteSourcesUseCase != nil,
-                "DeleteSourcesUseCase initializing failed!")
-    }
-
-    @Test("Check FetchSourcesUseCase initializing!")
-    func fetchSourcesUseCase() {
-        // Given
-        let fetchSourcesUseCase: PFetchSourcesUseCase?
-        // When
-        fetchSourcesUseCase = sut.fetchSourcesUseCase
-        // Then
-        #expect(fetchSourcesUseCase != nil,
-                "FetchSourcesUseCase initializing failed!")
-    }
-
-    @Test("Check ReadSourcesUseCase initializing!")
-    func readSourcesUseCase() {
-        // Given
-        let readSourcesUseCase: PReadSourcesUseCase?
-        // When
-        readSourcesUseCase = sut.readSourcesUseCase
-        // Then
-        #expect(readSourcesUseCase != nil,
-                "ReadSourcesUseCase initializing failed!")
-    }
-
     @Test("Check DeleteTopHeadlinesUseCase initializing!")
     func deleteTopHeadlinesUseCase() {
         // Given

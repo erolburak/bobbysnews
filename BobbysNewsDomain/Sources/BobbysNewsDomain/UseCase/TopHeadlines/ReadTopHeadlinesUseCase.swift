@@ -10,7 +10,8 @@ import BobbysNewsData
 public protocol PReadTopHeadlinesUseCase {
     // MARK: - Methods
 
-    func read(country: String) throws -> TopHeadlines
+    func read(category: String,
+              country: String) throws -> TopHeadlines
 }
 
 public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
@@ -30,10 +31,13 @@ public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
     // MARK: - Methods
 
-    public func read(country: String) throws -> TopHeadlines {
-        try TopHeadlines(articles: topHeadlinesRepository.read(country: country)
-            .compactMap {
-                Article(from: $0)
-            })
+    public func read(category: String,
+                     country: String) throws -> TopHeadlines
+    {
+        try TopHeadlines(articles: topHeadlinesRepository.read(category: category,
+                                                               country: country)
+                .compactMap {
+                    Article(from: $0)
+                })
     }
 }

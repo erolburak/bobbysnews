@@ -10,12 +10,14 @@ public extension ArticleDB {
 
     @discardableResult
     convenience init(from api: ArticleAPI,
+                     category: String,
                      country: String)
     {
         self.init(context: PersistenceController.shared.backgroundContext)
-        author = api.author
+        self.category = category
         content = api.content
         self.country = country
+        image = api.image
         publishedAt = api.publishedAt
         if let sourceAPI = api.source {
             source = SourceDB(from: sourceAPI)
@@ -23,6 +25,5 @@ public extension ArticleDB {
         story = api.story
         title = api.title
         url = api.url
-        urlToImage = api.urlToImage
     }
 }

@@ -42,23 +42,18 @@ struct DetailViewModelTests {
         // When
         await sut.onAppear()
         // Then
-        #expect(sut.article.author == article.author &&
+        #expect(sut.article.category == article.category &&
             sut.article.content == article.content &&
             sut.article.contentTranslated == nil &&
+            sut.article.image == article.image &&
             sut.article.publishedAt == article.publishedAt &&
             sut.article.showTranslations == article.showTranslations &&
-            sut.article.source?.category == article.source?.category &&
-            sut.article.source?.country == article.source?.country &&
-            sut.article.source?.id == article.source?.id &&
-            sut.article.source?.language == article.source?.language &&
             sut.article.source?.name == article.source?.name &&
-            sut.article.source?.story == article.source?.story &&
             sut.article.source?.url == article.source?.url &&
             sut.article.story == article.story &&
             sut.article.title == article.title &&
             sut.article.titleTranslated == nil &&
             sut.article.url == article.url &&
-            sut.article.urlToImage == article.urlToImage &&
             sut.articleContent == article.content &&
             sut.articleImage == nil &&
             sut.articleTitle == article.title &&

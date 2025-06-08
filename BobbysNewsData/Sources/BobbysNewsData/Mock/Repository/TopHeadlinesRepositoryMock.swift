@@ -24,22 +24,26 @@ public final class TopHeadlinesRepositoryMock: PTopHeadlinesRepository {
         topHeadlinesPersistenceController.delete()
     }
 
-    public func fetch(apiKey: Int,
+    public func fetch(apiKey: String,
+                      category: String,
                       country: String) throws
     {
         let topHeadlinesAPI = try topHeadlinesNetworkController.fetch(apiKey: apiKey,
+                                                                      category: category,
                                                                       country: country)
-        if topHeadlinesAPI.articles != nil ||
-            topHeadlinesAPI.articles?.isEmpty == false
-        {
-            topHeadlinesPersistenceController.save(country: country,
+        if topHeadlinesAPI.articles?.isEmpty == false {
+            topHeadlinesPersistenceController.save(category: category,
+                                                   country: country,
                                                    topHeadlinesAPI: topHeadlinesAPI)
         } else {
             delete()
         }
     }
 
-    public func read(country: String) -> [ArticleDB] {
-        topHeadlinesPersistenceController.read(country: country)
+    public func read(category: String,
+                     country: String) -> [ArticleDB]
+    {
+        topHeadlinesPersistenceController.read(category: category,
+                                               country: country)
     }
 }

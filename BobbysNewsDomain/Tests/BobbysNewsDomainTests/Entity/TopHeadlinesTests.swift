@@ -20,20 +20,19 @@ struct TopHeadlinesTests {
         // When
         topHeadlines = EntityMock.topHeadlines
         // Then
-        #expect(topHeadlines?.articles?.first?.author == "Test" &&
+        #expect(topHeadlines?.articles?.first?.category == "Test" &&
             topHeadlines?.articles?.first?.content == "Test" &&
+            topHeadlines?.articles?.first?.contentTranslated == nil &&
+            topHeadlines?.articles?.first?.country == "Test" &&
+            topHeadlines?.articles?.first?.image == URL(string: "Test") &&
             topHeadlines?.articles?.first?.publishedAt == .distantPast &&
-            topHeadlines?.articles?.first?.source?.category == "Test" &&
-            topHeadlines?.articles?.first?.source?.country == "uk" &&
-            topHeadlines?.articles?.first?.source?.id == "Test" &&
-            topHeadlines?.articles?.first?.source?.language == "Test" &&
+            topHeadlines?.articles?.first?.showTranslations == false &&
             topHeadlines?.articles?.first?.source?.name == "Test" &&
-            topHeadlines?.articles?.first?.source?.story == "Test" &&
             topHeadlines?.articles?.first?.source?.url == URL(string: "Test") &&
             topHeadlines?.articles?.first?.story == "Test" &&
             topHeadlines?.articles?.first?.title == "Test" &&
-            topHeadlines?.articles?.first?.url == URL(string: "Test") &&
-            topHeadlines?.articles?.first?.urlToImage == URL(string: "Test"),
+            topHeadlines?.articles?.first?.titleTranslated == nil &&
+            topHeadlines?.articles?.first?.url == URL(string: "Test"),
             "TopHeadlines initializing failed!")
     }
 }

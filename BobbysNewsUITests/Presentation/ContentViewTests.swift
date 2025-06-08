@@ -18,26 +18,10 @@ final class ContentViewTests: XCTestCase {
     func testContentView() {
         /// Launch app
         let app = XCUIApplication().appLaunch()
+        setCategory(with: app)
         app.openDetailView(with: app)
         closeDetailView(with: app)
-        changeApiKey(with: app)
         resetApp(with: app)
-    }
-
-    @MainActor
-    private func changeApiKey(with app: XCUIApplication) {
-        /// Open settings menu
-        let settingsImage = app.images["SettingsImage"]
-        XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
-        settingsImage.tap()
-        /// Open api key picker
-        let apiKeyPickerButton = app.buttons["API key selection"]
-        XCTAssertTrue(apiKeyPickerButton.waitForExistence(timeout: 5))
-        apiKeyPickerButton.tap()
-        /// Change api key to `2`
-        let apiKeyPickerItemButton = app.buttons["ApiKeyPickerItem2"]
-        XCTAssertTrue(apiKeyPickerItemButton.waitForExistence(timeout: 5))
-        apiKeyPickerItemButton.tap()
     }
 
     @MainActor
@@ -62,8 +46,24 @@ final class ContentViewTests: XCTestCase {
         let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"]
         XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 5))
         resetConfirmationDialogButton.tap()
-        /// Check if `EmptySelectedCountryMessage` exists
-        let emptySelectedCountryText = app.staticTexts["EmptySelectedCountryMessage"]
-        XCTAssertTrue(emptySelectedCountryText.waitForExistence(timeout: 5))
+        /// Check if `EmptySelectedApiKeyMessage` exists
+        let emptySelectedApiKeyMessage = app.staticTexts["EmptySelectedApiKeyMessage"]
+        XCTAssertTrue(emptySelectedApiKeyMessage.waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    private func setCategory(with app: XCUIApplication) {
+        /// Open settings menu
+        let settingsImage = app.images["SettingsImage"]
+        XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
+        settingsImage.tap()
+        /// Open category picker
+        let categoryPicker = app.buttons["CategoryPicker"]
+        XCTAssertTrue(categoryPicker.waitForExistence(timeout: 5))
+        categoryPicker.tap()
+        /// Set selected category to first match
+        let categoryPickerItem = app.buttons["CategoryPickerItem"].firstMatch
+        XCTAssertTrue(categoryPickerItem.waitForExistence(timeout: 5))
+        categoryPickerItem.tap()
     }
 }
