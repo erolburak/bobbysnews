@@ -16,15 +16,6 @@ extension XCUIApplication {
         app.launchArguments = ["–testing"]
         /// Launch app
         app.launch()
-        /// Close tips if needed
-        let closeCategoriesTipButton = popovers.buttons["Close"]
-        if closeCategoriesTipButton.waitForExistence(timeout: 1) {
-            closeCategoriesTipButton.tap()
-        }
-        let closeSettingsTipButton = popovers.buttons["Close"]
-        if closeSettingsTipButton.waitForExistence(timeout: 1) {
-            closeSettingsTipButton.tap()
-        }
         /// Set API key if needed
         let emptyApiKeyMessage = app.staticTexts["EmptyApiKeyMessage"]
         if emptyApiKeyMessage.waitForExistence(timeout: 1) {
@@ -54,7 +45,7 @@ extension XCUIApplication {
         let apiKeyAddEditButton = app.buttons["ApiKeyAddEditButton"]
         XCTAssertTrue(apiKeyAddEditButton.waitForExistence(timeout: 1))
         apiKeyAddEditButton.tap()
-        /// Set API key to first match
+        /// Set API key to `Test`
         let textField = app.textFields.firstMatch
         XCTAssertTrue(textField.waitForExistence(timeout: 1))
         textField.doubleTap()

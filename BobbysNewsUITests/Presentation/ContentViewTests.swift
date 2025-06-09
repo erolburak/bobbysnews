@@ -55,7 +55,7 @@ final class ContentViewTests: XCTestCase {
     private func setCategory(with app: XCUIApplication) {
         /// Open category menu
         let categoryMenu = app.staticTexts["General"]
-        XCTAssertTrue(categoryMenu.waitForExistence(timeout: 5))
+        XCTAssertTrue(categoryMenu.waitForExistence(timeout: 1))
         categoryMenu.tap()
         /// Set category to `General`
         let categoryButton = app.buttons["General"]
