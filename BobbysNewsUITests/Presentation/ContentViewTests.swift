@@ -53,13 +53,13 @@ final class ContentViewTests: XCTestCase {
 
     @MainActor
     private func setCategory(with app: XCUIApplication) {
-        /// Open toolbar title menu
-        let toolbarTitleMenu = app.staticTexts["Business"]
-        XCTAssertTrue(toolbarTitleMenu.waitForExistence(timeout: 1))
-        toolbarTitleMenu.tap()
-        /// Set category to `Business`
-        let categoryPickerItem = app.pickers.staticTexts["Business"]
-        XCTAssertTrue(categoryPickerItem.waitForExistence(timeout: 1))
-        categoryPickerItem.tap()
+        /// Open category menu
+        let categoryMenu = app.staticTexts["General"]
+        XCTAssertTrue(categoryMenu.waitForExistence(timeout: 5))
+        categoryMenu.tap()
+        /// Set category to `General`
+        let categoryButton = app.buttons["General"]
+        XCTAssertTrue(categoryButton.waitForExistence(timeout: 1))
+        categoryButton.tap()
     }
 }
