@@ -286,8 +286,16 @@ final class ContentViewModel {
     }
 
     private func configureTipKit() {
-        try? Tips.configure([.displayFrequency(.immediate),
-                             .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))])
+        guard let tipsConfigurationOptions: [Tips.ConfigurationOption] = try? [.displayFrequency(.immediate),
+                                                                               .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))]
+        else {
+            return
+        }
+        #if DEBUG
+            CommandLine.arguments.contains("-testing") ? Tips.hideAllTipsForTesting() : try? Tips.configure(tipsConfigurationOptions)
+        #else
+            try? Tips.configure(tipsConfigurationOptions)
+        #endif
     }
 
     private func readCountries() {
