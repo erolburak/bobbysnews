@@ -29,12 +29,14 @@ struct ContentView: View {
                     ListItem(article: $0)
                 }
             }
-            .navigationTitle("TopHeadlines")
-            .toolbarTitleDisplayMode(.inline)
             .disabled(viewModel.listDisabled)
             .opacity(viewModel.listOpacity)
             .refreshable {
                 await viewModel.fetchTopHeadlines()
+            }
+            .toolbarTitleDisplayMode(.inline)
+            .toolbarTitleMenu {
+                ToolbarTitleMenu()
             }
             .toolbar {
                 Toolbar()
@@ -55,6 +57,9 @@ struct ContentView: View {
             viewModel.onAppear(selectedApiKey: apiKey,
                                selectedCategory: category,
                                selectedCountry: country)
+        }
+        .task {
+            await viewModel.checkCategoriesTipStatusUpdate()
         }
         .onChange(of: viewModel.selectedCountry) { _, newValue in
             country = newValue
@@ -91,19 +96,19 @@ struct ContentView: View {
                viewModel.articles.isEmpty
             {
                 ContentUnavailableView {
-                    Label("EmptySelectedApiKey",
+                    Label("EmptyApiKey",
                           systemImage: "key")
                 } description: {
-                    Text("EmptySelectedApiKeyMessage")
-                        .accessibilityIdentifier("EmptySelectedApiKeyMessage")
+                    Text("EmptyApiKeyMessage")
+                        .accessibilityIdentifier("EmptyApiKeyMessage")
                 }
             } else if country.isEmpty {
                 ContentUnavailableView {
-                    Label("EmptySelectedCountry",
+                    Label("EmptyCountry",
                           systemImage: "flag")
                 } description: {
-                    Text("EmptySelectedCountryMessage")
-                        .accessibilityIdentifier("EmptySelectedCountryMessage")
+                    Text("EmptyCountryMessage")
+                        .accessibilityIdentifier("EmptyCountryMessage")
                 }
             } else {
                 switch viewModel.state {
@@ -150,12 +155,23 @@ struct ContentView: View {
                       options: .nonRepeating)
     }
 
+    @ToolbarContentBuilder
     private func Toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .principal) {
+            Text(category.localized)
+                .popoverTip(viewModel.categoriesTip, arrowEdge: .leading)
+                .onAppear {
+                    viewModel.showCategoriesTip()
+                }
+        }
+
         ToolbarItem(placement: .primaryAction) {
             Menu {
                 Section("ApiKey") {
-                    Label(viewModel.selectedApiKey.isEmpty ? String(localized: "ApiKeyPlaceholder") : viewModel.selectedApiKey,
-                          systemImage: "key")
+                    if !viewModel.selectedApiKey.isEmpty {
+                        Label(viewModel.selectedApiKey,
+                              systemImage: "key")
+                    }
 
                     Button(viewModel.selectedApiKey.isEmpty ? "Add" : "Edit",
                            systemImage: viewModel.selectedApiKey.isEmpty ? "plus" : "pencil")
@@ -182,23 +198,6 @@ struct ContentView: View {
                     .pickerStyle(.menu)
                 }
 
-                Section("CategorySelection") {
-                    Picker(viewModel.selectedCategory.localized,
-                           systemImage: "tag",
-                           selection: $viewModel.selectedCategory)
-                    {
-                        ForEach(viewModel.categoriesSorted,
-                                id: \.self)
-                        {
-                            Text($0.localized)
-                                .tag($0.localized)
-                                .accessibilityIdentifier("CategoryPickerItem")
-                        }
-                    }
-                    .accessibilityIdentifier("CategoryPicker")
-                    .pickerStyle(.menu)
-                }
-
                 Section {
                     Toggle("Translate",
                            systemImage: "translate",
@@ -218,14 +217,6 @@ struct ContentView: View {
                 }
             } label: {
                 Image(systemName: "gearshape")
-                    .popoverTip(viewModel.settingsTip,
-                                arrowEdge: .bottom)
-                    .onAppear {
-                        Task {
-                            try await Task.sleep(for: .seconds(1))
-                            try viewModel.showSettingsTip()
-                        }
-                    }
                     .accessibilityIdentifier("SettingsImage")
             }
             .alert("ApiKey",
@@ -261,7 +252,23 @@ struct ContentView: View {
                 }
                 .accessibilityIdentifier("ResetConfirmationDialogButton")
             }
+            .popoverTip(viewModel.settingsTip)
         }
+    }
+
+    private func ToolbarTitleMenu() -> some View {
+        Picker(viewModel.selectedCategory.localized,
+               systemImage: "tag",
+               selection: $viewModel.selectedCategory)
+        {
+            ForEach(viewModel.categoriesSorted,
+                    id: \.self)
+            {
+                Text($0.localized)
+                    .tag($0.localized)
+            }
+        }
+        .pickerStyle(.automatic)
     }
 }
 
@@ -351,9 +358,8 @@ private struct ListItem: View {
                 if let url = article.url {
                     ShareLink("Share",
                               item: url)
-                        .environment(\.symbolVariants,
-                                     .none)
                 }
+
                 if let title = article.title {
                     Button("Translate",
                            systemImage: "translate")
@@ -370,8 +376,4 @@ private struct ListItem: View {
                                  in: animation)
         .accessibilityIdentifier("NavigationLink")
     }
-}
-
-#Preview("ListItem") {
-    ListItem(article: .constant(PreviewMock.article))
 }

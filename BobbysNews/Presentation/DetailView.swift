@@ -10,6 +10,10 @@ import SwiftUI
 import WebKit
 
 struct DetailView: View {
+    // MARK: - Private Properties
+
+    @Environment(\.dismiss) private var dismiss
+
     // MARK: - Properties
 
     @State var viewModel: DetailViewModel
@@ -19,31 +23,13 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             Group {
-                Text(viewModel.title)
-                    .font(.system(.subheadline,
-                                  weight: .black))
-                    .lineLimit(1)
-                    .onGeometryChange(for: CGFloat.self) {
-                        $0.frame(in: .scrollView(axis: .vertical)).minY
-                    } action: {
-                        viewModel.titleScrollOffset = $0
-                    }
-
-                Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-                    .font(.system(size: 8,
-                                  weight: .semibold))
-            }
-            .onGeometryChange(for: CGFloat.self) {
-                $0.size.height
-            } action: {
-                viewModel.titleHeight = $0
-            }
-
-            Group {
                 if let image = viewModel.articleImage {
                     image
                         .resizable()
                         .scaledToFill()
+                        .frame(maxHeight: 600,
+                               alignment: .center)
+                        .clipped()
                 } else {
                     AsyncImage(url: viewModel.article.image,
                                transaction: Transaction(animation: .easeIn(duration: 0.75)))
@@ -53,6 +39,9 @@ struct DetailView: View {
                             image
                                 .resizable()
                                 .scaledToFill()
+                                .frame(maxHeight: 600,
+                                       alignment: .center)
+                                .clipped()
                         case .failure:
                             Image(systemName: "photo")
                                 .resizable()
@@ -68,54 +57,76 @@ struct DetailView: View {
                 }
             }
             .frame(maxWidth: .infinity,
-                   minHeight: 280,
-                   maxHeight: 280)
-            .background(.bar)
-            .clipShape(.rect(topLeadingRadius: 40,
-                             topTrailingRadius: 40))
-            .overlay {
-                LinearGradient(gradient: Gradient(colors: [.clear,
-                                                           Color(uiColor: .systemBackground)]),
-                               startPoint: UnitPoint(x: 0.5, y: 0.9),
-                               endPoint: UnitPoint(x: 0.5, y: 1))
+                   minHeight: 600,
+                   maxHeight: 600)
+            .overlay(alignment: .bottom) {
+                LinearGradient(stops: [Gradient.Stop(color: .clear,
+                                                     location: 0.6),
+                                       Gradient.Stop(color: Color(uiColor: .systemBackground).opacity(0.8),
+                                                     location: 0.8),
+                                       Gradient.Stop(color: Color(uiColor: .systemBackground),
+                                                     location: 1)],
+                               startPoint: .top,
+                               endPoint: .bottom)
+                .ignoresSafeArea()
             }
 
-            VStack(alignment: .leading,
-                   spacing: 8)
-            {
-                Text(viewModel.articleTitle)
+            VStack(alignment: .leading) {
+                Text(viewModel.title)
                     .font(.system(.headline,
                                   weight: .black))
+                    .lineLimit(1)
+
+                Text(viewModel.article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
+                    .font(.system(size: 10,
+                                  weight: .bold))
+                    .padding(.bottom)
+
+                Text(viewModel.articleTitle)
+                    .font(.system(.title,
+                                  weight: .black))
+                    .padding(.bottom)
 
                 Text(viewModel.articleContent)
-                    .font(.callout)
-                    .padding(.top, 8)
+                    .padding(.bottom)
+
+                if viewModel.article.url != nil {
+                    Button("GoToArticle") {
+                        viewModel.showWebView = true
+                    }
+                    .textSelection(.disabled)
+                    .font(.system(.subheadline,
+                                  weight: .semibold))
+                    .foregroundStyle(.secondary)
+                    .accessibilityIdentifier("ShowWebViewButton")
+                }
             }
             .frame(maxWidth: .infinity,
                    alignment: .leading)
-            .padding(.horizontal)
-
-            if viewModel.article.url != nil {
-                VStack {
-                    Text("OpenWebView")
-                        .font(.system(.caption2,
-                                      weight: .semibold))
-
-                    Button("Read") {
-                        viewModel.showWebView = true
-                    }
-                    .textCase(.uppercase)
-                    .font(.system(.subheadline,
-                                  weight: .black))
-                    .accessibilityIdentifier("ReadButton")
-                }
-                .textSelection(.disabled)
-                .foregroundStyle(.secondary)
-                .padding(.horizontal)
-                .padding(.top, 40)
-            }
+            .padding(.top, -120)
+            .padding([.horizontal,
+                      .bottom])
         }
+        .navigationBarBackButtonHidden()
+        .toolbarBackground(.hidden,
+                           for: .navigationBar)
+        .ignoresSafeArea(.all,
+                         edges: .top)
+        .scrollBounceBehavior(.basedOnSize,
+                              axes: .vertical)
         .textSelection(.enabled)
+        .overlay(alignment: .top) {
+            LinearGradient(stops: [Gradient.Stop(color: Color(uiColor: .systemBackground).opacity(0.4),
+                                                 location: 0),
+                                   Gradient.Stop(color: Color(uiColor: .systemBackground).opacity(0.2),
+                                                 location: 0.6),
+                                   Gradient.Stop(color: Color(uiColor: .clear),
+                                                 location: 1)],
+                           startPoint: .top,
+                           endPoint: .bottom)
+                .frame(height: 120)
+                .ignoresSafeArea(.all)
+        }
         .toolbar {
             Toolbar()
         }
@@ -154,7 +165,7 @@ struct DetailView: View {
                         {
                             viewModel.showWebView = false
                         }
-                        .accessibilityIdentifier("CloseButton")
+                        .accessibilityIdentifier("CloseWebViewButton")
                     }
                 }
                 .overlay {
@@ -168,6 +179,15 @@ struct DetailView: View {
 
     @ToolbarContentBuilder
     private func Toolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .cancellationAction) {
+            Button("Close",
+                   systemImage: "xmark")
+            {
+                dismiss()
+            }
+            .accessibilityIdentifier("CloseDetailViewButton")
+        }
+
         ToolbarItem(placement: .principal) {
             VStack {
                 Text(viewModel.title)
@@ -185,8 +205,6 @@ struct DetailView: View {
         if let url = viewModel.article.url {
             ToolbarItem(placement: .primaryAction) {
                 ShareLink(item: url)
-                    .environment(\.symbolVariants,
-                                 .none)
                     .accessibilityIdentifier("ShareLink")
             }
         }

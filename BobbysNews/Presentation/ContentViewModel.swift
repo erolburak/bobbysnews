@@ -15,10 +15,28 @@ final class ContentViewModel {
     // MARK: - Type Definitions
 
     enum States {
+        // MARK: - Properties
+
         /// General States
         case isLoading, loaded, isTranslating
         /// Empty States
         case emptyFetch, emptyRead, emptyTranslate
+    }
+
+    struct CategoriesTip: Tip {
+        // MARK: - Properties
+
+        @Parameter
+        static var show: Bool = false
+        var image: Image? = Image(systemName: "tag")
+        var message: Text? = Text("CategoriesTipMessage")
+        var rules: [Rule] {
+            [#Rule(Self.$show) {
+                $0
+            }]
+        }
+
+        var title = Text("Categories")
     }
 
     struct SettingsTip: Tip {
@@ -45,6 +63,7 @@ final class ContentViewModel {
 
     // MARK: - Properties
 
+    let categoriesTip = CategoriesTip()
     let settingsTip = SettingsTip()
     var alertError: Errors?
     var articles = [Article]()
@@ -233,8 +252,24 @@ final class ContentViewModel {
         sensoryFeedbackBool.toggle()
     }
 
-    func showSettingsTip() throws {
+    func showCategoriesTip() {
+        CategoriesTip.show = true
+    }
+
+    func showSettingsTip() {
         SettingsTip.show = true
+    }
+
+    @MainActor
+    func checkCategoriesTipStatusUpdate() async {
+        for await statusUpdate in categoriesTip.statusUpdates {
+            switch statusUpdate {
+            case .invalidated(.tipClosed):
+                showSettingsTip()
+            default:
+                break
+            }
+        }
     }
 
     @MainActor
