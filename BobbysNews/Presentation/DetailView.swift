@@ -68,7 +68,7 @@ struct DetailView: View {
                                                      location: 1)],
                                startPoint: .top,
                                endPoint: .bottom)
-                .ignoresSafeArea()
+                    .ignoresSafeArea()
             }
 
             VStack(alignment: .leading) {
