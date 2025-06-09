@@ -12,7 +12,7 @@ enum PreviewMock {
     // MARK: - Properties
 
     static let article = Article(category: "Category",
-                                 content: "ContentStart\n\n\n\n\n\n\n\n\n\n\n\n\n\nContentEnd",
+                                 content: "ContentStart\n\n\n\n\n\n\nContentEnd",
                                  country: "Country",
                                  image: URL(string: "https://raw.githubusercontent.com/erolburak/bobbysnews/main/BobbysNews/Resource/Assets.xcassets/AppIcon.appiconset/%E2%80%8EAppIcon.png"),
                                  publishedAt: .now,

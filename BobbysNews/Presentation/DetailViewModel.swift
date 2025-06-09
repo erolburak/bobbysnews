@@ -14,6 +14,8 @@ final class DetailViewModel {
     // MARK: - Type Definitions
 
     enum StatesWebView {
+        // MARK: - Properties
+
         /// General States
         case isLoading, loaded
         /// Error States

@@ -27,43 +27,39 @@ final class ContentViewTests: XCTestCase {
     @MainActor
     private func closeDetailView(with app: XCUIApplication) {
         /// Close detail view
-        let backButton = app.buttons.element(boundBy: .zero)
-        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
-        backButton.tap()
+        let closeDetailViewButton = app.buttons["CloseDetailViewButton"]
+        XCTAssertTrue(closeDetailViewButton.waitForExistence(timeout: 1))
+        closeDetailViewButton.tap()
     }
 
     @MainActor
     private func resetApp(with app: XCUIApplication) {
         /// Open settings menu
         let settingsImage = app.images["SettingsImage"]
-        XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
+        XCTAssertTrue(settingsImage.waitForExistence(timeout: 1))
         settingsImage.tap()
         /// Open reset confirmation dialog
         let resetButton = app.buttons["ResetButton"]
-        XCTAssertTrue(resetButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(resetButton.waitForExistence(timeout: 1))
         resetButton.tap()
         /// Confirm reset
         let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"]
-        XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 1))
         resetConfirmationDialogButton.tap()
-        /// Check if `EmptySelectedApiKeyMessage` exists
-        let emptySelectedApiKeyMessage = app.staticTexts["EmptySelectedApiKeyMessage"]
-        XCTAssertTrue(emptySelectedApiKeyMessage.waitForExistence(timeout: 5))
+        /// Check if `EmptyApiKeyMessage` exists
+        let emptyApiKeyMessage = app.staticTexts["EmptyApiKeyMessage"]
+        XCTAssertTrue(emptyApiKeyMessage.waitForExistence(timeout: 1))
     }
 
     @MainActor
     private func setCategory(with app: XCUIApplication) {
-        /// Open settings menu
-        let settingsImage = app.images["SettingsImage"]
-        XCTAssertTrue(settingsImage.waitForExistence(timeout: 5))
-        settingsImage.tap()
-        /// Open category picker
-        let categoryPicker = app.buttons["CategoryPicker"]
-        XCTAssertTrue(categoryPicker.waitForExistence(timeout: 5))
-        categoryPicker.tap()
-        /// Set selected category to first match
-        let categoryPickerItem = app.buttons["CategoryPickerItem"].firstMatch
-        XCTAssertTrue(categoryPickerItem.waitForExistence(timeout: 5))
+        /// Open toolbar title menu
+        let toolbarTitleMenu = app.staticTexts["Business"]
+        XCTAssertTrue(toolbarTitleMenu.waitForExistence(timeout: 1))
+        toolbarTitleMenu.tap()
+        /// Set category to `Business`
+        let categoryPickerItem = app.pickers.staticTexts["Business"]
+        XCTAssertTrue(categoryPickerItem.waitForExistence(timeout: 1))
         categoryPickerItem.tap()
     }
 }

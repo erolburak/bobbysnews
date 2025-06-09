@@ -65,6 +65,40 @@
         }
       }
     },
+    "Categories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorien"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        }
+      }
+    },
+    "CategoriesTipMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ändere hier die Kategorie."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change the category here."
+          }
+        }
+      }
+    },
     "CategoryBusiness" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -146,22 +180,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Science"
-          }
-        }
-      }
-    },
-    "CategorySelection" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kategorieauswahl"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Category selection"
           }
         }
       }
@@ -255,13 +273,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Länderauswahl"
+            "value" : "Land"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Country selection"
+            "value" : "Country"
           }
         }
       }
@@ -310,6 +328,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit"
+          }
+        }
+      }
+    },
+    "EmptyApiKey" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein API-Schlüssel hinzugefügt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No API key added"
+          }
+        }
+      }
+    },
+    "EmptyApiKeyMessage" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Füge einen gültigen API-Schlüssel in den Einstellungen hinzu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add a valid API key in the settings."
           }
         }
       }
@@ -378,6 +428,39 @@
         }
       }
     },
+    "EmptyCountry" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Land ausgewählt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No country selected"
+          }
+        }
+      }
+    },
+    "EmptyCountryMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle ein Land in den Einstellungen aus."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select a country in the settings."
+          }
+        }
+      }
+    },
     "EmptyFetchTopHeadlines" : {
       "localizations" : {
         "de" : {
@@ -440,71 +523,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loaded top headlines are displayed here."
-          }
-        }
-      }
-    },
-    "EmptySelectedApiKey" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kein API-Schlüssel hinzugefügt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No API key added"
-          }
-        }
-      }
-    },
-    "EmptySelectedApiKeyMessage" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Füge einen gültigen API-Schlüssel in den Einstellungen hinzu."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add a valid API key in the settings."
-          }
-        }
-      }
-    },
-    "EmptySelectedCountry" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kein Land ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No country selected"
-          }
-        }
-      }
-    },
-    "EmptySelectedCountryMessage" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wähle ein Land in den Einstellungen aus."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select a country in the settings."
           }
         }
       }
@@ -962,6 +980,22 @@
         }
       }
     },
+    "GoToArticle" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zum Artikel"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to article"
+          }
+        }
+      }
+    },
     "Headline" : {
       "localizations" : {
         "de" : {
@@ -974,38 +1008,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Headline"
-          }
-        }
-      }
-    },
-    "OpenWebView" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Möchten Sie den gesamten Artikel lesen?"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Would you like to read the entire article?"
-          }
-        }
-      }
-    },
-    "Read" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lesen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Read"
           }
         }
       }
@@ -1079,13 +1081,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API-Schlüssel, Länder und Kategorien werden hier in einer Liste dargestellt. Darüber hinaus kann hier ein API-Schlüssel hinzugefügt, das Land oder die Kategorie gewechselt werden."
+            "value" : "Bearbeite den API-Schlüssel, das Land und die Übersetzung oder setze die App hier zurück."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "API key, countries and categories are shown here in a list. In addition, the API key can be added, country or category can be selected here."
+            "value" : "Change the API key, country and translation or reset the app here."
           }
         }
       }
@@ -1102,22 +1104,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Share"
-          }
-        }
-      }
-    },
-    "TopHeadlines" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schlagzeilen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Top headlines"
           }
         }
       }
