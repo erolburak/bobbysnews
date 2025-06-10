@@ -19,7 +19,7 @@ final class ContentViewTests: XCTestCase {
         /// Launch app
         let app = XCUIApplication().appLaunch()
         setCategory(with: app)
-        app.openDetailView(with: app)
+        app.showDetailView(with: app)
         closeDetailView(with: app)
         resetApp(with: app)
     }
@@ -27,23 +27,23 @@ final class ContentViewTests: XCTestCase {
     @MainActor
     private func closeDetailView(with app: XCUIApplication) {
         /// Close detail view
-        let closeDetailViewButton = app.buttons["CloseDetailViewButton"]
+        let closeDetailViewButton = app.buttons["BackButton"].firstMatch
         XCTAssertTrue(closeDetailViewButton.waitForExistence(timeout: 1))
         closeDetailViewButton.tap()
     }
 
     @MainActor
     private func resetApp(with app: XCUIApplication) {
-        /// Open settings menu
-        let settingsImage = app.images["SettingsImage"]
-        XCTAssertTrue(settingsImage.waitForExistence(timeout: 1))
-        settingsImage.tap()
-        /// Open reset confirmation dialog
+        /// Show settings menu
+        let settingsMenu = app.buttons["SettingsMenu"]
+        XCTAssertTrue(settingsMenu.waitForExistence(timeout: 1))
+        settingsMenu.tap()
+        /// Show reset confirmation dialog
         let resetButton = app.buttons["ResetButton"]
         XCTAssertTrue(resetButton.waitForExistence(timeout: 1))
         resetButton.tap()
         /// Confirm reset
-        let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"]
+        let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"].firstMatch
         XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 1))
         resetConfirmationDialogButton.tap()
         /// Check if `EmptyApiKeyMessage` exists
@@ -53,13 +53,13 @@ final class ContentViewTests: XCTestCase {
 
     @MainActor
     private func setCategory(with app: XCUIApplication) {
-        /// Open category menu
-        let categoryMenu = app.staticTexts["General"]
-        XCTAssertTrue(categoryMenu.waitForExistence(timeout: 1))
-        categoryMenu.tap()
+        /// Show category picker
+        let categoryPicker = app.staticTexts["General"]
+        XCTAssertTrue(categoryPicker.waitForExistence(timeout: 1))
+        categoryPicker.tap()
         /// Set category to `General`
-        let categoryButton = app.buttons["General"]
-        XCTAssertTrue(categoryButton.waitForExistence(timeout: 1))
-        categoryButton.tap()
+        let categoryGeneralPickerItem = app.buttons["General"].firstMatch
+        XCTAssertTrue(categoryGeneralPickerItem.waitForExistence(timeout: 1))
+        categoryGeneralPickerItem.tap()
     }
 }

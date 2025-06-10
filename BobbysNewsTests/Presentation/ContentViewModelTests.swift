@@ -89,11 +89,11 @@ struct ContentViewModelTests {
     }
 
     @Test("Check ContentViewModel showSettingsTip!")
-    func showSettingsTip() throws {
+    func showSettingsTip() {
         // Given
         ContentViewModel.SettingsTip.show = false
         // When
-        try sut.showSettingsTip()
+        sut.showSettingsTip()
         // Then
         #expect(ContentViewModel.SettingsTip.show,
                 "ContentViewModel showSettingsTip failed!")

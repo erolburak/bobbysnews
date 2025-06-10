@@ -21,6 +21,9 @@ final class BobbysNewsUITestsLaunchTests: XCTestCase {
     @MainActor
     func testLaunch() throws {
         let app = XCUIApplication()
+        /// Set launch arguments to `-Testing`
+        app.launchArguments = ["–Testing"]
+        /// Launch app
         app.launch()
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "Launch Screen"

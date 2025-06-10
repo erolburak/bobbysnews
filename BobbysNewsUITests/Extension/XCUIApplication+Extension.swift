@@ -11,37 +11,38 @@ extension XCUIApplication {
     // MARK: - Methods
 
     func appLaunch() -> XCUIApplication {
-        let app = XCUIApplication()
-        /// Set launch arguments to `-testing`
-        app.launchArguments = ["–testing"]
+        /// Set launch arguments to `-Testing`
+        launchArguments = ["–Testing"]
         /// Launch app
-        app.launch()
+        launch()
+        /// Set device orientation to `portrait`
+        XCUIDevice.shared.orientation = .portrait
         /// Set API key if needed
-        let emptyApiKeyMessage = app.staticTexts["EmptyApiKeyMessage"]
+        let emptyApiKeyMessage = staticTexts["EmptyApiKeyMessage"]
         if emptyApiKeyMessage.waitForExistence(timeout: 1) {
-            setApiKey(with: app)
+            setApiKey(with: self)
         }
         /// Set country if needed
-        let emptyCountryMessage = app.staticTexts["EmptyCountryMessage"]
+        let emptyCountryMessage = staticTexts["EmptyCountryMessage"]
         if emptyCountryMessage.waitForExistence(timeout: 1) {
-            setCountry(with: app)
+            setCountry(with: self)
         }
-        return app
+        return self
     }
 
-    func openDetailView(with app: XCUIApplication) {
-        /// Open detail view
+    func showDetailView(with app: XCUIApplication) {
+        /// Show detail view
         let navigationLink = app.buttons["NavigationLink"]
         XCTAssertTrue(navigationLink.waitForExistence(timeout: 1))
         navigationLink.tap()
     }
 
     private func setApiKey(with app: XCUIApplication) {
-        /// Open settings menu
-        let settingsImage = app.images["SettingsImage"]
-        XCTAssertTrue(settingsImage.waitForExistence(timeout: 1))
-        settingsImage.tap()
-        /// Open API key alert
+        /// Show settings menu
+        let settingsMenu = app.buttons["SettingsMenu"]
+        XCTAssertTrue(settingsMenu.waitForExistence(timeout: 1))
+        settingsMenu.tap()
+        /// Show API key alert
         let apiKeyAddEditButton = app.buttons["ApiKeyAddEditButton"]
         XCTAssertTrue(apiKeyAddEditButton.waitForExistence(timeout: 1))
         apiKeyAddEditButton.tap()
@@ -51,17 +52,17 @@ extension XCUIApplication {
         textField.doubleTap()
         textField.typeText("Test")
         /// Confirm API key
-        let apiKeyDoneButton = app.buttons["ApiKeyDoneButton"]
+        let apiKeyDoneButton = app.buttons["ApiKeyDoneButton"].firstMatch
         XCTAssertTrue(apiKeyDoneButton.waitForExistence(timeout: 1))
         apiKeyDoneButton.tap()
     }
 
     private func setCountry(with app: XCUIApplication) {
-        /// Open settings menu
-        let settingsImage = app.images["SettingsImage"]
-        XCTAssertTrue(settingsImage.waitForExistence(timeout: 1))
-        settingsImage.tap()
-        /// Open country picker
+        /// Show settings menu
+        let settingsMenu = app.buttons["SettingsMenu"]
+        XCTAssertTrue(settingsMenu.waitForExistence(timeout: 1))
+        settingsMenu.tap()
+        /// Show country picker
         let countryPicker = app.buttons["CountryPicker"]
         XCTAssertTrue(countryPicker.waitForExistence(timeout: 1))
         countryPicker.tap()

@@ -292,7 +292,7 @@ final class ContentViewModel {
             return
         }
         #if DEBUG
-            CommandLine.arguments.contains("-testing") ? Tips.hideAllTipsForTesting() : try? Tips.configure(tipsConfigurationOptions)
+            CommandLine.arguments.contains("-Testing") ? Tips.hideAllTipsForTesting() : try? Tips.configure(tipsConfigurationOptions)
         #else
             try? Tips.configure(tipsConfigurationOptions)
         #endif
