@@ -28,9 +28,9 @@ The **BobbysNews** app is my own project, which uses a public API to retrieve he
 - [GNews](https://gnews.io)
 
 ## SCREENSHOTS
-<img width="240" src="https://github.com/user-attachments/assets/ab2aee17-f64a-4147-bc7a-56e3bde3ee94#gh-light-mode-only">
-<img width="240" src="https://github.com/user-attachments/assets/c7ee0aba-0c56-4135-825c-72292db73ba8#gh-dark-mode-only">
-<img width="240" src="https://github.com/user-attachments/assets/18a8450e-e163-4a89-8c06-4abe33bfdaff#gh-light-mode-only">
-<img width="240" src="https://github.com/user-attachments/assets/a323e5fe-934d-49a0-b518-220c759c3a32#gh-dark-mode-only">
-<img width="240" src="https://github.com/user-attachments/assets/fb50d2c3-2fae-429d-ac34-5f64fdae4838#gh-light-mode-only">
-<img width="240" src="https://github.com/user-attachments/assets/24257c5b-f9f2-4a78-a7b5-563f0cd11073#gh-dark-mode-only">
+<img width="240" src="https://github.com/user-attachments/assets/391c648c-2262-4d94-bb59-1432cc8b762b#gh-light-mode-only">
+<img width="240" src="https://github.com/user-attachments/assets/6bfde581-be5f-442e-9a74-39cd32e7217c#gh-dark-mode-only">
+<img width="240" src="https://github.com/user-attachments/assets/1491fd7f-f3b0-46e9-aeba-c6d332d0a3ee#gh-light-mode-only">
+<img width="240" src="https://github.com/user-attachments/assets/252fea2b-af97-4803-b110-20845ec55348#gh-dark-mode-only">
+<img width="240" src="https://github.com/user-attachments/assets/a78d4b79-7a97-472e-81ba-bde25b754dfd#gh-light-mode-only">
+<img width="240" src="https://github.com/user-attachments/assets/352e7499-3fa1-4c1f-ab41-7f3ee6b217e4#gh-dark-mode-only">
