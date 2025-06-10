@@ -153,6 +153,7 @@ struct ContentView: View {
         }
         .symbolEffect(.bounce,
                       options: .nonRepeating)
+        .symbolVariant(.fill)
     }
 
     @ToolbarContentBuilder

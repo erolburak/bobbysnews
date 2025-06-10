@@ -27,7 +27,7 @@ struct DetailView: View {
                     image
                         .resizable()
                         .scaledToFill()
-                        .frame(maxHeight: 600,
+                        .frame(maxHeight: 500,
                                alignment: .center)
                         .clipped()
                 } else {
@@ -39,7 +39,7 @@ struct DetailView: View {
                             image
                                 .resizable()
                                 .scaledToFill()
-                                .frame(maxHeight: 600,
+                                .frame(maxHeight: 500,
                                        alignment: .center)
                                 .clipped()
                         case .failure:
@@ -57,8 +57,8 @@ struct DetailView: View {
                 }
             }
             .frame(maxWidth: .infinity,
-                   minHeight: 600,
-                   maxHeight: 600)
+                   minHeight: 500,
+                   maxHeight: 500)
             .overlay(alignment: .bottom) {
                 LinearGradient(stops: [Gradient.Stop(color: .clear,
                                                      location: 0.6),
@@ -115,18 +115,6 @@ struct DetailView: View {
         .scrollBounceBehavior(.basedOnSize,
                               axes: .vertical)
         .textSelection(.enabled)
-        .overlay(alignment: .top) {
-            LinearGradient(stops: [Gradient.Stop(color: Color(uiColor: .systemBackground).opacity(0.4),
-                                                 location: 0),
-                                   Gradient.Stop(color: Color(uiColor: .systemBackground).opacity(0.2),
-                                                 location: 0.6),
-                                   Gradient.Stop(color: Color(uiColor: .clear),
-                                                 location: 1)],
-                           startPoint: .top,
-                           endPoint: .bottom)
-                .frame(height: 120)
-                .ignoresSafeArea(.all)
-        }
         .toolbar {
             Toolbar()
         }
@@ -153,6 +141,7 @@ struct DetailView: View {
                                                description: Text(viewModel.stateWebView == .error ? "ErrorWebViewMessage" : "ErrorRecoverySuggestionNoNetworkConnection"))
                             .symbolEffect(.bounce,
                                           options: .nonRepeating)
+                            .symbolVariant(.fill)
                     }
                 }
                 .navigationTitle("Headline")
