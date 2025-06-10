@@ -24,7 +24,7 @@ public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
     public init(topHeadlinesRepository: PTopHeadlinesRepository) {
         #if DEBUG
-            self.topHeadlinesRepository = CommandLine.arguments.contains("–testing") ? TopHeadlinesRepositoryMock() : topHeadlinesRepository
+            self.topHeadlinesRepository = CommandLine.arguments.contains("–Testing") ? TopHeadlinesRepositoryMock() : topHeadlinesRepository
         #else
             self.topHeadlinesRepository = topHeadlinesRepository
         #endif

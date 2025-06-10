@@ -11,7 +11,7 @@
   "defaultOptions" : {
     "commandLineArgumentEntries" : [
       {
-        "argument" : "-testing"
+        "argument" : "-Testing"
       }
     ],
     "language" : "en-GB",

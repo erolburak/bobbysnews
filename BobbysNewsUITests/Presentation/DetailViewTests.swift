@@ -18,14 +18,14 @@ final class DetailViewTests: XCTestCase {
     func testDetailView() {
         /// Launch app
         let app = XCUIApplication().appLaunch()
-        app.openDetailView(with: app)
-        openCloseWebView(with: app)
-        openShareView(with: app)
+        app.showDetailView(with: app)
+        showCloseWebView(with: app)
+        showShareView(with: app)
     }
 
     @MainActor
-    private func openCloseWebView(with app: XCUIApplication) {
-        /// Open web view
+    private func showCloseWebView(with app: XCUIApplication) {
+        /// Show web view
         let showWebViewButton = app.buttons["ShowWebViewButton"]
         XCTAssertTrue(showWebViewButton.waitForExistence(timeout: 1))
         showWebViewButton.tap()
@@ -36,8 +36,8 @@ final class DetailViewTests: XCTestCase {
     }
 
     @MainActor
-    private func openShareView(with app: XCUIApplication) {
-        /// Open share view
+    private func showShareView(with app: XCUIApplication) {
+        /// Show share view
         let shareLink = app.buttons["ShareLink"]
         XCTAssertTrue(shareLink.waitForExistence(timeout: 1))
         shareLink.tap()

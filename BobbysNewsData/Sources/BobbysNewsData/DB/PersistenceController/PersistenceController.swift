@@ -30,7 +30,7 @@ public final class PersistenceController {
         let cloudKitContainer = NSPersistentCloudKitContainer(name: "BobbysNews",
                                                               managedObjectModel: managedObjectModel)
         #if DEBUG
-            container = CommandLine.arguments.contains("-testing") ? NSPersistentContainer(name: "BobbysNews",
+            container = CommandLine.arguments.contains("-Testing") ? NSPersistentContainer(name: "BobbysNews",
                                                                                            managedObjectModel: managedObjectModel) : cloudKitContainer
         #else
             container = cloudKitContainer

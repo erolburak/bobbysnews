@@ -57,9 +57,9 @@ struct DetailViewModelTests {
             sut.articleContent == article.content &&
             sut.articleImage == nil &&
             sut.articleTitle == article.title &&
-            !sut.showWebView &&
-            sut.stateWebView == .isLoading &&
-            sut.title == article.source?.name,
+            !sut.sensoryFeedbackBool &&
+            !sut.showNoNetworkConnection &&
+            !sut.showWebView,
             "DetailViewModel onAppear failed!")
     }
 }

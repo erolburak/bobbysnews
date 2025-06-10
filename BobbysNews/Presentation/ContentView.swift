@@ -34,7 +34,8 @@ struct ContentView: View {
             .refreshable {
                 await viewModel.fetchTopHeadlines()
             }
-            .toolbarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationSubtitle("\(viewModel.articles.count)Articles")
             .toolbarTitleMenu {
                 ToolbarTitleMenu()
             }
@@ -130,9 +131,10 @@ struct ContentView: View {
                                                                   sensoryFeedback: true)
                             }
                         }
-                        .textCase(.uppercase)
+                        .buttonStyle(.glass)
                         .font(.system(.subheadline,
-                                      weight: .black))
+                                      weight: .bold))
+                        .textCase(.uppercase)
                     }
                 case .emptyTranslate:
                     ContentUnavailableView {
@@ -144,9 +146,10 @@ struct ContentView: View {
                         Button("Disable") {
                             viewModel.translate = false
                         }
-                        .textCase(.uppercase)
+                        .buttonStyle(.glass)
                         .font(.system(.subheadline,
-                                      weight: .black))
+                                      weight: .bold))
+                        .textCase(.uppercase)
                     }
                 }
             }
@@ -158,9 +161,9 @@ struct ContentView: View {
 
     @ToolbarContentBuilder
     private func Toolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .principal) {
+        ToolbarItem(placement: .title) {
             Text(category.localized)
-                .popoverTip(viewModel.categoriesTip, arrowEdge: .leading)
+                .popoverTip(viewModel.categoriesTip)
                 .onAppear {
                     viewModel.showCategoriesTip()
                 }
@@ -168,22 +171,22 @@ struct ContentView: View {
 
         ToolbarItem(placement: .primaryAction) {
             Menu {
-                Section("ApiKey") {
-                    if !viewModel.selectedApiKey.isEmpty {
-                        Label(viewModel.selectedApiKey,
-                              systemImage: "key")
-                    }
+                ControlGroup {
+                    Label(!viewModel.selectedApiKey.isEmpty ? viewModel.selectedApiKey : String(localized: "EmptyApiKey"),
+                          systemImage: "key")
+                        .fixedSize()
 
                     Button(viewModel.selectedApiKey.isEmpty ? "Add" : "Edit",
                            systemImage: viewModel.selectedApiKey.isEmpty ? "plus" : "pencil")
                     {
                         viewModel.showEditAlert = true
+                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
                     .accessibilityIdentifier("ApiKeyAddEditButton")
                 }
 
-                Section("CountrySelection") {
-                    Picker(Locale.current.localizedString(forRegionCode: viewModel.selectedCountry) ?? "-",
+                Section {
+                    Picker(Locale.current.localizedString(forRegionCode: viewModel.selectedCountry) ?? String(localized: "EmptyCountry"),
                            systemImage: "flag",
                            selection: $viewModel.selectedCountry)
                     {
@@ -204,7 +207,6 @@ struct ContentView: View {
                            systemImage: "translate",
                            isOn: $viewModel.translate)
                         .disabled(viewModel.translateDisabled)
-                        .accessibilityIdentifier("TranslateToggle")
                 }
 
                 Section {
@@ -213,12 +215,12 @@ struct ContentView: View {
                            role: .destructive)
                     {
                         viewModel.showConfirmationDialog = true
+                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
                     .accessibilityIdentifier("ResetButton")
                 }
             } label: {
                 Image(systemName: "gearshape")
-                    .accessibilityIdentifier("SettingsImage")
             }
             .alert("ApiKey",
                    isPresented: $viewModel.showEditAlert)
@@ -226,15 +228,15 @@ struct ContentView: View {
                 TextField("ApiKeyPlaceholder",
                           text: $viewModel.selectedApiKey)
 
-                Button("Cancel",
-                       role: .cancel) {}
+                Button(role: .cancel) {
+                    viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
+                }
 
-                Button("Done") {
+                Button(role: .confirm) {
                     apiKey = viewModel.selectedApiKey
 
                     Task {
                         await viewModel.fetchTopHeadlines(state: .isLoading)
-                        viewModel.sensoryFeedbackTrigger(feedback: .success)
                     }
                 }
                 .accessibilityIdentifier("ApiKeyDoneButton")
@@ -254,6 +256,7 @@ struct ContentView: View {
                 .accessibilityIdentifier("ResetConfirmationDialogButton")
             }
             .popoverTip(viewModel.settingsTip)
+            .accessibilityIdentifier("SettingsMenu")
         }
     }
 
@@ -373,6 +376,8 @@ private struct ListItem: View {
             .translationPresentation(isPresented: $showTranslationPresentation,
                                      text: translationPresentationText)
         }
+        .sensoryFeedback(.press(.button),
+                         trigger: showTranslationPresentation)
         .matchedTransitionSource(id: article.id,
                                  in: animation)
         .accessibilityIdentifier("NavigationLink")
