@@ -27,39 +27,26 @@ final class ContentViewTests: XCTestCase {
     @MainActor
     private func closeDetailView(with app: XCUIApplication) {
         /// Close detail view
-        let closeDetailViewButton = app.buttons["BackButton"].firstMatch
-        XCTAssertTrue(closeDetailViewButton.waitForExistence(timeout: 1))
-        closeDetailViewButton.tap()
+        app.buttons["BackButton"].tap()
     }
 
     @MainActor
     private func resetApp(with app: XCUIApplication) {
         /// Show settings menu
-        let settingsMenu = app.buttons["SettingsMenu"]
-        XCTAssertTrue(settingsMenu.waitForExistence(timeout: 1))
-        settingsMenu.tap()
+        app.buttons["SettingsMenu"].tap()
         /// Show reset confirmation dialog
-        let resetButton = app.buttons["ResetButton"]
-        XCTAssertTrue(resetButton.waitForExistence(timeout: 1))
-        resetButton.tap()
+        app.buttons["ResetButton"].tap()
         /// Confirm reset
-        let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"].firstMatch
-        XCTAssertTrue(resetConfirmationDialogButton.waitForExistence(timeout: 1))
-        resetConfirmationDialogButton.tap()
+        app.buttons["ResetConfirmationDialogButton"].tap()
         /// Check if `EmptyApiKeyMessage` exists
-        let emptyApiKeyMessage = app.staticTexts["EmptyApiKeyMessage"]
-        XCTAssertTrue(emptyApiKeyMessage.waitForExistence(timeout: 1))
+        XCTAssertTrue(app.staticTexts["EmptyApiKeyMessage"].exists)
     }
 
     @MainActor
     private func setCategory(with app: XCUIApplication) {
         /// Show category picker
-        let categoryPicker = app.staticTexts["General"]
-        XCTAssertTrue(categoryPicker.waitForExistence(timeout: 1))
-        categoryPicker.tap()
+        app.staticTexts["General"].tap()
         /// Set category to `General`
-        let categoryGeneralPickerItem = app.buttons["General"].firstMatch
-        XCTAssertTrue(categoryGeneralPickerItem.waitForExistence(timeout: 1))
-        categoryGeneralPickerItem.tap()
+        app.buttons["General"].firstMatch.tap()
     }
 }

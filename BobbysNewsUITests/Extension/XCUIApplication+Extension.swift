@@ -18,13 +18,11 @@ extension XCUIApplication {
         /// Set device orientation to `portrait`
         XCUIDevice.shared.orientation = .portrait
         /// Set API key if needed
-        let emptyApiKeyMessage = staticTexts["EmptyApiKeyMessage"]
-        if emptyApiKeyMessage.waitForExistence(timeout: 1) {
+        if staticTexts["EmptyApiKeyMessage"].exists {
             setApiKey(with: self)
         }
         /// Set country if needed
-        let emptyCountryMessage = staticTexts["EmptyCountryMessage"]
-        if emptyCountryMessage.waitForExistence(timeout: 1) {
+        if staticTexts["EmptyCountryMessage"].exists {
             setCountry(with: self)
         }
         return self
@@ -32,43 +30,28 @@ extension XCUIApplication {
 
     func showDetailView(with app: XCUIApplication) {
         /// Show detail view
-        let navigationLink = app.buttons["NavigationLink"]
-        XCTAssertTrue(navigationLink.waitForExistence(timeout: 1))
-        navigationLink.tap()
+        app.buttons["NavigationLink"].tap()
     }
 
     private func setApiKey(with app: XCUIApplication) {
         /// Show settings menu
-        let settingsMenu = app.buttons["SettingsMenu"]
-        XCTAssertTrue(settingsMenu.waitForExistence(timeout: 1))
-        settingsMenu.tap()
+        app.buttons["SettingsMenu"].tap()
         /// Show API key alert
-        let apiKeyAddEditButton = app.buttons["ApiKeyAddEditButton"]
-        XCTAssertTrue(apiKeyAddEditButton.waitForExistence(timeout: 1))
-        apiKeyAddEditButton.tap()
+        app.buttons["ApiKeyAddEditButton"].tap()
         /// Set API key to `Test`
         let textField = app.textFields.firstMatch
-        XCTAssertTrue(textField.waitForExistence(timeout: 1))
         textField.doubleTap()
         textField.typeText("Test")
         /// Confirm API key
-        let apiKeyDoneButton = app.buttons["ApiKeyDoneButton"].firstMatch
-        XCTAssertTrue(apiKeyDoneButton.waitForExistence(timeout: 1))
-        apiKeyDoneButton.tap()
+        app.buttons["ApiKeyDoneButton"].tap()
     }
 
     private func setCountry(with app: XCUIApplication) {
         /// Show settings menu
-        let settingsMenu = app.buttons["SettingsMenu"]
-        XCTAssertTrue(settingsMenu.waitForExistence(timeout: 1))
-        settingsMenu.tap()
+        app.buttons["SettingsMenu"].tap()
         /// Show country picker
-        let countryPicker = app.buttons["CountryPicker"]
-        XCTAssertTrue(countryPicker.waitForExistence(timeout: 1))
-        countryPicker.tap()
+        app.buttons["CountryPicker"].tap()
         /// Set country to first match
-        let countryPickerItem = app.buttons["CountryPickerItem"].firstMatch
-        XCTAssertTrue(countryPickerItem.waitForExistence(timeout: 1))
-        countryPickerItem.tap()
+        app.buttons["CountryPickerItem"].tap()
     }
 }
