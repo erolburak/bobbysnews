@@ -72,8 +72,8 @@ struct DetailView: View {
 
             VStack(alignment: .leading) {
                 Text(viewModel.articleTitle)
-                    .font(.system(.title,
-                                  weight: .black))
+                    .font(.title)
+                    .fontWeight(.black)
                     .padding(.bottom)
 
                 Text(viewModel.articleContent)
@@ -92,8 +92,7 @@ struct DetailView: View {
             .buttonStyle(.glass)
             .accessibilityIdentifier("ShowWebViewButton")
         }
-        .ignoresSafeArea(.all,
-                         edges: .top)
+        .ignoresSafeArea(edges: .top)
         .textSelection(.enabled)
         .navigationTitle(viewModel.article.source?.name ?? "EmptyArticleSource")
         .navigationSubtitle(viewModel.article.publishedAt?.toRelative ?? "EmptyArticlePublishedAt")

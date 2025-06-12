@@ -115,6 +115,7 @@ struct ContentView: View {
                 switch viewModel.state {
                 case .isLoading, .isTranslating:
                     Text(viewModel.state == .isLoading ? "TopHeadlinesLoading" : "TopHeadlinesTranslating")
+                        .font(.headline)
                         .fontWeight(.black)
                 case .loaded:
                     EmptyView()
@@ -132,8 +133,8 @@ struct ContentView: View {
                             }
                         }
                         .buttonStyle(.glass)
-                        .font(.system(.subheadline,
-                                      weight: .bold))
+                        .font(.subheadline)
+                        .fontWeight(.bold)
                         .textCase(.uppercase)
                     }
                 case .emptyTranslate:
@@ -147,8 +148,8 @@ struct ContentView: View {
                             viewModel.translate = false
                         }
                         .buttonStyle(.glass)
-                        .font(.system(.subheadline,
-                                      weight: .bold))
+                        .font(.subheadline)
+                        .fontWeight(.bold)
                         .textCase(.uppercase)
                     }
                 }
@@ -304,19 +305,19 @@ private struct ListItem: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(article.source?.name ?? String(localized: "EmptyArticleSource"))
-                        .font(.system(.subheadline,
-                                      weight: .black))
+                        .font(.subheadline)
+                        .fontWeight(.black)
                         .lineLimit(1)
 
                     Text(article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-                        .font(.system(size: 8,
-                                      weight: .semibold))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
 
                     Spacer()
 
                     Text((article.showTranslations ? article.titleTranslated : article.title) ?? String(localized: "EmptyArticleTitle"))
-                        .font(.system(.subheadline,
-                                      weight: .semibold))
+                        .font(.subheadline)
+                        .fontWeight(.semibold)
                         .lineLimit(2)
                 }
                 .multilineTextAlignment(.leading)
@@ -376,7 +377,7 @@ private struct ListItem: View {
             .translationPresentation(isPresented: $showTranslationPresentation,
                                      text: translationPresentationText)
         }
-        .sensoryFeedback(.press(.button),
+        .sensoryFeedback(.selection,
                          trigger: showTranslationPresentation)
         .matchedTransitionSource(id: article.id,
                                  in: animation)
