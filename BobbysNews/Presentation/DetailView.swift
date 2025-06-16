@@ -42,6 +42,8 @@ struct DetailView: View {
                                        alignment: .center)
                                 .clipped()
                         case .failure:
+                            Spacer()
+
                             Image(systemName: "photo")
                                 .resizable()
                                 .scaledToFit()
@@ -49,11 +51,25 @@ struct DetailView: View {
                                 .foregroundStyle(.gray)
                                 .symbolEffect(.bounce,
                                               options: .nonRepeating)
+                                .frame(alignment: .center)
+
+                            Spacer()
                         default:
+                            Spacer()
+
                             ProgressView()
+
+                            Spacer()
                         }
                     }
                 }
+            }
+            .visualEffect { emptyVisualEffect, geometryProxy in
+                let geometryProxyHeight = geometryProxy.size.height
+                let geometryProxyMinY = geometryProxy.frame(in: .scrollView).minY
+                let scaleFactor = (geometryProxyHeight + max(0, geometryProxyMinY)) / geometryProxyHeight
+                return emptyVisualEffect.scaleEffect(scaleFactor,
+                                                     anchor: .bottom)
             }
             .frame(maxWidth: .infinity,
                    minHeight: 500,
