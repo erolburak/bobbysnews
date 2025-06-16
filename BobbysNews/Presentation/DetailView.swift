@@ -66,9 +66,8 @@ struct DetailView: View {
             }
             .visualEffect { emptyVisualEffect, geometryProxy in
                 let geometryProxyHeight = geometryProxy.size.height
-                let geometryProxyMinY = geometryProxy.frame(in: .scrollView).minY
-                let scaleFactor = (geometryProxyHeight + max(0, geometryProxyMinY)) / geometryProxyHeight
-                return emptyVisualEffect.scaleEffect(scaleFactor,
+                return emptyVisualEffect.scaleEffect((geometryProxyHeight + max(0,
+                                                                                geometryProxy.frame(in: .scrollView).minY)) / geometryProxyHeight,
                                                      anchor: .bottom)
             }
             .frame(maxWidth: .infinity,
