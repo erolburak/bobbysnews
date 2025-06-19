@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -37,7 +37,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		BFA3D2D72D2EC65F00077763 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		BFA3D2D72D2EC65F00077763 /* Exceptions for "BobbysNews" folder in "BobbysNews" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resource/BobbysNews.xctestplan,
@@ -46,7 +46,7 @@
 			);
 			target = BF72AA862AA0BFD300368DA5 /* BobbysNews */;
 		};
-		BFA3D2D82D2EC65F00077763 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		BFA3D2D82D2EC65F00077763 /* Exceptions for "BobbysNews" folder in "BobbysNewsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Factory/ViewModelFactory.swift,
@@ -60,34 +60,44 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		BFA3D2C42D2EC65F00077763 /* BobbysNews */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (BFA3D2D72D2EC65F00077763 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, BFA3D2D82D2EC65F00077763 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = BobbysNews; sourceTree = "<group>"; };
-		BFA3D2E32D2EC66400077763 /* BobbysNewsTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BobbysNewsTests; sourceTree = "<group>"; };
-		BFA3D2F12D2EC66900077763 /* BobbysNewsUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = BobbysNewsUITests; sourceTree = "<group>"; };
+		BFA3D2C42D2EC65F00077763 /* BobbysNews */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BFA3D2D72D2EC65F00077763 /* Exceptions for "BobbysNews" folder in "BobbysNews" target */,
+				BFA3D2D82D2EC65F00077763 /* Exceptions for "BobbysNews" folder in "BobbysNewsTests" target */,
+			);
+			path = BobbysNews;
+			sourceTree = "<group>";
+		};
+		BFA3D2E32D2EC66400077763 /* BobbysNewsTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BobbysNewsTests;
+			sourceTree = "<group>";
+		};
+		BFA3D2F12D2EC66900077763 /* BobbysNewsUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = BobbysNewsUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BF72AA842AA0BFD300368DA5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				BF2F654B2B65497E00930B4B /* BobbysNewsDomain in Frameworks */,
 				BF2F65492B65497E00930B4B /* BobbysNewsData in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF72AA9B2AA0BFD400368DA5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF72AAA52AA0BFD400368DA5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -128,8 +138,6 @@
 			);
 			buildRules = (
 			);
-			dependencies = (
-			);
 			fileSystemSynchronizedGroups = (
 				BFA3D2C42D2EC65F00077763 /* BobbysNews */,
 			);
@@ -159,8 +167,6 @@
 				BFA3D2E32D2EC66400077763 /* BobbysNewsTests */,
 			);
 			name = BobbysNewsTests;
-			packageProductDependencies = (
-			);
 			productName = BobbysNewsTests;
 			productReference = BF72AA9E2AA0BFD400368DA5 /* BobbysNewsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -182,8 +188,6 @@
 				BFA3D2F12D2EC66900077763 /* BobbysNewsUITests */,
 			);
 			name = BobbysNewsUITests;
-			packageProductDependencies = (
-			);
 			productName = BobbysNewsUITests;
 			productReference = BF72AAA82AA0BFD400368DA5 /* BobbysNewsUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -212,7 +216,6 @@
 				};
 			};
 			buildConfigurationList = BF72AA822AA0BFD300368DA5 /* Build configuration list for PBXProject "BobbysNews" */;
-			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -223,6 +226,7 @@
 			mainGroup = BF72AA7E2AA0BFD300368DA5;
 			packageReferences = (
 			);
+			preferredProjectObjectVersion = 90;
 			productRefGroup = BF72AA882AA0BFD300368DA5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -237,24 +241,18 @@
 /* Begin PBXResourcesBuildPhase section */
 		BF72AA852AA0BFD300368DA5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF72AA9C2AA0BFD400368DA5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF72AAA62AA0BFD400368DA5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
@@ -262,45 +260,30 @@
 		BF5C95E72E045B5300026D92 /* Run Pre-Commit */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
 			name = "Run Pre-Commit";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcrun ./Scripts/pre-commit\n";
+			shellScript = (
+				"xcrun ./Scripts/pre-commit",
+				"",
+			);
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		BF72AA832AA0BFD300368DA5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF72AA9A2AA0BFD400368DA5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BF72AAA42AA0BFD400368DA5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -318,13 +301,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		BF72AAB02AA0BFD400368DA5 /* Debug */ = {
+		BF72AAB02AA0BFD400368DA5 /* Debug configuration for PBXProject "BobbysNews" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -391,13 +374,13 @@
 			};
 			name = Debug;
 		};
-		BF72AAB12AA0BFD400368DA5 /* Release */ = {
+		BF72AAB12AA0BFD400368DA5 /* Release configuration for PBXProject "BobbysNews" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -456,10 +439,10 @@
 			};
 			name = Release;
 		};
-		BF72AAB32AA0BFD400368DA5 /* Debug */ = {
+		BF72AAB32AA0BFD400368DA5 /* Debug configuration for PBXNativeTarget "BobbysNews" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = BobbysNews/Resource/BobbysNews.entitlements;
@@ -506,10 +489,10 @@
 			};
 			name = Debug;
 		};
-		BF72AAB42AA0BFD400368DA5 /* Release */ = {
+		BF72AAB42AA0BFD400368DA5 /* Release configuration for PBXNativeTarget "BobbysNews" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = BobbysNews/Resource/BobbysNews.entitlements;
@@ -556,7 +539,7 @@
 			};
 			name = Release;
 		};
-		BF72AAB62AA0BFD400368DA5 /* Debug */ = {
+		BF72AAB62AA0BFD400368DA5 /* Debug configuration for PBXNativeTarget "BobbysNewsTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -583,7 +566,7 @@
 			};
 			name = Debug;
 		};
-		BF72AAB72AA0BFD400368DA5 /* Release */ = {
+		BF72AAB72AA0BFD400368DA5 /* Release configuration for PBXNativeTarget "BobbysNewsTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -610,7 +593,7 @@
 			};
 			name = Release;
 		};
-		BF72AAB92AA0BFD400368DA5 /* Debug */ = {
+		BF72AAB92AA0BFD400368DA5 /* Debug configuration for PBXNativeTarget "BobbysNewsUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -636,7 +619,7 @@
 			};
 			name = Debug;
 		};
-		BF72AABA2AA0BFD400368DA5 /* Release */ = {
+		BF72AABA2AA0BFD400368DA5 /* Release configuration for PBXNativeTarget "BobbysNewsUITests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -668,37 +651,33 @@
 		BF72AA822AA0BFD300368DA5 /* Build configuration list for PBXProject "BobbysNews" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BF72AAB02AA0BFD400368DA5 /* Debug */,
-				BF72AAB12AA0BFD400368DA5 /* Release */,
+				BF72AAB02AA0BFD400368DA5 /* Debug configuration for PBXProject "BobbysNews" */,
+				BF72AAB12AA0BFD400368DA5 /* Release configuration for PBXProject "BobbysNews" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		BF72AAB22AA0BFD400368DA5 /* Build configuration list for PBXNativeTarget "BobbysNews" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BF72AAB32AA0BFD400368DA5 /* Debug */,
-				BF72AAB42AA0BFD400368DA5 /* Release */,
+				BF72AAB32AA0BFD400368DA5 /* Debug configuration for PBXNativeTarget "BobbysNews" */,
+				BF72AAB42AA0BFD400368DA5 /* Release configuration for PBXNativeTarget "BobbysNews" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		BF72AAB52AA0BFD400368DA5 /* Build configuration list for PBXNativeTarget "BobbysNewsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BF72AAB62AA0BFD400368DA5 /* Debug */,
-				BF72AAB72AA0BFD400368DA5 /* Release */,
+				BF72AAB62AA0BFD400368DA5 /* Debug configuration for PBXNativeTarget "BobbysNewsTests" */,
+				BF72AAB72AA0BFD400368DA5 /* Release configuration for PBXNativeTarget "BobbysNewsTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		BF72AAB82AA0BFD400368DA5 /* Build configuration list for PBXNativeTarget "BobbysNewsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BF72AAB92AA0BFD400368DA5 /* Debug */,
-				BF72AABA2AA0BFD400368DA5 /* Release */,
+				BF72AAB92AA0BFD400368DA5 /* Debug configuration for PBXNativeTarget "BobbysNewsUITests" */,
+				BF72AABA2AA0BFD400368DA5 /* Release configuration for PBXNativeTarget "BobbysNewsUITests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
