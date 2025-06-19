@@ -14,6 +14,7 @@
         "argument" : "-Testing"
       }
     ],
+    "distributor" : "com.apple.TestFlight",
     "language" : "en-GB",
     "locationScenario" : {
       "identifier" : "London, England",
