@@ -15,6 +15,7 @@ extension XCUIApplication {
         launchArguments = ["–Testing"]
         /// Launch app
         launch()
+        
         /// Set device orientation to `portrait`
         XCUIDevice.shared.orientation = .portrait
         /// Set API key if needed
@@ -43,7 +44,7 @@ extension XCUIApplication {
         textField.doubleTap()
         textField.typeText("Test")
         /// Confirm API key
-        app.buttons["ApiKeyDoneButton"].tap()
+        app.buttons["Done"].buttons["ApiKeyDoneButton"].tap()
     }
 
     private func setCountry(with app: XCUIApplication) {
@@ -51,7 +52,7 @@ extension XCUIApplication {
         app.buttons["SettingsMenu"].tap()
         /// Show country picker
         app.buttons["CountryPicker"].tap()
-        /// Set country to first match
-        app.buttons["CountryPickerItem"].tap()
+        /// Set country to `Afghanistan`
+        app.buttons["Afghanistan"].tap()
     }
 }

@@ -225,7 +225,6 @@ struct ContentView: View {
                         ) {
                             Text(Locale.current.localizedString(forRegionCode: $0) ?? "")
                                 .tag($0)
-                                .accessibilityIdentifier("CountryPickerItem")
                         }
                     }
                     .accessibilityIdentifier("CountryPicker")
