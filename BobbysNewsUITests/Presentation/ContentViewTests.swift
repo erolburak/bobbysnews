@@ -37,7 +37,7 @@ final class ContentViewTests: XCTestCase {
         /// Show reset confirmation dialog
         app.buttons["ResetButton"].tap()
         /// Confirm reset
-        app.buttons["ResetConfirmationDialogButton"].tap()
+        app.buttons["Reset"].buttons["ResetConfirmationDialogButton"].tap()
         /// Check if `EmptyApiKeyMessage` exists
         XCTAssertTrue(app.staticTexts["EmptyApiKeyMessage"].exists)
     }
