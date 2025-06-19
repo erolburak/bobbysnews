@@ -6,7 +6,7 @@ let package = Package(
     name: "BobbysNewsData",
     platforms: [
         .iOS(
-            .v26,
+            .v26
         )
     ],
     products: [
