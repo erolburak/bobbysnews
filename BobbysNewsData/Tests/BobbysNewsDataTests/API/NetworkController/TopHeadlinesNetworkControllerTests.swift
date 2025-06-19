@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNewsData
 import Testing
+
+@testable import BobbysNewsData
 
 @Suite("TopHeadlinesNetworkController tests")
 struct TopHeadlinesNetworkControllerTests {
@@ -23,11 +24,15 @@ struct TopHeadlinesNetworkControllerTests {
         let category = "Test"
         let country = "Test"
         // When
-        let topHeadlinesAPI = try sut.fetch(apiKey: apiKey,
-                                            category: category,
-                                            country: country)
+        let topHeadlinesAPI = try sut.fetch(
+            apiKey: apiKey,
+            category: category,
+            country: country
+        )
         // Then
-        #expect(topHeadlinesAPI.articles?.count == 1,
-                "TopHeadlinesNetworkController fetch failed!")
+        #expect(
+            topHeadlinesAPI.articles?.count == 1,
+            "TopHeadlinesNetworkController fetch failed!"
+        )
     }
 }

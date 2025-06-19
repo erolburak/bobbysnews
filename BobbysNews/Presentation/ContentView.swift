@@ -46,18 +46,21 @@ struct ContentView: View {
         .overlay(alignment: .center) {
             Overlay()
         }
-        .alert(isPresented: $viewModel.showAlert,
-               error: viewModel.alertError)
-        { _ in
+        .alert(
+            isPresented: $viewModel.showAlert,
+            error: viewModel.alertError
+        ) { _ in
         } message: {
             if let message = $0.recoverySuggestion {
                 Text(message)
             }
         }
         .task {
-            viewModel.onAppear(selectedApiKey: apiKey,
-                               selectedCategory: category,
-                               selectedCountry: country)
+            viewModel.onAppear(
+                selectedApiKey: apiKey,
+                selectedCategory: category,
+                selectedCountry: country
+            )
         }
         .task {
             await viewModel.checkCategoriesTipStatusUpdate()
@@ -94,19 +97,23 @@ struct ContentView: View {
     private func Overlay() -> some View {
         Group {
             if apiKey.isEmpty,
-               viewModel.articles.isEmpty
+                viewModel.articles.isEmpty
             {
                 ContentUnavailableView {
-                    Label("EmptyApiKey",
-                          systemImage: "key")
+                    Label(
+                        "EmptyApiKey",
+                        systemImage: "key"
+                    )
                 } description: {
                     Text("EmptyApiKeyMessage")
                         .accessibilityIdentifier("EmptyApiKeyMessage")
                 }
             } else if country.isEmpty {
                 ContentUnavailableView {
-                    Label("EmptyCountry",
-                          systemImage: "flag")
+                    Label(
+                        "EmptyCountry",
+                        systemImage: "flag"
+                    )
                 } description: {
                     Text("EmptyCountryMessage")
                         .accessibilityIdentifier("EmptyCountryMessage")
@@ -114,22 +121,33 @@ struct ContentView: View {
             } else {
                 switch viewModel.state {
                 case .isLoading, .isTranslating:
-                    Text(viewModel.state == .isLoading ? "TopHeadlinesLoading" : "TopHeadlinesTranslating")
-                        .font(.headline)
-                        .fontWeight(.black)
+                    Text(
+                        viewModel.state == .isLoading
+                            ? "TopHeadlinesLoading" : "TopHeadlinesTranslating"
+                    )
+                    .font(.headline)
+                    .fontWeight(.black)
                 case .loaded:
                     EmptyView()
                 case .emptyFetch, .emptyRead:
                     ContentUnavailableView {
-                        Label(viewModel.state == .emptyFetch ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
-                              systemImage: "newspaper")
+                        Label(
+                            viewModel.state == .emptyFetch
+                                ? "EmptyFetchTopHeadlines" : "EmptyReadTopHeadlines",
+                            systemImage: "newspaper"
+                        )
                     } description: {
-                        Text(viewModel.state == .emptyFetch ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage")
+                        Text(
+                            viewModel.state == .emptyFetch
+                                ? "EmptyFetchTopHeadlinesMessage" : "EmptyReadTopHeadlinesMessage"
+                        )
                     } actions: {
                         Button("Refresh") {
                             Task {
-                                await viewModel.fetchTopHeadlines(state: .isLoading,
-                                                                  sensoryFeedback: true)
+                                await viewModel.fetchTopHeadlines(
+                                    state: .isLoading,
+                                    sensoryFeedback: true
+                                )
                             }
                         }
                         .buttonStyle(.glass)
@@ -139,8 +157,10 @@ struct ContentView: View {
                     }
                 case .emptyTranslate:
                     ContentUnavailableView {
-                        Label("EmptyTranslateTopHeadlines",
-                              systemImage: "translate")
+                        Label(
+                            "EmptyTranslateTopHeadlines",
+                            systemImage: "translate"
+                        )
                     } description: {
                         Text("EmptyTranslateTopHeadlinesMessage")
                     } actions: {
@@ -155,8 +175,10 @@ struct ContentView: View {
                 }
             }
         }
-        .symbolEffect(.bounce,
-                      options: .nonRepeating)
+        .symbolEffect(
+            .bounce,
+            options: .nonRepeating
+        )
         .symbolVariant(.fill)
     }
 
@@ -173,13 +195,17 @@ struct ContentView: View {
         ToolbarItem(placement: .primaryAction) {
             Menu {
                 ControlGroup {
-                    Label(!viewModel.selectedApiKey.isEmpty ? viewModel.selectedApiKey : String(localized: "EmptyApiKey"),
-                          systemImage: "key")
-                        .fixedSize()
+                    Label(
+                        !viewModel.selectedApiKey.isEmpty
+                            ? viewModel.selectedApiKey : String(localized: "EmptyApiKey"),
+                        systemImage: "key"
+                    )
+                    .fixedSize()
 
-                    Button(viewModel.selectedApiKey.isEmpty ? "Add" : "Edit",
-                           systemImage: viewModel.selectedApiKey.isEmpty ? "plus" : "pencil")
-                    {
+                    Button(
+                        viewModel.selectedApiKey.isEmpty ? "Add" : "Edit",
+                        systemImage: viewModel.selectedApiKey.isEmpty ? "plus" : "pencil"
+                    ) {
                         viewModel.showEditAlert = true
                         viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
@@ -187,13 +213,16 @@ struct ContentView: View {
                 }
 
                 Section {
-                    Picker(Locale.current.localizedString(forRegionCode: viewModel.selectedCountry) ?? String(localized: "EmptyCountry"),
-                           systemImage: "flag",
-                           selection: $viewModel.selectedCountry)
-                    {
-                        ForEach(viewModel.countriesSorted,
-                                id: \.self)
-                        {
+                    Picker(
+                        Locale.current.localizedString(forRegionCode: viewModel.selectedCountry)
+                            ?? String(localized: "EmptyCountry"),
+                        systemImage: "flag",
+                        selection: $viewModel.selectedCountry
+                    ) {
+                        ForEach(
+                            viewModel.countriesSorted,
+                            id: \.self
+                        ) {
                             Text(Locale.current.localizedString(forRegionCode: $0) ?? "")
                                 .tag($0)
                                 .accessibilityIdentifier("CountryPickerItem")
@@ -204,17 +233,20 @@ struct ContentView: View {
                 }
 
                 Section {
-                    Toggle("Translate",
-                           systemImage: "translate",
-                           isOn: $viewModel.translate)
-                        .disabled(viewModel.translateDisabled)
+                    Toggle(
+                        "Translate",
+                        systemImage: "translate",
+                        isOn: $viewModel.translate
+                    )
+                    .disabled(viewModel.translateDisabled)
                 }
 
                 Section {
-                    Button("Reset",
-                           systemImage: "trash",
-                           role: .destructive)
-                    {
+                    Button(
+                        "Reset",
+                        systemImage: "trash",
+                        role: .destructive
+                    ) {
                         viewModel.showConfirmationDialog = true
                         viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
@@ -223,11 +255,13 @@ struct ContentView: View {
             } label: {
                 Image(systemName: "gearshape")
             }
-            .alert("ApiKey",
-                   isPresented: $viewModel.showEditAlert)
-            {
-                TextField("ApiKeyPlaceholder",
-                          text: $viewModel.selectedApiKey)
+            .alert(
+                "ApiKey",
+                isPresented: $viewModel.showEditAlert
+            ) {
+                TextField(
+                    "ApiKeyPlaceholder",
+                    text: $viewModel.selectedApiKey)
 
                 Button(role: .cancel) {
                     viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
@@ -242,13 +276,15 @@ struct ContentView: View {
                 }
                 .accessibilityIdentifier("ApiKeyDoneButton")
             }
-            .confirmationDialog("ResetConfirmationDialog",
-                                isPresented: $viewModel.showConfirmationDialog,
-                                titleVisibility: .visible)
-            {
-                Button("Reset",
-                       role: .destructive)
-                {
+            .confirmationDialog(
+                "ResetConfirmationDialog",
+                isPresented: $viewModel.showConfirmationDialog,
+                titleVisibility: .visible
+            ) {
+                Button(
+                    "Reset",
+                    role: .destructive
+                ) {
                     Task {
                         await viewModel.reset()
                         apiKey = ""
@@ -262,13 +298,15 @@ struct ContentView: View {
     }
 
     private func ToolbarTitleMenu() -> some View {
-        Picker(viewModel.selectedCategory.localized,
-               systemImage: "tag",
-               selection: $viewModel.selectedCategory)
-        {
-            ForEach(viewModel.categoriesSorted,
-                    id: \.self)
-            {
+        Picker(
+            viewModel.selectedCategory.localized,
+            systemImage: "tag",
+            selection: $viewModel.selectedCategory
+        ) {
+            ForEach(
+                viewModel.categoriesSorted,
+                id: \.self
+            ) {
                 Text($0.localized)
                     .tag($0.localized)
             }
@@ -297,10 +335,18 @@ private struct ListItem: View {
 
     var body: some View {
         NavigationLink {
-            DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: article,
-                                                                          articleImage: articleImage))
-                .navigationTransition(.zoom(sourceID: article.id,
-                                            in: animation))
+            DetailView(
+                viewModel: ViewModelFactory.shared.detailViewModel(
+                    article: article,
+                    articleImage: articleImage
+                )
+            )
+            .navigationTransition(
+                .zoom(
+                    sourceID: article.id,
+                    in: animation
+                )
+            )
         } label: {
             HStack {
                 VStack(alignment: .leading) {
@@ -309,32 +355,41 @@ private struct ListItem: View {
                         .fontWeight(.black)
                         .lineLimit(1)
 
-                    Text(article.publishedAt?.toRelative ?? String(localized: "EmptyArticlePublishedAt"))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
+                    Text(
+                        article.publishedAt?.toRelative
+                            ?? String(localized: "EmptyArticlePublishedAt")
+                    )
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
 
                     Spacer()
 
-                    Text((article.showTranslations ? article.titleTranslated : article.title) ?? String(localized: "EmptyArticleTitle"))
-                        .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .lineLimit(2)
+                    Text(
+                        (article.showTranslations ? article.titleTranslated : article.title)
+                            ?? String(localized: "EmptyArticleTitle")
+                    )
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .lineLimit(2)
                 }
                 .multilineTextAlignment(.leading)
 
                 Spacer()
 
-                AsyncImage(url: article.image,
-                           transaction: Transaction(animation: .easeIn(duration: 0.75)))
-                {
+                AsyncImage(
+                    url: article.image,
+                    transaction: Transaction(animation: .easeIn(duration: 0.75))
+                ) {
                     switch $0 {
-                    case let .success(image):
+                    case .success(let image):
                         image
                             .resizable()
                             .scaledToFill()
-                            .frame(width: 80,
-                                   height: 80,
-                                   alignment: .center)
+                            .frame(
+                                width: 80,
+                                height: 80,
+                                alignment: .center
+                            )
                             .clipped()
                             .onAppear {
                                 articleImage = image
@@ -345,14 +400,18 @@ private struct ListItem: View {
                             .scaledToFit()
                             .frame(height: 24)
                             .foregroundStyle(.gray)
-                            .symbolEffect(.bounce,
-                                          options: .nonRepeating)
+                            .symbolEffect(
+                                .bounce,
+                                options: .nonRepeating
+                            )
                     default:
                         ProgressView()
                     }
                 }
-                .frame(width: 80,
-                       height: 80)
+                .frame(
+                    width: 80,
+                    height: 80
+                )
                 .background(.bar)
                 .clipShape(.rect(cornerRadius: 12))
             }
@@ -361,26 +420,35 @@ private struct ListItem: View {
             .contentShape(.rect)
             .contextMenu {
                 if let url = article.url {
-                    ShareLink("Share",
-                              item: url)
+                    ShareLink(
+                        "Share",
+                        item: url
+                    )
                 }
 
                 if let title = article.title {
-                    Button("Translate",
-                           systemImage: "translate")
-                    {
+                    Button(
+                        "Translate",
+                        systemImage: "translate"
+                    ) {
                         translationPresentationText = title
                         showTranslationPresentation = true
                     }
                 }
             }
-            .translationPresentation(isPresented: $showTranslationPresentation,
-                                     text: translationPresentationText)
+            .translationPresentation(
+                isPresented: $showTranslationPresentation,
+                text: translationPresentationText
+            )
         }
-        .sensoryFeedback(.selection,
-                         trigger: showTranslationPresentation)
-        .matchedTransitionSource(id: article.id,
-                                 in: animation)
+        .sensoryFeedback(
+            .selection,
+            trigger: showTranslationPresentation
+        )
+        .matchedTransitionSource(
+            id: article.id,
+            in: animation
+        )
         .accessibilityIdentifier("NavigationLink")
     }
 }

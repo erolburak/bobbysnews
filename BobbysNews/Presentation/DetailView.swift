@@ -26,20 +26,25 @@ struct DetailView: View {
                     image
                         .resizable()
                         .scaledToFill()
-                        .frame(maxHeight: 500,
-                               alignment: .center)
+                        .frame(
+                            maxHeight: 500,
+                            alignment: .center
+                        )
                         .clipped()
                 } else {
-                    AsyncImage(url: viewModel.article.image,
-                               transaction: Transaction(animation: .easeIn(duration: 0.75)))
-                    {
+                    AsyncImage(
+                        url: viewModel.article.image,
+                        transaction: Transaction(animation: .easeIn(duration: 0.75))
+                    ) {
                         switch $0 {
-                        case let .success(image):
+                        case .success(let image):
                             image
                                 .resizable()
                                 .scaledToFill()
-                                .frame(maxHeight: 500,
-                                       alignment: .center)
+                                .frame(
+                                    maxHeight: 500,
+                                    alignment: .center
+                                )
                                 .clipped()
                         case .failure:
                             Spacer()
@@ -49,8 +54,10 @@ struct DetailView: View {
                                 .scaledToFit()
                                 .frame(height: 32)
                                 .foregroundStyle(.gray)
-                                .symbolEffect(.bounce,
-                                              options: .nonRepeating)
+                                .symbolEffect(
+                                    .bounce,
+                                    options: .nonRepeating
+                                )
                                 .frame(alignment: .center)
 
                             Spacer()
@@ -66,23 +73,39 @@ struct DetailView: View {
             }
             .visualEffect { emptyVisualEffect, geometryProxy in
                 let geometryProxyHeight = geometryProxy.size.height
-                return emptyVisualEffect.scaleEffect((geometryProxyHeight + max(0,
-                                                                                geometryProxy.frame(in: .scrollView).minY)) / geometryProxyHeight,
-                                                     anchor: .bottom)
+                return emptyVisualEffect.scaleEffect(
+                    (geometryProxyHeight
+                        + max(
+                            0,
+                            geometryProxy.frame(in: .scrollView).minY)) / geometryProxyHeight,
+                    anchor: .bottom
+                )
             }
-            .frame(maxWidth: .infinity,
-                   minHeight: 500,
-                   maxHeight: 500)
+            .frame(
+                maxWidth: .infinity,
+                minHeight: 500,
+                maxHeight: 500
+            )
             .overlay(alignment: .bottom) {
-                LinearGradient(stops: [Gradient.Stop(color: .clear,
-                                                     location: 0.6),
-                                       Gradient.Stop(color: Color(uiColor: .systemBackground).opacity(0.8),
-                                                     location: 0.8),
-                                       Gradient.Stop(color: Color(uiColor: .systemBackground),
-                                                     location: 1)],
-                               startPoint: .top,
-                               endPoint: .bottom)
-                    .ignoresSafeArea()
+                LinearGradient(
+                    stops: [
+                        Gradient.Stop(
+                            color: .clear,
+                            location: 0.6
+                        ),
+                        Gradient.Stop(
+                            color: Color(uiColor: .systemBackground).opacity(0.8),
+                            location: 0.8
+                        ),
+                        Gradient.Stop(
+                            color: Color(uiColor: .systemBackground),
+                            location: 1
+                        ),
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
             }
 
             VStack(alignment: .leading) {
@@ -94,11 +117,15 @@ struct DetailView: View {
                 Text(viewModel.articleContent)
                     .padding(.bottom)
             }
-            .frame(maxWidth: .infinity,
-                   alignment: .leading)
+            .frame(
+                maxWidth: .infinity,
+                alignment: .leading
+            )
             .padding(.top, -120)
-            .padding([.horizontal,
-                      .bottom])
+            .padding([
+                .horizontal,
+                .bottom,
+            ])
 
             Button("GoToArticle") {
                 viewModel.showWebView = true
@@ -123,8 +150,10 @@ struct DetailView: View {
         .sheet(isPresented: $viewModel.showWebView) {
             Sheet()
         }
-        .sensoryFeedback(.press(.button),
-                         trigger: viewModel.sensoryFeedbackBool)
+        .sensoryFeedback(
+            .press(.button),
+            trigger: viewModel.sensoryFeedbackBool
+        )
         .task {
             await viewModel.onAppear()
         }
@@ -134,12 +163,16 @@ struct DetailView: View {
         NavigationStack {
             Group {
                 if viewModel.showNoNetworkConnection {
-                    ContentUnavailableView("ErrorDescriptionNoNetworkConnection",
-                                           systemImage: "network.slash",
-                                           description: Text("ErrorRecoverySuggestionNoNetworkConnection"))
-                        .symbolEffect(.bounce,
-                                      options: .nonRepeating)
-                        .symbolVariant(.fill)
+                    ContentUnavailableView(
+                        "ErrorDescriptionNoNetworkConnection",
+                        systemImage: "network.slash",
+                        description: Text("ErrorRecoverySuggestionNoNetworkConnection")
+                    )
+                    .symbolEffect(
+                        .bounce,
+                        options: .nonRepeating
+                    )
+                    .symbolVariant(.fill)
                 } else {
                     WebView(url: viewModel.article.url)
                 }
@@ -161,7 +194,11 @@ struct DetailView: View {
 
 #Preview("DetailView") {
     NavigationStack {
-        DetailView(viewModel: ViewModelFactory.shared.detailViewModel(article: PreviewMock.article,
-                                                                      articleImage: nil))
+        DetailView(
+            viewModel: ViewModelFactory.shared.detailViewModel(
+                article: PreviewMock.article,
+                articleImage: nil
+            )
+        )
     }
 }

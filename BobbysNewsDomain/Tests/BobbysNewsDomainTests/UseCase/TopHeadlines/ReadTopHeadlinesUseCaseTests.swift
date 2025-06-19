@@ -6,8 +6,9 @@
 //
 
 import BobbysNewsData
-@testable import BobbysNewsDomain
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("ReadApiHeadlinesUseCase tests")
 struct ReadApiHeadlinesUseCaseTests {
@@ -24,10 +25,14 @@ struct ReadApiHeadlinesUseCaseTests {
         let country = "Test"
         var topHeadlines: TopHeadlines?
         // When
-        topHeadlines = try sut.read(category: category,
-                                    country: country)
+        topHeadlines = try sut.read(
+            category: category,
+            country: country
+        )
         // Then
-        #expect(topHeadlines?.articles?.count == 1,
-                "ReadTopHeadlinesUseCase read failed!")
+        #expect(
+            topHeadlines?.articles?.count == 1,
+            "ReadTopHeadlinesUseCase read failed!"
+        )
     }
 }

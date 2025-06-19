@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 26.01.24.
 //
 
-@testable import BobbysNewsData
 import Testing
+
+@testable import BobbysNewsData
 
 @Suite("SourceDBExtension tests")
 struct SourceDBExtensionTests {
@@ -19,8 +20,9 @@ struct SourceDBExtensionTests {
         // When
         let sourceDB = SourceDB(from: sourceAPI)
         // Then
-        #expect(sourceDB.name == sourceAPI.name &&
-            sourceDB.url == sourceAPI.url,
-            "SourceDB initializing failed!")
+        #expect(
+            sourceDB.name == sourceAPI.name && sourceDB.url == sourceAPI.url,
+            "SourceDB initializing failed!"
+        )
     }
 }

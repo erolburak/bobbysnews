@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 25.01.24.
 //
 
-@testable import BobbysNewsDomain
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("RepositoryFactory tests")
 struct RepositoryFactoryTests {
@@ -23,8 +24,10 @@ struct RepositoryFactoryTests {
         // When
         deleteTopHeadlinesUseCase = sut.deleteTopHeadlinesUseCase
         // Then
-        #expect(deleteTopHeadlinesUseCase != nil,
-                "DeleteTopHeadlinesUseCase initializing failed!")
+        #expect(
+            deleteTopHeadlinesUseCase != nil,
+            "DeleteTopHeadlinesUseCase initializing failed!"
+        )
     }
 
     @Test("Check FetchTopHeadlinesUseCase initializing!")
@@ -34,8 +37,10 @@ struct RepositoryFactoryTests {
         // When
         fetchTopHeadlinesUseCase = sut.fetchTopHeadlinesUseCase
         // Then
-        #expect(fetchTopHeadlinesUseCase != nil,
-                "FetchTopHeadlinesUseCase initializing failed!")
+        #expect(
+            fetchTopHeadlinesUseCase != nil,
+            "FetchTopHeadlinesUseCase initializing failed!"
+        )
     }
 
     @Test("Check ReadTopHeadlinesUseCase initializing!")
@@ -45,7 +50,9 @@ struct RepositoryFactoryTests {
         // When
         readTopHeadlinesUseCase = sut.readTopHeadlinesUseCase
         // Then
-        #expect(readTopHeadlinesUseCase != nil,
-                "ReadTopHeadlinesUseCase initializing failed!")
+        #expect(
+            readTopHeadlinesUseCase != nil,
+            "ReadTopHeadlinesUseCase initializing failed!"
+        )
     }
 }

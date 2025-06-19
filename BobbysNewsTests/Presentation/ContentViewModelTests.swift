@@ -21,9 +21,14 @@ struct ContentViewModelTests {
 
     init() {
         topHeadlinesRepositoryMock = TopHeadlinesRepositoryMock()
-        sut = ContentViewModel(deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
-                               fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
-                               readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
+        sut = ContentViewModel(
+            deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(
+                topHeadlinesRepository: topHeadlinesRepositoryMock),
+            fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(
+                topHeadlinesRepository: topHeadlinesRepositoryMock),
+            readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(
+                topHeadlinesRepository: topHeadlinesRepositoryMock)
+        )
     }
 
     // MARK: - Methods
@@ -33,12 +38,19 @@ struct ContentViewModelTests {
         // Given
         let contentViewModel: ContentViewModel?
         // When
-        contentViewModel = ContentViewModel(deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
-                                            fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock),
-                                            readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(topHeadlinesRepository: topHeadlinesRepositoryMock))
+        contentViewModel = ContentViewModel(
+            deleteTopHeadlinesUseCase: DeleteTopHeadlinesUseCase(
+                topHeadlinesRepository: topHeadlinesRepositoryMock),
+            fetchTopHeadlinesUseCase: FetchTopHeadlinesUseCase(
+                topHeadlinesRepository: topHeadlinesRepositoryMock),
+            readTopHeadlinesUseCase: ReadTopHeadlinesUseCase(
+                topHeadlinesRepository: topHeadlinesRepositoryMock)
+        )
         // Then
-        #expect(contentViewModel != nil,
-                "ContentViewModel initializing failed!")
+        #expect(
+            contentViewModel != nil,
+            "ContentViewModel initializing failed!"
+        )
     }
 
     @Test("Check ContentViewModel onAppear!")
@@ -48,15 +60,17 @@ struct ContentViewModelTests {
         sut.selectedCategory = .general
         sut.selectedCountry = "Test"
         // When
-        sut.onAppear(selectedApiKey: sut.selectedApiKey,
-                     selectedCategory: sut.selectedCategory,
-                     selectedCountry: sut.selectedCountry)
+        sut.onAppear(
+            selectedApiKey: sut.selectedApiKey,
+            selectedCategory: sut.selectedCategory,
+            selectedCountry: sut.selectedCountry
+        )
         // Then
-        #expect(sut.articles.count == 1 &&
-            !sut.categoriesSorted.isEmpty &&
-            !sut.countriesSorted.isEmpty &&
-            sut.state == .loaded,
-            "ContentViewModel onAppear failed!")
+        #expect(
+            sut.articles.count == 1 && !sut.categoriesSorted.isEmpty && !sut.countriesSorted.isEmpty
+                && sut.state == .loaded,
+            "ContentViewModel onAppear failed!"
+        )
     }
 
     @Test("Check ContentViewModel configureTranslations!")
@@ -68,9 +82,10 @@ struct ContentViewModelTests {
         // When
         await sut.configureTranslations()
         // Then
-        #expect(sut.translate &&
-            sut.translationSessionConfiguration != nil,
-            "ContentViewModel translateConfiguration failed!")
+        #expect(
+            sut.translate && sut.translationSessionConfiguration != nil,
+            "ContentViewModel translateConfiguration failed!"
+        )
     }
 
     @Test("Check ContentViewModel fetchTopHeadlines!")
@@ -84,8 +99,10 @@ struct ContentViewModelTests {
         // When
         await sut.fetchTopHeadlines(state: .isLoading)
         // Then
-        #expect(sut.articles.count == 1,
-                "ContentViewModel fetchTopHeadlines failed!")
+        #expect(
+            sut.articles.count == 1,
+            "ContentViewModel fetchTopHeadlines failed!"
+        )
     }
 
     @Test("Check ContentViewModel showSettingsTip!")
@@ -95,8 +112,10 @@ struct ContentViewModelTests {
         // When
         sut.showSettingsTip()
         // Then
-        #expect(ContentViewModel.SettingsTip.show,
-                "ContentViewModel showSettingsTip failed!")
+        #expect(
+            ContentViewModel.SettingsTip.show,
+            "ContentViewModel showSettingsTip failed!"
+        )
     }
 
     @Test("Check ContentViewModel reset!")
@@ -114,14 +133,11 @@ struct ContentViewModelTests {
         // When
         await sut.reset()
         // Then
-        #expect(sut.articles.isEmpty &&
-            !sut.countries.isEmpty &&
-            sut.selectedApiKey.isEmpty &&
-            sut.selectedCategory == .general &&
-            sut.selectedCountry.isEmpty &&
-            sut.state == .emptyRead &&
-            !sut.translate &&
-            sut.translateDisabled,
-            "ContentViewModel reset failed!")
+        #expect(
+            sut.articles.isEmpty && !sut.countries.isEmpty && sut.selectedApiKey.isEmpty
+                && sut.selectedCategory == .general && sut.selectedCountry.isEmpty
+                && sut.state == .emptyRead && !sut.translate && sut.translateDisabled,
+            "ContentViewModel reset failed!"
+        )
     }
 }

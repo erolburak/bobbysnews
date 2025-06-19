@@ -14,23 +14,31 @@ struct EntityMock {
 
     /// Mocks which represent Domain entities
     static let categories = Categories.allCases
-    static let errors: [Errors] = [.custom("Test",
-                                           "Test"),
-                                   .error("Test"),
-                                   .fetchTopHeadlines,
-                                   .noNetworkConnection,
-                                   .read,
-                                   .reset]
-    static let topHeadlines = TopHeadlines(articles: [Article(category: "Test",
-                                                              content: "Test",
-                                                              country: "Test",
-                                                              image: URL(string: "Test"),
-                                                              publishedAt: .distantPast,
-                                                              source: Source(name: "Test",
-                                                                             url: URL(string: "Test")),
-                                                              story: "Test",
-                                                              title: "Test",
-                                                              url: URL(string: "Test"))])
+    static let errors: [Errors] = [
+        .custom(
+            "Test",
+            "Test"),
+        .error("Test"),
+        .fetchTopHeadlines,
+        .noNetworkConnection,
+        .read,
+        .reset,
+    ]
+    static let topHeadlines = TopHeadlines(articles: [
+        Article(
+            category: "Test",
+            content: "Test",
+            country: "Test",
+            image: URL(string: "Test"),
+            publishedAt: .distantPast,
+            source: Source(
+                name: "Test",
+                url: URL(string: "Test")),
+            story: "Test",
+            title: "Test",
+            url: URL(string: "Test")
+        )
+    ])
 
     /// Mocks which represent DB entities
     lazy var articleDB = {

@@ -7,24 +7,24 @@ BobbysNews
 The **BobbysNews** app is my own project, which uses a public API to retrieve headlines from across the web. These headlines are displayed in a list and also contain a detail page for more information.
 
 ## SETUP
-- IDE: Xcode
+- [Xcode](https://developer.apple.com/xcode/)
 - [SPM](https://github.com/swiftlang/swift-package-manager)
-- [SwiftFormat](https://github.com/nicklockwood/SwiftFormat)
-- CI/CD: [GitHub Actions](https://docs.github.com/en/actions)
+- [Swift-Format](https://github.com/swiftlang/swift-format)
+- [GitHub Actions](https://docs.github.com/en/actions)
 
 ## ARCHITECTURE
 - Clean Architecture
 - MVVM
 
 ## APIS
-- SwiftUI
-- CoreData
-- UserDefaults
-- TipKit
-- Translation
-- CloudKit Database
-- SwiftTesting
-- XCTest
+- [Swift](https://github.com/swiftlang/swift)
+- [CoreData](https://developer.apple.com/documentation/coredata)
+- [UserDefaults](https://developer.apple.com/documentation/foundation/userdefaults)
+- [TipKit](https://developer.apple.com/documentation/TipKit)
+- [Translation](https://developer.apple.com/documentation/Translation)
+- [CloudKit](https://developer.apple.com/documentation/CloudKit)
+- [SwiftTesting](https://developer.apple.com/documentation/Testing)
+- [XCTest](https://developer.apple.com/documentation/XCTest)
 - [GNews](https://gnews.io)
 
 ## SCREENSHOTS

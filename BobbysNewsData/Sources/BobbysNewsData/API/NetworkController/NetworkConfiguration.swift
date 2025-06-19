@@ -15,11 +15,12 @@ struct NetworkConfiguration {
 
     // MARK: - Methods
 
-    func validateResponse(defaultError: ErrorsAPI,
-                          response: HTTPURLResponse?) throws
-    {
+    func validateResponse(
+        defaultError: ErrorsAPI,
+        response: HTTPURLResponse?
+    ) throws {
         guard let response,
-              200 ..< 300 ~= response.statusCode
+            200..<300 ~= response.statusCode
         else {
             switch response?.statusCode {
             case 400:

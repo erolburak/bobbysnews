@@ -1,0 +1,2 @@
+#!/bin/sh
+xcrun swift-format format --in-place --recursive "$SRCROOT"

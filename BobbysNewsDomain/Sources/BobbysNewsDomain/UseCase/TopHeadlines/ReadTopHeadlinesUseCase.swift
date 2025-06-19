@@ -10,8 +10,10 @@ import BobbysNewsData
 public protocol PReadTopHeadlinesUseCase {
     // MARK: - Methods
 
-    func read(category: String,
-              country: String) throws -> TopHeadlines
+    func read(
+        category: String,
+        country: String
+    ) throws -> TopHeadlines
 }
 
 public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
@@ -23,7 +25,9 @@ public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
     public init(topHeadlinesRepository: PTopHeadlinesRepository) {
         #if DEBUG
-            self.topHeadlinesRepository = CommandLine.arguments.contains("–Testing") ? TopHeadlinesRepositoryMock() : topHeadlinesRepository
+            self.topHeadlinesRepository =
+                CommandLine.arguments.contains("–Testing")
+                ? TopHeadlinesRepositoryMock() : topHeadlinesRepository
         #else
             self.topHeadlinesRepository = topHeadlinesRepository
         #endif
@@ -31,13 +35,18 @@ public final class ReadTopHeadlinesUseCase: PReadTopHeadlinesUseCase {
 
     // MARK: - Methods
 
-    public func read(category: String,
-                     country: String) throws -> TopHeadlines
-    {
-        try TopHeadlines(articles: topHeadlinesRepository.read(category: category,
-                                                               country: country)
-                .compactMap {
-                    Article(from: $0)
-                })
+    public func read(
+        category: String,
+        country: String
+    ) throws -> TopHeadlines {
+        try TopHeadlines(
+            articles: topHeadlinesRepository.read(
+                category: category,
+                country: country
+            )
+            .compactMap {
+                Article(from: $0)
+            }
+        )
     }
 }

@@ -8,10 +8,11 @@
 public final class TopHeadlinesNetworkControllerMock: PTopHeadlinesNetworkController {
     // MARK: - Methods
 
-    public func fetch(apiKey _: String,
-                      category _: String,
-                      country _: String) throws -> TopHeadlinesAPI
-    {
+    public func fetch(
+        apiKey _: String,
+        category _: String,
+        country _: String
+    ) throws -> TopHeadlinesAPI {
         EntityMock.topHeadlinesAPI
     }
 }

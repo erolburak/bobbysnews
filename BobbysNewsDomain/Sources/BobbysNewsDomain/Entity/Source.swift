@@ -15,9 +15,10 @@ public struct Source: Hashable, Sendable {
 
     // MARK: - Lifecycles
 
-    public init(name: String?,
-                url: URL?)
-    {
+    public init(
+        name: String?,
+        url: URL?
+    ) {
         self.name = name
         self.url = url
     }

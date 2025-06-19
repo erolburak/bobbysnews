@@ -10,9 +10,11 @@ import BobbysNewsData
 public protocol PFetchTopHeadlinesUseCase: Sendable {
     // MARK: - Methods
 
-    func fetch(apiKey: String,
-               category: String,
-               country: String) async throws
+    func fetch(
+        apiKey: String,
+        category: String,
+        country: String
+    ) async throws
 }
 
 public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
@@ -24,7 +26,9 @@ public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
     public init(topHeadlinesRepository: PTopHeadlinesRepository) {
         #if DEBUG
-            self.topHeadlinesRepository = CommandLine.arguments.contains("–Testing") ? TopHeadlinesRepositoryMock() : topHeadlinesRepository
+            self.topHeadlinesRepository =
+                CommandLine.arguments.contains("–Testing")
+                ? TopHeadlinesRepositoryMock() : topHeadlinesRepository
         #else
             self.topHeadlinesRepository = topHeadlinesRepository
         #endif
@@ -32,12 +36,15 @@ public final class FetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase {
 
     // MARK: - Methods
 
-    public func fetch(apiKey: String,
-                      category: String,
-                      country: String) async throws
-    {
-        try await topHeadlinesRepository.fetch(apiKey: apiKey,
-                                               category: category,
-                                               country: country)
+    public func fetch(
+        apiKey: String,
+        category: String,
+        country: String
+    ) async throws {
+        try await topHeadlinesRepository.fetch(
+            apiKey: apiKey,
+            category: category,
+            country: country
+        )
     }
 }

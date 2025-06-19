@@ -18,8 +18,14 @@ public final class UseCaseFactory {
 
     public init() {
         let repositoryFactory = RepositoryFactory()
-        deleteTopHeadlinesUseCase = DeleteTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
-        fetchTopHeadlinesUseCase = FetchTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
-        readTopHeadlinesUseCase = ReadTopHeadlinesUseCase(topHeadlinesRepository: repositoryFactory.topHeadlinesRepository)
+        deleteTopHeadlinesUseCase = DeleteTopHeadlinesUseCase(
+            topHeadlinesRepository: repositoryFactory.topHeadlinesRepository
+        )
+        fetchTopHeadlinesUseCase = FetchTopHeadlinesUseCase(
+            topHeadlinesRepository: repositoryFactory.topHeadlinesRepository
+        )
+        readTopHeadlinesUseCase = ReadTopHeadlinesUseCase(
+            topHeadlinesRepository: repositoryFactory.topHeadlinesRepository
+        )
     }
 }

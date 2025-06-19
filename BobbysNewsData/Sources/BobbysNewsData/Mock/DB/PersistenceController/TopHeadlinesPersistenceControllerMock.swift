@@ -10,17 +10,19 @@ public final class TopHeadlinesPersistenceControllerMock: PTopHeadlinesPersisten
 
     public func delete() {}
 
-    public func read(category _: String,
-                     country _: String) -> [ArticleDB]
-    {
+    public func read(
+        category _: String,
+        country _: String
+    ) -> [ArticleDB] {
         var entity = EntityMock()
         return entity.topHeadlinesDB.filter {
-            $0.category == "Test" &&
-                $0.country == "Test"
+            $0.category == "Test" && $0.country == "Test"
         }
     }
 
-    public func save(category _: String,
-                     country _: String,
-                     topHeadlinesAPI _: TopHeadlinesAPI) {}
+    public func save(
+        category _: String,
+        country _: String,
+        topHeadlinesAPI _: TopHeadlinesAPI
+    ) {}
 }

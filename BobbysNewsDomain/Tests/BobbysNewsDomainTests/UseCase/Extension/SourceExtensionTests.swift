@@ -5,9 +5,10 @@
 //  Created by Burak Erol on 26.01.24.
 //
 
-@testable import BobbysNewsDomain
 import Foundation
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("SourceExtension tests")
 struct SourceExtensionTests {
@@ -21,8 +22,9 @@ struct SourceExtensionTests {
         // When
         let source = Source(from: sourceDB)
         // Then
-        #expect(source?.name == "Test" &&
-            source?.url == URL(string: "Test"),
-            "SourceExtension Source initializing failed!")
+        #expect(
+            source?.name == "Test" && source?.url == URL(string: "Test"),
+            "SourceExtension Source initializing failed!"
+        )
     }
 }

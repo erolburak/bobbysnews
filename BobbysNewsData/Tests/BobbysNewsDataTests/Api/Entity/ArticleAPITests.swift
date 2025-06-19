@@ -5,9 +5,10 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNewsData
 import Foundation
 import Testing
+
+@testable import BobbysNewsData
 
 @Suite("ArticleAPI tests")
 struct ArticleAPITests {
@@ -20,14 +21,12 @@ struct ArticleAPITests {
         // When
         articleAPI = EntityMock.articleAPI
         // Then
-        #expect(articleAPI?.content == "Test" &&
-            articleAPI?.image == URL(string: "Test") &&
-            articleAPI?.publishedAt == .distantPast &&
-            articleAPI?.source?.name == "Test" &&
-            articleAPI?.source?.url == URL(string: "Test") &&
-            articleAPI?.story == "Test" &&
-            articleAPI?.title == "Test" &&
-            articleAPI?.url == URL(string: "Test"),
-            "AticleAPI initializing failed!")
+        #expect(
+            articleAPI?.content == "Test" && articleAPI?.image == URL(string: "Test")
+                && articleAPI?.publishedAt == .distantPast && articleAPI?.source?.name == "Test"
+                && articleAPI?.source?.url == URL(string: "Test") && articleAPI?.story == "Test"
+                && articleAPI?.title == "Test" && articleAPI?.url == URL(string: "Test"),
+            "AticleAPI initializing failed!"
+        )
     }
 }

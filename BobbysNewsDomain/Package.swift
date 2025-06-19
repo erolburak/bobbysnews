@@ -7,20 +7,20 @@ let package = Package(
     platforms: [
         .iOS(
             .v26,
-        ),
+        )
     ],
     products: [
         .library(
             name: "BobbysNewsDomain",
             targets: [
-                "BobbysNewsDomain",
-            ],
-        ),
+                "BobbysNewsDomain"
+            ]
+        )
     ],
     dependencies: [
         Package.Dependency.package(
             path: "../BobbysNewsData",
-        ),
+        )
     ],
     targets: [
         .target(
@@ -29,8 +29,8 @@ let package = Package(
                 Target.Dependency.product(
                     name: "BobbysNewsData",
                     package: "BobbysNewsData",
-                ),
-            ],
+                )
+            ]
         ),
         .testTarget(
             name: "BobbysNewsDomainTests",
@@ -40,7 +40,7 @@ let package = Package(
                     name: "BobbysNewsData",
                     package: "BobbysNewsData",
                 ),
-            ],
+            ]
         ),
-    ],
+    ]
 )

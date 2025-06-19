@@ -15,12 +15,14 @@ final class DetailViewModel {
 
     var article: Article
     var articleContent: String {
-        (article.showTranslations ? article.contentTranslated : article.content) ?? String(localized: "EmptyArticleContent")
+        (article.showTranslations ? article.contentTranslated : article.content)
+            ?? String(localized: "EmptyArticleContent")
     }
 
     var articleImage: Image?
     var articleTitle: String {
-        (article.showTranslations ? article.titleTranslated : article.title) ?? String(localized: "EmptyArticleTitle")
+        (article.showTranslations ? article.titleTranslated : article.title)
+            ?? String(localized: "EmptyArticleTitle")
     }
 
     var sensoryFeedbackBool = false
@@ -29,9 +31,10 @@ final class DetailViewModel {
 
     // MARK: - Lifecycles
 
-    init(article: Article,
-         articleImage: Image?)
-    {
+    init(
+        article: Article,
+        articleImage: Image?
+    ) {
         self.article = article
         self.articleImage = articleImage
     }
