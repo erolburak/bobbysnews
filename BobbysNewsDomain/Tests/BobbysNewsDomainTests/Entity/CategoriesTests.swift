@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 07.06.25.
 //
 
-@testable import BobbysNewsDomain
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("Categories tests")
 struct CategoriesTests {
@@ -20,8 +21,10 @@ struct CategoriesTests {
             // When
             newCategory = category
             // Then
-            #expect(newCategory != nil,
-                    "Category initializing failed!")
+            #expect(
+                newCategory != nil,
+                "Category initializing failed!"
+            )
         }
     }
 }

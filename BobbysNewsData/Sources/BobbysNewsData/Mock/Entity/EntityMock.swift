@@ -11,21 +11,27 @@ struct EntityMock {
     // MARK: - Properties
 
     /// Mocks which represent API entities
-    static let articleAPI = ArticleAPI(content: "Test",
-                                       image: URL(string: "Test"),
-                                       publishedAt: .distantPast,
-                                       source: sourceAPI,
-                                       story: "Test",
-                                       title: "Test",
-                                       url: URL(string: "Test"))
-    static let errorsAPI: [ErrorsAPI] = [.badRequest,
-                                         .forbidden,
-                                         .internalServerError,
-                                         .serviceUnavailable,
-                                         .tooManyRequests,
-                                         .unauthorized]
-    static let sourceAPI = SourceAPI(name: "Test",
-                                     url: URL(string: "Test"))
+    static let articleAPI = ArticleAPI(
+        content: "Test",
+        image: URL(string: "Test"),
+        publishedAt: .distantPast,
+        source: sourceAPI,
+        story: "Test",
+        title: "Test",
+        url: URL(string: "Test")
+    )
+    static let errorsAPI: [ErrorsAPI] = [
+        .badRequest,
+        .forbidden,
+        .internalServerError,
+        .serviceUnavailable,
+        .tooManyRequests,
+        .unauthorized,
+    ]
+    static let sourceAPI = SourceAPI(
+        name: "Test",
+        url: URL(string: "Test")
+    )
     static let topHeadlinesAPI = TopHeadlinesAPI(articles: [articleAPI])
 
     /// Mocks which represent DB entities

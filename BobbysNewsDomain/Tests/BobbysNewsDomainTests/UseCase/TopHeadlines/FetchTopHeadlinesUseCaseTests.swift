@@ -6,8 +6,9 @@
 //
 
 import BobbysNewsData
-@testable import BobbysNewsDomain
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("FetchTopHeadlinesUseCase tests")
 struct FetchTopHeadlinesUseCaseTests {
@@ -30,12 +31,18 @@ struct FetchTopHeadlinesUseCaseTests {
         let category = "Test"
         let country = "Test"
         // When
-        try await sut.fetch(apiKey: apiKey,
-                            category: category,
-                            country: country)
+        try await sut.fetch(
+            apiKey: apiKey,
+            category: category,
+            country: country
+        )
         // Then
-        #expect(mock.topHeadlinesPersistenceController.read(category: category,
-                                                            country: country).count == 1,
-                "FetchTopHeadlinesUseCase fetch failed!")
+        #expect(
+            mock.topHeadlinesPersistenceController.read(
+                category: category,
+                country: country
+            ).count == 1,
+            "FetchTopHeadlinesUseCase fetch failed!"
+        )
     }
 }

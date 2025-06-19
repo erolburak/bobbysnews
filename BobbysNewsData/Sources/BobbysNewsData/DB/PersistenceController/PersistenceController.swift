@@ -15,23 +15,32 @@ public final class PersistenceController {
     // MARK: - Properties
 
     public nonisolated(unsafe)
-    static let shared = PersistenceController()
+        static let shared = PersistenceController()
     public let backgroundContext: NSManagedObjectContext
 
     // MARK: - Lifecycles
 
     init() {
-        guard let moduleUrl = Bundle.module.url(forResource: "BobbysNews",
-                                                withExtension: "momd"),
+        guard
+            let moduleUrl = Bundle.module.url(
+                forResource: "BobbysNews",
+                withExtension: "momd"
+            ),
             let managedObjectModel = NSManagedObjectModel(contentsOf: moduleUrl)
         else {
             fatalError("Error initializing managed object model with module url!")
         }
-        let cloudKitContainer = NSPersistentCloudKitContainer(name: "BobbysNews",
-                                                              managedObjectModel: managedObjectModel)
+        let cloudKitContainer = NSPersistentCloudKitContainer(
+            name: "BobbysNews",
+            managedObjectModel: managedObjectModel
+        )
         #if DEBUG
-            container = CommandLine.arguments.contains("-Testing") ? NSPersistentContainer(name: "BobbysNews",
-                                                                                           managedObjectModel: managedObjectModel) : cloudKitContainer
+            container =
+                CommandLine.arguments.contains("-Testing")
+                ? NSPersistentContainer(
+                    name: "BobbysNews",
+                    managedObjectModel: managedObjectModel
+                ) : cloudKitContainer
         #else
             container = cloudKitContainer
         #endif

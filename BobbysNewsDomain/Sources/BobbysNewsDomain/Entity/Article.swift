@@ -26,16 +26,17 @@ public struct Article: Hashable, Identifiable, Sendable {
 
     // MARK: - Lifecycles
 
-    public init(category: String?,
-                content: String?,
-                country: String?,
-                image: URL?,
-                publishedAt: Date?,
-                source: Source?,
-                story: String?,
-                title: String?,
-                url: URL?)
-    {
+    public init(
+        category: String?,
+        content: String?,
+        country: String?,
+        image: URL?,
+        publishedAt: Date?,
+        source: Source?,
+        story: String?,
+        title: String?,
+        url: URL?
+    ) {
         self.category = category
         self.content = content
         self.country = country

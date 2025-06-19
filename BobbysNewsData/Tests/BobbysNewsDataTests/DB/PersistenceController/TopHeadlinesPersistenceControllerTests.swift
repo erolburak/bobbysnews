@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 05.09.23.
 //
 
-@testable import BobbysNewsData
 import Testing
+
+@testable import BobbysNewsData
 
 @Suite("TopHeadlinesPersistenceController tests")
 struct TopHeadlinesPersistenceControllerTests {
@@ -18,9 +19,10 @@ struct TopHeadlinesPersistenceControllerTests {
 
     @Test("Check TopHeadlinesPersistenceController delete!")
     func delete() {
-        #expect(throws: Never.self,
-                "TopHeadlinesPersistenceController delete failed!")
-        {
+        #expect(
+            throws: Never.self,
+            "TopHeadlinesPersistenceController delete failed!"
+        ) {
             sut.delete()
         }
     }
@@ -30,21 +32,28 @@ struct TopHeadlinesPersistenceControllerTests {
         // Given
         var topHeadlines: [ArticleDB]?
         // When
-        topHeadlines = sut.read(category: "Test",
-                                country: "Test")
+        topHeadlines = sut.read(
+            category: "Test",
+            country: "Test"
+        )
         // Then
-        #expect(topHeadlines?.count == 1,
-                "TopHeadlinesPersistenceController read failed!")
+        #expect(
+            topHeadlines?.count == 1,
+            "TopHeadlinesPersistenceController read failed!"
+        )
     }
 
     @Test("Check TopHeadlinesPersistenceController save!")
     func save() {
-        #expect(throws: Never.self,
-                "TopHeadlinesPersistenceController save failed!")
-        {
-            sut.save(category: "Test",
-                     country: "Test",
-                     topHeadlinesAPI: EntityMock.topHeadlinesAPI)
+        #expect(
+            throws: Never.self,
+            "TopHeadlinesPersistenceController save failed!"
+        ) {
+            sut.save(
+                category: "Test",
+                country: "Test",
+                topHeadlinesAPI: EntityMock.topHeadlinesAPI
+            )
         }
     }
 }

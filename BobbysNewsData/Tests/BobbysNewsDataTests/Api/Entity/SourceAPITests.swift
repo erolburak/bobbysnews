@@ -5,9 +5,10 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNewsData
 import Foundation
 import Testing
+
+@testable import BobbysNewsData
 
 @Suite("SourceAPI tests")
 struct SourceAPITests {
@@ -20,8 +21,9 @@ struct SourceAPITests {
         // When
         sourceAPI = EntityMock.sourceAPI
         // Then
-        #expect(sourceAPI?.name == "Test" &&
-            sourceAPI?.url == URL(string: "Test"),
-            "SourceAPI initializing failed!")
+        #expect(
+            sourceAPI?.name == "Test" && sourceAPI?.url == URL(string: "Test"),
+            "SourceAPI initializing failed!"
+        )
     }
 }

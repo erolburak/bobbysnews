@@ -16,8 +16,10 @@ struct DetailViewModelTests {
     // MARK: - Lifecycles
 
     init() {
-        sut = DetailViewModel(article: EntityMock.article,
-                              articleImage: nil)
+        sut = DetailViewModel(
+            article: EntityMock.article,
+            articleImage: nil
+        )
     }
 
     // MARK: - Methods
@@ -27,11 +29,15 @@ struct DetailViewModelTests {
         // Given
         let detailViewModel: DetailViewModel?
         // When
-        detailViewModel = DetailViewModel(article: EntityMock.article,
-                                          articleImage: nil)
+        detailViewModel = DetailViewModel(
+            article: EntityMock.article,
+            articleImage: nil
+        )
         // Then
-        #expect(detailViewModel != nil,
-                "DetailViewModel initializing failed!")
+        #expect(
+            detailViewModel != nil,
+            "DetailViewModel initializing failed!"
+        )
     }
 
     @Test("Check DetailViewModel onAppear!")
@@ -42,24 +48,19 @@ struct DetailViewModelTests {
         // When
         await sut.onAppear()
         // Then
-        #expect(sut.article.category == article.category &&
-            sut.article.content == article.content &&
-            sut.article.contentTranslated == nil &&
-            sut.article.image == article.image &&
-            sut.article.publishedAt == article.publishedAt &&
-            sut.article.showTranslations == article.showTranslations &&
-            sut.article.source?.name == article.source?.name &&
-            sut.article.source?.url == article.source?.url &&
-            sut.article.story == article.story &&
-            sut.article.title == article.title &&
-            sut.article.titleTranslated == nil &&
-            sut.article.url == article.url &&
-            sut.articleContent == article.content &&
-            sut.articleImage == nil &&
-            sut.articleTitle == article.title &&
-            !sut.sensoryFeedbackBool &&
-            !sut.showNoNetworkConnection &&
-            !sut.showWebView,
-            "DetailViewModel onAppear failed!")
+        #expect(
+            sut.article.category == article.category && sut.article.content == article.content
+                && sut.article.contentTranslated == nil && sut.article.image == article.image
+                && sut.article.publishedAt == article.publishedAt
+                && sut.article.showTranslations == article.showTranslations
+                && sut.article.source?.name == article.source?.name
+                && sut.article.source?.url == article.source?.url
+                && sut.article.story == article.story && sut.article.title == article.title
+                && sut.article.titleTranslated == nil && sut.article.url == article.url
+                && sut.articleContent == article.content && sut.articleImage == nil
+                && sut.articleTitle == article.title && !sut.sensoryFeedbackBool
+                && !sut.showNoNetworkConnection && !sut.showWebView,
+            "DetailViewModel onAppear failed!"
+        )
     }
 }

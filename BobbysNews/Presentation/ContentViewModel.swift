@@ -31,9 +31,11 @@ final class ContentViewModel {
         var image: Image? = Image(systemName: "tag")
         var message: Text? = Text("CategoriesTipMessage")
         var rules: [Rule] {
-            [#Rule(Self.$show) {
-                $0
-            }]
+            [
+                #Rule(Self.$show) {
+                    $0
+                }
+            ]
         }
 
         var title = Text("Categories")
@@ -47,9 +49,11 @@ final class ContentViewModel {
         var image: Image? = Image(systemName: "gearshape")
         var message: Text? = Text("SettingsTipMessage")
         var rules: [Rule] {
-            [#Rule(Self.$show) {
-                $0
-            }]
+            [
+                #Rule(Self.$show) {
+                    $0
+                }
+            ]
         }
 
         var title = Text("Settings")
@@ -74,8 +78,8 @@ final class ContentViewModel {
     var countries: [String] = []
     var countriesSorted: [String] {
         countries.sorted {
-            Locale.current.localizedString(forRegionCode: $0) ?? "" <
-                Locale.current.localizedString(forRegionCode: $1) ?? ""
+            Locale.current.localizedString(forRegionCode: $0) ?? "" < Locale.current
+                .localizedString(forRegionCode: $1) ?? ""
         }
     }
 
@@ -108,10 +112,11 @@ final class ContentViewModel {
 
     // MARK: - Lifecycles
 
-    init(deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase,
-         fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase,
-         readTopHeadlinesUseCase: PReadTopHeadlinesUseCase)
-    {
+    init(
+        deleteTopHeadlinesUseCase: PDeleteTopHeadlinesUseCase,
+        fetchTopHeadlinesUseCase: PFetchTopHeadlinesUseCase,
+        readTopHeadlinesUseCase: PReadTopHeadlinesUseCase
+    ) {
         self.deleteTopHeadlinesUseCase = deleteTopHeadlinesUseCase
         self.fetchTopHeadlinesUseCase = fetchTopHeadlinesUseCase
         self.readTopHeadlinesUseCase = readTopHeadlinesUseCase
@@ -120,10 +125,11 @@ final class ContentViewModel {
 
     // MARK: - Methods
 
-    func onAppear(selectedApiKey: String,
-                  selectedCategory: Categories,
-                  selectedCountry: String)
-    {
+    func onAppear(
+        selectedApiKey: String,
+        selectedCategory: Categories,
+        selectedCountry: String
+    ) {
         self.selectedApiKey = selectedApiKey
         self.selectedCategory = selectedCategory
         self.selectedCountry = selectedCountry
@@ -138,7 +144,7 @@ final class ContentViewModel {
             return
         }
         if translate,
-           translationSessionConfiguration == nil
+            translationSessionConfiguration == nil
         {
             translationSessionConfiguration = TranslationSession.Configuration()
         } else if translate {
@@ -149,29 +155,33 @@ final class ContentViewModel {
     }
 
     @MainActor
-    func fetchTopHeadlines(state: States? = nil,
-                           sensoryFeedback: Bool? = nil) async
-    {
+    func fetchTopHeadlines(
+        state: States? = nil,
+        sensoryFeedback: Bool? = nil
+    ) async {
         if sensoryFeedback == true {
             sensoryFeedbackTrigger(feedback: .success)
         }
         if !selectedApiKey.isEmpty,
-           !selectedCountry.isEmpty
+            !selectedCountry.isEmpty
         {
             if let state {
                 self.state = state
             }
             do {
                 if await checkNetworkConnection() == true {
-                    try await fetchTopHeadlinesUseCase.fetch(apiKey: selectedApiKey,
-                                                             category: selectedCategory.rawValue,
-                                                             country: selectedCountry)
+                    try await fetchTopHeadlinesUseCase.fetch(
+                        apiKey: selectedApiKey,
+                        category: selectedCategory.rawValue,
+                        country: selectedCountry)
                 }
                 translate = false
                 readTopHeadlines()
             } catch {
-                updateStateTopHeadlines(error: error as? LocalizedError,
-                                        state: articles.isEmpty ? .emptyFetch : .loaded)
+                updateStateTopHeadlines(
+                    error: error as? LocalizedError,
+                    state: articles.isEmpty ? .emptyFetch : .loaded
+                )
             }
         }
     }
@@ -183,16 +193,22 @@ final class ContentViewModel {
         var titleRequests = [TranslationSession.Request]()
         for (index, article) in articles.enumerated() {
             if let content = article.content,
-               article.contentTranslated == nil
+                article.contentTranslated == nil
             {
-                contentRequests.append(TranslationSession.Request(sourceText: content,
-                                                                  clientIdentifier: "\(index)"))
+                contentRequests.append(
+                    TranslationSession.Request(
+                        sourceText: content,
+                        clientIdentifier: "\(index)")
+                )
             }
             if let title = article.title,
-               article.titleTranslated == nil
+                article.titleTranslated == nil
             {
-                titleRequests.append(TranslationSession.Request(sourceText: title,
-                                                                clientIdentifier: "\(index)"))
+                titleRequests.append(
+                    TranslationSession.Request(
+                        sourceText: title,
+                        clientIdentifier: "\(index)")
+                )
             }
         }
         do {
@@ -213,14 +229,16 @@ final class ContentViewModel {
                 }
             }
             guard !articles.compactMap(\.contentTranslated).isEmpty,
-                  !articles.compactMap(\.titleTranslated).isEmpty
+                !articles.compactMap(\.titleTranslated).isEmpty
             else {
                 return updateStateTopHeadlines(state: .emptyTranslate)
             }
             showArticlesTranslations(show: true)
         } catch {
-            updateStateTopHeadlines(error: error as? LocalizedError,
-                                    state: .emptyTranslate)
+            updateStateTopHeadlines(
+                error: error as? LocalizedError,
+                state: .emptyTranslate
+            )
         }
     }
 
@@ -286,13 +304,17 @@ final class ContentViewModel {
     }
 
     private func configureTipKit() {
-        guard let tipsConfigurationOptions: [Tips.ConfigurationOption] = try? [.displayFrequency(.immediate),
-                                                                               .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews"))]
+        guard
+            let tipsConfigurationOptions: [Tips.ConfigurationOption] = try? [
+                .displayFrequency(.immediate),
+                .datastoreLocation(.groupContainer(identifier: "com.burakerol.BobbysNews")),
+            ]
         else {
             return
         }
         #if DEBUG
-            CommandLine.arguments.contains("-Testing") ? Tips.hideAllTipsForTesting() : try? Tips.configure(tipsConfigurationOptions)
+            CommandLine.arguments.contains("-Testing")
+                ? Tips.hideAllTipsForTesting() : try? Tips.configure(tipsConfigurationOptions)
         #else
             try? Tips.configure(tipsConfigurationOptions)
         #endif
@@ -307,30 +329,40 @@ final class ContentViewModel {
 
     private func readTopHeadlines() {
         if !selectedApiKey.isEmpty,
-           !selectedCountry.isEmpty
+            !selectedCountry.isEmpty
         {
             do {
-                guard let articles = try readTopHeadlinesUseCase.read(category: selectedCategory.rawValue,
-                                                                      country: selectedCountry).articles
+                guard
+                    let articles = try readTopHeadlinesUseCase.read(
+                        category: selectedCategory.rawValue,
+                        country: selectedCountry
+                    ).articles
                 else {
                     throw Errors.read
                 }
                 self.articles = articles
                 translateDisabled = articles.isEmpty
-                updateStateTopHeadlines(state: articles.isEmpty ? state == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
+                updateStateTopHeadlines(
+                    state: articles.isEmpty
+                        ? state == .emptyFetch ? .emptyFetch : .emptyRead : .loaded
+                )
             } catch {
-                updateStateTopHeadlines(error: error as? LocalizedError,
-                                        state: .emptyRead)
+                updateStateTopHeadlines(
+                    error: error as? LocalizedError,
+                    state: .emptyRead
+                )
             }
         }
     }
 
     private func showAlert(error: LocalizedError) {
         if let errorDescription = error.errorDescription,
-           let recoverySuggestion = error.recoverySuggestion
+            let recoverySuggestion = error.recoverySuggestion
         {
-            alertError = .custom(errorDescription,
-                                 recoverySuggestion)
+            alertError = .custom(
+                errorDescription,
+                recoverySuggestion
+            )
         } else {
             alertError = .error(error.localizedDescription)
         }
@@ -343,12 +375,15 @@ final class ContentViewModel {
             articles[index].showTranslations = show
         }
         sensoryFeedbackTrigger(feedback: .success)
-        updateStateTopHeadlines(state: articles.isEmpty ? state == .emptyFetch ? .emptyFetch : .emptyRead : .loaded)
+        updateStateTopHeadlines(
+            state: articles.isEmpty ? state == .emptyFetch ? .emptyFetch : .emptyRead : .loaded
+        )
     }
 
-    private func updateStateTopHeadlines(error: LocalizedError? = nil,
-                                         state: States)
-    {
+    private func updateStateTopHeadlines(
+        error: LocalizedError? = nil,
+        state: States
+    ) {
         self.state = state
         if let error {
             showAlert(error: error)

@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 07.06.25.
 //
 
-@testable import BobbysNewsData
 import Testing
+
+@testable import BobbysNewsData
 
 @Suite("ErrorsAPI tests")
 struct ErrorsAPITests {
@@ -20,8 +21,10 @@ struct ErrorsAPITests {
             // When
             newErrorAPI = errorAPI
             // Then
-            #expect(newErrorAPI != nil,
-                    "ErrorAPI initializing failed!")
+            #expect(
+                newErrorAPI != nil,
+                "ErrorAPI initializing failed!"
+            )
         }
     }
 }

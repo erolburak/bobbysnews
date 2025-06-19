@@ -21,15 +21,20 @@ final class ViewModelFactory {
     // MARK: - Methods
 
     func contentViewModel() -> ContentViewModel {
-        ContentViewModel(deleteTopHeadlinesUseCase: useCaseFactory.deleteTopHeadlinesUseCase,
-                         fetchTopHeadlinesUseCase: useCaseFactory.fetchTopHeadlinesUseCase,
-                         readTopHeadlinesUseCase: useCaseFactory.readTopHeadlinesUseCase)
+        ContentViewModel(
+            deleteTopHeadlinesUseCase: useCaseFactory.deleteTopHeadlinesUseCase,
+            fetchTopHeadlinesUseCase: useCaseFactory.fetchTopHeadlinesUseCase,
+            readTopHeadlinesUseCase: useCaseFactory.readTopHeadlinesUseCase
+        )
     }
 
-    func detailViewModel(article: Article,
-                         articleImage: Image?) -> DetailViewModel
-    {
-        DetailViewModel(article: article,
-                        articleImage: articleImage)
+    func detailViewModel(
+        article: Article,
+        articleImage: Image?
+    ) -> DetailViewModel {
+        DetailViewModel(
+            article: article,
+            articleImage: articleImage
+        )
     }
 }

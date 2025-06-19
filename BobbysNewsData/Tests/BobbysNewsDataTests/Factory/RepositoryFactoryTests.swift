@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 24.01.24.
 //
 
-@testable import BobbysNewsData
 import Testing
+
+@testable import BobbysNewsData
 
 @Suite("RepositoryFactory tests")
 struct RepositoryFactoryTests {
@@ -23,7 +24,9 @@ struct RepositoryFactoryTests {
         // When
         topHeadlinesRepository = sut.topHeadlinesRepository
         // Then
-        #expect(topHeadlinesRepository != nil,
-                "TopHeadlinesRepository initializing failed!")
+        #expect(
+            topHeadlinesRepository != nil,
+            "TopHeadlinesRepository initializing failed!"
+        )
     }
 }

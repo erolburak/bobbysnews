@@ -6,22 +6,25 @@
 //
 
 import BobbysNewsData
-@testable import BobbysNewsDomain
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("DeleteTopHeadlinesUseCase tests")
 struct DeleteTopHeadlinesUseCaseTests {
     // MARK: - Private Properties
 
-    private let sut = DeleteTopHeadlinesUseCase(topHeadlinesRepository: TopHeadlinesRepositoryMock())
+    private let sut = DeleteTopHeadlinesUseCase(
+        topHeadlinesRepository: TopHeadlinesRepositoryMock())
 
     // MARK: - Methods
 
     @Test("Check DeleteTopHeadlinesUseCase delete!")
     func delete() {
-        #expect(throws: Never.self,
-                "DeleteTopHeadlinesUseCase delete failed!")
-        {
+        #expect(
+            throws: Never.self,
+            "DeleteTopHeadlinesUseCase delete failed!"
+        ) {
             try sut.delete()
         }
     }

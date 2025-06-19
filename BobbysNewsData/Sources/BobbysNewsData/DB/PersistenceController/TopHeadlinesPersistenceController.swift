@@ -11,43 +11,62 @@ public protocol PTopHeadlinesPersistenceController: Sendable {
     // MARK: - Methods
 
     func delete() throws
-    func read(category: String,
-              country: String) throws -> [ArticleDB]
-    func save(category: String,
-              country: String,
-              topHeadlinesAPI: TopHeadlinesAPI) throws
+    func read(
+        category: String,
+        country: String
+    ) throws -> [ArticleDB]
+    func save(
+        category: String,
+        country: String,
+        topHeadlinesAPI: TopHeadlinesAPI
+    ) throws
 }
 
 final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceController {
     // MARK: - Methods
 
     func delete() throws {
-        try PersistenceController.shared.backgroundContext.execute(NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "ArticleDB")))
+        try PersistenceController.shared.backgroundContext.execute(
+            NSBatchDeleteRequest(fetchRequest: NSFetchRequest(entityName: "ArticleDB"))
+        )
         try PersistenceController.shared.backgroundContext.save()
     }
 
-    func read(category: String,
-              country: String) throws -> [ArticleDB]
-    {
+    func read(
+        category: String,
+        country: String
+    ) throws -> [ArticleDB] {
         try PersistenceController.shared.backgroundContext.performAndWait {
             let fetchRequest = ArticleDB.fetchRequest()
-            fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \ArticleDB.publishedAt,
-                                                             ascending: false)]
-            fetchRequest.predicate = NSCompoundPredicate(type: .and,
-                                                         subpredicates: [NSPredicate(format: "category = %@",
-                                                                                     category),
-                                                                         NSPredicate(format: "country = %@",
-                                                                                     country)])
+            fetchRequest.sortDescriptors = [
+                NSSortDescriptor(
+                    keyPath: \ArticleDB.publishedAt,
+                    ascending: false
+                )
+            ]
+            fetchRequest.predicate = NSCompoundPredicate(
+                type: .and,
+                subpredicates: [
+                    NSPredicate(
+                        format: "category = %@",
+                        category),
+                    NSPredicate(
+                        format: "country = %@",
+                        country),
+                ]
+            )
             return try PersistenceController.shared.backgroundContext.fetch(fetchRequest)
         }
     }
 
-    func save(category: String,
-              country: String,
-              topHeadlinesAPI: TopHeadlinesAPI) throws
-    {
+    func save(
+        category: String,
+        country: String,
+        topHeadlinesAPI: TopHeadlinesAPI
+    ) throws {
         try PersistenceController.shared.backgroundContext.performAndWait {
-            let existingArticles = try PersistenceController.shared.backgroundContext.fetch(ArticleDB.fetchRequest())
+            let existingArticles = try PersistenceController.shared.backgroundContext.fetch(
+                ArticleDB.fetchRequest())
             topHeadlinesAPI.articles?.forEach {
                 let existingArticle = existingArticles.first { $0.title == $0.title }
                 if existingArticle != nil {
@@ -64,9 +83,11 @@ final class TopHeadlinesPersistenceController: PTopHeadlinesPersistenceControlle
                     existingArticle?.url = $0.url
                 } else {
                     /// Create new article
-                    ArticleDB(from: $0,
-                              category: category,
-                              country: country)
+                    ArticleDB(
+                        from: $0,
+                        category: category,
+                        country: country
+                    )
                 }
             }
             try PersistenceController.shared.backgroundContext.save()

@@ -10,7 +10,8 @@ import Foundation
 public enum ErrorsAPI: LocalizedError {
     // MARK: - Properties
 
-    case badRequest, forbidden, internalServerError, serviceUnavailable, tooManyRequests, unauthorized
+    case badRequest, forbidden, internalServerError, serviceUnavailable, tooManyRequests,
+        unauthorized
 
     public var errorDescription: String? {
         switch self {

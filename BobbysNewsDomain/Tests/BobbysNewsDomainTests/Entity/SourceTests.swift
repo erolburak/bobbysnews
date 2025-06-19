@@ -5,9 +5,10 @@
 //  Created by Burak Erol on 04.09.23.
 //
 
-@testable import BobbysNewsDomain
 import Foundation
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("Source tests")
 struct SourceTests {
@@ -20,8 +21,9 @@ struct SourceTests {
         // When
         source = EntityMock.topHeadlines.articles?.first?.source
         // Then
-        #expect(source?.name == "Test" &&
-            source?.url == URL(string: "Test"),
-            "Source initializing failed!")
+        #expect(
+            source?.name == "Test" && source?.url == URL(string: "Test"),
+            "Source initializing failed!"
+        )
     }
 }

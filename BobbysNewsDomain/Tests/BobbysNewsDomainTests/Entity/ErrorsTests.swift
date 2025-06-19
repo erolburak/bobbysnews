@@ -5,8 +5,9 @@
 //  Created by Burak Erol on 24.01.24.
 //
 
-@testable import BobbysNewsDomain
 import Testing
+
+@testable import BobbysNewsDomain
 
 @Suite("Errors tests")
 struct ErrorsTests {
@@ -20,8 +21,10 @@ struct ErrorsTests {
             // When
             newError = error
             // Then
-            #expect(newError != nil,
-                    "Error initializing failed!")
+            #expect(
+                newError != nil,
+                "Error initializing failed!"
+            )
         }
     }
 }

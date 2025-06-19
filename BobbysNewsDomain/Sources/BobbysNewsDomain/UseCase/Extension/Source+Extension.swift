@@ -14,7 +14,9 @@ extension Source {
         guard let db else {
             return nil
         }
-        self.init(name: db.name,
-                  url: db.url)
+        self.init(
+            name: db.name,
+            url: db.url
+        )
     }
 }

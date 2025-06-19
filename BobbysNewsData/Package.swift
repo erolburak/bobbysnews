@@ -7,15 +7,15 @@ let package = Package(
     platforms: [
         .iOS(
             .v26,
-        ),
+        )
     ],
     products: [
         .library(
             name: "BobbysNewsData",
             targets: [
-                "BobbysNewsData",
-            ],
-        ),
+                "BobbysNewsData"
+            ]
+        )
     ],
     targets: [
         .target(
@@ -24,8 +24,8 @@ let package = Package(
         .testTarget(
             name: "BobbysNewsDataTests",
             dependencies: [
-                "BobbysNewsData",
-            ],
+                "BobbysNewsData"
+            ]
         ),
-    ],
+    ]
 )

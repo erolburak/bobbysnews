@@ -5,14 +5,15 @@
 //  Created by Burak Erol on 26.01.24.
 //
 
-public extension ArticleDB {
+extension ArticleDB {
     // MARK: - Lifecycles
 
     @discardableResult
-    convenience init(from api: ArticleAPI,
-                     category: String,
-                     country: String)
-    {
+    public convenience init(
+        from api: ArticleAPI,
+        category: String,
+        country: String
+    ) {
         self.init(context: PersistenceController.shared.backgroundContext)
         self.category = category
         content = api.content
