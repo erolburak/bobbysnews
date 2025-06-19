@@ -15,7 +15,7 @@ extension XCUIApplication {
         launchArguments = ["–Testing"]
         /// Launch app
         launch()
-        
+
         /// Set device orientation to `portrait`
         XCUIDevice.shared.orientation = .portrait
         /// Set API key if needed
