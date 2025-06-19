@@ -10,7 +10,7 @@ The **BobbysNews** app is my own project, which uses a public API to retrieve he
 - [Xcode](https://developer.apple.com/xcode/)
 - [SPM](https://github.com/swiftlang/swift-package-manager)
 - [Swift-Format](https://github.com/swiftlang/swift-format)
-- [GitHub Actions](https://docs.github.com/en/actions)
+- [Xcode Cloud](https://developer.apple.com/xcode-cloud/)
 
 ## ARCHITECTURE
 - Clean Architecture
