@@ -14,18 +14,13 @@
         "argument" : "-Testing"
       }
     ],
-    "distributor" : "com.apple.TestFlight",
-    "language" : "en-GB",
-    "locationScenario" : {
-      "identifier" : "London, England",
-      "referenceType" : "built-in"
-    },
-    "region" : "GB",
+    "language" : "en",
     "targetForVariableExpansion" : {
       "containerPath" : "container:BobbysNews.xcodeproj",
       "identifier" : "BF72AA862AA0BFD300368DA5",
       "name" : "BobbysNews"
-    }
+    },
+    "testTimeoutsEnabled" : true
   },
   "testTargets" : [
     {
