@@ -59,8 +59,24 @@ struct DetailViewModelTests {
                 && sut.article.titleTranslated == nil && sut.article.url == article.url
                 && sut.articleContent == article.content && sut.articleImage == nil
                 && sut.articleTitle == article.title && !sut.sensoryFeedbackBool
-                && !sut.showNoNetworkConnection && !sut.showWebView,
+                && !sut.showNoNetworkConnection && !sut.showWebView
+                && sut.webPage == nil,
             "DetailViewModel onAppear failed!"
+        )
+    }
+
+    @Test("Check DetailViewModel loadWebPage!")
+    @MainActor
+    func loadWebPage() {
+        // Given
+        let article = EntityMock.article
+        sut.showWebView = true
+        // When
+        sut.loadWebPage()
+        // Then
+        #expect(
+            sut.showWebView && sut.webPage != nil,
+            "DetailViewModel loadWebPage failed!"
         )
     }
 }

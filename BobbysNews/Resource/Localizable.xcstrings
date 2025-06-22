@@ -924,6 +924,22 @@
         }
       }
     },
+    "GNews" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GNews"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GNews"
+          }
+        }
+      }
+    },
     "GoToArticle" : {
       "localizations" : {
         "de" : {
@@ -936,6 +952,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go to article"
+          }
+        }
+      }
+    },
+    "GoToGNews" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zu GNews"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go to GNews"
           }
         }
       }
@@ -1004,23 +1036,6 @@
         }
       }
     },
-    "SelectCountry" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Land auswählen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select country"
-          }
-        }
-      }
-    },
     "Settings" : {
       "localizations" : {
         "de" : {
@@ -1065,23 +1080,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Share"
-          }
-        }
-      }
-    },
-    "TopHeadlines" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schlagzeilen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Top headlines"
           }
         }
       }
