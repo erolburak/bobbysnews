@@ -32,10 +32,7 @@ struct DetailView: View {
                         )
                         .clipped()
                 } else {
-                    AsyncImage(
-                        url: viewModel.article.image,
-                        transaction: Transaction(animation: .easeIn(duration: 0.75))
-                    ) {
+                    AsyncImage(url: viewModel.article.image) {
                         switch $0 {
                         case .success(let image):
                             image
@@ -173,8 +170,10 @@ struct DetailView: View {
                         options: .nonRepeating
                     )
                     .symbolVariant(.fill)
-                } else {
-                    WebView(url: viewModel.article.url)
+                } else if viewModel.webPage?.isLoading == true {
+                    ProgressView()
+                } else if let webPage = viewModel.webPage {
+                    WebView(webPage)
                 }
             }
             .navigationTitle("Headline")
@@ -188,6 +187,9 @@ struct DetailView: View {
                     .accessibilityIdentifier("CloseWebViewButton")
                 }
             }
+        }
+        .task {
+            viewModel.loadWebPage()
         }
     }
 }

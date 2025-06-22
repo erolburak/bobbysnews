@@ -9,6 +9,7 @@ import BobbysNewsDomain
 import Network
 import TipKit
 import Translation
+import WebKit
 
 @Observable
 final class ContentViewModel {
@@ -105,10 +106,13 @@ final class ContentViewModel {
     var showAlert = false
     var showConfirmationDialog = false
     var showEditAlert = false
+    var showNoNetworkConnection = false
+    var showWebView = false
     var state: States = .isLoading
     var translate = false
     var translateDisabled = true
     var translationSessionConfiguration: TranslationSession.Configuration?
+    var webPage: WebPage?
 
     // MARK: - Lifecycles
 
@@ -243,6 +247,18 @@ final class ContentViewModel {
     }
 
     @MainActor
+    func loadWebPage() {
+        if let url = URL(string: "https://gnews.io"),
+            !showNoNetworkConnection,
+            showWebView,
+            webPage == nil
+        {
+            webPage = WebPage()
+            webPage?.load(URLRequest(url: url))
+        }
+    }
+
+    @MainActor
     func reset() async {
         do {
             try deleteTopHeadlinesUseCase.delete()
@@ -255,6 +271,7 @@ final class ContentViewModel {
             state = .emptyRead
             translate = false
             translateDisabled = true
+            webPage = nil
             await MainActor.run {
                 sensoryFeedbackTrigger(feedback: .success)
             }
@@ -295,8 +312,10 @@ final class ContentViewModel {
         for await path in NWPathMonitor() {
             if path.status == .unsatisfied {
                 showAlert(error: Errors.noNetworkConnection)
+                showNoNetworkConnection = true
                 return false
             } else {
+                showNoNetworkConnection = false
                 return true
             }
         }

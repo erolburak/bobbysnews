@@ -8,6 +8,7 @@
 import BobbysNewsDomain
 import SwiftUI
 import Translation
+import WebKit
 
 struct ContentView: View {
     // MARK: - Private Properties
@@ -41,6 +42,9 @@ struct ContentView: View {
             }
             .toolbar {
                 Toolbar()
+            }
+            .sheet(isPresented: $viewModel.showWebView) {
+                Sheet()
             }
         }
         .overlay(alignment: .center) {
@@ -182,6 +186,43 @@ struct ContentView: View {
         .symbolVariant(.fill)
     }
 
+    private func Sheet() -> some View {
+        NavigationStack {
+            Group {
+                if viewModel.showNoNetworkConnection {
+                    ContentUnavailableView(
+                        "ErrorDescriptionNoNetworkConnection",
+                        systemImage: "network.slash",
+                        description: Text("ErrorRecoverySuggestionNoNetworkConnection")
+                    )
+                    .symbolEffect(
+                        .bounce,
+                        options: .nonRepeating
+                    )
+                    .symbolVariant(.fill)
+                } else if viewModel.webPage?.isLoading == true {
+                    ProgressView()
+                } else if let webPage = viewModel.webPage {
+                    WebView(webPage)
+                }
+            }
+            .navigationTitle("GNews")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(role: .close) {
+                        viewModel.showWebView = false
+                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
+                    }
+                    .accessibilityIdentifier("CloseWebViewButton")
+                }
+            }
+        }
+        .task {
+            viewModel.loadWebPage()
+        }
+    }
+
     @ToolbarContentBuilder
     private func Toolbar() -> some ToolbarContent {
         ToolbarItem(placement: .title) {
@@ -260,11 +301,14 @@ struct ContentView: View {
             ) {
                 TextField(
                     "ApiKeyPlaceholder",
-                    text: $viewModel.selectedApiKey)
+                    text: $viewModel.selectedApiKey
+                )
 
-                Button(role: .cancel) {
+                Button("GoToGNews") {
+                    viewModel.showWebView = true
                     viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                 }
+                .accessibilityIdentifier("ShowWebViewButton")
 
                 Button(role: .confirm) {
                     apiKey = viewModel.selectedApiKey
@@ -274,6 +318,10 @@ struct ContentView: View {
                     }
                 }
                 .accessibilityIdentifier("ApiKeyDoneButton")
+
+                Button(role: .cancel) {
+                    viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
+                }
             }
             .confirmationDialog(
                 "ResetConfirmationDialog",

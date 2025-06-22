@@ -21,6 +21,7 @@ final class ContentViewTests: XCTestCase {
         setCategory(with: app)
         app.showDetailView(with: app)
         closeDetailView(with: app)
+        showCloseWebView(with: app)
         resetApp(with: app)
     }
 
@@ -37,9 +38,13 @@ final class ContentViewTests: XCTestCase {
         /// Show reset confirmation dialog
         app.buttons["ResetButton"].tap()
         /// Confirm reset
-        app.buttons["Reset"].buttons["ResetConfirmationDialogButton"].tap()
+        let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"].firstMatch
+        resetConfirmationDialogButton.waitForExistence(timeout: 5)
+            ? resetConfirmationDialogButton.tap() : XCTFail()
         /// Check if `EmptyApiKeyMessage` exists
-        XCTAssertTrue(app.staticTexts["EmptyApiKeyMessage"].exists)
+        let emptyApiKeyMessage = app.staticTexts["EmptyApiKeyMessage"]
+        emptyApiKeyMessage.waitForExistence(timeout: 5)
+            ? XCTAssertTrue(emptyApiKeyMessage.exists) : XCTFail()
     }
 
     @MainActor
@@ -47,6 +52,17 @@ final class ContentViewTests: XCTestCase {
         /// Show category picker
         app.staticTexts["General"].tap()
         /// Set category to `General`
-        app.buttons["General"].firstMatch.tap()
+        app.buttons["General"].tap()
+    }
+
+    @MainActor
+    private func showCloseWebView(with app: XCUIApplication) {
+        /// Show API key add edit viiew
+        app.showApiKeyAddEditView(with: app)
+        /// Show web view
+        app.buttons["ShowWebViewButton"].firstMatch.tap()
+        /// Close web view
+        let closeWebViewButton = app.buttons["CloseWebViewButton"]
+        closeWebViewButton.waitForExistence(timeout: 5) ? closeWebViewButton.tap() : XCTFail()
     }
 }

@@ -15,7 +15,6 @@ extension XCUIApplication {
         launchArguments = ["–Testing"]
         /// Launch app
         launch()
-
         /// Set device orientation to `portrait`
         XCUIDevice.shared.orientation = .portrait
         /// Set API key if needed
@@ -29,22 +28,26 @@ extension XCUIApplication {
         return self
     }
 
+    func showApiKeyAddEditView(with app: XCUIApplication) {
+        /// Show settings menu
+        app.buttons["SettingsMenu"].tap()
+        /// Show API key alert
+        app.buttons["ApiKeyAddEditButton"].tap()
+    }
+
     func showDetailView(with app: XCUIApplication) {
         /// Show detail view
         app.buttons["NavigationLink"].tap()
     }
 
     private func setApiKey(with app: XCUIApplication) {
-        /// Show settings menu
-        app.buttons["SettingsMenu"].tap()
-        /// Show API key alert
-        app.buttons["ApiKeyAddEditButton"].tap()
+        showApiKeyAddEditView(with: app)
         /// Set API key to `Test`
         let textField = app.textFields.firstMatch
         textField.doubleTap()
         textField.typeText("Test")
         /// Confirm API key
-        app.buttons["Done"].buttons["ApiKeyDoneButton"].tap()
+        app.buttons["ApiKeyDoneButton"].firstMatch.tap()
     }
 
     private func setCountry(with app: XCUIApplication) {

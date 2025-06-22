@@ -8,6 +8,7 @@
 import BobbysNewsDomain
 import Network
 import SwiftUI
+import WebKit
 
 @Observable
 final class DetailViewModel {
@@ -28,6 +29,7 @@ final class DetailViewModel {
     var sensoryFeedbackBool = false
     var showNoNetworkConnection = false
     var showWebView = false
+    var webPage: WebPage?
 
     // MARK: - Lifecycles
 
@@ -45,6 +47,18 @@ final class DetailViewModel {
     func onAppear() async {
         Task {
             await checkNetworkConnection()
+        }
+    }
+
+    @MainActor
+    func loadWebPage() {
+        if let url = article.url,
+            !showNoNetworkConnection,
+            showWebView,
+            webPage == nil
+        {
+            webPage = WebPage()
+            webPage?.load(URLRequest(url: url))
         }
     }
 

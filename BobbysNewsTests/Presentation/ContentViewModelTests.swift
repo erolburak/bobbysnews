@@ -105,6 +105,21 @@ struct ContentViewModelTests {
         )
     }
 
+    @Test("Check ContentViewModel loadWebPage!")
+    @MainActor
+    func loadWebPage() {
+        // Given
+        let article = EntityMock.article
+        sut.showWebView = true
+        // When
+        sut.loadWebPage()
+        // Then
+        #expect(
+            sut.showWebView && sut.webPage?.isLoading == true,
+            "ContentViewModel loadWebPage failed!"
+        )
+    }
+
     @Test("Check ContentViewModel showSettingsTip!")
     func showSettingsTip() {
         // Given
@@ -130,6 +145,7 @@ struct ContentViewModelTests {
         sut.state = .loaded
         sut.translate = true
         sut.translateDisabled = false
+        sut.webPage = nil
         // When
         await sut.reset()
         // Then
