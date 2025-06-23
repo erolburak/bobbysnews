@@ -26,7 +26,7 @@ final class DetailViewModel {
             ?? String(localized: "EmptyArticleTitle")
     }
 
-    var scrollGeometryYOffset: CGFloat = 0
+    var scrollGeometryContentOffsetY = 0.0
     var sensoryFeedbackBool = false
     var showNoNetworkConnection = false
     var showWebView = false

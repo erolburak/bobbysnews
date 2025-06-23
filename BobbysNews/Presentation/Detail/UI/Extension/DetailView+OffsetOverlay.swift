@@ -10,14 +10,11 @@ import SwiftUI
 extension DetailView {
     // MARK: - Layouts
 
+    @ViewBuilder
     func OffsetOverlay() -> some View {
         Color(uiColor: .systemBackground)
-            .frame(height: viewModel.scrollGeometryYOffset + 10)
-            .padding(
-                .bottom,
-                -10
-            )
-            .offset(y: viewModel.scrollGeometryYOffset)
+            .frame(height: viewModel.scrollGeometryContentOffsetY)
+            .offset(y: viewModel.scrollGeometryContentOffsetY)
             .ignoresSafeArea()
     }
 }

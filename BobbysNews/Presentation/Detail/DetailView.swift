@@ -25,6 +25,7 @@ struct DetailView: View {
                     image
                         .resizable()
                         .scaledToFill()
+                        .frame(maxHeight: 500)
                         .clipped()
                 } else {
                     AsyncImage(url: viewModel.article.image) {
@@ -33,6 +34,7 @@ struct DetailView: View {
                             image
                                 .resizable()
                                 .scaledToFill()
+                                .frame(maxHeight: 500)
                                 .clipped()
                         case .failure:
                             Spacer()
@@ -59,8 +61,12 @@ struct DetailView: View {
                     }
                 }
             }
+            .ignoresSafeArea(edges: .horizontal)
             .frame(minHeight: 500)
-            .offset(y: viewModel.scrollGeometryYOffset)
+            .offset(
+                y: viewModel.scrollGeometryContentOffsetY >= 0
+                    ? viewModel.scrollGeometryContentOffsetY : 0
+            )
             .overlay(alignment: .bottom) {
                 OffsetOverlay()
             }
@@ -78,7 +84,6 @@ struct DetailView: View {
                 )
             }
 
-            Text("\(viewModel.scrollGeometryYOffset)")
             VStack(alignment: .leading) {
                 Text(viewModel.articleTitle)
                     .font(.title)
@@ -122,7 +127,7 @@ struct DetailView: View {
         .onScrollGeometryChange(for: CGFloat.self) { scrollGeometry in
             scrollGeometry.contentOffset.y
         } action: { _, newValue in
-            newValue >= 0 ? viewModel.scrollGeometryYOffset = newValue / 1.75 : nil
+            viewModel.scrollGeometryContentOffsetY = newValue / 1.75
         }
         .sensoryFeedback(
             .press(.button),
