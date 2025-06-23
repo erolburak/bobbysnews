@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import WebKit
 
 struct DetailView: View {
     // MARK: - Private Properties
@@ -26,10 +25,7 @@ struct DetailView: View {
                     image
                         .resizable()
                         .scaledToFill()
-                        .frame(
-                            maxHeight: 500,
-                            alignment: .center
-                        )
+                        .frame(maxHeight: 500)
                         .clipped()
                 } else {
                     AsyncImage(url: viewModel.article.image) {
@@ -38,10 +34,7 @@ struct DetailView: View {
                             image
                                 .resizable()
                                 .scaledToFill()
-                                .frame(
-                                    maxHeight: 500,
-                                    alignment: .center
-                                )
+                                .frame(maxHeight: 500)
                                 .clipped()
                         case .failure:
                             Spacer()
@@ -68,6 +61,18 @@ struct DetailView: View {
                     }
                 }
             }
+            .ignoresSafeArea(edges: .horizontal)
+            .frame(minHeight: 500)
+            .offset(
+                y: viewModel.scrollGeometryContentOffsetY >= 0
+                    ? viewModel.scrollGeometryContentOffsetY : 0
+            )
+            .overlay(alignment: .bottom) {
+                OffsetOverlay()
+            }
+            .overlay(alignment: .bottom) {
+                LinearGradientOverlay()
+            }
             .visualEffect { emptyVisualEffect, geometryProxy in
                 let geometryProxyHeight = geometryProxy.size.height
                 return emptyVisualEffect.scaleEffect(
@@ -77,32 +82,6 @@ struct DetailView: View {
                             geometryProxy.frame(in: .scrollView).minY)) / geometryProxyHeight,
                     anchor: .bottom
                 )
-            }
-            .frame(
-                maxWidth: .infinity,
-                minHeight: 500,
-                maxHeight: 500
-            )
-            .overlay(alignment: .bottom) {
-                LinearGradient(
-                    stops: [
-                        Gradient.Stop(
-                            color: .clear,
-                            location: 0.6
-                        ),
-                        Gradient.Stop(
-                            color: Color(uiColor: .systemBackground).opacity(0.8),
-                            location: 0.8
-                        ),
-                        Gradient.Stop(
-                            color: Color(uiColor: .systemBackground),
-                            location: 1
-                        ),
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .ignoresSafeArea()
             }
 
             VStack(alignment: .leading) {
@@ -118,7 +97,10 @@ struct DetailView: View {
                 maxWidth: .infinity,
                 alignment: .leading
             )
-            .padding(.top, -120)
+            .padding(
+                .top,
+                -120
+            )
             .padding([
                 .horizontal,
                 .bottom,
@@ -137,15 +119,15 @@ struct DetailView: View {
         .navigationSubtitle(viewModel.article.publishedAt?.toRelative ?? "EmptyArticlePublishedAt")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if let url = viewModel.article.url {
-                ToolbarItem(placement: .primaryAction) {
-                    ShareLink(item: url)
-                        .accessibilityIdentifier("ShareLink")
-                }
-            }
+            Toolbar()
         }
         .sheet(isPresented: $viewModel.showWebView) {
             Sheet()
+        }
+        .onScrollGeometryChange(for: CGFloat.self) { scrollGeometry in
+            scrollGeometry.contentOffset.y
+        } action: { _, newValue in
+            viewModel.scrollGeometryContentOffsetY = newValue / 1.75
         }
         .sensoryFeedback(
             .press(.button),
@@ -153,43 +135,6 @@ struct DetailView: View {
         )
         .task {
             await viewModel.onAppear()
-        }
-    }
-
-    private func Sheet() -> some View {
-        NavigationStack {
-            Group {
-                if viewModel.showNoNetworkConnection {
-                    ContentUnavailableView(
-                        "ErrorDescriptionNoNetworkConnection",
-                        systemImage: "network.slash",
-                        description: Text("ErrorRecoverySuggestionNoNetworkConnection")
-                    )
-                    .symbolEffect(
-                        .bounce,
-                        options: .nonRepeating
-                    )
-                    .symbolVariant(.fill)
-                } else if viewModel.webPage?.isLoading == true {
-                    ProgressView()
-                } else if let webPage = viewModel.webPage {
-                    WebView(webPage)
-                }
-            }
-            .navigationTitle("Headline")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(role: .close) {
-                        viewModel.showWebView = false
-                        viewModel.sensoryFeedbackBool.toggle()
-                    }
-                    .accessibilityIdentifier("CloseWebViewButton")
-                }
-            }
-        }
-        .task {
-            viewModel.loadWebPage()
         }
     }
 }
