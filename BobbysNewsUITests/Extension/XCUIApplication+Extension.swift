@@ -37,7 +37,7 @@ extension XCUIApplication {
 
     func showDetailView(with app: XCUIApplication) {
         /// Show detail view
-        app.buttons["NavigationLink"].tap()
+        app.buttons["ContentListItem"].tap()
     }
 
     private func setApiKey(with app: XCUIApplication) {

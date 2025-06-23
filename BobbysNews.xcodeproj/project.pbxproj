@@ -51,8 +51,8 @@
 			membershipExceptions = (
 				Factory/ViewModelFactory.swift,
 				Mock/Preview/PreviewMock.swift,
-				Presentation/ContentViewModel.swift,
-				Presentation/DetailViewModel.swift,
+				Presentation/Content/ContentViewModel.swift,
+				Presentation/Detail/DetailViewModel.swift,
 				"Presentation/Extension/Date+Extension.swift",
 			);
 			target = BF72AA9D2AA0BFD400368DA5 /* BobbysNewsTests */;
@@ -264,6 +264,9 @@
 			shellPath = /bin/sh;
 			shellScript = (
 				"xcrun ./Scripts/pre-commit",
+				"",
+				"",
+				"",
 				"",
 				"",
 				"",
