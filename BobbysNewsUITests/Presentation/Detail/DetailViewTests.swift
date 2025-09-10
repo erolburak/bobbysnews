@@ -26,14 +26,14 @@ final class DetailViewTests: XCTestCase {
     @MainActor
     private func showCloseWebView(with app: XCUIApplication) {
         /// Show web view
-        app.buttons["ShowWebViewButton"].tap()
+        app.buttons["ShowWebViewButton"].waitForExistence().tap()
         /// Close web view
-        app.buttons["CloseWebViewButton"].tap()
+        app.buttons["CloseWebViewButton"].waitForExistence().tap()
     }
 
     @MainActor
     private func showShareView(with app: XCUIApplication) {
         /// Show share view
-        app.buttons["ShareLink"].tap()
+        app.buttons["ShareLink"].waitForExistence().tap()
     }
 }

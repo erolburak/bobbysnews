@@ -30,32 +30,32 @@ extension XCUIApplication {
 
     func showApiKeyAddEditView(with app: XCUIApplication) {
         /// Show settings menu
-        app.buttons["SettingsMenu"].tap()
+        app.buttons["SettingsMenu"].waitForExistence().tap()
         /// Show API key alert
-        app.buttons["ApiKeyAddEditButton"].tap()
+        app.buttons["ApiKeyAddEditButton"].waitForExistence().tap()
     }
 
     func showDetailView(with app: XCUIApplication) {
         /// Show detail view
-        app.buttons["ContentListItem"].tap()
+        app.buttons["ContentListItem"].waitForExistence().tap()
     }
 
     private func setApiKey(with app: XCUIApplication) {
         showApiKeyAddEditView(with: app)
         /// Set API key to `Test`
-        let textField = app.textFields.firstMatch
+        let textField = app.textFields.firstMatch.waitForExistence()
         textField.doubleTap()
         textField.typeText("Test")
         /// Confirm API key
-        app.buttons["ApiKeyDoneButton"].firstMatch.tap()
+        app.buttons["ApiKeyDoneButton"].firstMatch.waitForExistence().tap()
     }
 
     private func setCountry(with app: XCUIApplication) {
         /// Show settings menu
-        app.buttons["SettingsMenu"].tap()
+        app.buttons["SettingsMenu"].waitForExistence().tap()
         /// Show country picker
-        app.buttons["CountryPicker"].tap()
+        app.buttons["CountryPicker"].waitForExistence().tap()
         /// Set country to `Afghanistan`
-        app.buttons["Afghanistan"].tap()
+        app.buttons["Afghanistan"].waitForExistence().tap()
     }
 }

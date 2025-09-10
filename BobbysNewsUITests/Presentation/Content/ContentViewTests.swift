@@ -28,31 +28,27 @@ final class ContentViewTests: XCTestCase {
     @MainActor
     private func closeDetailView(with app: XCUIApplication) {
         /// Close detail view
-        app.buttons["BackButton"].tap()
+        app.buttons["BackButton"].waitForExistence().tap()
     }
 
     @MainActor
     private func resetApp(with app: XCUIApplication) {
         /// Show settings menu
-        app.buttons["SettingsMenu"].tap()
+        app.buttons["SettingsMenu"].waitForExistence().tap()
         /// Show reset confirmation dialog
-        app.buttons["ResetButton"].tap()
+        app.buttons["ResetButton"].waitForExistence().tap()
         /// Confirm reset
-        let resetConfirmationDialogButton = app.buttons["ResetConfirmationDialogButton"].firstMatch
-        resetConfirmationDialogButton.waitForExistence(timeout: 5)
-            ? resetConfirmationDialogButton.tap() : XCTFail()
+        app.buttons["ResetConfirmationDialogButton"].firstMatch.waitForExistence().tap()
         /// Check if `EmptyApiKeyMessage` exists
-        let emptyApiKeyMessage = app.staticTexts["EmptyApiKeyMessage"]
-        emptyApiKeyMessage.waitForExistence(timeout: 5)
-            ? XCTAssertTrue(emptyApiKeyMessage.exists) : XCTFail()
+        app.staticTexts["EmptyApiKeyMessage"].waitForExistence()
     }
 
     @MainActor
     private func setCategory(with app: XCUIApplication) {
         /// Show category picker
-        app.staticTexts["General"].tap()
+        app.staticTexts["General"].waitForExistence().tap()
         /// Set category to `General`
-        app.buttons["General"].tap()
+        app.buttons["General"].waitForExistence().tap()
     }
 
     @MainActor
@@ -60,9 +56,8 @@ final class ContentViewTests: XCTestCase {
         /// Show API key add edit viiew
         app.showApiKeyAddEditView(with: app)
         /// Show web view
-        app.buttons["ShowWebViewButton"].firstMatch.tap()
+        app.buttons["ShowWebViewButton"].firstMatch.waitForExistence().tap()
         /// Close web view
-        let closeWebViewButton = app.buttons["CloseWebViewButton"]
-        closeWebViewButton.waitForExistence(timeout: 5) ? closeWebViewButton.tap() : XCTFail()
+        app.buttons["CloseWebViewButton"].waitForExistence().tap()
     }
 }
