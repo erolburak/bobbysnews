@@ -109,7 +109,6 @@ struct ContentViewModelTests {
     @MainActor
     func loadWebPage() {
         // Given
-        let article = EntityMock.article
         sut.showWebView = true
         // When
         sut.loadWebPage()
