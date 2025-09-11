@@ -17,4 +17,10 @@ extension XCUIElement {
         XCTAssertTrue(exists)
         return self
     }
+
+    func waitForNonExistence() {
+        /// Check if `XCUIElement` not exists
+        let notExists = self.waitForNonExistence(timeout: 5)
+        XCTAssertTrue(notExists)
+    }
 }

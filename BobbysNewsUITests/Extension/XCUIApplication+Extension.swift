@@ -48,6 +48,8 @@ extension XCUIApplication {
         textField.typeText("Test")
         /// Confirm API key
         app.buttons["ApiKeyDoneButton"].firstMatch.waitForExistence().tap()
+        /// Check if `EmptyApiKeyMessage` not exists
+        app.staticTexts["EmptyApiKeyMessage"].waitForNonExistence()
     }
 
     private func setCountry(with app: XCUIApplication) {
@@ -57,5 +59,7 @@ extension XCUIApplication {
         app.buttons["CountryPicker"].waitForExistence().tap()
         /// Set country to `Afghanistan`
         app.buttons["Afghanistan"].waitForExistence().tap()
+        /// Check if `EmptyCountryMessage` not exists
+        app.staticTexts["EmptyCountryMessage"].waitForNonExistence()
     }
 }
