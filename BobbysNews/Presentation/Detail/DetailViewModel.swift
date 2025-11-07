@@ -46,9 +46,7 @@ final class DetailViewModel {
 
     @MainActor
     func onAppear() async {
-        Task {
-            await checkNetworkConnection()
-        }
+        await checkNetworkConnection()
     }
 
     @MainActor
@@ -63,6 +61,7 @@ final class DetailViewModel {
         }
     }
 
+    @MainActor
     private func checkNetworkConnection() async {
         for await path in NWPathMonitor() {
             showNoNetworkConnection = path.status == .unsatisfied

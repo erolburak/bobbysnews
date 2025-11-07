@@ -276,9 +276,7 @@ final class ContentViewModel {
                 sensoryFeedbackTrigger(feedback: .success)
             }
         } catch {
-            await MainActor.run {
-                showAlert(error: Errors.reset)
-            }
+            showAlert(error: Errors.reset)
         }
     }
 
