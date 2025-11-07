@@ -81,7 +81,7 @@ struct ContentView: View {
                 await viewModel.fetchTopHeadlines(state: .isLoading)
             }
         }
-        .sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) { _, _ in
+        .sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) {
             viewModel.sensoryFeedback
         }
         .onChange(of: viewModel.translate) {
