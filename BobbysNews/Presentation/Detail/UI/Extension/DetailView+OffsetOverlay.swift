@@ -10,7 +10,6 @@ import SwiftUI
 extension DetailView {
     // MARK: - Layouts
 
-    @ViewBuilder
     func OffsetOverlay() -> some View {
         Color(uiColor: .systemBackground)
             .frame(height: viewModel.scrollGeometryContentOffsetY)
