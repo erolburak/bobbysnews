@@ -87,6 +87,10 @@ final class ContentViewModel {
     var listDisabled: Bool { state != .loaded }
     var listOpacity: Double { state == .loaded ? 1 : 0.3 }
     var selectedApiKey = ""
+    var selectedApiKeyConfirmDisabled: Bool {
+        selectedApiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     var selectedCategory: Categories = .general {
         willSet {
             sensoryFeedbackTrigger(feedback: .selection)
@@ -104,9 +108,9 @@ final class ContentViewModel {
     var sensoryFeedback: SensoryFeedback?
     var sensoryFeedbackBool = false
     var showAlert = false
-    var showConfirmationDialog = false
     var showEditAlert = false
     var showNoNetworkConnection = false
+    var showResetConfirmationDialog = false
     var showWebView = false
     var state: States = .isLoading
     var translate = false

@@ -40,16 +40,24 @@ struct ContentListItem: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text(article.source?.name ?? String(localized: "EmptyArticleSource"))
-                        .font(.subheadline)
-                        .fontWeight(.black)
+                        .font(
+                            .system(
+                                .subheadline,
+                                weight: .black
+                            )
+                        )
                         .lineLimit(1)
 
                     Text(
                         article.publishedAt?.toRelative
                             ?? String(localized: "EmptyArticlePublishedAt")
                     )
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
+                    .font(
+                        .system(
+                            .subheadline,
+                            weight: .semibold
+                        )
+                    )
 
                     Spacer()
 
@@ -57,8 +65,12 @@ struct ContentListItem: View {
                         (article.showTranslations ? article.titleTranslated : article.title)
                             ?? String(localized: "EmptyArticleTitle")
                     )
-                    .font(.subheadline)
-                    .fontWeight(.semibold)
+                    .font(
+                        .system(
+                            .subheadline,
+                            weight: .semibold
+                        )
+                    )
                     .lineLimit(2)
                 }
                 .multilineTextAlignment(.leading)
@@ -141,7 +153,7 @@ struct ContentListItem: View {
             id: article.id,
             in: animation
         )
-        .accessibilityIdentifier("ContentListItem")
+        .accessibilityIdentifier(Accessibility.contentListItem.id)
     }
 }
 

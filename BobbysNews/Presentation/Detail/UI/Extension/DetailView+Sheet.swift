@@ -39,7 +39,7 @@ extension DetailView {
                         viewModel.showWebView = false
                         viewModel.sensoryFeedbackBool.toggle()
                     }
-                    .accessibilityIdentifier("CloseWebViewButton")
+                    .accessibilityIdentifier(Accessibility.closeWebViewButton.id)
                 }
             }
         }

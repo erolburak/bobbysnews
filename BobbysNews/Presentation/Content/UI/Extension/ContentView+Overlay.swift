@@ -20,9 +20,22 @@ extension ContentView {
                         "EmptyApiKey",
                         systemImage: "key"
                     )
+                    .accessibilityIdentifier(Accessibility.emptyApiKey.id)
                 } description: {
                     Text("EmptyApiKeyMessage")
-                        .accessibilityIdentifier("EmptyApiKeyMessage")
+                } actions: {
+                    Button("Add") {
+                        viewModel.showEditAlert = true
+                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
+                    }
+                    .buttonStyle(.glass)
+                    .font(
+                        .system(
+                            .subheadline,
+                            weight: .bold
+                        )
+                    )
+                    .textCase(.uppercase)
                 }
             } else if country.isEmpty {
                 ContentUnavailableView {
@@ -30,9 +43,9 @@ extension ContentView {
                         "EmptyCountry",
                         systemImage: "flag"
                     )
+                    .accessibilityIdentifier(Accessibility.emptyCountry.id)
                 } description: {
                     Text("EmptyCountryMessage")
-                        .accessibilityIdentifier("EmptyCountryMessage")
                 }
             } else {
                 switch viewModel.state {
@@ -41,8 +54,12 @@ extension ContentView {
                         viewModel.state == .isLoading
                             ? "TopHeadlinesLoading" : "TopHeadlinesTranslating"
                     )
-                    .font(.headline)
-                    .fontWeight(.black)
+                    .font(
+                        .system(
+                            .headline,
+                            weight: .black
+                        )
+                    )
                 case .loaded:
                     EmptyView()
                 case .emptyFetch, .emptyRead:
@@ -67,8 +84,12 @@ extension ContentView {
                             }
                         }
                         .buttonStyle(.glass)
-                        .font(.subheadline)
-                        .fontWeight(.bold)
+                        .font(
+                            .system(
+                                .subheadline,
+                                weight: .bold
+                            )
+                        )
                         .textCase(.uppercase)
                     }
                 case .emptyTranslate:
@@ -84,8 +105,12 @@ extension ContentView {
                             viewModel.translate = false
                         }
                         .buttonStyle(.glass)
-                        .font(.subheadline)
-                        .fontWeight(.bold)
+                        .font(
+                            .system(
+                                .subheadline,
+                                weight: .bold
+                            )
+                        )
                         .textCase(.uppercase)
                     }
                 }

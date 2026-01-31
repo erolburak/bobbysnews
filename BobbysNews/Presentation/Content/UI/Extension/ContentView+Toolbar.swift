@@ -37,7 +37,7 @@ extension ContentView {
                         viewModel.showEditAlert = true
                         viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
-                    .accessibilityIdentifier("ApiKeyAddEditButton")
+                    .accessibilityIdentifier(Accessibility.apiKeyAddEditButton.id)
                 }
 
                 Section {
@@ -55,7 +55,7 @@ extension ContentView {
                                 .tag($0)
                         }
                     }
-                    .accessibilityIdentifier("CountryPicker")
+                    .accessibilityIdentifier(Accessibility.countryPicker.id)
                     .pickerStyle(.menu)
                 }
 
@@ -74,20 +74,20 @@ extension ContentView {
                         systemImage: "trash",
                         role: .destructive
                     ) {
-                        viewModel.showConfirmationDialog = true
+                        viewModel.showResetConfirmationDialog = true
                         viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
-                    .accessibilityIdentifier("ResetButton")
+                    .accessibilityIdentifier(Accessibility.resetButton.id)
                 }
             } label: {
                 Image(systemName: "gearshape")
             }
             .alert(
-                "ApiKey",
+                "ApiKeyAlert",
                 isPresented: $viewModel.showEditAlert
             ) {
                 TextField(
-                    "ApiKeyPlaceholder",
+                    "ApiKeyAlertPlaceholder",
                     text: $viewModel.selectedApiKey
                 )
 
@@ -95,7 +95,7 @@ extension ContentView {
                     viewModel.showWebView = true
                     viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                 }
-                .accessibilityIdentifier("ShowWebViewButton")
+                .accessibilityIdentifier(Accessibility.showWebViewButton.id)
 
                 Button(role: .confirm) {
                     apiKey = viewModel.selectedApiKey
@@ -104,15 +104,17 @@ extension ContentView {
                         await viewModel.fetchTopHeadlines(state: .isLoading)
                     }
                 }
-                .accessibilityIdentifier("ApiKeyDoneButton")
+                .disabled(viewModel.selectedApiKeyConfirmDisabled)
+                .accessibilityIdentifier(Accessibility.apiKeyAlertConfirmButton.id)
 
                 Button(role: .cancel) {
+                    viewModel.selectedApiKey = ""
                     viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                 }
             }
             .confirmationDialog(
                 "ResetConfirmationDialog",
-                isPresented: $viewModel.showConfirmationDialog,
+                isPresented: $viewModel.showResetConfirmationDialog,
                 titleVisibility: .visible
             ) {
                 Button(
@@ -124,10 +126,10 @@ extension ContentView {
                         apiKey = ""
                     }
                 }
-                .accessibilityIdentifier("ResetConfirmationDialogButton")
+                .accessibilityIdentifier(Accessibility.resetButtonConfirmationDialog.id)
             }
             .popoverTip(viewModel.settingsTip)
-            .accessibilityIdentifier("SettingsMenu")
+            .accessibilityIdentifier(Accessibility.settingsMenu.id)
         }
     }
 }

@@ -15,7 +15,7 @@ extension DetailView {
         if let url = viewModel.article.url {
             ToolbarItem(placement: .primaryAction) {
                 ShareLink(item: url)
-                    .accessibilityIdentifier("ShareLink")
+                    .accessibilityIdentifier(Accessibility.shareLink.id)
             }
         }
     }

@@ -86,8 +86,12 @@ struct DetailView: View {
 
             VStack(alignment: .leading) {
                 Text(viewModel.articleTitle)
-                    .font(.title)
-                    .fontWeight(.black)
+                    .font(
+                        .system(
+                            .title,
+                            weight: .black
+                        )
+                    )
                     .padding(.bottom)
 
                 Text(viewModel.articleContent)
@@ -111,7 +115,7 @@ struct DetailView: View {
                 viewModel.sensoryFeedbackBool.toggle()
             }
             .buttonStyle(.glass)
-            .accessibilityIdentifier("ShowWebViewButton")
+            .accessibilityIdentifier(Accessibility.showWebViewButton.id)
         }
         .ignoresSafeArea(edges: .top)
         .textSelection(.enabled)

@@ -34,13 +34,14 @@ final class ContentViewTests: XCTestCase {
     @MainActor
     private func resetApp(with app: XCUIApplication) {
         /// Show settings menu
-        app.buttons["SettingsMenu"].waitForExistence().tap()
+        app.buttons[Accessibility.settingsMenu.id].waitForExistence().tap()
         /// Show reset confirmation dialog
-        app.buttons["ResetButton"].waitForExistence().tap()
+        app.buttons[Accessibility.resetButton.id].waitForExistence().tap()
         /// Confirm reset
-        app.buttons["ResetConfirmationDialogButton"].firstMatch.waitForExistence().tap()
-        /// Check if `EmptyApiKeyMessage` exists
-        app.staticTexts["EmptyApiKeyMessage"].waitForExistence()
+        app.buttons[Accessibility.resetButtonConfirmationDialog.id].firstMatch.waitForExistence()
+            .tap()
+        /// Check if `EmptyApiKey` exists
+        app.staticTexts[Accessibility.emptyApiKey.id].waitForExistence()
     }
 
     @MainActor
@@ -56,8 +57,8 @@ final class ContentViewTests: XCTestCase {
         /// Show API key add edit viiew
         app.showApiKeyAddEditView(with: app)
         /// Show web view
-        app.buttons["ShowWebViewButton"].firstMatch.waitForExistence().tap()
+        app.buttons[Accessibility.showWebViewButton.id].firstMatch.waitForExistence().tap()
         /// Close web view
-        app.buttons["CloseWebViewButton"].waitForExistence().tap()
+        app.buttons[Accessibility.closeWebViewButton.id].waitForExistence().tap()
     }
 }
