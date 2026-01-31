@@ -50,12 +50,20 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Factory/ViewModelFactory.swift,
-				Mock/Preview/PreviewMock.swift,
+				Helper/Accessibility/Accessibility.swift,
+				Helper/Preview/PreviewMock.swift,
 				Presentation/Content/ContentViewModel.swift,
 				Presentation/Detail/DetailViewModel.swift,
 				"Presentation/Extension/Date+Extension.swift",
 			);
 			target = BF72AA9D2AA0BFD400368DA5 /* BobbysNewsTests */;
+		};
+		BFB920D22F2C078100B3505F /* Exceptions for "BobbysNews" folder in "BobbysNewsUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Helper/Accessibility/Accessibility.swift,
+			);
+			target = BF72AAA72AA0BFD400368DA5 /* BobbysNewsUITests */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -65,6 +73,7 @@
 			exceptions = (
 				BFA3D2D72D2EC65F00077763 /* Exceptions for "BobbysNews" folder in "BobbysNews" target */,
 				BFA3D2D82D2EC65F00077763 /* Exceptions for "BobbysNews" folder in "BobbysNewsTests" target */,
+				BFB920D22F2C078100B3505F /* Exceptions for "BobbysNews" folder in "BobbysNewsUITests" target */,
 			);
 			path = BobbysNews;
 			sourceTree = "<group>";
@@ -200,7 +209,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 2600;
+				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					BF72AA862AA0BFD300368DA5 = {
 						CreatedOnToolsVersion = 15.0;
@@ -489,7 +498,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = com.burakerol.BobbysNews;
@@ -541,7 +550,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = com.burakerol.BobbysNews;
@@ -569,7 +578,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.burakerol.BobbysNewsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -597,7 +606,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.burakerol.BobbysNewsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -624,7 +633,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.burakerol.BobbysNewsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -651,7 +660,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MACOSX_DEPLOYMENT_TARGET = "";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.burakerol.BobbysNewsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

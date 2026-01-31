@@ -39,7 +39,7 @@ extension ContentView {
                         viewModel.showWebView = false
                         viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
-                    .accessibilityIdentifier("CloseWebViewButton")
+                    .accessibilityIdentifier(Accessibility.closeWebViewButton.id)
                 }
             }
         }

@@ -57,7 +57,7 @@
         }
       }
     },
-    "ApiKey" : {
+    "ApiKeyAlert" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -73,7 +73,7 @@
         }
       }
     },
-    "ApiKeyPlaceholder" : {
+    "ApiKeyAlertPlaceholder" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -313,13 +313,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kein API-Schlüssel hinzugefügt"
+            "value" : "Kein API-Schlüssel"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No API key added"
+            "value" : "No API key"
           }
         }
       }
@@ -329,13 +329,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Füge einen gültigen API-Schlüssel in den Einstellungen hinzu."
+            "value" : "Füge einen gültigen API-Schlüssel hinzu."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add a valid API key in the settings."
+            "value" : "Add a valid API key."
           }
         }
       }
@@ -409,13 +409,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kein Land ausgewählt"
+            "value" : "Kein Land"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No country selected"
+            "value" : "No country"
           }
         }
       }

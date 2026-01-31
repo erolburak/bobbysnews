@@ -18,11 +18,11 @@ extension XCUIApplication {
         /// Set device orientation to `portrait`
         XCUIDevice.shared.orientation = .portrait
         /// Set API key if needed
-        if staticTexts["EmptyApiKeyMessage"].exists {
+        if staticTexts[Accessibility.emptyApiKey.id].exists {
             setApiKey(with: self)
         }
         /// Set country if needed
-        if staticTexts["EmptyCountryMessage"].exists {
+        if staticTexts[Accessibility.emptyCountry.id].exists {
             setCountry(with: self)
         }
         return self
@@ -30,14 +30,14 @@ extension XCUIApplication {
 
     func showApiKeyAddEditView(with app: XCUIApplication) {
         /// Show settings menu
-        app.buttons["SettingsMenu"].waitForExistence().tap()
+        app.buttons[Accessibility.settingsMenu.id].waitForExistence().tap()
         /// Show API key alert
-        app.buttons["ApiKeyAddEditButton"].waitForExistence().tap()
+        app.buttons[Accessibility.apiKeyAddEditButton.id].waitForExistence().tap()
     }
 
     func showDetailView(with app: XCUIApplication) {
         /// Show detail view
-        app.buttons["ContentListItem"].waitForExistence().tap()
+        app.buttons[Accessibility.contentListItem.id].waitForExistence().tap()
     }
 
     private func setApiKey(with app: XCUIApplication) {
@@ -46,20 +46,20 @@ extension XCUIApplication {
         let textField = app.textFields.firstMatch.waitForExistence()
         textField.doubleTap()
         textField.typeText("Test")
-        /// Confirm API key
-        app.buttons["ApiKeyDoneButton"].firstMatch.waitForExistence().tap()
-        /// Check if `EmptyApiKeyMessage` not exists
-        app.staticTexts["EmptyApiKeyMessage"].waitForNonExistence()
+        /// Confirm selected API key
+        app.buttons[Accessibility.apiKeyAlertConfirmButton.id].firstMatch.waitForExistence().tap()
+        /// Check if `EmptyApiKey` not exists
+        app.staticTexts[Accessibility.emptyApiKey.id].waitForNonExistence()
     }
 
     private func setCountry(with app: XCUIApplication) {
         /// Show settings menu
-        app.buttons["SettingsMenu"].waitForExistence().tap()
+        app.buttons[Accessibility.settingsMenu.id].waitForExistence().tap()
         /// Show country picker
-        app.buttons["CountryPicker"].waitForExistence().tap()
+        app.buttons[Accessibility.countryPicker.id].waitForExistence().tap()
         /// Set country to `Afghanistan`
         app.buttons["Afghanistan"].waitForExistence().tap()
-        /// Check if `EmptyCountryMessage` not exists
-        app.staticTexts["EmptyCountryMessage"].waitForNonExistence()
+        /// Check if `EmptyCountry` not exists
+        app.staticTexts[Accessibility.emptyCountry.id].waitForNonExistence()
     }
 }
