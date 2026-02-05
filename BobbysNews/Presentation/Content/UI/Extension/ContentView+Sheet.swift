@@ -37,7 +37,6 @@ extension ContentView {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .close) {
                         viewModel.showWebView = false
-                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
                     .accessibilityIdentifier(Accessibility.closeWebViewButton.id)
                 }

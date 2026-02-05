@@ -26,7 +26,6 @@ extension ContentView {
                 } actions: {
                     Button("Add") {
                         viewModel.showEditAlert = true
-                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
                     .buttonStyle(.glass)
                     .font(

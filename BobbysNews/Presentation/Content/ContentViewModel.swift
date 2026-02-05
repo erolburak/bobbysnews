@@ -91,20 +91,8 @@ final class ContentViewModel {
         selectedApiKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
-    var selectedCategory: Categories = .general {
-        willSet {
-            sensoryFeedbackTrigger(feedback: .selection)
-        }
-    }
-
-    var selectedCountry = "" {
-        willSet {
-            if !newValue.isEmpty {
-                sensoryFeedbackTrigger(feedback: .selection)
-            }
-        }
-    }
-
+    var selectedCategory: Categories = .general
+    var selectedCountry = ""
     var sensoryFeedback: SensoryFeedback?
     var sensoryFeedbackBool = false
     var showAlert = false
@@ -168,7 +156,7 @@ final class ContentViewModel {
         sensoryFeedback: Bool? = nil
     ) async {
         if sensoryFeedback == true {
-            sensoryFeedbackTrigger(feedback: .success)
+            self.sensoryFeedback(.success)
         }
         if !selectedApiKey.isEmpty,
             !selectedCountry.isEmpty
@@ -276,15 +264,12 @@ final class ContentViewModel {
             translate = false
             translateDisabled = true
             webPage = nil
-            await MainActor.run {
-                sensoryFeedbackTrigger(feedback: .success)
-            }
         } catch {
             showAlert(error: Errors.reset)
         }
     }
 
-    func sensoryFeedbackTrigger(feedback: SensoryFeedback) {
+    func sensoryFeedback(_ feedback: SensoryFeedback) {
         sensoryFeedback = feedback
         sensoryFeedbackBool.toggle()
     }
@@ -388,14 +373,13 @@ final class ContentViewModel {
             alertError = .error(error.localizedDescription)
         }
         showAlert = true
-        sensoryFeedbackTrigger(feedback: .error)
     }
 
     private func showArticlesTranslations(show: Bool) {
+        sensoryFeedback(.success)
         for index in articles.indices {
             articles[index].showTranslations = show
         }
-        sensoryFeedbackTrigger(feedback: .success)
         updateStateTopHeadlines(
             state: articles.isEmpty ? state == .emptyFetch ? .emptyFetch : .emptyRead : .loaded
         )

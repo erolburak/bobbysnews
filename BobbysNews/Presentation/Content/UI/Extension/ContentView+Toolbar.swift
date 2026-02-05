@@ -35,7 +35,6 @@ extension ContentView {
                         systemImage: viewModel.selectedApiKey.isEmpty ? "plus" : "pencil"
                     ) {
                         viewModel.showEditAlert = true
-                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
                     .accessibilityIdentifier(Accessibility.apiKeyAddEditButton.id)
                 }
@@ -75,12 +74,14 @@ extension ContentView {
                         role: .destructive
                     ) {
                         viewModel.showResetConfirmationDialog = true
-                        viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                     }
                     .accessibilityIdentifier(Accessibility.resetButton.id)
                 }
             } label: {
                 Image(systemName: "gearshape")
+                    .onTapGesture {
+                        viewModel.sensoryFeedback(.impact)
+                    }
             }
             .alert(
                 "ApiKeyAlert",
@@ -93,7 +94,6 @@ extension ContentView {
 
                 Button("GoToGNews") {
                     viewModel.showWebView = true
-                    viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                 }
                 .accessibilityIdentifier(Accessibility.showWebViewButton.id)
 
@@ -109,7 +109,6 @@ extension ContentView {
 
                 Button(role: .cancel) {
                     viewModel.selectedApiKey = ""
-                    viewModel.sensoryFeedbackTrigger(feedback: .press(.button))
                 }
             }
             .confirmationDialog(

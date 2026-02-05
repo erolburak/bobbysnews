@@ -37,7 +37,6 @@ extension DetailView {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(role: .close) {
                         viewModel.showWebView = false
-                        viewModel.sensoryFeedbackBool.toggle()
                     }
                     .accessibilityIdentifier(Accessibility.closeWebViewButton.id)
                 }
