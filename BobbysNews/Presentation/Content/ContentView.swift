@@ -23,7 +23,9 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 ForEach($viewModel.articles) {
-                    ContentListItem(article: $0)
+                    ContentListItem(article: $0) { feedback in
+                        viewModel.sensoryFeedback(feedback)
+                    }
                 }
             }
             .disabled(viewModel.listDisabled)
@@ -65,15 +67,8 @@ struct ContentView: View {
         .task {
             await viewModel.checkCategoriesTipStatusUpdate()
         }
-        .onChange(of: viewModel.selectedCountry) { _, newValue in
-            country = newValue
-            viewModel.articles.removeAll()
-
-            Task {
-                await viewModel.fetchTopHeadlines(state: .isLoading)
-            }
-        }
         .onChange(of: viewModel.selectedCategory) { _, newValue in
+            viewModel.sensoryFeedback(.selection)
             category = newValue
             viewModel.articles.removeAll()
 
@@ -81,13 +76,39 @@ struct ContentView: View {
                 await viewModel.fetchTopHeadlines(state: .isLoading)
             }
         }
-        .sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) {
-            viewModel.sensoryFeedback
+        .onChange(of: viewModel.selectedCountry) { _, newValue in
+            if !newValue.isEmpty {
+                viewModel.sensoryFeedback(.selection)
+            }
+            country = newValue
+            viewModel.articles.removeAll()
+            Task {
+                await viewModel.fetchTopHeadlines(state: .isLoading)
+            }
+        }
+        .onChange(of: viewModel.showAlert) { _, newValue in
+            newValue ? viewModel.sensoryFeedback(.error) : viewModel.sensoryFeedback(.impact)
+        }
+        .onChange(of: viewModel.showEditAlert) {
+            viewModel.sensoryFeedback(.impact)
+        }
+        .onChange(of: viewModel.showNoNetworkConnection) { _, newValue in
+            newValue ? viewModel.sensoryFeedback(.error) : viewModel.sensoryFeedback(.impact)
+        }
+        .onChange(of: viewModel.showResetConfirmationDialog) {
+            viewModel.sensoryFeedback(.impact)
+        }
+        .onChange(of: viewModel.showWebView) {
+            viewModel.sensoryFeedback(.impact)
         }
         .onChange(of: viewModel.translate) {
+            viewModel.sensoryFeedback(.impact)
             Task {
                 await viewModel.configureTranslations()
             }
+        }
+        .sensoryFeedback(trigger: viewModel.sensoryFeedbackBool) {
+            viewModel.sensoryFeedback
         }
         .translationTask(viewModel.translationSessionConfiguration) {
             await viewModel.fetchTranslations(translateSession: $0)

@@ -27,7 +27,6 @@ final class DetailViewModel {
     }
 
     var scrollGeometryContentOffsetY = 0.0
-    var sensoryFeedbackBool = false
     var showNoNetworkConnection = false
     var showWebView = false
     var webPage: WebPage?

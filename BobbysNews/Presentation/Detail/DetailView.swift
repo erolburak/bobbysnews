@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct DetailView: View {
-    // MARK: - Private Properties
-
-    @Environment(\.dismiss) private var dismiss
-
     // MARK: - Properties
 
     @State var viewModel: DetailViewModel
+    let sensoryFeedback: (SensoryFeedback) -> Void
 
     // MARK: - Layouts
 
@@ -105,14 +102,15 @@ struct DetailView: View {
                 .top,
                 -120
             )
-            .padding([
-                .horizontal,
-                .bottom,
-            ])
+            .padding(
+                [
+                    .horizontal,
+                    .bottom,
+                ]
+            )
 
             Button("GoToArticle") {
                 viewModel.showWebView = true
-                viewModel.sensoryFeedbackBool.toggle()
             }
             .buttonStyle(.glass)
             .accessibilityIdentifier(Accessibility.showWebViewButton.id)
@@ -133,12 +131,15 @@ struct DetailView: View {
         } action: { _, newValue in
             viewModel.scrollGeometryContentOffsetY = newValue / 1.75
         }
-        .sensoryFeedback(
-            .press(.button),
-            trigger: viewModel.sensoryFeedbackBool
-        )
+        .onChange(of: viewModel.showWebView) {
+            sensoryFeedback(.impact)
+        }
         .task {
+            sensoryFeedback(.impact)
             await viewModel.onAppear()
+        }
+        .onDisappear {
+            sensoryFeedback(.impact)
         }
     }
 }
@@ -150,6 +151,6 @@ struct DetailView: View {
                 article: PreviewMock.article,
                 articleImage: nil
             )
-        )
+        ) { _ in }
     }
 }

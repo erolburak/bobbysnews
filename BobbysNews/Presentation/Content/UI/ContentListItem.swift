@@ -19,6 +19,7 @@ struct ContentListItem: View {
     // MARK: - Properties
 
     @Binding var article: Article
+    let sensoryFeedback: (SensoryFeedback) -> Void
 
     // MARK: - Layouts
 
@@ -29,7 +30,9 @@ struct ContentListItem: View {
                     article: article,
                     articleImage: articleImage
                 )
-            )
+            ) { feedback in
+                sensoryFeedback(feedback)
+            }
             .navigationTransition(
                 .zoom(
                     sourceID: article.id,
@@ -135,6 +138,7 @@ struct ContentListItem: View {
                         "Translate",
                         systemImage: "translate"
                     ) {
+                        sensoryFeedback(.impact)
                         translationPresentationText = title
                         showTranslationPresentation = true
                     }
@@ -145,10 +149,6 @@ struct ContentListItem: View {
                 text: translationPresentationText
             )
         }
-        .sensoryFeedback(
-            .selection,
-            trigger: showTranslationPresentation
-        )
         .matchedTransitionSource(
             id: article.id,
             in: animation
@@ -160,7 +160,9 @@ struct ContentListItem: View {
 #Preview("ContentListItem") {
     NavigationStack {
         ScrollView {
-            ContentListItem(article: .constant(PreviewMock.article))
+            ContentListItem(
+                article: .constant(PreviewMock.article)
+            ) { _ in }
         }
     }
 }

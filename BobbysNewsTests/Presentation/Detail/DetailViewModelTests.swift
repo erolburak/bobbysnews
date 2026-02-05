@@ -58,9 +58,8 @@ struct DetailViewModelTests {
                 && sut.article.story == article.story && sut.article.title == article.title
                 && sut.article.titleTranslated == nil && sut.article.url == article.url
                 && sut.articleContent == article.content && sut.articleImage == nil
-                && sut.articleTitle == article.title && !sut.sensoryFeedbackBool
-                && !sut.showNoNetworkConnection && !sut.showWebView
-                && sut.webPage == nil,
+                && sut.articleTitle == article.title && !sut.showNoNetworkConnection
+                && !sut.showWebView && sut.webPage == nil,
             "DetailViewModel onAppear failed!"
         )
     }
