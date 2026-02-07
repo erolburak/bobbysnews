@@ -79,9 +79,6 @@ extension ContentView {
                 }
             } label: {
                 Image(systemName: "gearshape")
-                    .onTapGesture {
-                        viewModel.sensoryFeedback(.impact)
-                    }
             }
             .alert(
                 "ApiKeyAlert",

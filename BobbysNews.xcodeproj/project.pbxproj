@@ -55,6 +55,7 @@
 				Presentation/Content/ContentViewModel.swift,
 				Presentation/Detail/DetailViewModel.swift,
 				"Presentation/Extension/Date+Extension.swift",
+				Resource/AppIcon.icon,
 			);
 			target = BF72AA9D2AA0BFD400368DA5 /* BobbysNewsTests */;
 		};
@@ -62,6 +63,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Helper/Accessibility/Accessibility.swift,
+				Resource/AppIcon.icon,
 			);
 			target = BF72AAA72AA0BFD400368DA5 /* BobbysNewsUITests */;
 		};
