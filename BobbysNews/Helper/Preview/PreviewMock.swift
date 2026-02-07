@@ -17,7 +17,7 @@ enum PreviewMock {
         country: "Country",
         image: URL(
             string:
-                "https://raw.githubusercontent.com/erolburak/bobbysnews/main/BobbysNews/Resource/Assets.xcassets/AppIcon.appiconset/%E2%80%8EAppIcon.png"
+                "https://erolburak.com/images/burakerol.png"
         ),
         publishedAt: .now,
         source: Source(
