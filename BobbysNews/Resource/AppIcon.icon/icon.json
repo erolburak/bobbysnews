@@ -4,11 +4,10 @@
     {
       "layers" : [
         {
-          "hidden" : false,
-          "image-name" : "AppIcon 2.png",
+          "image-name" : "AppIcon.png",
           "name" : "AppIcon",
           "position" : {
-            "scale" : 0.8,
+            "scale" : 1.25,
             "translation-in-points" : [
               0,
               0
